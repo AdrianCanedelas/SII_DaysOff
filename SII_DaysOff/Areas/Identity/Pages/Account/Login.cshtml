@@ -4,8 +4,12 @@
 @inject UserManager<ApplicationUser> UserManager
 
 @{
+    //Layout = null;
     ViewData["Title"] = "IFS WebApps";
+    ViewData["notShow"] = true;
 }
+
+<link href="~/css/Login.css" rel="stylesheet" />
 
 <div class="container my-5">
     <h1 class="text-center">@ViewData["Title"]</h1>
@@ -44,7 +48,7 @@
                         </div>
                     </div>
                     <div>
-                        <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-outline-primary my-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Log in</button>
+                        <button id="" type="submit" class="w-100 btn btn-lg btn-outline-primary my-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Log in</button>
                     </div>
                     <hr class="my-3" />
                 </form>
