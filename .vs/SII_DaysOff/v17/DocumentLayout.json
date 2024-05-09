@@ -1,0 +1,61 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\areas\\identity\\pages\\account\\register.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\areas\\identity\\pages\\account\\register.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Register.cshtml",
+              "DocumentMoniker": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "RelativeDocumentMoniker": "SII_DaysOff\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "ToolTip": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "RelativeToolTip": "SII_DaysOff\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "ViewState": "AQIAABgAAAAAAAAAAAAAACIAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-05-09T08:50:17.268Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Register.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "RelativeDocumentMoniker": "SII_DaysOff\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "ToolTip": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "RelativeToolTip": "SII_DaysOff\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "ViewState": "AQIAAHMAAAAAAAAAAAAIwIcAAABEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-09T08:48:42.612Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
