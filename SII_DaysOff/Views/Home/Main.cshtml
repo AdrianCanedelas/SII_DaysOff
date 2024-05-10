@@ -1,0 +1,272 @@
+﻿@{
+	ViewData["title"] = "Main";
+}
+
+<h1 class="mx-4">Days Off</h1>
+
+<!-- Primer div con información de días disponibles, tomados... -->
+<div class="card my-4 mx-4">
+	<div class="card-header bg-light">
+		<span>Time off balance in 2024</span>
+	</div>
+	<div class="card-body shadow">
+		<div class="row text-center">
+			<div class="col-6 col-sm-2">
+				<p class="fw-bold">Annual leaves</p>
+				<p>Holidays</p>
+			</div>
+			<div class="col-6 col-sm-2">
+				<p class="fw-bold">Available days</p>
+				<p>Holidays</p>
+			</div>
+			<div class="col-6 col-sm-2">
+				<p class="fw-bold">Acquired days</p>
+				<p>Holidays</p>
+			</div>
+			<div class="col-6 col-sm-2">
+				<p class="fw-bold">Remaining days</p>
+				<p>Holidays</p>
+			</div>
+			<div class="col-6 col-sm-2">
+				<p class="fw-bold">Validity start date</p>
+				<p>Holidays</p>
+			</div>
+			<div class="col-6 col-sm-2">
+				<p class="fw-bold">Validity end date</p>
+				<p>Holidays</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Segundo div -->
+<div class="card shadow my-4 mx-4">
+
+	<!-- Parte superior con botón para iniciar solicitud nueva -->
+	<div class="card-header bg-light">
+		<div class="row">
+			<div class="col-6 d-flex justify-content-start align-items-center">
+				Requested time off
+			</div>
+			<div class="col-6 d-flex justify-content-end align-items-center">
+				<button id="" type="submit" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">New request</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Dropdown con las 3 opciones de visualización de solicictudes -->
+	<div class="card-body">
+		<div class="row">
+			<div class="col-auto">
+				<div class="dropdown">
+					<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown">
+						Type of request
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+						<li><a class="dropdown-item" href="#">Pending requests</a></li>
+						<li><hr class="dropdown-divider"></li>
+						<li><a class="dropdown-item" href="#">Approved requests</a></li>
+						<li><hr class="dropdown-divider"></li>
+						<li><a class="dropdown-item" href="#">Cancelled request</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<!-- Aquí aparecerán las solicitudes -->
+			<div class="col">
+				<ul class="list-group ">
+					<!--
+						1. Motivo
+						2. Día inicio
+						3. Es medio día?
+						4. Día fin
+						5. Es medio día ?
+						6. Días totales
+						7. Día solicitud
+						8. Estado
+					-->
+					<li class="list-group-item list-group-item-primary">
+						<div class="row">
+							<div class="col fw-bold">
+								Reason for the request
+							</div>
+							<div class="col fw-bold">
+								Start day
+							</div>
+							<div class="col fw-bold">
+								Is half day?
+							</div>
+							<div class="col fw-bold">
+								End day
+							</div>
+							<div class="col fw-bold">
+								Is half day?
+							</div>
+							<div class="col fw-bold">
+								Total days
+							</div>
+							<div class="col fw-bold">
+								Request day
+							</div>
+							<div class="col fw-bold">
+								Status
+							</div>
+						</div>
+					</li>
+
+					<!-- Solicitudes -->
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col">
+								Vacations
+							</div>
+							<div class="col">
+								13/05/2024
+							</div>
+							<div class="col">
+								Is half day?
+							</div>
+							<div class="col">
+								31/05/2024
+							</div>
+							<div class="col">
+								Is half day?
+							</div>
+							<div class="col">
+								15
+							</div>
+							<div class="col">
+								10/05/2024
+							</div>
+							<div class="col">
+								Pending
+							</div>
+						</div>
+					</li>
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col">
+								Vacations
+							</div>
+							<div class="col">
+								13/05/2024
+							</div>
+							<div class="col">
+								Is half day?
+							</div>
+							<div class="col">
+								31/05/2024
+							</div>
+							<div class="col">
+								Is half day?
+							</div>
+							<div class="col">
+								15
+							</div>
+							<div class="col">
+								10/05/2024
+							</div>
+							<div class="col">
+								Pending
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal que se abre al darle a crear nueva solicitud -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="exampleModalLabel">New request</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="mb-3">
+							<label for="recipient-name" class="col-form-label">Type</label>
+							<div class="dropdown">
+								<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown">
+									Choose an option
+								</button>
+								<ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+									<li><a class="dropdown-item" href="#">Accident</a></li>
+									<li><a class="dropdown-item" href="#">Vacations</a></li>
+									<li><a class="dropdown-item" href="#">Others</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="message-text" class="col-form-label">Start date</label>
+							<textarea class="form-control" id="message-text"></textarea>
+						</div>
+						<div class="mb-3">
+							<label for="message-text" class="col-form-label">End date</label>
+							<textarea class="form-control" id="message-text"></textarea>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" onclick="Toasty()" data-bs-dismiss="modal"">Send request</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Mensaje de solicitud enviada (toast) -->
+	<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+		<div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+			<div class="toast-header">
+				<img src="..." class="rounded me-2" alt="...">
+				<strong class="me-auto">Request</strong>
+				<small>now</small>
+				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+			</div>
+			<div class="toast-body">
+				Your request has been sent
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<script>
+	/* Modal enviar solicitud */
+	const myModal = document.getElementById("myAlert")
+
+	myModal.addEventListener('show.bs.modal', event => {
+		console.log('mostrado')
+	})
+	myModal.addEventListener('hide.bs.modal', event => {
+		console.log('cerrado')
+	})
+
+	const myModalI = bootstrap.Modal.getOrCreateInstance('#exampleModal')
+	myModalI.show()
+
+	/* Toast */
+	/*document.getElementById('showToast').addEventListener('click', function () {
+		var toast = document.getElementById('#liveToast');
+
+		var bsToast = new bootstrap.Toast(toast);
+		bsToast.show();
+	});*/
+
+	var option = {
+		animation: true,
+		delay: 2000
+	};
+
+	function Toasty() {
+		var toastHTMLElement = document.getElementById("liveToast");
+
+		var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+
+		toastElement.show();
+	}
+
+</script>
