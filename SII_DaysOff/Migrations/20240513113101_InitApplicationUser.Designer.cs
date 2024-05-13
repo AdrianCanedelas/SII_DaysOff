@@ -12,7 +12,7 @@ using SII_DaysOff.Areas.Identity.Data;
 namespace SII_DaysOff.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240509084719_InitApplicationUser")]
+    [Migration("20240513113101_InitApplicationUser")]
     partial class InitApplicationUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
