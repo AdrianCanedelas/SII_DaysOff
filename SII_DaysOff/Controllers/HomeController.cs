@@ -13,6 +13,12 @@ namespace SII_DaysOff.Controllers
             _logger = logger;
         }
 
+        public IActionResult Index()
+        {
+            ViewData["notShow"] = false;
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             ViewData["notShow"] = false;

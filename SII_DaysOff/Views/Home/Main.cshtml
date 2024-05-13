@@ -5,7 +5,7 @@
 <h1 class="mx-4">Days Off</h1>
 
 <!-- Primer div con información de días disponibles, tomados... -->
-<div class="card my-4 mx-4">
+<div class="card my-5 mx-4">
 	<div class="card-header bg-light">
 		<span>Time off balance in 2024</span>
 	</div>
@@ -86,7 +86,7 @@
 						8. Estado
 					-->
 					<li class="list-group-item list-group-item-primary">
-						<div class="row">
+						<div class="row text-center">
 							<div class="col fw-bold">
 								Reason for the request
 							</div>
@@ -116,7 +116,7 @@
 
 					<!-- Solicitudes -->
 					<li class="list-group-item">
-						<div class="row">
+						<div class="row text-center">
 							<div class="col">
 								Vacations
 							</div>
@@ -144,7 +144,7 @@
 						</div>
 					</li>
 					<li class="list-group-item">
-						<div class="row">
+						<div class="row text-center">
 							<div class="col">
 								Vacations
 							</div>
@@ -186,25 +186,49 @@
 				</div>
 				<div class="modal-body">
 					<form>
-						<div class="mb-3">
-							<label for="recipient-name" class="col-form-label">Type</label>
-							<div class="dropdown">
-								<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown">
-									Choose an option
-								</button>
-								<ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-									<li><a class="dropdown-item" href="#">Accident</a></li>
-									<li><a class="dropdown-item" href="#">Vacations</a></li>
-									<li><a class="dropdown-item" href="#">Others</a></li>
-								</ul>
+						<div class="row mb-3">
+							<div class="col-2">
+								<label for="recipient-name" class="col-form-label">Type</label>
+							</div>
+							<div class="col">
+								<div class="dropdown">
+									<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown">
+										Choose an option
+									</button>
+									<ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+										<li><a class="dropdown-item" href="#">Accident</a></li>
+										<li><a class="dropdown-item" href="#">Vacations</a></li>
+										<li><a class="dropdown-item" href="#">Others</a></li>
+									</ul>
+								</div>
 							</div>
 						</div>
-						<div class="mb-3">
-							<label for="message-text" class="col-form-label">Start date</label>
+						<div class="row mb-3">
+							<div class="col">
+								<label for="message-text" class="col-form-label">Start date</label>
+							</div>
+							<div class="col d-flex justify-content-end align-items-center">
+								<li class="list-group-item border-0">
+									<input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+									Is half day?
+								</li>
+							</div>
+						</div>
+						<div class="row mb-3 mx-1">
 							<textarea class="form-control" id="message-text"></textarea>
 						</div>
-						<div class="mb-3">
-							<label for="message-text" class="col-form-label">End date</label>
+						<div class="row mb-3">
+							<div class="col">
+								<label for="message-text" class="col-form-label">End date</label>
+							</div>
+							<div class="col d-flex justify-content-end align-items-center">
+								<li class="list-group-item border-0">
+									<input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+									Is half day?
+								</li>
+							</div>
+						</div>
+						<div class="row mx-1">
 							<textarea class="form-control" id="message-text"></textarea>
 						</div>
 					</form>
@@ -235,18 +259,10 @@
 </div>
 
 <script>
+
 	/* Modal enviar solicitud */
-	const myModal = document.getElementById("myAlert")
-
-	myModal.addEventListener('show.bs.modal', event => {
-		console.log('mostrado')
-	})
-	myModal.addEventListener('hide.bs.modal', event => {
-		console.log('cerrado')
-	})
-
-	const myModalI = bootstrap.Modal.getOrCreateInstance('#exampleModal')
-	myModalI.show()
+	var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), options)
+	myModal.show();
 
 	/* Toast */
 	/*document.getElementById('showToast').addEventListener('click', function () {

@@ -1,42 +1,44 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - IFS DaysOff</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/SII_DaysOff.styles.css" asp-append-version="true" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - IFS DaysOff</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/SII_DaysOff.styles.css" asp-append-version="true" />
 
-    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-    @if (!ViewData["notShow"].Equals(true))
-    {
-        <header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 navbar-custom">
-                <div class="container-fluid">
-                    <img src="C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/img/siigroup-spain-whiteline.png" />
-                    <p class="text-light">IFS DaysOff</p>
-                    <partial name="_LoginPartial" />
-                </div>
-            </nav>
-        </header>
-    }
-    <div class="container-fluid">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+		@if (!ViewData["notShow"].Equals(true) || ViewData["notShow"].Equals(null))
+		{
+			<header>
+				<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 navbar-custom">
+					<div class="container-fluid">
+						<img src="C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/img/siigroup-spain-whiteline.png" />
+						<p class="text-light">IFS DaysOff</p>
+						<partial name="_LoginPartial" />
+					</div>
+				</nav>
+			</header>
+		}
+	
+	
+	<div class="container-fluid">
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
+	</div>
 
-    <footer class="footer text-muted">
-        <div class="align-content-start mx-5">
-            &copy; SII
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+	<footer class="footer text-muted">
+		<div class="align-content-start mx-5">
+			&copy; SII
+		</div>
+	</footer>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
