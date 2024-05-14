@@ -9,8 +9,6 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-@Html.Partial("../Components/ModalChangePassword")
-@Html.Partial("../Components/ModalRegisterUser")
 
 <style>
     .submenu {
@@ -39,7 +37,8 @@
             <a id="manage" class="nav-link text-light">@UserManager.GetUserName(User)!</a>
             <div class="submenu bg-light shadow-lg px-4 py-1 rounded-3">
                 <div class="row my-2">
-                    <button class="btn btn-outline-primary fw-bold" data-bs-toggle="modal" data-bs-target="#passModal">Change password</button>
+                    <!-- data-bs-toggle="modal" data-bs-target="#passModal" -->
+                    <a class="btn btn-outline-primary fw-bold" asp-area="Identity" asp-page="/Account/Manage/ChangePassword">Change password</a>
                 </div>
                 @{
                     var user = await UserManager.GetUserAsync(User);
@@ -47,7 +46,7 @@
                 @if (user.Profile.Equals("Admin"))
                 {
                     <div class="row my-2">
-                        <button class="btn btn-outline-primary fw-bold" data-bs-toggle="modal" data-bs-target="#registerModal">Register a new User</button>
+                        <a class="btn btn-outline-primary fw-bold" asp-area="Identity" asp-page="/Account/Register">Register a new User</a>
                     </div>
                 }
                 <div class="row my-2 mx-4">

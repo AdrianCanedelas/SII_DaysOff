@@ -1,0 +1,31 @@
+﻿@model SII_DaysOff.Models.Reasons
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Reasons</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReasonName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReasonName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DaysAssigned)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DaysAssigned)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IdReason">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

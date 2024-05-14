@@ -18,6 +18,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\adrian.candelas\source\repos\SII_DaysOff\SII_DaysOff
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Areas/Identity/Pages/Account/ConfirmEmail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxDb25maXJtRW1haWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Areas/Identity/Pages/Account/ForgotPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxGb3Jnb3RQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -100,6 +104,46 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/Reasons/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVhc29uc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/Reasons/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVhc29uc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/Reasons/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVhc29uc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/Reasons/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVhc29uc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/Reasons/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVhc29uc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/Requests/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxdWVzdHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/Requests/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxdWVzdHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/Requests/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxdWVzdHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/Requests/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxdWVzdHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/Requests/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxdWVzdHNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/Shared/Error.cshtml]

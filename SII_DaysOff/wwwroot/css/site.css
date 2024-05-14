@@ -22,3 +22,7 @@ body {
 .navbar-custom {
     background-color: #004278;
 }
+
+img {
+    width: 70px;
+}

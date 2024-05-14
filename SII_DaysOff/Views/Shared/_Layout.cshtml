@@ -11,12 +11,12 @@
 	<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-		@if (!ViewData["notShow"].Equals(true) || ViewData["notShow"].Equals(null))
+		@if (!ViewData["notShow"].Equals(true) || ViewData["notShow"] == null)
 		{
 			<header>
 				<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 navbar-custom">
 					<div class="container-fluid">
-						<img src="C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/img/siigroup-spain-whiteline.png" />
+					<img src="~img/siigroup-spain-whiteline.png" />
 						<p class="text-light">IFS DaysOff</p>
 						<partial name="_LoginPartial" />
 					</div>
