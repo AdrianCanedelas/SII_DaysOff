@@ -23,6 +23,14 @@ body {
     background-color: #004278;
 }
 
-img {
+img.login {
+    width: 300px;
+}
+
+img.navBar {
     width: 70px;
+}
+
+a.title {
+    font-size: 20px;
 }

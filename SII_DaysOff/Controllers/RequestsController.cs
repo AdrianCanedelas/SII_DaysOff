@@ -49,7 +49,6 @@ namespace SII_DaysOff.Controllers
         // GET: Requests/Create
         public IActionResult Create()
         {
-            Console.WriteLine("1111111111111");
             ViewData["IdAdmin"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             ViewData["IdReason"] = new SelectList(_context.Reasons, "IdReason", "IdReason");
             ViewData["IdUser"] = new SelectList(_context.AspNetUsers, "Id", "Id");
@@ -63,20 +62,15 @@ namespace SII_DaysOff.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdRequest,IdUser,IdAdmin,IdReason,RequestDate,StartDate,EndDate,TotalDays,HalfDayStart,HalfDayEnd,Status")] Requests requests)
         {
-			Console.WriteLine("22222222222222222");
 			if (ModelState.IsValid)
             {
                 _context.Add(requests);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            Console.WriteLine("aaa");
             ViewData["IdAdmin"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.IdAdmin);
-            Console.WriteLine("bbb");
             ViewData["IdReason"] = new SelectList(_context.Reasons, "IdReason", "IdReason", requests.IdReason);
-            Console.WriteLine("ccc");
             ViewData["IdUser"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.IdUser);
-            Console.WriteLine("ddd");
             return View(requests);
         }
 

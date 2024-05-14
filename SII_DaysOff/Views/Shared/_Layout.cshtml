@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@ViewData["Title"] - IFS DaysOff</title>
+	<title>@ViewData["Title"] - SII DaysOff</title>
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/SII_DaysOff.styles.css" asp-append-version="true" />
@@ -11,20 +11,20 @@
 	<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-		@if (!ViewData["notShow"].Equals(true) || ViewData["notShow"] == null)
-		{
-			<header>
-				<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 navbar-custom">
-					<div class="container-fluid">
-					<img src="~img/siigroup-spain-whiteline.png" />
-						<p class="text-light">IFS DaysOff</p>
-						<partial name="_LoginPartial" />
-					</div>
-				</nav>
-			</header>
-		}
-	
-	
+	@if (!ViewData["notShow"].Equals(true) || ViewData["notShow"] == null)
+	{
+		<header>
+			<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 navbar-custom">
+				<div class="container-fluid">
+					<img src="~/img/siigroup-spain-whiteline.png" class="navBar mx-4" />
+					<a id="manage" class="nav-link text-light title" asp-controller="Home" asp-action="Main">SII DaysOff</a>
+					<partial name="_LoginPartial" />
+				</div>
+			</nav>
+		</header>
+	}
+
+
 	<div class="container-fluid">
 		<main role="main" class="pb-3">
 			@RenderBody()
