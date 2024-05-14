@@ -1,5 +1,4 @@
-﻿@model SII_DaysOff.Areas.Identity.Pages.Account.Manage.ChangePasswordModel
-@using Microsoft.AspNetCore.Identity
+﻿@using Microsoft.AspNetCore.Identity
 @using SII_DaysOff.Areas.Identity.Data
 
 @{
@@ -10,10 +9,18 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
+@Html.Partial("../Components/ModalChangePassword")
+@Html.Partial("../Components/ModalRegisterUser")
+
 <style>
     .submenu {
         display: none;
         position:absolute;
+        z-index: 9999;
+    }
+
+    #manage:hover {
+        text-shadow: 2px 2px 4px white;
     }
 
     li:hover .submenu {
@@ -25,15 +32,27 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
+        <li class="nav-item">
+            <!--<a class="nav-link text-light mx-5" id="register" asp-area="Identity" asp-page="~/Home/PendingRequests">Awaiting requests</a>-->
+        </li>
     <li class="nav-item">
             <a id="manage" class="nav-link text-light">@UserManager.GetUserName(User)!</a>
-            <div class="submenu bg-light rounded-2 px-4 py-2 shadow-lg">
+            <div class="submenu bg-light shadow-lg px-4 py-1 rounded-3">
                 <div class="row my-2">
                     <button class="btn btn-outline-primary fw-bold" data-bs-toggle="modal" data-bs-target="#passModal">Change password</button>
                 </div>
-                <div class="row my-2">
+                @{
+                    var user = await UserManager.GetUserAsync(User);
+                }
+                @if (user.Profile.Equals("Admin"))
+                {
+                    <div class="row my-2">
+                        <button class="btn btn-outline-primary fw-bold" data-bs-toggle="modal" data-bs-target="#registerModal">Register a new User</button>
+                    </div>
+                }
+                <div class="row my-2 mx-4">
                      <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                        <button class="btn btn-outline-primary fw-bold">Logout</button>
+                        <button class="btn btn-outline-primary fw-bold" >Logout</button>
                     </form>
                 </div>
             </div>
@@ -50,44 +69,6 @@ else
 }
 </ul>
 
-<div class="modal fade" id="passModal" tabindex="-1" aria-labelledby="passModalLabel" aria-hidden="true" data-bs-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="passModalLabel">Change password</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="change-password-form" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-floating my-3">
-                        <input asp-for="Input.OldPassword" class="form-control" autocomplete="current-password" aria-required="true" />
-                        <label asp-for="Input.OldPassword" class="form-label"></label>
-                        <span asp-validation-for="Input.OldPassword" class="text-danger"></span>
-                    </div>
-                    <div class="form-floating my-3">
-                        <input asp-for="Input.NewPassword" class="form-control" autocomplete="new-password" aria-required="true" />
-                        <label asp-for="Input.NewPassword" class="form-label"></label>
-                        <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
-                    </div>
-                    <div class="form-floating my-3">
-                        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
-                        <label asp-for="Input.ConfirmPassword" class="form-label"></label>
-                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                    </div>
-                    <button type="submit" class="w-100 btn btn-lg btn-primary">Update password</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-
-<script>
-    /* Modal password */
-    var myModal = new bootstrap.Modal(document.getElementById('passModal'), options)
-    myModal.show();
-</script>
