@@ -34,7 +34,7 @@
             <!--<a class="nav-link text-light mx-5" id="register" asp-area="Identity" asp-page="~/Home/PendingRequests">Awaiting requests</a>-->
         </li>
     <li class="nav-item">
-            <a id="manage" class="nav-link text-light">@UserManager.GetUserName(User)!</a>
+            <a id="manage" class="nav-link text-light mx-5">@UserManager.GetUserName(User)!</a>
             <div class="submenu bg-light shadow-lg px-4 py-1 rounded-3">
                 <div class="row my-2">
                     <!-- data-bs-toggle="modal" data-bs-target="#passModal" -->
@@ -46,7 +46,10 @@
                 @if (user.Profile.Equals("Admin"))
                 {
                     <div class="row my-2">
-                        <a class="btn btn-outline-primary fw-bold" asp-area="Identity" asp-page="/Account/Register">Register a new User</a>
+                        <a class="btn btn-outline-primary fw-bold" asp-area="Identity" asp-page="/Account/Register">Register new user</a>
+                    </div>
+                    <div class="row my-2">
+                        <a class="btn btn-outline-primary fw-bold" asp-controller="Reasons" asp-action="Create">Register new reason</a>
                     </div>
                 }
                 <div class="row my-2 mx-4">

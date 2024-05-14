@@ -10,6 +10,7 @@
 }
 
 <link href="~/css/Login.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" />
 
 <div class="container my-5">
     <div class="row my-3">
@@ -25,13 +26,13 @@
                     <p class="my-2">Identifier</p>
                     <div class="form-floating">
                         <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
-                        <label asp-for="Input.Email" class="form-label">Account Identifier</label>
+                        <label asp-for="Input.Email" class="form-label"><i class="bi bi-person-circle"></i>  Account Identifier</label>
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
                     <p class="my-2">Password</p>
                     <div class="form-floating">
                         <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
-                        <label asp-for="Input.Password" class="form-label"></label>
+                        <label asp-for="Input.Password" class="form-label"><i class="bi bi-key-fill"></i>  Password</label>
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
                     <!--<div class="modal fade" id="exampleModal">
@@ -49,7 +50,7 @@
                     </div>-->
                     <div>
                         <button id="" type="submit" class="w-100 btn btn-lg btn-outline-primary my-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            Log in
+                            <i class="bi bi-box-arrow-in-right"></i> Log in
                         </button>
                     </div>
                     <hr class="my-3" />
