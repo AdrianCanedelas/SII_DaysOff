@@ -1,16 +1,16 @@
-﻿@model SII_DaysOff.Models.Requests
+﻿@model IEnumerable<SII_DaysOff.Models.Requests>
 
 @{
+	ViewData["notShow"] = false;
 	ViewData["title"] = "Main";
 }
 
-@Html.Partial("../Components/ModalCreateRequest")
 
 <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" />
 
 <h1 class="mx-4">Days Off</h1>
 
-<!-- Tabs para admin 
+<!-- Tabs para admin
 <ul class="nav nav-tabs m-4">
 	<li class="nav-item">
 		<a class="nav-link active" aria-current="page" href="#">Active</a>
@@ -22,7 +22,6 @@
 		<a class="nav-link" href="#">Register new reason</a>
 	</li>
 </ul>-->
-
 <!-- Primer div con información de días disponibles, tomados... -->
 <div class="card my-5 mx-4">
 	<div class="card-header bg-light">
@@ -68,11 +67,11 @@
 				Requested time off
 			</div>
 			<div class="col-6 d-flex justify-content-end align-items-center">
-				<!-- 
+				<!--
 					data-bs-toggle="modal" data-bs-target="#exampleModal"
 					asp-area="" asp-controller="Requests" asp-action="Create"
 				-->
-				<a class="btn btn-outline-primary fw-bold mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal">New request</a>
+				<a class="btn btn-outline-primary fw-bold mx-2" asp-area="" asp-controller="Requests" asp-action="Create">New request</a>
 				<a class="btn btn-outline-primary fw-bold" asp-area="" asp-controller="Requests" asp-action="Index">View requests</a>
 			</div>
 		</div>
@@ -152,7 +151,42 @@
 					</li>
 
 					<!-- Solicitudes -->
-					<li class="list-group-item">
+					@if (Model != null)
+					{
+						foreach (var item in Model)
+						{
+							<li class="list-group-item">
+								<div class="row text-center">
+									<div class="col">
+										@Html.DisplayFor(model => item.IdReason)
+									</div>
+									<div class="col">
+										@Html.DisplayFor(model => item.StartDate)
+									</div>
+									<div class="col">
+										@Html.DisplayFor(model => item.HalfDayStart)
+									</div>
+									<div class="col">
+										@Html.DisplayFor(model => item.EndDate)
+									</div>
+									<div class="col">
+										@Html.DisplayFor(model => item.HalfDayEnd)
+									</div>
+									<div class="col">
+										@Html.DisplayFor(model => item.TotalDays)
+									</div>
+									<div class="col">
+										@Html.DisplayFor(model => item.RequestDate)
+									</div>
+									<div class="col">
+										@Html.DisplayFor(model => item.Status)
+									</div>
+								</div>
+							</li>
+						}
+					}
+
+					<!--<li class="list-group-item">
 						<div class="row text-center">
 							<div class="col">
 								Vacations
@@ -179,142 +213,7 @@
 								Pending
 							</div>
 						</div>
-					</li><li class="list-group-item">
-						<div class="row text-center">
-							<div class="col">
-								Vacations
-							</div>
-							<div class="col">
-								13/05/2024
-							</div>
-							<div class="col">
-								Is half day?
-							</div>
-							<div class="col">
-								31/05/2024
-							</div>
-							<div class="col">
-								Is half day?
-							</div>
-							<div class="col">
-								15
-							</div>
-							<div class="col">
-								10/05/2024
-							</div>
-							<div class="col">
-								Pending
-							</div>
-						</div>
-					</li><li class="list-group-item">
-						<div class="row text-center">
-							<div class="col">
-								Vacations
-							</div>
-							<div class="col">
-								13/05/2024
-							</div>
-							<div class="col">
-								Is half day?
-							</div>
-							<div class="col">
-								31/05/2024
-							</div>
-							<div class="col">
-								Is half day?
-							</div>
-							<div class="col">
-								15
-							</div>
-							<div class="col">
-								10/05/2024
-							</div>
-							<div class="col">
-								Pending
-							</div>
-						</div>
-					</li><li class="list-group-item">
-						<div class="row text-center">
-							<div class="col">
-								Vacations
-							</div>
-							<div class="col">
-								13/05/2024
-							</div>
-							<div class="col">
-								Is half day?
-							</div>
-							<div class="col">
-								31/05/2024
-							</div>
-							<div class="col">
-								Is half day?
-							</div>
-							<div class="col">
-								15
-							</div>
-							<div class="col">
-								10/05/2024
-							</div>
-							<div class="col">
-								Pending
-							</div>
-						</div>
-					</li><li class="list-group-item">
-						<div class="row text-center">
-							<div class="col">
-								Vacations
-							</div>
-							<div class="col">
-								13/05/2024
-							</div>
-							<div class="col">
-								Is half day?
-							</div>
-							<div class="col">
-								31/05/2024
-							</div>
-							<div class="col">
-								Is half day?
-							</div>
-							<div class="col">
-								15
-							</div>
-							<div class="col">
-								10/05/2024
-							</div>
-							<div class="col">
-								Pending
-							</div>
-						</div>
-					</li><li class="list-group-item">
-						<div class="row text-center">
-							<div class="col">
-								Vacations
-							</div>
-							<div class="col">
-								13/05/2024
-							</div>
-							<div class="col">
-								Is half day?
-							</div>
-							<div class="col">
-								31/05/2024
-							</div>
-							<div class="col">
-								Is half day?
-							</div>
-							<div class="col">
-								15
-							</div>
-							<div class="col">
-								10/05/2024
-							</div>
-							<div class="col">
-								Pending
-							</div>
-						</div>
-					</li>
+					</li>-->
 				</ul>
 			</div>
 		</div>

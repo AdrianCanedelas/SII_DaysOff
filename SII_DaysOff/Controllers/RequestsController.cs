@@ -21,8 +21,9 @@ namespace SII_DaysOff.Controllers
         // GET: Requests
         public async Task<IActionResult> Index()
         {
-            var dbContextBD = _context.Requests.Include(r => r.IdAdminNavigation).Include(r => r.IdReasonNavigation).Include(r => r.IdUserNavigation);
-            return View(await dbContextBD.ToListAsync());
+			Console.WriteLine("pruebaIndex");
+			var dbContextBD = _context.Requests.Include(r => r.IdAdminNavigation).Include(r => r.IdReasonNavigation).Include(r => r.IdUserNavigation);
+            return View("../Home/Main", await dbContextBD.ToListAsync());
         }
 
         // GET: Requests/Details/5
@@ -62,6 +63,7 @@ namespace SII_DaysOff.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdRequest,IdUser,IdAdmin,IdReason,RequestDate,StartDate,EndDate,TotalDays,HalfDayStart,HalfDayEnd,Status")] Requests requests)
         {
+            Console.WriteLine("pruebaCreate");
 			if (ModelState.IsValid)
             {
                 _context.Add(requests);

@@ -34,3 +34,7 @@ img.navBar {
 a.title {
     font-size: 20px;
 }
+
+.date-own {
+    display: none;
+}

@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SII_DaysOff")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ef944c179e9f3e842cfd627e518ed6d8f5ed9e9f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7334a6483a0ac8be8e05c2277578df55e0b0487a")]
 [assembly: System.Reflection.AssemblyProductAttribute("SII_DaysOff")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SII_DaysOff")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
