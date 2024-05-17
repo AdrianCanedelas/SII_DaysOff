@@ -38,3 +38,15 @@ a.title {
 .date-own {
     display: none;
 }
+
+.iconManageAccept {
+    color: lightgreen;
+    font-size: 20px;
+    margin-right: 10px
+}
+
+.iconManageCancel {
+    color: red;
+    font-size: 20px;
+    margin-left: 10px;
+}

@@ -1,12 +1,16 @@
-﻿@model IEnumerable<SII_DaysOff.Models.Requests>
+﻿@using Microsoft.AspNetCore.Identity
+@using SII_DaysOff.Areas.Identity.Data
+@model IEnumerable<SII_DaysOff.Models.Requests>
 
 @{
 	ViewData["notShow"] = false;
 	ViewData["title"] = "Main";
 }
 
+@inject UserManager<ApplicationUser> UserManager
 
-<link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+
+@Html.Partial("../Components/ModalCreateRequest")
 
 <h1 class="mx-4">Days Off</h1>
 
@@ -71,7 +75,15 @@
 					data-bs-toggle="modal" data-bs-target="#exampleModal"
 					asp-area="" asp-controller="Requests" asp-action="Create"
 				-->
-				<a class="btn btn-outline-primary fw-bold mx-2" asp-area="" asp-controller="Requests" asp-action="Create">New request</a>
+				@{
+					var user = await UserManager.GetUserAsync(User);
+				}
+				@if (user.Profile.Equals("Admin"))
+				{
+					<a class="btn btn-outline-primary fw-bold mx-2" asp-area="" asp-controller="Requests" asp-action="ManageIndex">Manage request</a>
+
+				}
+				<a class="btn btn-outline-primary fw-bold mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal">New request</a>
 				<a class="btn btn-outline-primary fw-bold" asp-area="" asp-controller="Requests" asp-action="Index">View requests</a>
 			</div>
 		</div>

@@ -57,6 +57,7 @@ namespace SII_DaysOff.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdReason,ReasonName,DaysAssigned")] Reasons reasons)
         {
+            Console.WriteLine("creado reason");
             if (ModelState.IsValid)
             {
                 _context.Add(reasons);

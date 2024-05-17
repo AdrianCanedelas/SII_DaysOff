@@ -11,127 +11,84 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<div class="card-body">
-	<div class="row">
-		<div class="col-auto">
-			<!--<div class="dropdown">
-				<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown">
-					Type of request
-				</button>
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-					<li><a class="dropdown-item" href="#">Pending requests</a></li>
-					<li><hr class="dropdown-divider"></li>
-					<li><a class="dropdown-item" href="#">Approved requests</a></li>
-					<li><hr class="dropdown-divider"></li>
-					<li><a class="dropdown-item" href="#">Cancelled request</a></li>
-				</ul>
-			</div>-->
-		</div>
-
-		<!-- Aquí aparecerán las solicitudes -->
-		<div class="col">
-			<ul class="list-group ">
-				<!--
-					1. Motivo
-					2. Día inicio
-					3. Es medio día?
-					4. Día fin
-					5. Es medio día ?
-					6. Días totales
-					7. Día solicitud
-					8. Estado
-				-->
-				<li class="list-group-item list-group-item-primary">
-					<div class="row text-center">
-						<div class="col fw-bold">
-							Reason for the request
-						</div>
-						<div class="col fw-bold">
-							Start day
-						</div>
-						<div class="col fw-bold">
-							Is half day?
-						</div>
-						<div class="col fw-bold">
-							End day
-						</div>
-						<div class="col fw-bold">
-							Is half day?
-						</div>
-						<div class="col fw-bold">
-							Total days
-						</div>
-						<div class="col fw-bold">
-							Request day
-						</div>
-						<div class="col fw-bold">
-							Status
-						</div>
-					</div>
-				</li>
-
-				<!-- Solicitudes -->
-				@foreach (var item in Model)
-				{
-					<li class="list-group-item">
-						<div class="row text-center">
-							<div class="col">
-								@Html.DisplayFor(model => item.IdReason)
-							</div>
-							<div class="col">
-								@Html.DisplayFor(model => item.StartDate)
-							</div>
-							<div class="col">
-								@Html.DisplayFor(model => item.HalfDayStart)
-							</div>
-							<div class="col">
-								@Html.DisplayFor(model => item.EndDate)
-							</div>
-							<div class="col">
-								@Html.DisplayFor(model => item.HalfDayEnd)
-							</div>
-							<div class="col">
-								@Html.DisplayFor(model => item.TotalDays)
-							</div>
-							<div class="col">
-								@Html.DisplayFor(model => item.RequestDate)
-							</div>
-							<div class="col">
-								@Html.DisplayFor(model => item.Status)
-							</div>
-						</div>
-					</li>
-				}
-
-				<!--<li class="list-group-item">
-					<div class="row text-center">
-						<div class="col">
-							Vacations
-						</div>
-						<div class="col">
-							13/05/2024
-						</div>
-						<div class="col">
-							Is half day?
-						</div>
-						<div class="col">
-							31/05/2024
-						</div>
-						<div class="col">
-							Is half day?
-						</div>
-						<div class="col">
-							15
-						</div>
-						<div class="col">
-							10/05/2024
-						</div>
-						<div class="col">
-							Pending
-						</div>
-					</div>
-				</li>-->
-			</ul>
-		</div>
-	</div>
-</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalDays)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HalfDayStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HalfDayEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdAdminNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdReasonNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUserNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@if(Model != null){
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequestDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalDays)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HalfDayStart)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HalfDayEnd)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdAdminNavigation.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdReasonNavigation.IdReason)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdUserNavigation.Id)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdRequest">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.IdRequest">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.IdRequest">Delete</a>
+                    </td>
+                </tr>
+            }
+}
+    </tbody>
+</table>
