@@ -2,41 +2,37 @@
 
 <!-- Modal que se abre al darle a crear nueva solicitud -->
 <div class="modal fade" id="reasonModal" tabindex="-1" aria-labelledby="reasonModalLabel" aria-hidden="true" data-bs-backdrop="static">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title" id="reasonModalLabel">New reason</h4>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<form asp-action="Create">
-					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-					<div class="form-group">
-						<label asp-for="ReasonName" class="control-label"></label>
-						<input asp-for="ReasonName" class="form-control" />
-						<span asp-validation-for="ReasonName" class="text-danger"></span>
-					</div>
-					<div class="form-group">
-						<label asp-for="DaysAssigned" class="control-label"></label>
-						<input asp-for="DaysAssigned" class="form-control" />
-						<span asp-validation-for="DaysAssigned" class="text-danger"></span>
-					</div>
-					<!--div class="form-group">
-						<input type="submit" value="Create" class="btn btn-primary" />
-					</div>-->
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-				<input type="submit" value="Create new reason" class="btn btn-primary" asp-controller="Reasons" asp-action="Create" />
-				<!--<button type="submit" value="Create" class="btn btn-primary" onclick="Toasty()" data-bs-dismiss="modal">Send request</button>-->
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="reasonModalLabel">New reason</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="reasonForm" asp-controller="Reasons" asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="ReasonName" class="control-label"></label>
+                        <input asp-for="ReasonName" class="form-control" />
+                        <span asp-validation-for="ReasonName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DaysAssigned" class="control-label"></label>
+                        <input asp-for="DaysAssigned" class="form-control" />
+                        <span asp-validation-for="DaysAssigned" class="text-danger"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" form="reasonForm">Create reason</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
-	@{
-		await Html.RenderPartialAsync("_ValidationScriptsPartial");
-	}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

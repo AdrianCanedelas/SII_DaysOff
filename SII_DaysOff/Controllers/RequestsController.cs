@@ -57,6 +57,7 @@ namespace SII_DaysOff.Controllers
         // GET: Requests/Create
         public IActionResult Create()
         {
+            Console.WriteLine("create request");
             ViewData["IdAdmin"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             ViewData["IdReason"] = new SelectList(_context.Reasons, "IdReason", "IdReason");
             ViewData["IdUser"] = new SelectList(_context.AspNetUsers, "Id", "Id");

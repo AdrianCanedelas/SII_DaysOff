@@ -1,5 +1,4 @@
-﻿@page
-@model SII_DaysOff.Areas.Identity.Pages.Account.RegisterModel
+﻿@model SII_DaysOff.Areas.Identity.Pages.Account.RegisterModel
 
 <!-- Modal registrar nuevo usuario -->
 <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalModalLabel" aria-hidden="true" data-bs-backdrop="static">
@@ -10,8 +9,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!--<form id="registerForm" method="post">
-                    <h2>Create a new account.</h2>
+                <form id="registerForm" method="post">
                     <hr />
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-floating">
@@ -50,8 +48,7 @@
                         <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                     </div>
                     <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-                </form>-->
-                <button type="submit" class="w-100 btn btn-lg btn-primary">Register user</button>
+                </form>
             </div>
         </div>
     </div>
