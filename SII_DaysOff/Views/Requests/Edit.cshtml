@@ -1,0 +1,81 @@
+﻿@model SII_DaysOff.Models.Requests
+
+@{
+    ViewData["notShow"] = false;
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Requests</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdRequest" />
+            <div class="form-group">
+                <label asp-for="IdUser" class="control-label"></label>
+                <select asp-for="IdUser" class="form-control" asp-items="ViewBag.IdUser"></select>
+                <span asp-validation-for="IdUser" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdAdmin" class="control-label"></label>
+                <select asp-for="IdAdmin" class="form-control" asp-items="ViewBag.IdAdmin"></select>
+                <span asp-validation-for="IdAdmin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdReason" class="control-label"></label>
+                <select asp-for="IdReason" class="form-control" asp-items="ViewBag.IdReason"></select>
+                <span asp-validation-for="IdReason" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RequestDate" class="control-label"></label>
+                <input asp-for="RequestDate" class="form-control" />
+                <span asp-validation-for="RequestDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalDays" class="control-label"></label>
+                <input asp-for="TotalDays" class="form-control" />
+                <span asp-validation-for="TotalDays" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HalfDayStart" class="control-label"></label>
+                <input asp-for="HalfDayStart" class="form-control" />
+                <span asp-validation-for="HalfDayStart" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HalfDayEnd" class="control-label"></label>
+                <input asp-for="HalfDayEnd" class="form-control" />
+                <span asp-validation-for="HalfDayEnd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <input asp-for="Status" class="form-control" />
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,11 +1,29 @@
-﻿@{
+﻿@model IEnumerable<SII_DaysOff.Models.Requests>
+
+@{
+	ViewData["notShow"] = false;
 	ViewData["title"] = "Main";
 }
 
+
+<link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+
 <h1 class="mx-4">Days Off</h1>
 
+<!-- Tabs para admin
+<ul class="nav nav-tabs m-4">
+	<li class="nav-item">
+		<a class="nav-link active" aria-current="page" href="#">Active</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="#">Register new user</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="#">Register new reason</a>
+	</li>
+</ul>-->
 <!-- Primer div con información de días disponibles, tomados... -->
-<div class="card my-4 mx-4">
+<div class="card my-5 mx-4">
 	<div class="card-header bg-light">
 		<span>Time off balance in 2024</span>
 	</div>
@@ -49,16 +67,34 @@
 				Requested time off
 			</div>
 			<div class="col-6 d-flex justify-content-end align-items-center">
-				<button id="" type="submit" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">New request</button>
+				<!--
+					data-bs-toggle="modal" data-bs-target="#exampleModal"
+					asp-area="" asp-controller="Requests" asp-action="Create"
+				-->
+				<a class="btn btn-outline-primary fw-bold mx-2" asp-area="" asp-controller="Requests" asp-action="Create">New request</a>
+				<a class="btn btn-outline-primary fw-bold" asp-area="" asp-controller="Requests" asp-action="Index">View requests</a>
 			</div>
 		</div>
 	</div>
+
+	<!-- Tabs para admin -->
+	<ul class="nav nav-tabs m-4">
+		<li class="nav-item">
+			<a class="nav-link active" aria-current="page" href="#"><i class="bi bi-clock-history"></i>   Pending requests</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#"><i class="bi bi-check-circle"></i>   Approved requests</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#"><i class="bi bi-dash-circle"></i>   Cancelled requests</a>
+		</li>
+	</ul>
 
 	<!-- Dropdown con las 3 opciones de visualización de solicictudes -->
 	<div class="card-body">
 		<div class="row">
 			<div class="col-auto">
-				<div class="dropdown">
+				<!--<div class="dropdown">
 					<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown">
 						Type of request
 					</button>
@@ -69,7 +105,7 @@
 						<li><hr class="dropdown-divider"></li>
 						<li><a class="dropdown-item" href="#">Cancelled request</a></li>
 					</ul>
-				</div>
+				</div>-->
 			</div>
 
 			<!-- Aquí aparecerán las solicitudes -->
@@ -86,7 +122,7 @@
 						8. Estado
 					-->
 					<li class="list-group-item list-group-item-primary">
-						<div class="row">
+						<div class="row text-center">
 							<div class="col fw-bold">
 								Reason for the request
 							</div>
@@ -115,104 +151,70 @@
 					</li>
 
 					<!-- Solicitudes -->
-					<li class="list-group-item">
-						<div class="row">
-							<div class="col">
-								Vacations
-							</div>
-							<div class="col">
-								13/05/2024
-							</div>
-							<div class="col">
-								Is half day?
-							</div>
-							<div class="col">
-								31/05/2024
-							</div>
-							<div class="col">
-								Is half day?
-							</div>
-							<div class="col">
-								15
-							</div>
-							<div class="col">
-								10/05/2024
-							</div>
-							<div class="col">
-								Pending
-							</div>
-						</div>
-					</li>
-					<li class="list-group-item">
-						<div class="row">
-							<div class="col">
-								Vacations
-							</div>
-							<div class="col">
-								13/05/2024
-							</div>
-							<div class="col">
-								Is half day?
-							</div>
-							<div class="col">
-								31/05/2024
-							</div>
-							<div class="col">
-								Is half day?
-							</div>
-							<div class="col">
-								15
-							</div>
-							<div class="col">
-								10/05/2024
-							</div>
-							<div class="col">
-								Pending
-							</div>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
+					@if (Model != null)
+					{
+						foreach (var item in Model)
+						{
+							<li class="list-group-item">
+								<div class="row text-center">
+									<div class="col">
+										@Html.DisplayFor(model => item.IdReason)
+									</div>
+									<div class="col">
+										@Html.DisplayFor(model => item.StartDate)
+									</div>
+									<div class="col">
+										@Html.DisplayFor(model => item.HalfDayStart)
+									</div>
+									<div class="col">
+										@Html.DisplayFor(model => item.EndDate)
+									</div>
+									<div class="col">
+										@Html.DisplayFor(model => item.HalfDayEnd)
+									</div>
+									<div class="col">
+										@Html.DisplayFor(model => item.TotalDays)
+									</div>
+									<div class="col">
+										@Html.DisplayFor(model => item.RequestDate)
+									</div>
+									<div class="col">
+										@Html.DisplayFor(model => item.Status)
+									</div>
+								</div>
+							</li>
+						}
+					}
 
-	<!-- Modal que se abre al darle a crear nueva solicitud -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title" id="exampleModalLabel">New request</h4>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<form>
-						<div class="mb-3">
-							<label for="recipient-name" class="col-form-label">Type</label>
-							<div class="dropdown">
-								<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown">
-									Choose an option
-								</button>
-								<ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-									<li><a class="dropdown-item" href="#">Accident</a></li>
-									<li><a class="dropdown-item" href="#">Vacations</a></li>
-									<li><a class="dropdown-item" href="#">Others</a></li>
-								</ul>
+					<!--<li class="list-group-item">
+						<div class="row text-center">
+							<div class="col">
+								Vacations
+							</div>
+							<div class="col">
+								13/05/2024
+							</div>
+							<div class="col">
+								Is half day?
+							</div>
+							<div class="col">
+								31/05/2024
+							</div>
+							<div class="col">
+								Is half day?
+							</div>
+							<div class="col">
+								15
+							</div>
+							<div class="col">
+								10/05/2024
+							</div>
+							<div class="col">
+								Pending
 							</div>
 						</div>
-						<div class="mb-3">
-							<label for="message-text" class="col-form-label">Start date</label>
-							<textarea class="form-control" id="message-text"></textarea>
-						</div>
-						<div class="mb-3">
-							<label for="message-text" class="col-form-label">End date</label>
-							<textarea class="form-control" id="message-text"></textarea>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" onclick="Toasty()" data-bs-dismiss="modal"">Send request</button>
-				</div>
+					</li>-->
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -235,18 +237,10 @@
 </div>
 
 <script>
+
 	/* Modal enviar solicitud */
-	const myModal = document.getElementById("myAlert")
-
-	myModal.addEventListener('show.bs.modal', event => {
-		console.log('mostrado')
-	})
-	myModal.addEventListener('hide.bs.modal', event => {
-		console.log('cerrado')
-	})
-
-	const myModalI = bootstrap.Modal.getOrCreateInstance('#exampleModal')
-	myModalI.show()
+	var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), options)
+	myModal.show();
 
 	/* Toast */
 	/*document.getElementById('showToast').addEventListener('click', function () {
@@ -270,3 +264,9 @@
 	}
 
 </script>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}
