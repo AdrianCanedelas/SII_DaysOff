@@ -21,7 +21,7 @@ namespace SII_DaysOff.Controllers
         // GET: Requests
         public async Task<IActionResult> Index()
         {
-            var dbContextBD = _context.Requests.Include(r => r.Reason).Include(r => r.Status);
+            var dbContextBD = _context.Requests.Include(r => r.CreatedByNavigation).Include(r => r.ModifiedByNavigation).Include(r => r.Reason).Include(r => r.Request).Include(r => r.Status);
             return View(await dbContextBD.ToListAsync());
         }
 
@@ -34,7 +34,10 @@ namespace SII_DaysOff.Controllers
             }
 
             var requests = await _context.Requests
+                .Include(r => r.CreatedByNavigation)
+                .Include(r => r.ModifiedByNavigation)
                 .Include(r => r.Reason)
+                .Include(r => r.Request)
                 .Include(r => r.Status)
                 .FirstOrDefaultAsync(m => m.RequestId == id);
             if (requests == null)
@@ -48,7 +51,10 @@ namespace SII_DaysOff.Controllers
         // GET: Requests/Create
         public IActionResult Create()
         {
+            ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id");
+            ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "ReasonId");
+            ViewData["RequestId"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId");
             return View();
         }
@@ -67,7 +73,10 @@ namespace SII_DaysOff.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.CreatedBy);
+            ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.ModifiedBy);
             ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "ReasonId", requests.ReasonId);
+            ViewData["RequestId"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.RequestId);
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", requests.StatusId);
             return View(requests);
         }
@@ -85,7 +94,10 @@ namespace SII_DaysOff.Controllers
             {
                 return NotFound();
             }
+            ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.CreatedBy);
+            ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.ModifiedBy);
             ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "ReasonId", requests.ReasonId);
+            ViewData["RequestId"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.RequestId);
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", requests.StatusId);
             return View(requests);
         }
@@ -122,7 +134,10 @@ namespace SII_DaysOff.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.CreatedBy);
+            ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.ModifiedBy);
             ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "ReasonId", requests.ReasonId);
+            ViewData["RequestId"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.RequestId);
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", requests.StatusId);
             return View(requests);
         }
@@ -136,7 +151,10 @@ namespace SII_DaysOff.Controllers
             }
 
             var requests = await _context.Requests
+                .Include(r => r.CreatedByNavigation)
+                .Include(r => r.ModifiedByNavigation)
                 .Include(r => r.Reason)
+                .Include(r => r.Request)
                 .Include(r => r.Status)
                 .FirstOrDefaultAsync(m => m.RequestId == id);
             if (requests == null)

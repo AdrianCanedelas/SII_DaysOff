@@ -20,7 +20,10 @@ namespace SII_DaysOff.Models
         public Guid ModifiedBy { get; set; }
         public DateTime ModificationDate { get; set; }
 
+        public virtual AspNetUsers CreatedByNavigation { get; set; } = null!;
+        public virtual AspNetUsers ModifiedByNavigation { get; set; } = null!;
         public virtual Reasons Reason { get; set; } = null!;
+        public virtual AspNetUsers Request { get; set; } = null!;
         public virtual Statuses Status { get; set; } = null!;
     }
 }

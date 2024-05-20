@@ -21,9 +21,8 @@ namespace SII_DaysOff.Controllers
         // GET: Reasons
         public async Task<IActionResult> Index()
         {
-              return _context.Reasons != null ? 
-                          View(await _context.Reasons.ToListAsync()) :
-                          Problem("Entity set 'DbContextBD.Reasons'  is null.");
+            var dbContextBD = _context.Reasons.Include(r => r.CreatedByNavigation).Include(r => r.ModifiedByNavigation);
+            return View(await dbContextBD.ToListAsync());
         }
 
         // GET: Reasons/Details/5
@@ -35,6 +34,8 @@ namespace SII_DaysOff.Controllers
             }
 
             var reasons = await _context.Reasons
+                .Include(r => r.CreatedByNavigation)
+                .Include(r => r.ModifiedByNavigation)
                 .FirstOrDefaultAsync(m => m.ReasonId == id);
             if (reasons == null)
             {
@@ -47,6 +48,8 @@ namespace SII_DaysOff.Controllers
         // GET: Reasons/Create
         public IActionResult Create()
         {
+            ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id");
+            ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             return View();
         }
 
@@ -64,6 +67,8 @@ namespace SII_DaysOff.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", reasons.CreatedBy);
+            ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", reasons.ModifiedBy);
             return View(reasons);
         }
 
@@ -80,6 +85,8 @@ namespace SII_DaysOff.Controllers
             {
                 return NotFound();
             }
+            ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", reasons.CreatedBy);
+            ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", reasons.ModifiedBy);
             return View(reasons);
         }
 
@@ -115,6 +122,8 @@ namespace SII_DaysOff.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", reasons.CreatedBy);
+            ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", reasons.ModifiedBy);
             return View(reasons);
         }
 
@@ -127,6 +136,8 @@ namespace SII_DaysOff.Controllers
             }
 
             var reasons = await _context.Reasons
+                .Include(r => r.CreatedByNavigation)
+                .Include(r => r.ModifiedByNavigation)
                 .FirstOrDefaultAsync(m => m.ReasonId == id);
             if (reasons == null)
             {

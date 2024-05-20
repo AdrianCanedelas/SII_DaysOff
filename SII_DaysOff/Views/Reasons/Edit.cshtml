@@ -26,7 +26,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="CreatedBy" class="control-label"></label>
-                <input asp-for="CreatedBy" class="form-control" />
+                <select asp-for="CreatedBy" class="form-control" asp-items="ViewBag.CreatedBy"></select>
                 <span asp-validation-for="CreatedBy" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -36,7 +36,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="ModifiedBy" class="control-label"></label>
-                <input asp-for="ModifiedBy" class="form-control" />
+                <select asp-for="ModifiedBy" class="form-control" asp-items="ViewBag.ModifiedBy"></select>
                 <span asp-validation-for="ModifiedBy" class="text-danger"></span>
             </div>
             <div class="form-group">

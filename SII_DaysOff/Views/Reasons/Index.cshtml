@@ -20,16 +20,16 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreatedBy)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.CreationDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ModifiedBy)
+                @Html.DisplayNameFor(model => model.ModificationDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ModificationDate)
+                @Html.DisplayNameFor(model => model.CreatedByNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedByNavigation)
             </th>
             <th></th>
         </tr>
@@ -44,16 +44,16 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreatedBy)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.CreationDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ModifiedBy)
+                @Html.DisplayFor(modelItem => item.ModificationDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ModificationDate)
+                @Html.DisplayFor(modelItem => item.CreatedByNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedByNavigation.Id)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ReasonId">Edit</a> |

@@ -5,7 +5,7 @@ namespace SII_DaysOff.Models
 {
     public partial class AspNetUserTokens
     {
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public string LoginProvider { get; set; } = null!;
         public string Name { get; set; } = null!;
         public string? Value { get; set; }

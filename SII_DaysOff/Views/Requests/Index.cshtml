@@ -35,19 +35,22 @@
                 @Html.DisplayNameFor(model => model.Comments)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreatedBy)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.CreationDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifiedBy)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ModificationDate)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.CreatedByNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedByNavigation)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Reason)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Request)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
@@ -80,19 +83,22 @@
                 @Html.DisplayFor(modelItem => item.Comments)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreatedBy)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.CreationDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedBy)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ModificationDate)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.CreatedByNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedByNavigation.Id)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Reason.ReasonId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Request.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status.StatusId)
