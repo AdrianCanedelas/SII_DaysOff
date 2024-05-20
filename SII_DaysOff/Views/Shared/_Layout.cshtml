@@ -7,8 +7,10 @@
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/SII_DaysOff.styles.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" />
 
 	<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="~/js/site.js"></script>
 </head>
 <body>
 	@if (!ViewData["notShow"].Equals(true) || ViewData["notShow"] == null)
@@ -16,9 +18,15 @@
 		<header>
 			<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 navbar-custom">
 				<div class="container-fluid">
-					<img src="~/img/siigroup-spain-whiteline.png" class="navBar mx-4" />
-					<a id="manage" class="nav-link text-light title" asp-controller="Home" asp-action="Main">SII DaysOff</a>
-					<partial name="_LoginPartial" />
+					<div class="col-3">
+						<img src="~/img/siigroup-spain-whiteline.png" class="navBar mx-4" />
+					</div>
+					<div class="col-6 d-flex justify-content-center">
+						<a id="manage" class="nav-link text-light title" asp-controller="Home" asp-action="Main">SII DaysOff</a>
+					</div>
+					<div class="col-3 d-flex justify-content-center">
+						<partial name="_LoginPartial" />
+					</div>
 				</div>
 			</nav>
 		</header>

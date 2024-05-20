@@ -23,7 +23,14 @@ namespace SII_DaysOff.Controllers
         {
 			Console.WriteLine("pruebaIndex");
 			var dbContextBD = _context.Requests.Include(r => r.IdAdminNavigation).Include(r => r.IdReasonNavigation).Include(r => r.IdUserNavigation);
-            return View("../Home/Main", await dbContextBD.ToListAsync());
+            return View(await dbContextBD.ToListAsync());
+        }
+        
+        public async Task<IActionResult> ManageIndex()
+        {
+			Console.WriteLine("pruebaIndex");
+			var dbContextBD = _context.Requests.Include(r => r.IdAdminNavigation).Include(r => r.IdReasonNavigation).Include(r => r.IdUserNavigation).Where(r => r.Status.Equals("Pending"));
+            return View(await dbContextBD.ToListAsync());
         }
 
         // GET: Requests/Details/5
@@ -50,6 +57,7 @@ namespace SII_DaysOff.Controllers
         // GET: Requests/Create
         public IActionResult Create()
         {
+            Console.WriteLine("create request");
             ViewData["IdAdmin"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             ViewData["IdReason"] = new SelectList(_context.Reasons, "IdReason", "IdReason");
             ViewData["IdUser"] = new SelectList(_context.AspNetUsers, "Id", "Id");
@@ -73,7 +81,7 @@ namespace SII_DaysOff.Controllers
             ViewData["IdAdmin"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.IdAdmin);
             ViewData["IdReason"] = new SelectList(_context.Reasons, "IdReason", "IdReason", requests.IdReason);
             ViewData["IdUser"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.IdUser);
-            return View(requests);
+            return View("Main", requests);
         }
 
         // GET: Requests/Edit/5
@@ -102,6 +110,7 @@ namespace SII_DaysOff.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdRequest,IdUser,IdAdmin,IdReason,RequestDate,StartDate,EndDate,TotalDays,HalfDayStart,HalfDayEnd,Status")] Requests requests)
         {
+            Console.WriteLine("edit");
             if (id != requests.IdRequest)
             {
                 return NotFound();
@@ -131,6 +140,74 @@ namespace SII_DaysOff.Controllers
             ViewData["IdReason"] = new SelectList(_context.Reasons, "IdReason", "IdReason", requests.IdReason);
             ViewData["IdUser"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.IdUser);
             return View(requests);
+        }
+        
+        // GET: Requests/Edit/5
+        public async Task<IActionResult> Manage(int? id)
+        {
+			Console.WriteLine("pruebaManageGet");
+			if (id == null || _context.Requests == null)
+            {
+                return NotFound();
+            }
+			Console.WriteLine("pruebaManageGet2");
+
+			var requests = await _context.Requests.FindAsync(id);
+			Console.WriteLine("pruebaManageGet3");
+			if (requests == null)
+            {
+                return NotFound();
+            }
+			Console.WriteLine("pruebaManageGet4");
+			ViewData["IdAdmin"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.IdAdmin);
+            ViewData["IdReason"] = new SelectList(_context.Reasons, "IdReason", "IdReason", requests.IdReason);
+            ViewData["IdUser"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.IdUser);
+			Console.WriteLine("pruebaManageGet5");
+			return View("Edit");
+        }
+
+        // POST: Requests/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Manage(int id, [Bind("IdRequest,IdUser,IdAdmin,IdReason,RequestDate,StartDate,EndDate,TotalDays,HalfDayStart,HalfDayEnd,Status")] Requests requests, string option)
+        {
+            Console.WriteLine("pruebaManage");
+            if (id != requests.IdRequest)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Console.WriteLine("option -> " + option);
+                    requests.Status = option;
+                    _context.Update(requests);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!RequestsExists(requests.IdRequest))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(ManageIndex));
+            }
+            ViewData["IdAdmin"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.IdAdmin);
+            ViewData["IdReason"] = new SelectList(_context.Reasons, "IdReason", "IdReason", requests.IdReason);
+            ViewData["IdUser"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.IdUser);
+
+			Console.WriteLine("pruebaManage2");
+
+			return View("/Requests/ManageIndex", requests);
         }
 
         // GET: Requests/Delete/5

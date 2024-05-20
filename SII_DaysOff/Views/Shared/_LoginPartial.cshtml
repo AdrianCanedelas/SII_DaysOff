@@ -2,8 +2,7 @@
 @using SII_DaysOff.Areas.Identity.Data
 
 @{
-    ViewData["Title"] = "Change password";
-    ViewData["ActivePage"] = SII_DaysOff.Areas.Identity.Pages.Account.Manage.ManageNavPages.ChangePassword;
+	ViewData["Title"] = "Change password";
 }
 
 @inject SignInManager<ApplicationUser> SignInManager
@@ -11,66 +10,73 @@
 
 
 <style>
-    .submenu {
-        display: none;
-        position:absolute;
-        z-index: 9999;
-    }
+	.submenu {
+		display: none;
+		position: absolute;
+		z-index: 9999;
+	}
 
-    #manage:hover {
-        text-shadow: 2px 2px 4px white;
-    }
+	#manage:hover {
+		text-shadow: 2px 2px 4px white;
+	}
 
-    li:hover .submenu {
-        display: block;
-    }
+	li:hover .submenu {
+		display: block;
+	}
 
 </style>
 
+
+
 <ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-        <li class="nav-item">
-            <!--<a class="nav-link text-light mx-5" id="register" asp-area="Identity" asp-page="~/Home/PendingRequests">Awaiting requests</a>-->
-        </li>
-    <li class="nav-item">
-            <a id="manage" class="nav-link text-light mx-5">@UserManager.GetUserName(User)!</a>
-            <div class="submenu bg-light shadow-lg px-4 py-1 rounded-3">
-                <div class="row my-2">
-                    <!-- data-bs-toggle="modal" data-bs-target="#passModal" -->
-                    <a class="btn btn-outline-primary fw-bold" asp-area="Identity" asp-page="/Account/Manage/ChangePassword">Change password</a>
-                </div>
-                @{
-                    var user = await UserManager.GetUserAsync(User);
-                }
-                @if (user.Profile.Equals("Admin"))
-                {
-                    <div class="row my-2">
-                        <a class="btn btn-outline-primary fw-bold" asp-area="Identity" asp-page="/Account/Register">Register new user</a>
-                    </div>
-                    <div class="row my-2">
-                        <a class="btn btn-outline-primary fw-bold" asp-controller="Reasons" asp-action="Create">Register new reason</a>
-                    </div>
-                }
-                <div class="row my-2 mx-4">
-                     <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                        <button class="btn btn-outline-primary fw-bold" >Logout</button>
-                    </form>
-                </div>
-            </div>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-            <a class="nav-link text-light" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-            <a class="nav-link text-light" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
-}
+	@if (SignInManager.IsSignedIn(User))
+	{
+		<li class="nav-item">
+			<!--<a class="nav-link text-light mx-5" id="register" asp-area="Identity" asp-page="~/Home/PendingRequests">Awaiting requests</a>-->
+		</li>
+		<li class="nav-item">
+			<a id="manage" class="nav-link text-light mx-5">@UserManager.GetUserName(User)!</a>
+			<div class="submenu bg-light shadow-lg px-4 py-1 rounded-3">
+				<div class="row my-2">
+					<!-- data-bs-toggle="modal" data-bs-target="#passModal" -->
+					<a class="btn btn-outline-primary fw-bold" data-bs-toggle="modal" data-bs-target="#passModal">Change password</a>
+				</div>
+				@{
+					var user = await UserManager.GetUserAsync(User);
+				}
+				@if (user.Profile.Equals("Admin"))
+				{
+					<div class="row my-2">
+						<!--
+							 asp-area="Identity" asp-page="/Account/Register"
+							 data-bs-toggle="modal" data-bs-target="#registerModal"
+						-->
+						<a class="btn btn-outline-primary fw-bold" data-bs-toggle="modal" data-bs-target="#registerModal">Register new user</a>
+					</div>
+					<div class="row my-2">
+						<!-- asp-controller="Reasons" asp-action="Create" -->
+						<a class="btn btn-outline-primary fw-bold" data-bs-toggle="modal" data-bs-target="#reasonModal">Register new reason</a>
+					</div>
+				}
+				<div class="row my-2 mx-4">
+					<form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+						<button class="btn btn-outline-primary fw-bold">Logout</button>
+					</form>
+				</div>
+			</div>
+		</li>
+	}
+	else
+	{
+		<li class="nav-item">
+			<a class="nav-link text-light" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link text-light" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+		</li>
+	}
 </ul>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+	<partial name="_ValidationScriptsPartial" />
 }

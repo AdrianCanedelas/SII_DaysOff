@@ -10,25 +10,33 @@ namespace SII_DaysOff.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+		private readonly DbContextBD _context;
 
-        public HomeController(ILogger<HomeController> logger)
+		/*public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-        }
+        }*/
+
+        public HomeController (DbContextBD context)
+        {
+			_context = context;
+		}
 
         public IActionResult Index()
         {
             ViewData["notShow"] = false;
             return View();
         }
+        
+        public IActionResult Main(string optionStatus)
+        {
+            Console.WriteLine("optionStatus -> " + optionStatus);
+            ViewData["notShow"] = false;
+            var requests = _context.Requests.ToList().Where(r => r.Status.Equals(optionStatus));
+            return View(requests);
+        }
 
         public IActionResult Privacy()
-        {
-            ViewData["notShow"] = false;
-            return View();
-        }
-        
-        public IActionResult Main()
         {
             ViewData["notShow"] = false;
             return View();

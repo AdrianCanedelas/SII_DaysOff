@@ -10,7 +10,6 @@
 }
 
 <link href="~/css/Login.css" rel="stylesheet" />
-<link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" />
 
 <div class="container my-5">
     <div class="row my-3">
@@ -49,7 +48,8 @@
                         </div>
                     </div>-->
                     <div>
-                        <button id="" type="submit" class="w-100 btn btn-lg btn-outline-primary my-3" data-bs-toggle="modal" data-bs-target="#exampleModal" asp-area="" asp-controller="Requests" asp-action="Index">
+                        <button id="" type="submit" class="w-100 btn btn-lg btn-outline-primary my-3" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                asp-controller="Home" asp-action="Main" value="Pending" name="optionStatus">
                             <i class="bi bi-box-arrow-in-right"></i> Log in
                         </button>
                     </div>
