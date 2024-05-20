@@ -8,11 +8,19 @@ using NuGet.Packaging.Signing;
 namespace SII_DaysOff.Areas.Identity.Data;
 
 // Add profile data for application users by adding properties to the ApplicationUser class
-public class ApplicationUser : IdentityUser<int>
+public class ApplicationUser : IdentityUser<Guid>
 {
-    public string Profile {  get; set; }
-    public int AvailableDays { get; set; }
-    public int AcquiredDays { get; set; }
-    public int RemainingDays { get; set; }
+    public string Name { get; set; }
+    public string Surname { get; set; }
+    public DateTime RegisterDate { get; set; }
+    public bool IsActive { get; set; }
+    public Guid CreatedBy { get; set; }
+    public ApplicationUser? CreatedByUser { get; set; }
+    public DateTime CreationDate { get; set; }
+    public Guid ModifiedBy { get; set; }
+    public ApplicationUser? ModifiedByUser { get; set; }
+    public DateTime ModificationDate { get; set; }
+    public Guid Manager { get; set; }
+    public ApplicationUser? ManagerUser { get; set; }
 }
 

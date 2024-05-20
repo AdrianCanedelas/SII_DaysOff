@@ -21,20 +21,12 @@ namespace SII_DaysOff.Controllers
         // GET: Requests
         public async Task<IActionResult> Index()
         {
-			Console.WriteLine("pruebaIndex");
-			var dbContextBD = _context.Requests.Include(r => r.IdAdminNavigation).Include(r => r.IdReasonNavigation).Include(r => r.IdUserNavigation);
-            return View(await dbContextBD.ToListAsync());
-        }
-        
-        public async Task<IActionResult> ManageIndex()
-        {
-			Console.WriteLine("pruebaIndex");
-			var dbContextBD = _context.Requests.Include(r => r.IdAdminNavigation).Include(r => r.IdReasonNavigation).Include(r => r.IdUserNavigation).Where(r => r.Status.Equals("Pending"));
+            var dbContextBD = _context.Requests.Include(r => r.Reason).Include(r => r.Status);
             return View(await dbContextBD.ToListAsync());
         }
 
         // GET: Requests/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.Requests == null)
             {
@@ -42,10 +34,9 @@ namespace SII_DaysOff.Controllers
             }
 
             var requests = await _context.Requests
-                .Include(r => r.IdAdminNavigation)
-                .Include(r => r.IdReasonNavigation)
-                .Include(r => r.IdUserNavigation)
-                .FirstOrDefaultAsync(m => m.IdRequest == id);
+                .Include(r => r.Reason)
+                .Include(r => r.Status)
+                .FirstOrDefaultAsync(m => m.RequestId == id);
             if (requests == null)
             {
                 return NotFound();
@@ -57,10 +48,8 @@ namespace SII_DaysOff.Controllers
         // GET: Requests/Create
         public IActionResult Create()
         {
-            Console.WriteLine("create request");
-            ViewData["IdAdmin"] = new SelectList(_context.AspNetUsers, "Id", "Id");
-            ViewData["IdReason"] = new SelectList(_context.Reasons, "IdReason", "IdReason");
-            ViewData["IdUser"] = new SelectList(_context.AspNetUsers, "Id", "Id");
+            ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "ReasonId");
+            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId");
             return View();
         }
 
@@ -69,23 +58,22 @@ namespace SII_DaysOff.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdRequest,IdUser,IdAdmin,IdReason,RequestDate,StartDate,EndDate,TotalDays,HalfDayStart,HalfDayEnd,Status")] Requests requests)
+        public async Task<IActionResult> Create([Bind("RequestId,UserId,ReasonId,StatusId,RequestDate,StartDate,EndDate,HalfDayStart,HalfDayEnd,Comments,CreatedBy,CreationDate,ModifiedBy,ModificationDate")] Requests requests)
         {
-            Console.WriteLine("pruebaCreate");
-			if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
+                requests.RequestId = Guid.NewGuid();
                 _context.Add(requests);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdAdmin"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.IdAdmin);
-            ViewData["IdReason"] = new SelectList(_context.Reasons, "IdReason", "IdReason", requests.IdReason);
-            ViewData["IdUser"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.IdUser);
-            return View("Main", requests);
+            ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "ReasonId", requests.ReasonId);
+            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", requests.StatusId);
+            return View(requests);
         }
 
         // GET: Requests/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null || _context.Requests == null)
             {
@@ -97,9 +85,8 @@ namespace SII_DaysOff.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdAdmin"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.IdAdmin);
-            ViewData["IdReason"] = new SelectList(_context.Reasons, "IdReason", "IdReason", requests.IdReason);
-            ViewData["IdUser"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.IdUser);
+            ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "ReasonId", requests.ReasonId);
+            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", requests.StatusId);
             return View(requests);
         }
 
@@ -108,10 +95,9 @@ namespace SII_DaysOff.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdRequest,IdUser,IdAdmin,IdReason,RequestDate,StartDate,EndDate,TotalDays,HalfDayStart,HalfDayEnd,Status")] Requests requests)
+        public async Task<IActionResult> Edit(Guid id, [Bind("RequestId,UserId,ReasonId,StatusId,RequestDate,StartDate,EndDate,HalfDayStart,HalfDayEnd,Comments,CreatedBy,CreationDate,ModifiedBy,ModificationDate")] Requests requests)
         {
-            Console.WriteLine("edit");
-            if (id != requests.IdRequest)
+            if (id != requests.RequestId)
             {
                 return NotFound();
             }
@@ -125,7 +111,7 @@ namespace SII_DaysOff.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RequestsExists(requests.IdRequest))
+                    if (!RequestsExists(requests.RequestId))
                     {
                         return NotFound();
                     }
@@ -136,82 +122,13 @@ namespace SII_DaysOff.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdAdmin"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.IdAdmin);
-            ViewData["IdReason"] = new SelectList(_context.Reasons, "IdReason", "IdReason", requests.IdReason);
-            ViewData["IdUser"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.IdUser);
+            ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "ReasonId", requests.ReasonId);
+            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", requests.StatusId);
             return View(requests);
-        }
-        
-        // GET: Requests/Edit/5
-        public async Task<IActionResult> Manage(int? id)
-        {
-			Console.WriteLine("pruebaManageGet");
-			if (id == null || _context.Requests == null)
-            {
-                return NotFound();
-            }
-			Console.WriteLine("pruebaManageGet2");
-
-			var requests = await _context.Requests.FindAsync(id);
-			Console.WriteLine("pruebaManageGet3");
-			if (requests == null)
-            {
-                return NotFound();
-            }
-			Console.WriteLine("pruebaManageGet4");
-			ViewData["IdAdmin"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.IdAdmin);
-            ViewData["IdReason"] = new SelectList(_context.Reasons, "IdReason", "IdReason", requests.IdReason);
-            ViewData["IdUser"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.IdUser);
-			Console.WriteLine("pruebaManageGet5");
-			return View("Edit");
-        }
-
-        // POST: Requests/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Manage(int id, [Bind("IdRequest,IdUser,IdAdmin,IdReason,RequestDate,StartDate,EndDate,TotalDays,HalfDayStart,HalfDayEnd,Status")] Requests requests, string option)
-        {
-            Console.WriteLine("pruebaManage");
-            if (id != requests.IdRequest)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    Console.WriteLine("option -> " + option);
-                    requests.Status = option;
-                    _context.Update(requests);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!RequestsExists(requests.IdRequest))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(ManageIndex));
-            }
-            ViewData["IdAdmin"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.IdAdmin);
-            ViewData["IdReason"] = new SelectList(_context.Reasons, "IdReason", "IdReason", requests.IdReason);
-            ViewData["IdUser"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.IdUser);
-
-			Console.WriteLine("pruebaManage2");
-
-			return View("/Requests/ManageIndex", requests);
         }
 
         // GET: Requests/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null || _context.Requests == null)
             {
@@ -219,10 +136,9 @@ namespace SII_DaysOff.Controllers
             }
 
             var requests = await _context.Requests
-                .Include(r => r.IdAdminNavigation)
-                .Include(r => r.IdReasonNavigation)
-                .Include(r => r.IdUserNavigation)
-                .FirstOrDefaultAsync(m => m.IdRequest == id);
+                .Include(r => r.Reason)
+                .Include(r => r.Status)
+                .FirstOrDefaultAsync(m => m.RequestId == id);
             if (requests == null)
             {
                 return NotFound();
@@ -234,7 +150,7 @@ namespace SII_DaysOff.Controllers
         // POST: Requests/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             if (_context.Requests == null)
             {
@@ -250,9 +166,9 @@ namespace SII_DaysOff.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RequestsExists(int id)
+        private bool RequestsExists(Guid id)
         {
-          return (_context.Requests?.Any(e => e.IdRequest == id)).GetValueOrDefault();
+          return (_context.Requests?.Any(e => e.RequestId == id)).GetValueOrDefault();
         }
     }
 }

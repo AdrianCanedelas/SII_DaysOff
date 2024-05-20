@@ -27,7 +27,7 @@ namespace SII_DaysOff.Controllers
         }
 
         // GET: Reasons/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.Reasons == null)
             {
@@ -35,7 +35,7 @@ namespace SII_DaysOff.Controllers
             }
 
             var reasons = await _context.Reasons
-                .FirstOrDefaultAsync(m => m.IdReason == id);
+                .FirstOrDefaultAsync(m => m.ReasonId == id);
             if (reasons == null)
             {
                 return NotFound();
@@ -47,8 +47,7 @@ namespace SII_DaysOff.Controllers
         // GET: Reasons/Create
         public IActionResult Create()
         {
-			Console.WriteLine("creado reason1");
-			return View();
+            return View();
         }
 
         // POST: Reasons/Create
@@ -56,11 +55,11 @@ namespace SII_DaysOff.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdReason,ReasonName,DaysAssigned")] Reasons reasons)
+        public async Task<IActionResult> Create([Bind("ReasonId,Name,Description,CreatedBy,CreationDate,ModifiedBy,ModificationDate")] Reasons reasons)
         {
-            Console.WriteLine("creado reason2");
             if (ModelState.IsValid)
             {
+                reasons.ReasonId = Guid.NewGuid();
                 _context.Add(reasons);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -69,7 +68,7 @@ namespace SII_DaysOff.Controllers
         }
 
         // GET: Reasons/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null || _context.Reasons == null)
             {
@@ -89,9 +88,9 @@ namespace SII_DaysOff.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdReason,ReasonName,DaysAssigned")] Reasons reasons)
+        public async Task<IActionResult> Edit(Guid id, [Bind("ReasonId,Name,Description,CreatedBy,CreationDate,ModifiedBy,ModificationDate")] Reasons reasons)
         {
-            if (id != reasons.IdReason)
+            if (id != reasons.ReasonId)
             {
                 return NotFound();
             }
@@ -105,7 +104,7 @@ namespace SII_DaysOff.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ReasonsExists(reasons.IdReason))
+                    if (!ReasonsExists(reasons.ReasonId))
                     {
                         return NotFound();
                     }
@@ -120,7 +119,7 @@ namespace SII_DaysOff.Controllers
         }
 
         // GET: Reasons/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null || _context.Reasons == null)
             {
@@ -128,7 +127,7 @@ namespace SII_DaysOff.Controllers
             }
 
             var reasons = await _context.Reasons
-                .FirstOrDefaultAsync(m => m.IdReason == id);
+                .FirstOrDefaultAsync(m => m.ReasonId == id);
             if (reasons == null)
             {
                 return NotFound();
@@ -140,7 +139,7 @@ namespace SII_DaysOff.Controllers
         // POST: Reasons/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             if (_context.Reasons == null)
             {
@@ -156,9 +155,9 @@ namespace SII_DaysOff.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ReasonsExists(int id)
+        private bool ReasonsExists(Guid id)
         {
-          return (_context.Reasons?.Any(e => e.IdReason == id)).GetValueOrDefault();
+          return (_context.Reasons?.Any(e => e.ReasonId == id)).GetValueOrDefault();
         }
     }
 }

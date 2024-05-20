@@ -1,9 +1,8 @@
 ﻿@model IEnumerable<SII_DaysOff.Models.Requests>
 
 @{
-    ViewData["notShow"] = false;
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Components/ModalChangePassword.cshtml";
 }
 
 <h1>Index</h1>
@@ -15,6 +14,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.RequestDate)
             </th>
             <th>
@@ -24,71 +26,83 @@
                 @Html.DisplayNameFor(model => model.EndDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TotalDays)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.HalfDayStart)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.HalfDayEnd)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Comments)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModificationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reason)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdAdminNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdReasonNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdUserNavigation)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@if(Model != null){
-            foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RequestDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StartDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EndDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalDays)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.HalfDayStart)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.HalfDayEnd)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IdAdminNavigation.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IdReasonNavigation.IdReason)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IdUserNavigation.Id)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.IdRequest">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.IdRequest">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.IdRequest">Delete</a>
-                    </td>
-                </tr>
-            }
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HalfDayStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HalfDayEnd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModificationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reason.ReasonId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status.StatusId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.RequestId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.RequestId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.RequestId">Delete</a>
+            </td>
+        </tr>
 }
     </tbody>
 </table>

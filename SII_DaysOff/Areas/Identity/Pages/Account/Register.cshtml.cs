@@ -132,10 +132,10 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                user.Profile = Input.Profile;
+                /*user.Profile = Input.Profile;
                 user.AvailableDays = int.Parse(Input.AvailableDays);
                 user.AcquiredDays = int.Parse(Input.AcquiredDays);
-                user.RemainingDays = int.Parse(Input.RemainingDays);
+                user.RemainingDays = int.Parse(Input.RemainingDays);*/
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

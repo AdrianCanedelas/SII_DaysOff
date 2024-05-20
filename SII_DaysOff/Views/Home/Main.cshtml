@@ -77,11 +77,7 @@
 				@{
 					var user = await UserManager.GetUserAsync(User);
 				}
-				@if (user.Profile.Equals("Admin"))
-				{
-					<a class="btn btn-outline-primary fw-bold mx-2" asp-area="" asp-controller="Requests" asp-action="ManageIndex">Manage request</a>
-
-				}
+				<a class="btn btn-outline-primary fw-bold mx-2" asp-area="" asp-controller="Requests" asp-action="ManageIndex">Manage request</a>
 				<a class="btn btn-outline-primary fw-bold mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal">New request</a>
 				<!--<a class="btn btn-outline-primary fw-bold" asp-area="" asp-controller="Requests" asp-action="Index">View requests</a>-->
 			</div>
@@ -169,7 +165,6 @@
 							<li class="list-group-item">
 								<div class="row text-center">
 									<div class="col">
-										@Html.DisplayFor(model => item.IdReason)
 									</div>
 									<div class="col">
 										@Html.DisplayFor(model => item.StartDate)
@@ -184,7 +179,6 @@
 										@Html.DisplayFor(model => item.HalfDayEnd)
 									</div>
 									<div class="col">
-										@Html.DisplayFor(model => item.TotalDays)
 									</div>
 									<div class="col">
 										@Html.DisplayFor(model => item.RequestDate)
