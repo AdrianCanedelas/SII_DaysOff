@@ -77,20 +77,26 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
             /// </summary>
 
             [Required]
-            [Display(Name = "Profile")]
-            public string Profile { get; set; }
+            [Display(Name = "Role")]
+            public Guid Role { get; set; }
             
             [Required]
-            [Display(Name = "AvailableDays")]
-            public string AvailableDays { get; set; }
+            [StringLength(100)]
+            [Display(Name = "Name")]
+            public string Name { get; set; }
             
             [Required]
-            [Display(Name = "AcquiredDays")]
-            public string AcquiredDays { get; set; }
+            [StringLength(100)]
+            [Display(Name = "Surname")]
+            public string Surname { get; set; }
             
             [Required]
-            [Display(Name = "RemainingDays")]
-            public string RemainingDays { get; set; }
+            [Display(Name = "IsActive")]
+            public bool IsActive { get; set; }
+            
+            [Required]
+            [Display(Name = "Manager")]
+            public Guid Manager { get; set; }
 
             [Required]
             [EmailAddress]
@@ -136,6 +142,12 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
                 user.AvailableDays = int.Parse(Input.AvailableDays);
                 user.AcquiredDays = int.Parse(Input.AcquiredDays);
                 user.RemainingDays = int.Parse(Input.RemainingDays);*/
+
+                //user.RoleID = Input.Role;
+                user.Name = Input.Name;
+                user.Surname = Input.Surname;
+                user.IsActive = Input.IsActive;
+                user.Manager = Input.Manager;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

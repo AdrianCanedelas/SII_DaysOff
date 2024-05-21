@@ -35,6 +35,13 @@ namespace SII_DaysOff.Controllers
             var requests = _context.Requests.ToList().Where(r => r.Status.Equals(optionStatus));
             return View(requests);
         }
+        
+        public IActionResult Reasons()
+        {
+            ViewData["notShow"] = false;
+            var reasons = _context.Reasons.ToList();
+            return View(reasons);
+        }
 
         public IActionResult Privacy()
         {

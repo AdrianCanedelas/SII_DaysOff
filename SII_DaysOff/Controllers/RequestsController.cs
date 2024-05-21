@@ -21,7 +21,14 @@ namespace SII_DaysOff.Controllers
         // GET: Requests
         public async Task<IActionResult> Index()
         {
-            var dbContextBD = _context.Requests.Include(r => r.CreatedByNavigation).Include(r => r.ModifiedByNavigation).Include(r => r.Reason).Include(r => r.Request).Include(r => r.Status);
+            var dbContextBD = _context.Requests.Include(r => r.CreatedByNavigation).Include(r => r.ModifiedByNavigation).Include(r => r.Reason).Include(r => r.Status).Include(r => r.User);
+            return View(await dbContextBD.ToListAsync());
+        }
+
+        public async Task<IActionResult> ManageIndex()
+        {
+            Console.WriteLine("pruebaIndex");
+            var dbContextBD = _context.Requests;
             return View(await dbContextBD.ToListAsync());
         }
 
@@ -37,8 +44,8 @@ namespace SII_DaysOff.Controllers
                 .Include(r => r.CreatedByNavigation)
                 .Include(r => r.ModifiedByNavigation)
                 .Include(r => r.Reason)
-                .Include(r => r.Request)
                 .Include(r => r.Status)
+                .Include(r => r.User)
                 .FirstOrDefaultAsync(m => m.RequestId == id);
             if (requests == null)
             {
@@ -54,8 +61,8 @@ namespace SII_DaysOff.Controllers
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "ReasonId");
-            ViewData["RequestId"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId");
+            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             return View();
         }
 
@@ -76,9 +83,9 @@ namespace SII_DaysOff.Controllers
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.CreatedBy);
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.ModifiedBy);
             ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "ReasonId", requests.ReasonId);
-            ViewData["RequestId"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.RequestId);
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", requests.StatusId);
-            return View(requests);
+            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.UserId);
+            return View("Main", requests);
         }
 
         // GET: Requests/Edit/5
@@ -97,8 +104,8 @@ namespace SII_DaysOff.Controllers
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.CreatedBy);
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.ModifiedBy);
             ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "ReasonId", requests.ReasonId);
-            ViewData["RequestId"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.RequestId);
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", requests.StatusId);
+            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.UserId);
             return View(requests);
         }
 
@@ -137,8 +144,72 @@ namespace SII_DaysOff.Controllers
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.CreatedBy);
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.ModifiedBy);
             ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "ReasonId", requests.ReasonId);
-            ViewData["RequestId"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.RequestId);
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", requests.StatusId);
+            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.UserId);
+            return View(requests);
+        }
+
+        // GET: Requests/Edit/5
+        public async Task<IActionResult> Manage(int? id)
+        {
+            if (id == null || _context.Requests == null)
+            {
+                return NotFound();
+            }
+
+            var requests = await _context.Requests.FindAsync(id);
+            if (requests == null)
+            {
+                return NotFound();
+            }
+            ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.CreatedBy);
+            ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.ModifiedBy);
+            ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "ReasonId", requests.ReasonId);
+            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", requests.StatusId);
+            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.UserId);
+            return View(requests);
+        }
+
+        // POST: Requests/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Manage(Guid id, [Bind("IdRequest,IdUser,IdAdmin,IdReason,RequestDate,StartDate,EndDate,TotalDays,HalfDayStart,HalfDayEnd,Status")] Requests requests, string option)
+        {
+            if (id != requests.RequestId)
+            {
+                Console.WriteLine("1");
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                Console.WriteLine("2");
+                try
+                {
+                    _context.Update(requests);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!RequestsExists(requests.RequestId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            Console.WriteLine("3");
+            ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.CreatedBy);
+            ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.ModifiedBy);
+            ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "ReasonId", requests.ReasonId);
+            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", requests.StatusId);
+            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.UserId);
             return View(requests);
         }
 
@@ -154,8 +225,8 @@ namespace SII_DaysOff.Controllers
                 .Include(r => r.CreatedByNavigation)
                 .Include(r => r.ModifiedByNavigation)
                 .Include(r => r.Reason)
-                .Include(r => r.Request)
                 .Include(r => r.Status)
+                .Include(r => r.User)
                 .FirstOrDefaultAsync(m => m.RequestId == id);
             if (requests == null)
             {

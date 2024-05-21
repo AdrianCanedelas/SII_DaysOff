@@ -14,30 +14,35 @@
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
+                <input asp-for="Input.Role" class="form-control" autocomplete="role" aria-required="true" />
+                <label asp-for="Input.Role"></label>
+                <span asp-validation-for="Input.Role" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
                 <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
                 <label asp-for="Input.Email"></label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <input asp-for="Input.Profile" class="form-control" autocomplete="profiule" aria-required="true" />
-                <label asp-for="Input.Profile"></label>
-                <span asp-validation-for="Input.Profile" class="text-danger"></span>
+                <input asp-for="Input.Name" class="form-control" autocomplete="name" aria-required="true" />
+                <label asp-for="Input.Name"></label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <input asp-for="Input.AvailableDays" class="form-control" autocomplete="availabledays" aria-required="true" />
-                <label asp-for="Input.AvailableDays"></label>
-                <span asp-validation-for="Input.AvailableDays" class="text-danger"></span>
+                <input asp-for="Input.Surname" class="form-control" autocomplete="surname" aria-required="true" />
+                <label asp-for="Input.Surname"></label>
+                <span asp-validation-for="Input.Surname" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <input asp-for="Input.AcquiredDays" class="form-control" autocomplete="acquireddays" aria-required="true" />
-                <label asp-for="Input.AcquiredDays"></label>
-                <span asp-validation-for="Input.AcquiredDays" class="text-danger"></span>
+                <input asp-for="Input.IsActive" class="form-control" autocomplete="isactive" aria-required="true" />
+                <label asp-for="Input.IsActive"></label>
+                <span asp-validation-for="Input.IsActive" class="text-danger"></span>
             </div>
-            <div class="form-floating">
-                <input asp-for="Input.RemainingDays" class="form-control" autocomplete="remainingdays" aria-required="true" />
-                <label asp-for="Input.RemainingDays"></label>
-                <span asp-validation-for="Input.RemainingDays" class="text-danger"></span>
-            </div>
+            <!--<div class="form-floating">
+                <input asp-for="Input.Manager" class="form-control" autocomplete="manager" aria-required="true" />
+                <label asp-for="Input.Manager"></label>
+                <span asp-validation-for="Input.Manager" class="text-danger"></span>
+            </div>-->
             <div class="form-floating">
                 <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
                 <label asp-for="Input.Password"></label>

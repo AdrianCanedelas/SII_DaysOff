@@ -123,30 +123,28 @@ namespace SII_DaysOff.Models
 
                 entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
 
+                entity.Property(e => e.RoleId).HasColumnName("RoleID");
+
                 entity.Property(e => e.Surname).HasMaxLength(100);
 
                 entity.Property(e => e.UserName).HasMaxLength(256);
 
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.InverseCreatedByNavigation)
-                    .HasForeignKey(d => d.CreatedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .HasForeignKey(d => d.CreatedBy);
 
                 entity.HasOne(d => d.ManagerNavigation)
                     .WithMany(p => p.InverseManagerNavigation)
-                    .HasForeignKey(d => d.Manager)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
-
-                entity.HasOne(d => d.Manager1)
-                    .WithMany(p => p.AspNetUsers)
-                    .HasForeignKey(d => d.Manager)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_AspNetUsers_Roles");
+                    .HasForeignKey(d => d.Manager);
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.InverseModifiedByNavigation)
-                    .HasForeignKey(d => d.ModifiedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .HasForeignKey(d => d.ModifiedBy);
+
+                entity.HasOne(d => d.RoleNavigation)
+                    .WithMany(p => p.AspNetUsers)
+                    .HasForeignKey(d => d.RoleId)
+                    .HasConstraintName("FK_AspNetUsers_Roles");
 
                 entity.HasMany(d => d.Role)
                     .WithMany(p => p.User)
@@ -243,17 +241,17 @@ namespace SII_DaysOff.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Requests_Reasons");
 
-                entity.HasOne(d => d.Request)
-                    .WithOne(p => p.RequestsRequest)
-                    .HasForeignKey<Requests>(d => d.RequestId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Requests_AspNetUsers");
-
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.Requests)
                     .HasForeignKey(d => d.StatusId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Requests_Statuses");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.RequestsUser)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Requests_AspNetUsers");
             });
 
             modelBuilder.Entity<Roles>(entity =>
@@ -275,13 +273,11 @@ namespace SII_DaysOff.Models
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.RolesCreatedByNavigation)
                     .HasForeignKey(d => d.CreatedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Roles_AspNetUsers");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.RolesModifiedByNavigation)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Roles_AspNetUsers1");
             });
 
@@ -293,13 +289,29 @@ namespace SII_DaysOff.Models
                     .HasColumnName("StatusID")
                     .HasDefaultValueSql("(newid())");
 
+                entity.Property(e => e.CreationDate).HasColumnType("datetime");
+
                 entity.Property(e => e.Description)
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
+                entity.Property(e => e.ModificationDate).HasColumnType("datetime");
+
                 entity.Property(e => e.Name)
                     .HasMaxLength(100)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.StatusesCreatedByNavigation)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Statuses_AspNetUsers");
+
+                entity.HasOne(d => d.ModifiedByNavigation)
+                    .WithMany(p => p.StatusesModifiedByNavigation)
+                    .HasForeignKey(d => d.ModifiedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Statuses_AspNetUsers1");
             });
 
             modelBuilder.Entity<UserVacationDays>(entity =>
@@ -322,19 +334,13 @@ namespace SII_DaysOff.Models
                     .WithMany(p => p.UserVacationDaysCreatedByNavigation)
                     .HasForeignKey(d => d.CreatedBy)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserVacationDays_AspNetUsers1");
+                    .HasConstraintName("FK_UserVacationDays_AspNetUsers");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.UserVacationDaysModifiedByNavigation)
                     .HasForeignKey(d => d.ModifiedBy)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserVacationDays_AspNetUsers2");
-
-                entity.HasOne(d => d.User)
-                    .WithOne(p => p.UserVacationDaysUser)
-                    .HasForeignKey<UserVacationDays>(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserVacationDays_AspNetUsers");
+                    .HasConstraintName("FK_UserVacationDays_AspNetUsers1");
 
                 entity.HasOne(d => d.YearNavigation)
                     .WithMany(p => p.UserVacationDays)

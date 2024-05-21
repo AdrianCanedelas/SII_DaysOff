@@ -16,7 +16,6 @@ namespace SII_DaysOff.Models
 
         public virtual AspNetUsers CreatedByNavigation { get; set; } = null!;
         public virtual AspNetUsers ModifiedByNavigation { get; set; } = null!;
-        public virtual AspNetUsers User { get; set; } = null!;
         public virtual VacationDays YearNavigation { get; set; } = null!;
     }
 }

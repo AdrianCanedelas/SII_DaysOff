@@ -170,7 +170,7 @@ namespace SII_DaysOff.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("CreatedBy")
+                    b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreationDate")
@@ -192,13 +192,13 @@ namespace SII_DaysOff.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<Guid>("Manager")
+                    b.Property<Guid?>("Manager")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("ModificationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ModifiedBy")
+                    b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -315,21 +315,15 @@ namespace SII_DaysOff.Migrations
                 {
                     b.HasOne("SII_DaysOff.Areas.Identity.Data.ApplicationUser", "CreatedByUser")
                         .WithMany()
-                        .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CreatedBy");
 
                     b.HasOne("SII_DaysOff.Areas.Identity.Data.ApplicationUser", "ManagerUser")
                         .WithMany()
-                        .HasForeignKey("Manager")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Manager");
 
                     b.HasOne("SII_DaysOff.Areas.Identity.Data.ApplicationUser", "ModifiedByUser")
                         .WithMany()
-                        .HasForeignKey("ModifiedBy")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ModifiedBy");
 
                     b.Navigation("CreatedByUser");
 

@@ -17,8 +17,11 @@ namespace SII_DaysOff.Models
             ReasonsModifiedByNavigation = new HashSet<Reasons>();
             RequestsCreatedByNavigation = new HashSet<Requests>();
             RequestsModifiedByNavigation = new HashSet<Requests>();
+            RequestsUser = new HashSet<Requests>();
             RolesCreatedByNavigation = new HashSet<Roles>();
             RolesModifiedByNavigation = new HashSet<Roles>();
+            StatusesCreatedByNavigation = new HashSet<Statuses>();
+            StatusesModifiedByNavigation = new HashSet<Statuses>();
             UserVacationDaysCreatedByNavigation = new HashSet<UserVacationDays>();
             UserVacationDaysModifiedByNavigation = new HashSet<UserVacationDays>();
             VacationDaysCreatedByNavigation = new HashSet<VacationDays>();
@@ -31,11 +34,11 @@ namespace SII_DaysOff.Models
         public string Surname { get; set; } = null!;
         public DateTime RegisterDate { get; set; }
         public bool IsActive { get; set; }
-        public Guid CreatedBy { get; set; }
+        public Guid? CreatedBy { get; set; }
         public DateTime CreationDate { get; set; }
-        public Guid ModifiedBy { get; set; }
+        public Guid? ModifiedBy { get; set; }
         public DateTime ModificationDate { get; set; }
-        public Guid Manager { get; set; }
+        public Guid? Manager { get; set; }
         public string? UserName { get; set; }
         public string? NormalizedUserName { get; set; }
         public string? Email { get; set; }
@@ -50,13 +53,12 @@ namespace SII_DaysOff.Models
         public DateTimeOffset? LockoutEnd { get; set; }
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
+        public Guid? RoleId { get; set; }
 
-        public virtual AspNetUsers CreatedByNavigation { get; set; } = null!;
-        public virtual Roles Manager1 { get; set; } = null!;
-        public virtual AspNetUsers ManagerNavigation { get; set; } = null!;
-        public virtual AspNetUsers ModifiedByNavigation { get; set; } = null!;
-        public virtual Requests? RequestsRequest { get; set; }
-        public virtual UserVacationDays? UserVacationDaysUser { get; set; }
+        public virtual AspNetUsers? CreatedByNavigation { get; set; }
+        public virtual AspNetUsers? ManagerNavigation { get; set; }
+        public virtual AspNetUsers? ModifiedByNavigation { get; set; }
+        public virtual Roles? RoleNavigation { get; set; }
         public virtual ICollection<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual ICollection<AspNetUserTokens> AspNetUserTokens { get; set; }
@@ -67,8 +69,11 @@ namespace SII_DaysOff.Models
         public virtual ICollection<Reasons> ReasonsModifiedByNavigation { get; set; }
         public virtual ICollection<Requests> RequestsCreatedByNavigation { get; set; }
         public virtual ICollection<Requests> RequestsModifiedByNavigation { get; set; }
+        public virtual ICollection<Requests> RequestsUser { get; set; }
         public virtual ICollection<Roles> RolesCreatedByNavigation { get; set; }
         public virtual ICollection<Roles> RolesModifiedByNavigation { get; set; }
+        public virtual ICollection<Statuses> StatusesCreatedByNavigation { get; set; }
+        public virtual ICollection<Statuses> StatusesModifiedByNavigation { get; set; }
         public virtual ICollection<UserVacationDays> UserVacationDaysCreatedByNavigation { get; set; }
         public virtual ICollection<UserVacationDays> UserVacationDaysModifiedByNavigation { get; set; }
         public virtual ICollection<VacationDays> VacationDaysCreatedByNavigation { get; set; }
