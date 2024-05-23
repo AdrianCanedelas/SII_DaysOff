@@ -15,7 +15,7 @@ public class ApplicationUser : IdentityUser<Guid>
     /*public Guid? RoleID { get; set; }
     public Roles? RoleIDUser { get; set; }*/
     public Guid RoleId { get; set; }
-    public Roles RoleIdUser { get; set; }
+    public virtual Roles? RoleIdUser { get; set; }
     public string Name { get; set; }
     public string Surname { get; set; }
     public DateTime RegisterDate { get; set; }

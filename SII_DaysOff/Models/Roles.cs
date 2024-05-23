@@ -1,10 +1,11 @@
-﻿using SII_DaysOff.Areas.Identity.Data;
+﻿using Microsoft.AspNetCore.Identity;
+using SII_DaysOff.Areas.Identity.Data;
 using System;
 using System.Collections.Generic;
 
 namespace SII_DaysOff.Models
 {
-    public partial class Roles
+    public partial class Roles : IdentityRole<Guid>
     {
         public Roles()
         {

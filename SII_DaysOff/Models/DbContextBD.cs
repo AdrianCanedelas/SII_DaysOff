@@ -7,7 +7,7 @@ using SII_DaysOff.Areas.Identity.Data;
 
 namespace SII_DaysOff.Models
 {
-    public partial class DbContextBD : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
+    public partial class DbContextBD : IdentityDbContext<ApplicationUser, Roles, Guid>
     {
         public DbContextBD(DbContextOptions<DbContextBD> options)
         : base(options)
@@ -107,11 +107,11 @@ namespace SII_DaysOff.Models
 
                 entity.HasIndex(e => e.NormalizedEmail, "EmailIndex");
 
-                entity.HasIndex(e => e.CreatedBy, "IX_AspNetUsers_CreatedBy");
+                entity.HasIndex(e => e.CreatedBy, "IX_AspNetUsers_CreatedBy").IsUnique(false);
 
-                entity.HasIndex(e => e.Manager, "IX_AspNetUsers_Manager");
+                entity.HasIndex(e => e.Manager, "IX_AspNetUsers_Manager").IsUnique(false);
 
-                entity.HasIndex(e => e.ModifiedBy, "IX_AspNetUsers_ModifiedBy");
+                entity.HasIndex(e => e.ModifiedBy, "IX_AspNetUsers_ModifiedBy").IsUnique(false);
 
                 entity.HasIndex(e => e.NormalizedUserName, "UserNameIndex")
                     .IsUnique()
@@ -127,7 +127,7 @@ namespace SII_DaysOff.Models
 
                 entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
 
-                entity.Property(e => e.RoleId).HasColumnName("RoleID");
+                //entity.Property(e => e.RoleId).HasColumnName("RoleID");
 
                 entity.Property(e => e.Surname).HasMaxLength(100);
 
@@ -148,11 +148,11 @@ namespace SII_DaysOff.Models
                     .HasForeignKey<ApplicationUser>(u => u.ModifiedBy)
                     .OnDelete(DeleteBehavior.NoAction);
 
-                entity.HasOne(d => d.RoleIdUser)
-                    .WithMany()
-                    .HasForeignKey(d => d.RoleId)
-                    .OnDelete(DeleteBehavior.NoAction)
-                    .HasConstraintName("FK_Users_RoleId");
+                entity.HasOne(u => u.RoleIdUser)
+                .WithMany()
+                .HasForeignKey(u => u.RoleId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_Users_RoleId");
             });
 
             modelBuilder.Entity<Reasons>(entity =>
@@ -272,6 +272,12 @@ namespace SII_DaysOff.Models
                     .WithMany()
                     .HasForeignKey(d => d.ModifiedBy)
                     .HasConstraintName("FK_Roles_AspNetUsers1");
+
+                entity.HasMany(r => r.AspNetUsers)
+                .WithOne(u => u.RoleIdUser)
+                .HasForeignKey(u => u.RoleId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_Users_RoleId");
             });
 
             modelBuilder.Entity<Statuses>(entity =>

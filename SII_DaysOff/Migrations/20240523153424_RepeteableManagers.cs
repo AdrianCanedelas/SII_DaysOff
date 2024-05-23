@@ -4,7 +4,7 @@
 
 namespace SII_DaysOff.Migrations
 {
-    public partial class DuplicateRoleIdFKSOlved : Migration
+    public partial class RepeteableManagers : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -12,8 +12,8 @@ using SII_DaysOff.Models;
 namespace SII_DaysOff.Migrations
 {
     [DbContext(typeof(DbContextBD))]
-    [Migration("20240523122715_DuplicateRoleIdFKSOlved")]
-    partial class DuplicateRoleIdFKSOlved
+    [Migration("20240523150437_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -131,34 +131,6 @@ namespace SII_DaysOff.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("SII_DaysOff.Areas.Identity.Data.ApplicationRole", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
-
             modelBuilder.Entity("SII_DaysOff.Areas.Identity.Data.ApplicationUser", b =>
                 {
                     b.Property<Guid>("Id")
@@ -228,10 +200,6 @@ namespace SII_DaysOff.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("RoleID");
-
-                    b.Property<Guid?>("RolesRoleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("SecurityStamp")
@@ -267,8 +235,6 @@ namespace SII_DaysOff.Migrations
                         .HasDatabaseName("EmailIndex");
 
                     b.HasIndex("RoleId");
-
-                    b.HasIndex("RolesRoleId");
 
                     b.HasIndex(new[] { "NormalizedEmail" }, "EmailIndex");
 
@@ -403,6 +369,10 @@ namespace SII_DaysOff.Migrations
                         .HasColumnName("RoleID")
                         .HasDefaultValueSql("(newid())");
 
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
@@ -415,11 +385,22 @@ namespace SII_DaysOff.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)");
 
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("RoleId");
 
@@ -427,7 +408,12 @@ namespace SII_DaysOff.Migrations
 
                     b.HasIndex("ModifiedBy");
 
-                    b.ToTable("Roles");
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
                 });
 
             modelBuilder.Entity("SII_DaysOff.Models.Statuses", b =>
@@ -545,7 +531,7 @@ namespace SII_DaysOff.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("SII_DaysOff.Areas.Identity.Data.ApplicationRole", null)
+                    b.HasOne("SII_DaysOff.Models.Roles", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -572,7 +558,7 @@ namespace SII_DaysOff.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("SII_DaysOff.Areas.Identity.Data.ApplicationRole", null)
+                    b.HasOne("SII_DaysOff.Models.Roles", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -612,15 +598,11 @@ namespace SII_DaysOff.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("SII_DaysOff.Models.Roles", "RoleIdUser")
-                        .WithMany()
+                        .WithMany("AspNetUsers")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("FK_Users_RoleId");
-
-                    b.HasOne("SII_DaysOff.Models.Roles", null)
-                        .WithMany("AspNetUsers")
-                        .HasForeignKey("RolesRoleId");
 
                     b.Navigation("CreatedByUser");
 
