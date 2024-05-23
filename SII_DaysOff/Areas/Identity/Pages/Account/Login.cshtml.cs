@@ -87,53 +87,61 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            Console.WriteLine("1");
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
+                Console.WriteLine("2");
                 ModelState.AddModelError(string.Empty, ErrorMessage);
             }
-
+            Console.WriteLine("3");
             returnUrl ??= Url.Content("~/");
-
+            Console.WriteLine("4");
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
+            Console.WriteLine("5");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
+            Console.WriteLine("6");
             ReturnUrl = returnUrl;
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            Console.WriteLine("a");
             returnUrl ??= Url.Content("~/");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             if (ModelState.IsValid)
             {
+                Console.WriteLine("b");
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    Console.WriteLine("c");
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect("~/Home/Main");
                 }
                 if (result.RequiresTwoFactor)
                 {
+                    Console.WriteLine("d");
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
                 }
                 if (result.IsLockedOut)
                 {
+                    Console.WriteLine("e");
                     _logger.LogWarning("User account locked out.");
                     return RedirectToPage("./Lockout");
                 }
                 else
                 {
+                    Console.WriteLine("f");
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }
             }
-
+            Console.WriteLine("g");
             // If we got this far, something failed, redisplay form
             return Page();
         }

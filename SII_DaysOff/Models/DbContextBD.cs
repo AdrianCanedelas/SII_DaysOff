@@ -151,11 +151,6 @@ namespace SII_DaysOff.Models
                 entity.HasOne(d => d.RoleIdUser)
                     .WithMany()
                     .HasForeignKey(d => d.RoleId)
-                    .HasConstraintName("FK_AspNetUsers_Roles");
-
-                entity.HasOne(d => d.RoleIdUser)
-                    .WithMany()
-                    .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.NoAction)
                     .HasConstraintName("FK_Users_RoleId");
             });

@@ -27,7 +27,10 @@
 </style>
 
 <ul class="navbar-nav">
-	@if (!SignInManager.IsSignedIn(User))
+	@{
+		Console.WriteLine("SigendIn ? -> " + SignInManager.IsSignedIn(User));
+	}
+	@if (SignInManager.IsSignedIn(User))
 	{
 		<li class="nav-item">
 			<!--<a class="nav-link text-light mx-5" id="register" asp-area="Identity" asp-page="~/Home/PendingRequests">Awaiting requests</a>-->
