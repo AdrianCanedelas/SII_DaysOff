@@ -55,15 +55,26 @@ namespace SII_DaysOff.Controllers
             return View(requests);
         }
 
+        [HttpGet]
+        public async Task<JsonResult> GetUsersReasonsAndStatuses()
+        {
+            var users = await _context.AspNetUsers.Select(u => new { Id = u.Id, UserName = u.UserName }).ToListAsync();
+            var reasons = await _context.Reasons.Select(r => new { Id = r.ReasonId, Name = r.Name }).ToListAsync();
+            var statuses = await _context.Statuses.Select(s => new { Id = s.StatusId, Name = s.Name }).ToListAsync();
+
+            return Json(new { users = users, reasons = reasons, statuses = statuses });
+        }
+
         // GET: Requests/Create
         public IActionResult Create()
         {
-            ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id");
+			Console.WriteLine("1");
+			ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "ReasonId");
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId");
             ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id");
-            return View();
+            return View(new Requests());
         }
 
         // POST: Requests/Create
@@ -73,9 +84,25 @@ namespace SII_DaysOff.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RequestId,UserId,ReasonId,StatusId,RequestDate,StartDate,EndDate,HalfDayStart,HalfDayEnd,Comments,CreatedBy,CreationDate,ModifiedBy,ModificationDate")] Requests requests)
         {
-            if (ModelState.IsValid)
+			Console.WriteLine("2");
+            if (!ModelState.IsValid)
             {
-                requests.RequestId = Guid.NewGuid();
+                foreach (var entry in ModelState)
+                {
+                    var fieldName = entry.Key;
+                    var fieldValue = entry.Value;
+
+                    foreach (var error in fieldValue.Errors)
+                    {
+                        var errorMessage = error.ErrorMessage;
+                        Console.WriteLine($"Error en el campo: {fieldName}. Mensaje: {errorMessage}");
+                    }
+                }
+            }
+			if (ModelState.IsValid)
+            {
+				Console.WriteLine("3");
+				requests.RequestId = Guid.NewGuid();
                 _context.Add(requests);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -85,7 +112,10 @@ namespace SII_DaysOff.Controllers
             ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "ReasonId", requests.ReasonId);
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", requests.StatusId);
             ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.UserId);
-            return View("Main", requests);
+			Console.WriteLine("4");
+            var allRequests = await _context.Requests.ToListAsync();
+
+            return View("~/Views/Home/Main.cshtml", allRequests);
         }
 
         // GET: Requests/Edit/5

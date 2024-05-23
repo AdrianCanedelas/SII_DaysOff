@@ -12,15 +12,47 @@
                 <form asp-action="Create" asp-controller="Requests" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
-                        <label asp-for="ReasonId" class="control-label"></label>
-                        <!--select asp-for="ReasonId" class="form-control" asp-items="ViewBag.ReasonId"></select>-->
-                        <input asp-for="ReasonId" class="form-control" />
+                        <label asp-for="UserId" class="control-label"></label>
+                        <select asp-for="UserId" class="form-control">
+                            <option value="">Select user</option>
+                            @if (ViewBag.Users != null)
+                            {
+                                foreach (var user in ViewBag.Users)
+                                {
+                                    <option value="@user.Id">@user.UserName</option>
+                                }
+                            }
+                        </select>
                     </div>
+
+                    <div class="form-group">
+                        <label asp-for="ReasonId" class="control-label"></label>
+                        <select asp-for="ReasonId" class="form-control">
+                            <option value="">Select reason</option>
+                            @if (ViewBag.Users != null)
+                            {
+                                foreach (var reason in ViewBag.Reasons)
+                                {
+                                    <option value="@reason.Id">@reason.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
                     <div class="form-group">
                         <label asp-for="StatusId" class="control-label"></label>
-                        <!--<select asp-for="StatusId" class="form-control" asp-items="ViewBag.StatusId"></select>-->
-                        <input asp-for="StatusId" class="form-control" />
+                        <select asp-for="StatusId" class="form-control">
+                            <option value="">Select status</option>
+                            @if (ViewBag.Users != null)
+                            {
+                                foreach (var status in ViewBag.Statuses)
+                                {
+                                    <option value="@status.Id">@status.Name</option>
+                                }
+                            }
+                        </select>
                     </div>
+
                     <div class="form-group">
                         <label asp-for="RequestDate" class="control-label"></label>
                         <input asp-for="RequestDate" class="form-control" />
