@@ -32,7 +32,10 @@ namespace SII_DaysOff.Controllers
         {
             Console.WriteLine("optionStatus -> " + optionStatus);
             ViewData["notShow"] = false;
-            var requests = _context.Requests.ToList().Where(r => r.Status.Equals(optionStatus));
+            var requests = _context.Requests
+                .ToList()
+                .Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals(optionStatus))?.StatusId));
+
             return View(requests);
         }
         

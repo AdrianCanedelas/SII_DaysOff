@@ -23,8 +23,8 @@ namespace SII_DaysOff.Models
 
         public virtual ApplicationUser? CreatedByNavigation { get; set; } = null!;
         public virtual ApplicationUser? ModifiedByNavigation { get; set; } = null!;
-        public virtual Reasons Reason { get; set; } = null!;
-        public virtual Statuses Status { get; set; } = null!;
-        public virtual ApplicationUser User { get; set; } = null!;
+        public virtual Reasons? Reason { get; set; } = null!;
+        public virtual Statuses? Status { get; set; } = null!;
+        public virtual ApplicationUser? User { get; set; } = null!;
     }
 }

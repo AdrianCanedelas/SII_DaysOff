@@ -28,8 +28,10 @@ namespace SII_DaysOff.Controllers
         public async Task<IActionResult> ManageIndex()
         {
             Console.WriteLine("pruebaIndex");
-            var dbContextBD = _context.Requests;
-            return View(await dbContextBD.ToListAsync());
+			var requests = _context.Requests
+				.ToList()
+				.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId));
+			return View(requests);
         }
 
         // GET: Requests/Details/5
@@ -205,43 +207,27 @@ namespace SII_DaysOff.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Manage(Guid id, [Bind("IdRequest,IdUser,IdAdmin,IdReason,RequestDate,StartDate,EndDate,TotalDays,HalfDayStart,HalfDayEnd,Status")] Requests requests, string option)
+        public async Task<IActionResult> Manage(Guid id, string option)
         {
-            if (id != requests.RequestId)
-            {
-                Console.WriteLine("1");
-                return NotFound();
-            }
+			var request = await _context.Requests.FindAsync(id);
+			if (request == null)
+			{
+				return NotFound();
+			}
 
-            if (ModelState.IsValid)
-            {
-                Console.WriteLine("2");
-                try
-                {
-                    _context.Update(requests);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!RequestsExists(requests.RequestId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            Console.WriteLine("3");
-            ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.CreatedBy);
-            ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.ModifiedBy);
-            ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "ReasonId", requests.ReasonId);
-            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", requests.StatusId);
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.UserId);
-            return View(requests);
-        }
+			if (option == "Approved")
+			{
+				request.StatusId = Guid.Parse("98D18765-5BF7-41BD-8727-A39F7F95B9AC"); 
+			}
+			else if (option == "Cancelled")
+			{
+				request.StatusId = Guid.Parse("67AD8346-6F99-4465-9F33-4E0AC387D5D1");
+			}
+
+			await _context.SaveChangesAsync();
+
+			return RedirectToAction(nameof(ManageIndex));
+		}
 
         // GET: Requests/Delete/5
         public async Task<IActionResult> Delete(Guid? id)

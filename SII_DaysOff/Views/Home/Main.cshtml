@@ -86,8 +86,8 @@
                             <div class="col fw-bold">Is half day?</div>
                             <div class="col fw-bold">End day</div>
                             <div class="col fw-bold">Is half day?</div>
-                            <div class="col fw-bold">Total days</div>
                             <div class="col fw-bold">Request day</div>
+                            <div class="col fw-bold">Comments</div>
                             <div class="col fw-bold">Status</div>
                         </div>
                     </li>
@@ -97,14 +97,14 @@
                         {
                             <li class="list-group-item">
                                 <div class="row text-center">
-                                    <div class="col">@item.Reason</div>
+                                    <div class="col">@Html.DisplayFor(model => item.Reason.Name)</div>
                                     <div class="col">@Html.DisplayFor(model => item.StartDate)</div>
                                     <div class="col">@Html.DisplayFor(model => item.HalfDayStart)</div>
                                     <div class="col">@Html.DisplayFor(model => item.EndDate)</div>
                                     <div class="col">@Html.DisplayFor(model => item.HalfDayEnd)</div>
-                                    <div class="col">totaldays</div>
                                     <div class="col">@Html.DisplayFor(model => item.RequestDate)</div>
-                                    <div class="col">@Html.DisplayFor(model => item.Status)</div>
+                                    <div class="col">@Html.DisplayFor(model => item.Comments)</div>
+                                    <div class="col">@Html.DisplayFor(model => item.Status.Name)</div>
                                 </div>
                             </li>
                         }
