@@ -10,7 +10,7 @@ using SII_DaysOff.Areas.Identity.Data;
 
 namespace SII_DaysOff.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(DbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

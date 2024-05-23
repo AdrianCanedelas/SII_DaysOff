@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SII_DaysOff.Areas.Identity.Data;
+using System;
 using System.Collections.Generic;
 
 namespace SII_DaysOff.Models
@@ -7,7 +8,7 @@ namespace SII_DaysOff.Models
     {
         public Roles()
         {
-            AspNetUsers = new HashSet<AspNetUsers>();
+            AspNetUsers = new HashSet<ApplicationUser>();
         }
 
         public Guid RoleId { get; set; }
@@ -17,8 +18,8 @@ namespace SII_DaysOff.Models
         public Guid? ModifiedBy { get; set; }
         public DateTime? ModificationDate { get; set; }
 
-        public virtual AspNetUsers? CreatedByNavigation { get; set; }
-        public virtual AspNetUsers? ModifiedByNavigation { get; set; }
-        public virtual ICollection<AspNetUsers> AspNetUsers { get; set; }
+        public virtual ApplicationUser? CreatedByNavigation { get; set; }
+        public virtual ApplicationUser? ModifiedByNavigation { get; set; }
+        public virtual ICollection<ApplicationUser> AspNetUsers { get; set; }
     }
 }

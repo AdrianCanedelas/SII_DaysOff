@@ -5,14 +5,14 @@ using SII_DaysOff.Models;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+builder.Services.AddDbContext<DbContextBD>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDbContext<DbContextBD>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<DbContextBD>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorPagesOptions(options => {

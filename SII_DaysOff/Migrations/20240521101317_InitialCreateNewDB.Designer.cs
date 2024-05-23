@@ -6,12 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SII_DaysOff.Areas.Identity.Data;
+using SII_DaysOff.Models;
 
 #nullable disable
 
 namespace SII_DaysOff.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(DbContextBD))]
     [Migration("20240521101317_InitialCreateNewDB")]
     partial class InitialCreateNewDB
     {

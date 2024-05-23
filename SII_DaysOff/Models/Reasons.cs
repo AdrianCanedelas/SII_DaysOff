@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SII_DaysOff.Areas.Identity.Data;
+using System;
 using System.Collections.Generic;
 
 namespace SII_DaysOff.Models
@@ -18,8 +19,8 @@ namespace SII_DaysOff.Models
         public Guid ModifiedBy { get; set; }
         public DateTime ModificationDate { get; set; }
 
-        public virtual AspNetUsers CreatedByNavigation { get; set; } = null!;
-        public virtual AspNetUsers ModifiedByNavigation { get; set; } = null!;
+        public virtual ApplicationUser CreatedByNavigation { get; set; } = null!;
+        public virtual ApplicationUser ModifiedByNavigation { get; set; } = null!;
         public virtual ICollection<Requests> Requests { get; set; }
     }
 }
