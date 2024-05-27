@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["notShow"] = false;
+    ViewData["Title"] = "Calendar";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<a asp-controller="requests" asp-action="ExportExcel">Export</a>
+
+<button id="btnPDF" class="btn btn-primary">Export calendar</button>
+
+<div id="pdfContainer">
+    <div id="calendar"></div>
+</div>

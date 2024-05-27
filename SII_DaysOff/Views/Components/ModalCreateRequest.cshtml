@@ -9,58 +9,26 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form asp-action="Create" asp-controller="Requests" method="post">
+                <form asp-action="Create" asp-controller="Requests">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label asp-for="UserId" class="control-label"></label>
-                        <!--<select asp-for="UserId" class="form-control">
-                            <option value="">Select user</option>
-                            @*@if (ViewBag.Users != null)
-                            {
-                                foreach (var user in ViewBag.Users)
-                                {
-                                    <option value="@user.Id">@user.UserName</option>
-                                }
-                            }*@
-                        </select>-->
+                        <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
                         <input asp-for="UserId" class="form-control" />
-                    </div>
-
+                    </div>-->
                     <div class="form-group">
                         <label asp-for="ReasonId" class="control-label"></label>
-                        @*<select asp-for="ReasonId" class="form-control">
-                            <option value="">Select reason</option>
-                            @if (ViewBag.Users != null)
-                            {
-                                foreach (var reason in ViewBag.Reasons)
-                                {
-                                    <option value="@reason.Id">@reason.Name</option>
-                                }
-                            }
-                        </select>*@
-                        <input asp-for="ReasonId" class="form-control" />
+                        <select asp-for="ReasonId" class="form-control" asp-items="ViewBag.ReasonId"></select>
                     </div>
-
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label asp-for="StatusId" class="control-label"></label>
-                        @*<select asp-for="StatusId" class="form-control">
-                            <option value="">Select status</option>
-                            @if (ViewBag.Users != null)
-                            {
-                                foreach (var status in ViewBag.Statuses)
-                                {
-                                    <option value="@status.Id">@status.Name</option>
-                                }
-                            }
-                        </select>*@
-                        <input asp-for="StatusId" class="form-control" />
-                    </div>
-
-                    <div class="form-group">
+                        <select asp-for="StatusId" class="form-control" asp-items="ViewBag.StatusId"></select>
+                    </div>-->
+                    <!--<div class="form-group">
                         <label asp-for="RequestDate" class="control-label"></label>
                         <input asp-for="RequestDate" class="form-control" />
                         <span asp-validation-for="RequestDate" class="text-danger"></span>
-                    </div>
+                    </div>-->
                     <div class="form-group">
                         <label asp-for="StartDate" class="control-label"></label>
                         <input asp-for="StartDate" class="form-control" />
@@ -86,79 +54,23 @@
                         <input asp-for="Comments" class="form-control" />
                         <span asp-validation-for="Comments" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label asp-for="CreatedBy" class="control-label"></label>
-                        <!--<select asp-for="CreatedBy" class="form-control" asp-items="ViewBag.CreatedBy"></select>-->
-                        <input asp-for="CreatedBy" class="form-control" />
-                    </div>
-                    <div class="form-group">
+                        <select asp-for="CreatedBy" class="form-control" asp-items="ViewBag.CreatedBy"></select>
+                    </div>-->
+                    <!--<div class="form-group">
                         <label asp-for="CreationDate" class="control-label"></label>
                         <input asp-for="CreationDate" class="form-control" />
                         <span asp-validation-for="CreationDate" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
+                    </div>-->
+                    <!--<div class="form-group">
                         <label asp-for="ModifiedBy" class="control-label"></label>
-                        <!--<select asp-for="ModifiedBy" class="form-control" asp-items="ViewBag.ModifiedBy"></select>-->
-                        <input asp-for="ModifiedBy" class="form-control" />
-                    </div>
-                    <div class="form-group">
+                        <select asp-for="ModifiedBy" class="form-control" asp-items="ViewBag.ModifiedBy"></select>
+                    </div>-->
+                    <!--<div class="form-group">
                         <label asp-for="ModificationDate" class="control-label"></label>
                         <input asp-for="ModificationDate" class="form-control" />
                         <span asp-validation-for="ModificationDate" class="text-danger"></span>
-                    </div>
-                    <!--<div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-primary" />
-                    </div>
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <label asp-for="IdUser" class="control-label"></label>
-                        <input asp-for="IdUser" class="form-control" />
-                        <span asp-validation-for="IdUser" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="IdAdmin" class="control-label"></label>
-                        <input asp-for="IdAdmin" class="form-control" />
-                        <span asp-validation-for="IdAdmin" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="IdReason" class="control-label"></label>
-                        <input asp-for="IdReason" class="form-control" />
-                        <span asp-validation-for="IdReason" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="RequestDate" class="control-label"></label>
-                        <input asp-for="RequestDate" class="form-control" />
-                        <span asp-validation-for="RequestDate" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="StartDate" class="control-label"></label>
-                        <input asp-for="StartDate" class="form-control" />
-                        <span asp-validation-for="StartDate" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="EndDate" class="control-label"></label>
-                        <input asp-for="EndDate" class="form-control" />
-                        <span asp-validation-for="EndDate" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="TotalDays" class="control-label"></label>
-                        <input asp-for="TotalDays" class="form-control" />
-                        <span asp-validation-for="TotalDays" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="HalfDayStart" class="control-label"></label>
-                        <input asp-for="HalfDayStart" class="form-control" />
-                        <span asp-validation-for="HalfDayStart" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="HalfDayEnd" class="control-label"></label>
-                        <input asp-for="HalfDayEnd" class="form-control" />
-                        <span asp-validation-for="HalfDayEnd" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Status" class="control-label"></label>
-                        <input asp-for="Status" class="form-control" />
-                        <span asp-validation-for="Status" class="text-danger"></span>
                     </div>-->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

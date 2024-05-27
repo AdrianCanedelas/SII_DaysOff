@@ -8,7 +8,6 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-
 <style>
 	.submenu {
 		display: none;
@@ -26,6 +25,8 @@
 
 </style>
 
+@Html.Partial("../Components/ModalCreateReason", new SII_DaysOff.Models.Reasons())
+
 <ul class="navbar-nav">
 	@{
 		Console.WriteLine("SigendIn ? -> " + SignInManager.IsSignedIn(User));
@@ -38,7 +39,7 @@
 		<li class="nav-item">
 			@if (SignInManager.IsSignedIn(User))
 			{
-			<a id="manage" class="nav-link text-light mx-5">@UserManager.GetUserName(User)!</a>
+			<a id="manage" class="nav-link text-light">@UserManager.GetUserName(User)!</a>
 			<div class="submenu bg-light shadow-lg px-4 py-1 rounded-3">
 				<div class="row my-2">
 					<!-- data-bs-toggle="modal" data-bs-target="#passModal" -->

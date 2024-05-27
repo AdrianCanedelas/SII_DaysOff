@@ -16,7 +16,7 @@ html {
 body {
     margin-bottom: 60px;
     background-color: #f2f2f2;
-    overflow-y: hidden;
+    /*overflow-y: hidden;*/
 }
 
 /*Navbar*/
@@ -60,4 +60,20 @@ a.title {
 .nav-link.active {
     background-color: var(--bs-primary) !important;
     color: white !important;
+}
+
+.fc .fc-button-primary {
+    background-color: #004278;
+}
+
+.fc-col-header-cell {
+    background-color: #004278;
+}
+
+.fc-col-header-cell-cushion {
+    color: white;
+}
+
+.fc-day-today {
+    background-color: #b8d1ec !important;
 }

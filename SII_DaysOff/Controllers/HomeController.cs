@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Manage.Internal;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Manage.Internal;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using SII_DaysOff.Areas.Identity.Data;
 using SII_DaysOff.Models;
@@ -11,16 +13,18 @@ namespace SII_DaysOff.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 		private readonly DbContextBD _context;
+        private UserManager<ApplicationUser> _userManager;
 
-		/*public HomeController(ILogger<HomeController> logger)
+        /*public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }*/
 
-        public HomeController (DbContextBD context)
+        public HomeController (DbContextBD context, UserManager<ApplicationUser> userManager)
         {
 			_context = context;
-		}
+            _userManager = userManager;
+        }
 
         public IActionResult Index()
         {
@@ -28,14 +32,28 @@ namespace SII_DaysOff.Controllers
             return View();
         }
         
-        public IActionResult Main(string optionStatus)
+        public async Task<IActionResult> MainAsync(string optionStatus)
         {
-            Console.WriteLine("optionStatus -> " + optionStatus);
+            var user = await _userManager.GetUserAsync(User);
             ViewData["notShow"] = false;
             var requests = _context.Requests
                 .ToList()
-                .Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals(optionStatus))?.StatusId));
+                .Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals(optionStatus))?.StatusId))
+                .Where(r => r.UserId == (_context.AspNetUsers.FirstOrDefault(u => u.Name.Equals(user.Name))?.Id));
 
+            ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "Name");
+            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Name");
+            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Email");
+
+			var managerUserIds = _context.Users
+				.Where(u => u.Manager == user.Id)
+				.Select(u => u.Id)
+				.ToList();
+			var pendingRequests = _context.Requests
+				.ToList()
+				.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId))
+				.Where(r => managerUserIds.Contains(r.UserId)).Count();
+			ViewData["PendingRequests"] = pendingRequests;
             return View(requests);
         }
         

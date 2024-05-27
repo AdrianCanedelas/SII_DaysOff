@@ -3,192 +3,235 @@
 @model IEnumerable<SII_DaysOff.Models.Requests>
 
 @{
-    ViewData["notShow"] = false;
-    ViewData["title"] = "Main";
+	ViewData["notShow"] = false;
+	ViewData["title"] = "Main";
 }
 
 @inject UserManager<ApplicationUser> UserManager
 
 @Html.Partial("../Components/ModalCreateRequest", new SII_DaysOff.Models.Requests())
+@Html.Partial("../Components/ModalEditRequest", new SII_DaysOff.Models.Requests())
 
 <h1 class="mx-4">Days Off</h1>
 
 <!-- Tabs para admin -->
 <div class="card my-5 mx-4">
-    <div class="card-header bg-light">
-        <span>Time off balance in 2024</span>
-    </div>
-    <div class="card-body shadow">
-        <div class="row text-center">
-            <div class="col-6 col-sm-2">
-                <p class="fw-bold">Annual leaves</p>
-                <p>Holidays</p>
-            </div>
-            <div class="col-6 col-sm-2">
-                <p class="fw-bold">Available days</p>
-                <p>Holidays</p>
-            </div>
-            <div class="col-6 col-sm-2">
-                <p class="fw-bold">Acquired days</p>
-                <p>Holidays</p>
-            </div>
-            <div class="col-6 col-sm-2">
-                <p class="fw-bold">Remaining days</p>
-                <p>Holidays</p>
-            </div>
-            <div class="col-6 col-sm-2">
-                <p class="fw-bold">Validity start date</p>
-                <p>Holidays</p>
-            </div>
-            <div class="col-6 col-sm-2">
-                <p class="fw-bold">Validity end date</p>
-                <p>Holidays</p>
-            </div>
-        </div>
-    </div>
+	<div class="card-header bg-light">
+		<span>Time off balance in 2024</span>
+	</div>
+	<div class="card-body shadow">
+		<div class="row text-center">
+			<div class="col-6 col-sm-2">
+				<p class="fw-bold">Annual leaves</p>
+			</div>
+			<div class="col-6 col-sm-2">
+				<p class="fw-bold">Available days</p>
+				<p>Holidays</p>
+			</div>
+			<div class="col-6 col-sm-2">
+				<p class="fw-bold">Acquired days</p>
+				<p>Holidays</p>
+			</div>
+			<div class="col-6 col-sm-2">
+				<p class="fw-bold">Remaining days</p>
+				<p>Holidays</p>
+			</div>
+			<div class="col-6 col-sm-2">
+				<p class="fw-bold">Validity start date</p>
+				<p>Holidays</p>
+			</div>
+			<div class="col-6 col-sm-2">
+				<p class="fw-bold">Validity end date</p>
+				<p>Holidays</p>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="card shadow my-4 mx-4">
-    <div class="card-header bg-light">
-        <div class="row">
-            <div class="col-6 d-flex justify-content-start align-items-center">
-                Requested time off
-            </div>
-            <div class="col-6 d-flex justify-content-end align-items-center">
-                <a class="btn btn-outline-primary fw-bold mx-2" asp-area="" asp-controller="Requests" asp-action="ManageIndex">Manage request</a>
-                <button type="submit" class="btn btn-outline-primary fw-bold mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal">New request</button>
-            </div>
-        </div>
-    </div>
+	<div class="card-header bg-light">
+		<div class="row">
+			<div class="col-6 d-flex justify-content-start align-items-center">
+				Requested time off
+			</div>
+			<div class="col-6 d-flex justify-content-end align-items-center">
+				@{
+					if (ViewBag.pendingRequests > 0)
+					{
+						<a class="btn btn-outline-primary fw-bold mx-2 position-relative" asp-area="" asp-controller="Requests" asp-action="ManageIndex">
+							Manage request
+							<span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
+								@ViewBag.pendingRequests
+								<span class="visually-hidden">unread messages</span>
+							</span>
+						</a>
+					}
+					else
+					{
+						<a class="btn btn-outline-primary fw-bold mx-2 disabled" asp-area="" asp-controller="Requests" asp-action="ManageIndex">Manage request</a>
+					}
+				}
+				<button type="submit" class="btn btn-outline-primary fw-bold mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal">New request</button>
+				<a type="submit" class="btn btn-outline-primary fw-bold mx-2" asp-controller="Requests" asp-action="Calendar">Calendar</a>
+			</div>
+		</div>
+	</div>
 
-    <ul class="nav nav-tabs m-4">
-        <li class="nav-item">
-            <a class="nav-link" aria-current="page" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Pending"><i class="bi bi-clock-history"></i> Pending requests</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Approved"><i class="bi bi-check-circle"></i> Approved requests</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Cancelled"><i class="bi bi-dash-circle"></i> Cancelled requests</a>
-        </li>
-    </ul>
+	<ul class="nav nav-tabs m-4">
+		<li class="nav-item">
+			<a class="nav-link" aria-current="page" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Pending"><i class="bi bi-clock-history"></i> Pending requests</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Approved"><i class="bi bi-check-circle"></i> Approved requests</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Cancelled"><i class="bi bi-dash-circle"></i> Cancelled requests</a>
+		</li>
+	</ul>
 
-    <div class="card-body cardRequests">
-        <div class="row">
-            <div class="col-auto">
-            </div>
-            <div class="col">
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-primary">
-                        <div class="row text-center">
-                            <div class="col fw-bold">Reason for the request</div>
-                            <div class="col fw-bold">Start day</div>
-                            <div class="col fw-bold">Is half day?</div>
-                            <div class="col fw-bold">End day</div>
-                            <div class="col fw-bold">Is half day?</div>
-                            <div class="col fw-bold">Request day</div>
-                            <div class="col fw-bold">Comments</div>
-                            <div class="col fw-bold">Status</div>
-                        </div>
-                    </li>
-                    @if (Model != null)
-                    {
-                        foreach (var item in Model)
-                        {
-                            <li class="list-group-item">
-                                <div class="row text-center">
-                                    <div class="col">@Html.DisplayFor(model => item.Reason.Name)</div>
-                                    <div class="col">@Html.DisplayFor(model => item.StartDate)</div>
-                                    <div class="col">@Html.DisplayFor(model => item.HalfDayStart)</div>
-                                    <div class="col">@Html.DisplayFor(model => item.EndDate)</div>
-                                    <div class="col">@Html.DisplayFor(model => item.HalfDayEnd)</div>
-                                    <div class="col">@Html.DisplayFor(model => item.RequestDate)</div>
-                                    <div class="col">@Html.DisplayFor(model => item.Comments)</div>
-                                    <div class="col">@Html.DisplayFor(model => item.Status.Name)</div>
-                                </div>
-                            </li>
-                        }
-                    }
-                </ul>
-            </div>
-        </div>
-    </div>
+	<div class="card-body cardRequests">
+		<div class="row">
+			<div class="col-auto">
+			</div>
+			<div class="col">
+				<ul class="list-group">
+					<li class="list-group-item list-group-item-primary">
+						<div class="row text-center">
+							<div class="col fw-bold">Reason</div>
+							<div class="col fw-bold">Start day</div>
+							<div class="col fw-bold">Is half day?</div>
+							<div class="col fw-bold">End day</div>
+							<div class="col fw-bold">Is half day?</div>
+							<div class="col fw-bold">Request day</div>
+							<div class="col fw-bold">Comments</div>
+							<div class="col fw-bold">Status</div>
+							<div class="col fw-bold">Edit/Delete</div>
+						</div>
+					</li>
+					@if (Model != null)
+					{
+						foreach (var item in Model)
+						{
+							<li class="list-group-item">
+								<div class="row text-center">
+									<div class="col my-2">@Html.DisplayFor(model => item.Reason.Name)</div>
+									<div class="col my-2">@Html.DisplayFor(model => item.StartDate)</div>
+									<div class="col my-2">
+										@{
+											if (Html.DisplayFor(model => item.HalfDayStart).Equals(1))
+											{
+												<i class="bi bi-check-square-fill"></i>
+											} else
+											{
+												<i class="bi bi-x-square-fill"></i>
+											}
+										}
+									</div>
+									<div class="col my-2">@Html.DisplayFor(model => item.EndDate)</div>
+									<div class="col my-2">
+										@{
+											if (Html.DisplayFor(model => item.HalfDayEnd).Equals(1))
+											{
+												<i class="bi bi-check-square-fill"></i>
+											}
+											else
+											{
+												<i class="bi bi-x-square-fill"></i>
+											}
+										}
+									</div>
+									<div class="col my-2">@Html.DisplayFor(model => item.RequestDate)</div>
+									<div class="col my-2">@Html.DisplayFor(model => item.Comments)</div>
+									<div class="col my-2">@Html.DisplayFor(model => item.Status.Name)</div>
+									<div class="col">
+										<a asp-controller="Requests" asp-action="Edit" asp-route-id="@item.RequestId" class="btn btn-unstyled"><i class="bi bi-pencil-square"></i></a>
+										@*<a asp-route-id="@item.RequestId" data-bs-toggle="modal" data-bs-target="#editModal" class="btn btn-unstyled"><i class="bi bi-pencil-square"></i></a>*@
+										<a asp-controller="Requests" asp-action="Delete" asp-route-id="@item.RequestId" method="post" class="btn btn-unstyled"><i class="bi bi-trash-fill"></i></a>
+									</div>
+								</div>
+							</li>
+						}
+					}
+				</ul>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script>
-    var option = { animation: true, delay: 2000 };
+	var option = { animation: true, delay: 2000 };
 
-    function Toasty() {
-        var toastHTMLElement = document.getElementById("liveToast");
-        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
-        toastElement.show();
-    }
+	function Toasty() {
+		var toastHTMLElement = document.getElementById("liveToast");
+		var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+		toastElement.show();
+	}
 
-    document.addEventListener("DOMContentLoaded", function () {
-        var navLinks = document.querySelectorAll('.nav-link');
-        navLinks.forEach(function (navLink) {
-            navLink.addEventListener('click', function () {
-                navLinks.forEach(function (link) {
-                    link.classList.remove('active');
-                });
-                this.classList.add('active');
-            });
-        });
-    });
+	document.addEventListener("DOMContentLoaded", function () {
+		var navLinks = document.querySelectorAll('.nav-link');
+		navLinks.forEach(function (navLink) {
+			navLink.addEventListener('click', function () {
+				navLinks.forEach(function (link) {
+					link.classList.remove('active');
+				});
+				this.classList.add('active');
+			});
+		});
+	});
 
-    /* Modal crear solicitud */
-    document.addEventListener('DOMContentLoaded', function () {
-        var newRequestButton = document.getElementById('newRequestButton');
-        var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+	/* Modal crear solicitud */
+	document.addEventListener('DOMContentLoaded', function () {
+		var newRequestButton = document.getElementById('newRequestButton');
+		var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
 
-        newRequestButton.addEventListener('click', function () {
-            // Cargar el contenido del modal
-            fetch('@Url.Action("Components", "ModalCreateRequests")')
-                .then(response => response.text())
-                .then(html => {
-                    var modalContent = document.querySelector('.modal-body');
-                    modalContent.innerHTML = html;
-                    // Llamada adicional para cargar los datos necesarios en el modal
-                    fetch('@Url.Action("GetUsersReasonsAndStatuses", "Requests")')
-                        .then(response => response.json())
-                        .then(data => {
-                            // Actualizar los campos select con los datos recibidos
-                            var usersSelect = document.getElementById('UserId');
-                            usersSelect.innerHTML = '';
-                            data.users.forEach(user => {
-                                var option = document.createElement('option');
-                                option.value = user.id;
-                                option.textContent = user.userName;
-                                usersSelect.appendChild(option);
-                            });
+		newRequestButton.addEventListener('click', function () {
+			// Cargar el contenido del modal
+			fetch('@Url.Action("Components", "ModalCreateRequests")')
+				.then(response => response.text())
+				.then(html => {
+					var modalContent = document.querySelector('.modal-body');
+					modalContent.innerHTML = html;
+					// Llamada adicional para cargar los datos necesarios en el modal
+					fetch('@Url.Action("GetUsersReasonsAndStatuses", "Requests")')
+						.then(response => response.json())
+						.then(data => {
+							// Actualizar los campos select con los datos recibidos
+							var usersSelect = document.getElementById('UserId');
+							usersSelect.innerHTML = '';
+							data.users.forEach(user => {
+								var option = document.createElement('option');
+								option.value = user.id;
+								option.textContent = user.userName;
+								usersSelect.appendChild(option);
+							});
 
-                            var reasonsSelect = document.getElementById('ReasonId');
-                            reasonsSelect.innerHTML = '';
-                            data.reasons.forEach(reason => {
-                                var option = document.createElement('option');
-                                option.value = reason.id;
-                                option.textContent = reason.name;
-                                reasonsSelect.appendChild(option);
-                            });
+							var reasonsSelect = document.getElementById('ReasonId');
+							reasonsSelect.innerHTML = '';
+							data.reasons.forEach(reason => {
+								var option = document.createElement('option');
+								option.value = reason.id;
+								option.textContent = reason.name;
+								reasonsSelect.appendChild(option);
+							});
 
-                            var statusesSelect = document.getElementById('StatusId');
-                            statusesSelect.innerHTML = '';
-                            data.statuses.forEach(status => {
-                                var option = document.createElement('option');
-                                option.value = status.id;
-                                option.textContent = status.name;
-                                statusesSelect.appendChild(option);
-                            });
-                        });
-                    modal.show();
-                });
-        });
-    });
+							var statusesSelect = document.getElementById('StatusId');
+							statusesSelect.innerHTML = '';
+							data.statuses.forEach(status => {
+								var option = document.createElement('option');
+								option.value = status.id;
+								option.textContent = status.name;
+								statusesSelect.appendChild(option);
+							});
+						});
+					modal.show();
+				});
+		});
+	});
 
 </script>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
 }

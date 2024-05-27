@@ -1,10 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using ClosedXML.Excel;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
+using SelectPdf;
+using SII_DaysOff.Areas.Identity.Data;
 using SII_DaysOff.Models;
 
 namespace SII_DaysOff.Controllers
@@ -12,10 +23,19 @@ namespace SII_DaysOff.Controllers
     public class RequestsController : Controller
     {
         private readonly DbContextBD _context;
+        private readonly IServiceProvider _serviceProvider;
+		private readonly IRazorViewEngine _razorViewEngine;
+		private readonly ITempDataProvider _tempDataProvider;
+		private UserManager<ApplicationUser> _userManager;
 
-        public RequestsController(DbContextBD context)
+        public RequestsController(DbContextBD context, UserManager<ApplicationUser> userManager, IServiceProvider serviceProvider, 
+            IRazorViewEngine razorViewEngine, ITempDataProvider tempDataProvider)
         {
             _context = context;
+            _userManager = userManager;
+            _serviceProvider = serviceProvider;
+            _razorViewEngine = razorViewEngine;
+            _tempDataProvider = tempDataProvider;
         }
 
         // GET: Requests
@@ -24,13 +44,26 @@ namespace SII_DaysOff.Controllers
             var dbContextBD = _context.Requests.Include(r => r.CreatedByNavigation).Include(r => r.ModifiedByNavigation).Include(r => r.Reason).Include(r => r.Status).Include(r => r.User);
             return View(await dbContextBD.ToListAsync());
         }
+        
+        public IActionResult Calendar()
+        {
+            return View();
+        }
 
         public async Task<IActionResult> ManageIndex()
         {
-            Console.WriteLine("pruebaIndex");
-			var requests = _context.Requests
-				.ToList()
-				.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId));
+			var user = await _userManager.GetUserAsync(User);
+
+			var managerUserIds = _context.Users
+	            .Where(u => u.Manager == user.Id)
+	            .Select(u => u.Id)
+	            .ToList();
+            var requests = _context.Requests
+                .Include(r => r.Reason)
+                .ToList()
+                .Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId))
+                .Where(r => managerUserIds.Contains(r.UserId));
+
 			return View(requests);
         }
 
@@ -70,13 +103,12 @@ namespace SII_DaysOff.Controllers
         // GET: Requests/Create
         public IActionResult Create()
         {
-			Console.WriteLine("1");
-			ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id");
+            ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "ReasonId");
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId");
             ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id");
-            return View(new Requests());
+            return PartialView("ModalCreateRequest");
         }
 
         // POST: Requests/Create
@@ -86,7 +118,6 @@ namespace SII_DaysOff.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RequestId,UserId,ReasonId,StatusId,RequestDate,StartDate,EndDate,HalfDayStart,HalfDayEnd,Comments,CreatedBy,CreationDate,ModifiedBy,ModificationDate")] Requests requests)
         {
-			Console.WriteLine("2");
             if (!ModelState.IsValid)
             {
                 foreach (var entry in ModelState)
@@ -103,8 +134,17 @@ namespace SII_DaysOff.Controllers
             }
 			if (ModelState.IsValid)
             {
-				Console.WriteLine("3");
-				requests.RequestId = Guid.NewGuid();
+                var user = await _userManager.GetUserAsync(User);
+                requests.RequestId = Guid.NewGuid();
+                requests.UserId = user.Id;
+                requests.StatusId = _context.Statuses
+                    .Where(s => s.Name.Equals("Pending")).FirstOrDefault().StatusId;
+                requests.CreatedBy = user.Id;
+                requests.ModifiedBy = user.Id;
+                requests.CreationDate = DateTime.Now;
+                requests.ModificationDate = DateTime.Now;
+                requests.RequestDate = DateTime.Now;
+                        
                 _context.Add(requests);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -114,7 +154,6 @@ namespace SII_DaysOff.Controllers
             ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "ReasonId", requests.ReasonId);
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", requests.StatusId);
             ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.UserId);
-			Console.WriteLine("4");
             var allRequests = await _context.Requests.ToListAsync();
 
             return View("~/Views/Home/Main.cshtml", allRequests);
@@ -123,6 +162,7 @@ namespace SII_DaysOff.Controllers
         // GET: Requests/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
+            Console.WriteLine("editGET");
             if (id == null || _context.Requests == null)
             {
                 return NotFound();
@@ -148,6 +188,7 @@ namespace SII_DaysOff.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("RequestId,UserId,ReasonId,StatusId,RequestDate,StartDate,EndDate,HalfDayStart,HalfDayEnd,Comments,CreatedBy,CreationDate,ModifiedBy,ModificationDate")] Requests requests)
         {
+            Console.WriteLine("editPOST");
             if (id != requests.RequestId)
             {
                 return NotFound();
@@ -157,6 +198,10 @@ namespace SII_DaysOff.Controllers
             {
                 try
                 {
+                    var user = await _userManager.GetUserAsync(User);
+
+                    requests.ModifiedBy = user.Id;
+                    requests.ModificationDate = DateTime.Now;
                     _context.Update(requests);
                     await _context.SaveChangesAsync();
                 }
@@ -228,6 +273,86 @@ namespace SII_DaysOff.Controllers
 
 			return RedirectToAction(nameof(ManageIndex));
 		}
+
+        public JsonResult getDaysOff()
+		{
+			Console.WriteLine("Entra");
+			var daysOff = _context.Requests
+                .Include(r => r.User)
+				.ToList()
+				.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Approved"))?.StatusId))
+                .Select(r => new
+                {
+                    title = r.User.Name + " " + r.User.Surname,
+                    start = r.StartDate.ToString("yyyy-MM-dd"),
+                    end = r.EndDate.ToString("yyyy-MM-dd"),
+                    description = r.UserId
+                });
+
+            return new JsonResult(daysOff);
+        }
+
+        public IActionResult GeneratePDF(string html)
+        {
+            html = html.Replace("StrTag", "<").Replace("EndTag", ">");
+
+            HtmlToPdf oHtmlToPdf = new HtmlToPdf();
+            PdfDocument oPdfDocument = oHtmlToPdf.ConvertHtmlString(html);
+            byte[] pdf = oPdfDocument.Save();
+            oPdfDocument.Close();
+
+            return File(
+                pdf,
+                "application/pdf",
+                "Calendar.pdf"
+                );
+        }
+
+        public async Task<FileResult> ExportExcel()
+        {
+            var daysOff = _context.Requests
+                .Include(r => r.User)
+                .Include(r => r.Status)
+                .Include(r => r.Reason)
+                .ToList()
+                .Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId));
+            var fileName = "calendar.xlsx";
+            return GenerateExcel(fileName, daysOff);
+        }
+
+        private FileResult GenerateExcel(string fileName, IEnumerable<Requests> requests)
+        {
+            DataTable dataTable = new DataTable("DaysOff");
+            dataTable.Columns.AddRange(new DataColumn[]
+            {
+                new DataColumn("Id"),
+                new DataColumn("User"),
+                new DataColumn("Reason"),
+                new DataColumn("StartDate"),
+                new DataColumn("HalfDayStart"),
+                new DataColumn("EndDate"),
+                new DataColumn("HalfDayEnd"),
+                new DataColumn("RequestDay"),
+                new DataColumn("Comments"),
+                new DataColumn("Status"),
+            });
+
+            foreach (var request in requests)
+            {
+                dataTable.Rows.Add(request.RequestId, request.User.Email, request.Reason.Name, request.StartDate, request.HalfDayStart.Equals(true) ? "Yes":"No", request.EndDate, request.HalfDayEnd.Equals(true) ? "Yes" : "No", request.RequestDate, request.Comments, request.Status.Name);
+            }
+
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dataTable);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+                }
+            }
+        }
 
         // GET: Requests/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
