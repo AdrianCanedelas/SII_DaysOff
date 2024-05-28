@@ -118,10 +118,10 @@
 					<li class="list-group-item list-group-item-primary">
 						<div class="row text-center">
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["ReasonOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.Reason)</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["ReasonOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.Reason)<i class="bi bi-caret-down mx-1"></i></a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StartDayOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.StartDate)</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StartDayOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.StartDate)<i class="bi bi-caret-up mx-1"></i></a>
 							</div>
 							<div class="col fw-bold">
 								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayStartOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.HalfDayStart)</a>
@@ -150,9 +150,9 @@
 						{
 							<li class="list-group-item">
 								<div class="row text-center">
-									<div class="col my-2">@Html.DisplayFor(model => item.Reason.Name)</div>
-									<div class="col my-2">@Html.DisplayFor(model => item.StartDate)</div>
-									<div class="col my-2">
+									<div class="col d-flex justify-content-center align-items-center">@Html.DisplayFor(model => item.Reason.Name)</div>
+									<div class="col d-flex justify-content-center align-items-center">@Html.DisplayFor(model => item.StartDate)</div>
+									<div class="col d-flex justify-content-center align-items-center">
 										@{
 											if (Html.DisplayFor(model => item.HalfDayStart).Equals(1))
 											{
@@ -164,8 +164,8 @@
 											}
 										}
 									</div>
-									<div class="col my-2">@Html.DisplayFor(model => item.EndDate)</div>
-									<div class="col my-2">
+									<div class="col d-flex justify-content-center align-items-center">@Html.DisplayFor(model => item.EndDate)</div>
+									<div class="col d-flex justify-content-center align-items-center">
 										@{
 											if (Html.DisplayFor(model => item.HalfDayEnd).Equals(1))
 											{
@@ -177,9 +177,9 @@
 											}
 										}
 									</div>
-									<div class="col my-2">@Html.DisplayFor(model => item.RequestDate)</div>
-									<div class="col my-2">@Html.DisplayFor(model => item.Comments)</div>
-									<div class="col my-2">@Html.DisplayFor(model => item.Status.Name)</div>
+									<div class="col d-flex justify-content-center align-items-center">@Html.DisplayFor(model => item.RequestDate)</div>
+									<div class="col d-flex justify-content-center align-items-center">@Html.DisplayFor(model => item.Comments)</div>
+									<div class="col d-flex justify-content-center align-items-center">@Html.DisplayFor(model => item.Status.Name)</div>
 									<div class="col">
 										<a asp-controller="Requests" asp-action="Edit" asp-route-id="@item.RequestId" class="btn btn-unstyled"><i class="bi bi-pencil-square"></i></a>
 										@*<a asp-route-id="@item.RequestId" data-bs-toggle="modal" data-bs-target="#editModal" class="btn btn-unstyled"><i class="bi bi-pencil-square"></i></a>*@

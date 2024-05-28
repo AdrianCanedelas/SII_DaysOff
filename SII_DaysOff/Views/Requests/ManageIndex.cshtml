@@ -41,28 +41,25 @@
 				<li class="list-group-item list-group-item-primary">
 					<div class="row text-center">
 						<div class="col fw-bold">
-							<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["ReasonOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.Reason)</a>
+							<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["ReasonOrder"]">@Html.DisplayNameFor(model => model.Reason)</a>
 						</div>
 						<div class="col fw-bold">
-							<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StartDayOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.StartDate)</a>
+							<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["StartDayOrder"]">@Html.DisplayNameFor(model => model.StartDate)</a>
 						</div>
 						<div class="col fw-bold">
-							<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayStartOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.HalfDayStart)</a>
+							<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["HalfDayStartOrder"]">@Html.DisplayNameFor(model => model.HalfDayStart)</a>
 						</div>
 						<div class="col fw-bold">
-							<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["EndDayOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.EndDate)</a>
+							<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["EndDayOrder"]">@Html.DisplayNameFor(model => model.EndDate)</a>
 						</div>
 						<div class="col fw-bold">
-							<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayEndOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.HalfDayEnd)</a>
+							<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["HalfDayEndOrder"]">@Html.DisplayNameFor(model => model.HalfDayEnd)</a>
 						</div>
 						<div class="col fw-bold">
-							<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["RequestDayOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.RequestDate)</a>
+							<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["RequestDayOrder"]">@Html.DisplayNameFor(model => model.RequestDate)</a>
 						</div>
 						<div class="col fw-bold">
-							<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["CommentsOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.Comments)</a>
-						</div>
-						<div class="col fw-bold">
-							<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StatusOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.Status)</a>
+							<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["CommentsOrder"]">@Html.DisplayNameFor(model => model.Comments)</a>
 						</div>
 						<div class="col fw-bold">Approve/Reject</div>
 					</div>
@@ -72,7 +69,7 @@
 				@foreach (var item in Model)
 				{
 					<li class="list-group-item">
-						<div class="row text-center">
+						<div class="row text-center d-flex justify-content-center align-items-center">
 							<div class="col">@Html.DisplayFor(model => item.Reason.Name)</div>
 							<div class="col">@Html.DisplayFor(model => item.StartDate)</div>
 							<div class="col">@Html.DisplayFor(model => item.HalfDayStart)</div>
@@ -83,8 +80,8 @@
 							<div class="col">
 								<form asp-action="Manage" method="post">
 									<input type="hidden" name="id" value="@item.RequestId" />
-									<button type="submit" class="btn btn-unstyled" name="option" value="Approved"><i class="bi bi-check-square-fill"></i></button>
-									<button type="submit" class="btn btn-unstyled" name="option" value="Cancelled"><i class="bi bi-x-square-fill"></i></button>
+									<button type="submit" class="btn btn-unstyled" name="option" value="Approved"><i class="bi bi-clipboard2-check-fill"></i></button>
+									<button type="submit" class="btn btn-unstyled" name="option" value="Cancelled"><i class="bi bi-clipboard2-x-fill"></i></button>
 								</form>
 							</div>
 						</div>
