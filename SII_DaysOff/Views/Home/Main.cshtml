@@ -87,6 +87,26 @@
 		<li class="nav-item">
 			<a class="nav-link" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Cancelled"><i class="bi bi-dash-circle"></i> Cancelled requests</a>
 		</li>
+		<form asp-controller="Home" asp-action="Main">
+			<div class="form-actions no-color">
+				<p>
+					<input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="btn btn-outline-primary" />
+					<input type="submit" value="Search" class="btn btn-outline-primary mx-3" /> |
+					<a asp-action="Main" class="mx-3">Back to Full List</a>
+					<select class="btn btn-outline-primary form-control my-2" name="SelectedOption">
+						<option value="select"> --- Select a field --- </option>
+						<option value="Reason">Reason</option>
+						<option value="StartDate">StartDate</option>
+						<option value="HalfDayStart">HalfDayStart</option>
+						<option value="EndDate">EndDate</option>
+						<option value="HalfDayEnd">HalfDayEnd</option>
+						<option value="RequestsDate">RequestsDate</option>
+						<option value="Comments">Comments</option>
+						<option value="Status">Status</option>
+					</select>
+				</p>
+			</div>
+		</form>
 	</ul>
 
 	<div class="card-body cardRequests">
@@ -98,28 +118,28 @@
 					<li class="list-group-item list-group-item-primary">
 						<div class="row text-center">
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["ReasonOrder"]">@Html.DisplayNameFor(model => model.Reason)</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["ReasonOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.Reason)</a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StartDayOrder"]">@Html.DisplayNameFor(model => model.StartDate)</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StartDayOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.StartDate)</a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayStartOrder"]">@Html.DisplayNameFor(model => model.HalfDayStart)</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayStartOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.HalfDayStart)</a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["EndDayOrder"]">@Html.DisplayNameFor(model => model.EndDate)</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["EndDayOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.EndDate)</a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayEndOrder"]">@Html.DisplayNameFor(model => model.HalfDayEnd)</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayEndOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.HalfDayEnd)</a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["RequestDayOrder"]">@Html.DisplayNameFor(model => model.RequestDate)</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["RequestDayOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.RequestDate)</a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["CommentsOrder"]">@Html.DisplayNameFor(model => model.Comments)</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["CommentsOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.Comments)</a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StatusOrder"]">@Html.DisplayNameFor(model => model.Status)</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StatusOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.Status)</a>
 							</div>
 							<div class="col fw-bold">Edit/Delete</div>
 						</div>
@@ -137,7 +157,8 @@
 											if (Html.DisplayFor(model => item.HalfDayStart).Equals(1))
 											{
 												<i class="bi bi-check-square-fill"></i>
-											} else
+											}
+											else
 											{
 												<i class="bi bi-x-square-fill"></i>
 											}

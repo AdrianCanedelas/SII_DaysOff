@@ -40,13 +40,30 @@
 				-->
 				<li class="list-group-item list-group-item-primary">
 					<div class="row text-center">
-						<div class="col fw-bold">Reason for the request</div>
-						<div class="col fw-bold">Start day</div>
-						<div class="col fw-bold">Is half day?</div>
-						<div class="col fw-bold">End day</div>
-						<div class="col fw-bold">Is half day?</div>
-						<div class="col fw-bold">Request day</div>
-						<div class="col fw-bold">Comments</div>
+						<div class="col fw-bold">
+							<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["ReasonOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.Reason)</a>
+						</div>
+						<div class="col fw-bold">
+							<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StartDayOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.StartDate)</a>
+						</div>
+						<div class="col fw-bold">
+							<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayStartOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.HalfDayStart)</a>
+						</div>
+						<div class="col fw-bold">
+							<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["EndDayOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.EndDate)</a>
+						</div>
+						<div class="col fw-bold">
+							<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayEndOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.HalfDayEnd)</a>
+						</div>
+						<div class="col fw-bold">
+							<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["RequestDayOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.RequestDate)</a>
+						</div>
+						<div class="col fw-bold">
+							<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["CommentsOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.Comments)</a>
+						</div>
+						<div class="col fw-bold">
+							<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StatusOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.Status)</a>
+						</div>
 						<div class="col fw-bold">Approve/Reject</div>
 					</div>
 				</li>

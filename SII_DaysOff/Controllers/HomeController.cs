@@ -36,8 +36,21 @@ namespace SII_DaysOff.Controllers
         
         public async Task<IActionResult> MainAsync(string sortOrder, string searchString, string optionStatus = "Pending")
         {
-            //Ordenación
-            ViewData["ReasonOrder"] = String.IsNullOrEmpty(sortOrder) ? "Reason_desc" : "";
+			ViewData["status"] = optionStatus;
+			string searchSelected = null;
+			try
+			{
+				searchSelected = Request.Form["SelectedOption"];
+			} catch (InvalidOperationException)
+			{
+
+			}
+
+			Console.WriteLine("\n\n\nselected --> " + searchSelected);
+			Console.WriteLine("status --> " + optionStatus);
+
+			//Ordenación
+			ViewData["ReasonOrder"] = String.IsNullOrEmpty(sortOrder) ? "Reason_desc" : "";
 			ViewData["StartDayOrder"] = sortOrder == "StartDay" ? "StartDay_desc" : "StartDay";
 			ViewData["HalfDayStartOrder"] = sortOrder == "HalfDayStart" ? "HalfDayStart_desc" : "HalfDayStart";
 			ViewData["EndDayOrder"] = sortOrder == "EndDay" ? "EndDay_desc" : "EndDay";
@@ -62,7 +75,41 @@ namespace SII_DaysOff.Controllers
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Name");
             ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Email");
 
-            switch(sortOrder)
+			if (!String.IsNullOrEmpty(searchString))
+			{
+				switch (searchSelected)
+				{
+					case "select":
+						requests = requests.Where(r => r.Reason.Name.Contains(searchString));
+						break;
+					case "Reason":
+						requests = requests.Where(r => r.Reason.Name.Contains(searchString));
+						break;
+					case "StartDate":
+						requests = requests.Where(r => r.StartDate.ToString().Contains(searchString));
+						break;
+					case "HalfDayStart":
+						requests = requests.Where(r => r.HalfDayStart == Boolean.Parse(searchString));
+						break;
+					case "EndDate":
+						requests = requests.Where(r => r.EndDate.ToString().Contains(searchString));
+						break;
+					case "HalfDayEnd":
+						requests = requests.Where(r => r.HalfDayEnd == Boolean.Parse(searchString));
+						break;
+					case "RequestDate":
+						requests = requests.Where(r => r.RequestDate.ToString().Contains(searchString));
+						break;
+					case "Comments":
+						requests = requests.Where(r => r.Comments.Contains(searchString));
+						break;
+					case "Status":
+						requests = requests.Where(r => r.Status.Name.Contains(searchString));
+						break;
+				}
+			}
+
+			switch (sortOrder)
             {
                 case "Rreason_desc":
                     requests = requests.OrderByDescending(r => r.Reason.Name);
