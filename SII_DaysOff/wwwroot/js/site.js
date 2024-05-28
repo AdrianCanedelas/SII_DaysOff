@@ -1,9 +1,9 @@
 ﻿/* Calendar */
-
 document.addEventListener('DOMContentLoaded', function () {
 	console.log('Entra JS')
 	var calendarEl = document.getElementById('calendar');
 	var calendar = new FullCalendar.Calendar(calendarEl, {
+		height: 750,
 		themeSystem: "bootstrap5",
 		headerToolbar: {
 			left: "prevYear,prev,next,nextYear today",
@@ -34,11 +34,18 @@ document.addEventListener('DOMContentLoaded', function () {
 	calendar.render();
 });
 
-/* Exportar calendario */
-/*$("#btnPDF").click(function () {
-	var sHtml = $("pdfContainer").html();
-	sHtml = sHtml.replace(/</g, "StrTag").replace(/>/g, "EndTag");
-	window.open('../Requests/GeneratePDF?html=' + sHtml, '_blank');
-});*/
-
+/* Exportar calendario -- format(C2) element.classList.add('rotate'); */
+console.log("entraaaa");
+$("#printPDF").click(function () {
+	console.log("entraaaa2");
+	var element = document.getElementById('parentDiv');
+	html2pdf().from(element).set({
+		margin: [50, 50, 50, 50],
+		enableLinks: true,
+		jsPDF: { orientation: 'landscape', unit: 'pt', format: 'A2', compressPDF: true },
+		filename: "Calendar.pdf",
+	}).save();
+});
+document.styleSheets[0].insertRule("td { page-break-inside: avoid; }");
 /* NavBar Requests */
+

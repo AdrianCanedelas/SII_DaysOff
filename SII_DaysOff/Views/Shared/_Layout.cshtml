@@ -9,10 +9,6 @@
 	<link rel="stylesheet" href="~/SII_DaysOff.styles.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" />
 	<link href="~/fullcalendar/fullcalendar-6.1.13/dist/index.global.min.js" rel="stylesheet" />
-
-	<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-	<script src="~/js/site.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 </head>
 <body>
 	@if (!ViewData["notShow"].Equals(true) || ViewData["notShow"] == null)
@@ -47,9 +43,13 @@
 		</div>
 	</footer>
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="~/js/site.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 	<script src="~/fullcalendar/fullcalendar-6.1.13/dist/index.global.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

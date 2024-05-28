@@ -147,7 +147,7 @@ namespace SII_DaysOff.Controllers
                         
                 _context.Add(requests);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return LocalRedirect("~/Home/Main");
             }
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.CreatedBy);
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.ModifiedBy);
@@ -286,7 +286,7 @@ namespace SII_DaysOff.Controllers
                     title = r.User.Name + " " + r.User.Surname,
                     start = r.StartDate.ToString("yyyy-MM-dd"),
                     end = r.EndDate.ToString("yyyy-MM-dd"),
-                    description = r.UserId
+                    description = r.Comments,
                 });
 
             return new JsonResult(daysOff);
@@ -315,7 +315,7 @@ namespace SII_DaysOff.Controllers
                 .Include(r => r.Status)
                 .Include(r => r.Reason)
                 .ToList()
-                .Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId));
+                .Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Approved"))?.StatusId));
             var fileName = "calendar.xlsx";
             return GenerateExcel(fileName, daysOff);
         }
