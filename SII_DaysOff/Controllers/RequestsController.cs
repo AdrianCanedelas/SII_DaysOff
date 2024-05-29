@@ -540,7 +540,7 @@ namespace SII_DaysOff.Controllers
 				DateTime firstDayOfMonth = new DateTime(year, month, 1);
                 int daysMonth = DateTime.DaysInMonth(year, month);
                 int row = 5;
-                int column = ((int)firstDayOfMonth.DayOfWeek + 2) % 7;
+                int column = ((int)firstDayOfMonth.DayOfWeek + 1) % 7;
 
                 for(int day = 1; day <= daysMonth; day++)
                 {
