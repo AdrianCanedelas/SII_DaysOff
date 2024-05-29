@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using SII_DaysOff.Areas.Identity.Data
-@model IEnumerable<SII_DaysOff.Models.Requests>
+@using SII_DaysOff.Data
+
+@model PaginatedList<Requests>
 
 @{
 	ViewData["notShow"] = false;
@@ -90,7 +92,7 @@
 		<form asp-controller="Home" asp-action="Main">
 			<div class="form-actions no-color">
 				<p>
-					<input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="btn btn-outline-primary" >
+					<input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="btn btn-outline-primary">
 					<input type="submit" value="Search" class="btn btn-outline-primary mx-3" /> |
 					<a asp-action="Main" class="mx-3">Back to Full List</a>
 				</p>
@@ -105,28 +107,28 @@
 					<li class="list-group-item list-group-item-primary">
 						<div class="row text-center">
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["ReasonOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.Reason)<i class="bi bi-caret-down mx-1"></i></a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["ReasonOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Reason<i class="bi bi-caret-down mx-1"></i></a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StartDayOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.StartDate)<i class="bi bi-caret-up mx-1"></i></a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StartDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Start Date<i class="bi bi-caret-up mx-1"></i></a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayStartOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.HalfDayStart)</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayStartOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Is Half Day?</a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["EndDayOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.EndDate)</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["EndDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">End Date</a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayEndOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.HalfDayEnd)</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayEndOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Is Half Day?</a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["RequestDayOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.RequestDate)</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["RequestDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Request Date</a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["CommentsOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.Comments)</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["CommentsOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Comments</a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StatusOrder"]" asp-route-optionStatus="@ViewData["status"]">@Html.DisplayNameFor(model => model.Status)</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StatusOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Status</a>
 							</div>
 							<div class="col fw-bold">Edit/Delete</div>
 						</div>
@@ -188,6 +190,24 @@
 				</ul>
 			</div>
 		</div>
+	</div>
+
+	@{
+		var previousDisabled = !Model.HasPreviousPage ? "disabled" : "";
+		var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+	}
+
+	<div class="card-footer py-3">
+		<a asp-action="Main" asp-route-sortOrder="@ViewData["currentOrder"]"
+			asp-route-numPage="@(Model.PageIndex -1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
+			class="btn btn-primary @previousDisabled">Previous</a>
+		@for (var i=1; i<=Model.TotalPages; i++){ var activePage = (i == Model.PageIndex) ? "active" : ""; <a
+			asp-action="Main" asp-route-sortOrder="@ViewData["currentOrder"]" asp-route-numPage="@i"
+			asp-route-currentFilter="@ViewData["CurrentFilter"]" class="btn btn-primary @activePage">@i</a>}
+
+			<a asp-action="Main" asp-route-sortOrder="@ViewData["CurrentOrder"]"
+				asp-route-numPage="@(Model.PageIndex + 1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
+				class="btn btn-primary @nextDisabled">Next</a>
 	</div>
 </div>
 

@@ -5,10 +5,8 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<a asp-controller="requests" asp-action="ExportExcel">Export</a>
-
-@*<button id="btnPDF" class="btn btn-primary">Export calendar</button>*@
-
+<a asp-controller="requests" asp-action="ExportExcel" class="btn btn-outline-success fw-bold mb-3" asp-route-type="requests">Export requests</a>
+<a asp-controller="requests" asp-action="ExportExcel" class="btn btn-outline-success fw-bold mb-3" asp-route-type="calendar">Export Excel Calendar</a>
 <button id="printPDF" class="btn btn-outline-primary fw-bold mb-3">Export calendar</button>
 
 <div id="parentDiv">

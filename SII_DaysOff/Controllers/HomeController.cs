@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SII_DaysOff.Areas.Identity.Data;
+using SII_DaysOff.Data;
 using SII_DaysOff.Models;
 using System.Diagnostics;
 
@@ -33,13 +34,13 @@ namespace SII_DaysOff.Controllers
             ViewData["notShow"] = false;
             return View();
         }
-        
-        public async Task<IActionResult> MainAsync(string sortOrder, string searchString, string optionStatus = "Pending")
-        {
+
+		public async Task<IActionResult> MainAsync(string sortOrder, string searchString, int? numPage, string currentFilter, string optionStatus = "Pending")
+		{
 			ViewData["status"] = optionStatus;
 			Console.WriteLine("status --> " + optionStatus);
 
-			//Ordenación
+			// Ordenación
 			ViewData["ReasonOrder"] = String.IsNullOrEmpty(sortOrder) ? "Reason_desc" : "";
 			ViewData["StartDayOrder"] = sortOrder == "StartDay" ? "StartDay_desc" : "StartDay";
 			ViewData["HalfDayStartOrder"] = sortOrder == "HalfDayStart" ? "HalfDayStart_desc" : "HalfDayStart";
@@ -49,41 +50,56 @@ namespace SII_DaysOff.Controllers
 			ViewData["CommentsOrder"] = sortOrder == "Comments" ? "Comments_desc" : "Comments";
 			ViewData["StatusOrder"] = sortOrder == "Status" ? "Status_desc" : "Status";
 
-			//Cuadro de búsqueda
+			// Cuadro de búsqueda
 			ViewData["CurrentFilter"] = searchString;
 
 			var user = await _userManager.GetUserAsync(User);
-            ViewData["notShow"] = false;
-            var requests = _context.Requests
-                .Include(r => r.Reason)
-				.Include(r => r.Status)
-                .ToList()
-                .Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals(optionStatus))?.StatusId))
-                .Where(r => r.UserId == (_context.AspNetUsers.FirstOrDefault(u => u.Name.Equals(user.Name))?.Id));
+			ViewData["notShow"] = false;
 
-            ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "Name");
-            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Name");
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Email");
+			var statusId = _context.Statuses.FirstOrDefault(s => s.Name.Equals(optionStatus))?.StatusId;
+			var userId = _context.AspNetUsers.FirstOrDefault(u => u.Name.Equals(user.Name))?.Id;
+
+			if (statusId == null || userId == null)
+			{
+				return View(new List<Requests>());
+			}
+
+			var requests = _context.Requests
+				.Include(r => r.Reason)
+				.Include(r => r.Status)
+				.Where(r => r.StatusId == statusId)
+				.Where(r => r.UserId == userId)
+				.AsQueryable();
+
+			ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "Name");
+			ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Name");
+			ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Email");
+
+			if (searchString != null) numPage = 1;
+			else searchString = currentFilter;
 
 			if (!String.IsNullOrEmpty(searchString))
 			{
-				requests = requests.Where(r => r.Reason.Name.Contains(searchString) 
-				|| r.StartDate.ToString().Contains(searchString)
-				|| r.EndDate.ToString().Contains(searchString)
-				|| r.RequestDate.ToString().Contains(searchString)
-				|| r.Comments.Contains(searchString)
-				|| r.Status.Name.Contains(searchString));
+				requests = requests.Where(r => r.Reason.Name.Contains(searchString)
+					|| r.StartDate.ToString().Contains(searchString)
+					|| r.EndDate.ToString().Contains(searchString)
+					|| r.RequestDate.ToString().Contains(searchString)
+					|| r.Comments.Contains(searchString)
+					|| r.Status.Name.Contains(searchString));
 			}
 
+			ViewData["CurrentOrder"] = sortOrder;
+			ViewData["CurrentFilter"] = currentFilter;
+
 			switch (sortOrder)
-            {
-                case "Rreason_desc":
-                    requests = requests.OrderByDescending(r => r.Reason.Name);
-                    break;
-                case "StartDay_desc":
+			{
+				case "Reason_desc":
+					requests = requests.OrderByDescending(r => r.Reason.Name);
+					break;
+				case "StartDay_desc":
 					requests = requests.OrderByDescending(r => r.StartDate);
 					break;
-                case "StartDay":
+				case "StartDay":
 					requests = requests.OrderBy(r => r.StartDate);
 					break;
 				case "HalfDayStart":
@@ -124,21 +140,27 @@ namespace SII_DaysOff.Controllers
 					break;
 			}
 
-            /**/
 			var managerUserIds = _context.Users
 				.Where(u => u.Manager == user.Id)
 				.Select(u => u.Id)
 				.ToList();
+
 			var pendingRequests = _context.Requests
 				.ToList()
 				.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId))
-				.Where(r => managerUserIds.Contains(r.UserId)).Count();
+				.Where(r => managerUserIds.Contains(r.UserId))
+				.Count();
+
 			ViewData["PendingRequests"] = pendingRequests;
 
-            return View(requests);
-        }
-        
-        public IActionResult Reasons()
+			int registerCount = 5;
+
+			return View(await PaginatedList<Requests>.CreateAsync(requests.AsNoTracking(), numPage?? 1, registerCount));
+		}
+
+
+
+		public IActionResult Reasons()
         {
             ViewData["notShow"] = false;
             var reasons = _context.Reasons.ToList();

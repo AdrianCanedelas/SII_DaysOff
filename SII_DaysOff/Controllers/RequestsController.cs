@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
@@ -134,8 +136,102 @@ namespace SII_DaysOff.Controllers
 			return View(requests);
         }
 
-        // GET: Requests/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+		/*
+         public async Task<IActionResult> ManageIndex(string sortOrder, string searchString, int? numPage, string currentFilter)
+        {
+			//Ordenación
+			ViewData["ReasonOrder"] = String.IsNullOrEmpty(sortOrder) ? "Reason_desc" : "";
+			ViewData["StartDayOrder"] = sortOrder == "StartDay" ? "StartDay_desc" : "StartDay";
+			ViewData["HalfDayStartOrder"] = sortOrder == "HalfDayStart" ? "HalfDayStart_desc" : "HalfDayStart";
+			ViewData["EndDayOrder"] = sortOrder == "EndDay" ? "EndDay_desc" : "EndDay";
+			ViewData["HalfDayEndOrder"] = sortOrder == "HalfDayEnd" ? "HalfDayEnd_desc" : "HalfDayEnd";
+			ViewData["RequestDayOrder"] = sortOrder == "RequestDay" ? "RequestDay_desc" : "RequestDay";
+			ViewData["CommentsOrder"] = sortOrder == "Comments" ? "Comments_desc" : "Comments";
+
+			//Cuadro de búsqueda
+			ViewData["CurrentFilter"] = searchString;
+
+			var user = await _userManager.GetUserAsync(User);
+			var userId = _context.AspNetUsers.FirstOrDefault(u => u.Name.Equals(user.Name))?.Id;
+
+			var managerUserIds = _context.Users
+	            .Where(u => u.Manager == user.Id)
+	            .Select(u => u.Id)
+	            .ToList();
+            var requests = _context.Requests
+                .Include(r => r.Reason)
+                .Where(r => r.StatusId == userId)
+                .Where(r => managerUserIds.Contains(r.UserId)).AsQueryable();
+
+			if (searchString != null) numPage = 1;
+			else searchString = currentFilter;
+
+			if (!String.IsNullOrEmpty(searchString))
+			{
+				requests = requests.Where(r => r.Reason.Name.Contains(searchString) 
+                || r.StartDate.ToString().Contains(searchString) 
+				|| r.EndDate.ToString().Contains(searchString)
+				|| r.RequestDate.ToString().Contains(searchString)
+				|| r.Comments.Contains(searchString));
+			}
+
+			ViewData["CurrentOrder"] = sortOrder;
+			ViewData["CurrentFilter"] = currentFilter;
+
+			switch (sortOrder)
+			{
+				case "Rreason_desc":
+					requests = requests.OrderByDescending(r => r.Reason.Name);
+					break;
+				case "StartDay_desc":
+					requests = requests.OrderByDescending(r => r.StartDate);
+					break;
+				case "StartDay":
+					requests = requests.OrderBy(r => r.StartDate);
+					break;
+				case "HalfDayStart":
+					requests = requests.OrderBy(r => r.HalfDayStart);
+					break;
+				case "HalfDayStart_desc":
+					requests = requests.OrderByDescending(r => r.HalfDayStart);
+					break;
+				case "EndDay":
+					requests = requests.OrderBy(r => r.EndDate);
+					break;
+				case "EndDay_desc":
+					requests = requests.OrderByDescending(r => r.EndDate);
+					break;
+				case "HalfDayEnd":
+					requests = requests.OrderBy(r => r.HalfDayEnd);
+					break;
+				case "HalfDayEnd_desc":
+					requests = requests.OrderByDescending(r => r.HalfDayEnd);
+					break;
+				case "RequestDay":
+					requests = requests.OrderBy(r => r.RequestDate);
+					break;
+				case "RequestDay_desc":
+					requests = requests.OrderByDescending(r => r.RequestDate);
+					break;
+				case "Comments":
+					requests = requests.OrderBy(r => r.Comments);
+					break;
+				case "Comments_desc":
+					requests = requests.OrderByDescending(r => r.Comments);
+					break;
+				case "Status_desc":
+					requests = requests.OrderByDescending(r => r.Status.Name);
+					break;
+			}
+
+			int registerCount = 5;
+
+			return View(await PaginatedList<Requests>.CreateAsync(requests.AsNoTracking(), numPage?? 1, registerCount));
+        }
+         */
+
+		// GET: Requests/Details/5
+		public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.Requests == null)
             {
@@ -375,7 +471,269 @@ namespace SII_DaysOff.Controllers
                 );
         }
 
-        public async Task<FileResult> ExportExcel()
+		public async Task<FileResult> ExportExcel(int year, int month, string type)
+		{
+			var daysOff = _context.Requests
+				.Include(r => r.User)
+				.Include(r => r.Status)
+				.Include(r => r.Reason)
+				.ToList()
+				.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Approved"))?.StatusId));
+			var fileName = type + ".xlsx";
+            if(type.Equals("requests")) return GenerateExcel(fileName, daysOff);
+            return GenerateExcel(fileName, daysOff, 2024, 5);
+		}
+
+		private FileResult GenerateExcel(string fileName, IEnumerable<Requests> requests, int year, int month)
+		{
+			using (XLWorkbook workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Calendario");
+                worksheet.Style.Fill.SetBackgroundColor(XLColor.WhiteSmoke);
+
+				var mergedCell = worksheet.Range("B2:H3").Merge();
+
+				mergedCell.Value = CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(month).ToUpper() + " " + year;
+
+				mergedCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+				mergedCell.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+				mergedCell.Style.Fill.SetBackgroundColor(XLColor.BlueGray);
+				mergedCell.Style.Font.Bold = true;
+                mergedCell.Style.Font.SetFontSize(22);
+				mergedCell.Style.Font.SetFontColor(XLColor.White);
+				setBorder(worksheet, -1, -1, mergedCell);
+				
+
+				worksheet.Cell(4, 2).Value = "Mon";
+                worksheet.Cell(4, 3).Value = "Tue";
+				worksheet.Cell(4, 4).Value = "Wed";
+				worksheet.Cell(4, 5).Value = "Thu";
+				worksheet.Cell(4, 6).Value = "Fri";
+				worksheet.Cell(4, 7).Value = "Sat";
+				worksheet.Cell(4, 8).Value = "Sun";
+
+				for (int i = 2; i <= 8; i++)
+				{
+					worksheet.Column(i).Width = 35;
+					worksheet.Cell(4, i).Style.Fill.SetBackgroundColor(XLColor.BlueGray);
+					worksheet.Cell(4, i).Style.Border.SetBottomBorder(XLBorderStyleValues.Thin);
+					worksheet.Cell(4, i).Style.Border.SetBottomBorderColor(XLColor.CoolBlack);
+					worksheet.Cell(4, i).Style.Border.SetTopBorder(XLBorderStyleValues.Thin);
+					worksheet.Cell(4, i).Style.Border.SetTopBorderColor(XLColor.CoolBlack);
+					worksheet.Cell(4, i).Style.Border.SetRightBorder(XLBorderStyleValues.Thin);
+					worksheet.Cell(4, i).Style.Border.SetRightBorderColor(XLColor.CoolBlack);
+					worksheet.Cell(4, i).Style.Border.SetLeftBorder(XLBorderStyleValues.Thin);
+					worksheet.Cell(4, i).Style.Border.SetLeftBorderColor(XLColor.CoolBlack);
+                    worksheet.Cell(4, i).Style.Font.SetFontColor(XLColor.White);
+                    worksheet.Cell(4, i).Style.Font.Bold = true;
+                    worksheet.Cell(4, i).Style.Font.SetFontSize(16);
+					worksheet.Cell(4, i).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+					worksheet.Cell(4, i).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+				}
+
+				for (int i = 4; i <= 40; i++)
+				{
+					if (i > 4) worksheet.Row(i).Height = 25;
+					else worksheet.Row(i).Height = 20;
+				}
+
+				DateTime firstDayOfMonth = new DateTime(year, month, 1);
+                int daysMonth = DateTime.DaysInMonth(year, month);
+                int row = 5;
+                int column = ((int)firstDayOfMonth.DayOfWeek + 2) % 7;
+
+                for(int day = 1; day <= daysMonth; day++)
+                {
+                    worksheet.Cell(row, column).Value = day;
+
+					worksheet.Cell(row, column).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
+					worksheet.Cell(row, column).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+					worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(XLColor.GhostWhite);
+                    setBorder(worksheet, row, column, null);
+
+                    if(requests.Any(r => r.StartDate <= new DateTime(year, month, day) && r.EndDate >= new DateTime(year, month, day)))
+                    {
+                        worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(XLColor.BluePigment);
+                        worksheet.Cell(row, column).Style.Font.SetFontColor(XLColor.White);
+
+						for (int i = 0; i < 6; i++)
+						{
+							row++;
+							worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(XLColor.BlueBell);
+						}
+                        row -= 6;
+                        int pastRow = row;
+						foreach (Requests r in requests)
+                        {
+                            if(r.StartDate <= new DateTime(year, month, day) && r.EndDate >= new DateTime(year, month, day))
+                            {
+                                if(row>pastRow) worksheet.Cell(row, column).Value += ("     ");
+								worksheet.Cell(row, column).Value += ("             |" + r.User.Name + " " + r.User.Surname + "   |" + r.Reason.Name);
+                                row++;
+                            }
+                        }
+                        row = pastRow;
+                    } else
+                    {
+						for (int i = 0; i < 6; i++)
+						{
+							row++;
+							worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(XLColor.GhostWhite);
+						}
+						row -= 6;
+					}
+
+                    if(column == 8)
+                    {
+                        row = bottomRows(worksheet, row, column);
+						column = 2;
+                    } else {
+						row = bottomRows(worksheet, row, column);
+						row -= 6;
+						column++;
+					}
+                }
+				using (MemoryStream stream = new MemoryStream())
+				{
+					workbook.SaveAs(stream);
+					return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+				}
+			}
+		}
+        
+        /*private FileResult GenerateExcel(string fileName, IEnumerable<Requests> requests, int year, int month)
+		{
+			using (XLWorkbook workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Calendario");
+
+				var mergedCell = worksheet.Range("B2:H3").Merge();
+
+				mergedCell.Value = CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(month).ToUpper() + " " + year;
+
+				mergedCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+				mergedCell.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+				mergedCell.Style.Fill.SetBackgroundColor(XLColor.BlueGray);
+				mergedCell.Style.Font.Bold = true;
+                mergedCell.Style.Font.SetFontSize(22);
+				mergedCell.Style.Font.SetFontColor(XLColor.White);
+				setBorder(worksheet, -1, -1, mergedCell);
+				
+
+				worksheet.Cell(4, 2).Value = "Mon";
+                worksheet.Cell(4, 3).Value = "Tue";
+				worksheet.Cell(4, 4).Value = "Wed";
+				worksheet.Cell(4, 5).Value = "Thu";
+				worksheet.Cell(4, 6).Value = "Fri";
+				worksheet.Cell(4, 7).Value = "Sat";
+				worksheet.Cell(4, 8).Value = "Sun";
+
+				for (int i = 2; i <= 8; i++)
+				{
+					worksheet.Column(i).Width = 35;
+					worksheet.Cell(4, i).Style.Fill.SetBackgroundColor(XLColor.BlueGray);
+					worksheet.Cell(4, i).Style.Border.SetBottomBorder(XLBorderStyleValues.Thin);
+					worksheet.Cell(4, i).Style.Border.SetBottomBorderColor(XLColor.CoolBlack);
+					worksheet.Cell(4, i).Style.Border.SetTopBorder(XLBorderStyleValues.Thin);
+					worksheet.Cell(4, i).Style.Border.SetTopBorderColor(XLColor.CoolBlack);
+					worksheet.Cell(4, i).Style.Border.SetRightBorder(XLBorderStyleValues.Thin);
+					worksheet.Cell(4, i).Style.Border.SetRightBorderColor(XLColor.CoolBlack);
+					worksheet.Cell(4, i).Style.Border.SetLeftBorder(XLBorderStyleValues.Thin);
+					worksheet.Cell(4, i).Style.Border.SetLeftBorderColor(XLColor.CoolBlack);
+                    worksheet.Cell(4, i).Style.Font.SetFontColor(XLColor.White);
+                    worksheet.Cell(4, i).Style.Font.Bold = true;
+                    worksheet.Cell(4, i).Style.Font.SetFontSize(16);
+					worksheet.Cell(4, i).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+					worksheet.Cell(4, i).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+				}
+
+				for (int i = 4; i <= 9; i++)
+				{
+					if (i > 4) worksheet.Row(i).Height = 90;
+					else worksheet.Row(i).Height = 20;
+				}
+
+				DateTime firstDayOfMonth = new DateTime(year, month, 1);
+                int daysMonth = DateTime.DaysInMonth(year, month);
+                int row = 5;
+                int column = ((int)firstDayOfMonth.DayOfWeek + 2) % 7;
+
+                for(int day = 1; day <= daysMonth; day++)
+                {
+                    worksheet.Cell(row, column).Value = day;
+
+                    worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(XLColor.GhostWhite);
+                    setBorder(worksheet, row, column, null);
+
+                    if(requests.Any(r => r.StartDate <= new DateTime(year, month, day) && r.EndDate >= new DateTime(year, month, day)))
+                    {
+                        worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(XLColor.BlueBell);
+                        foreach(Requests r in requests)
+                        {
+                            if(r.StartDate <= new DateTime(year, month, day) && r.EndDate >= new DateTime(year, month, day))
+                            {
+                                worksheet.Cell(row, column).Value += ("             |User: " + r.User.Name + " " + r.User.Surname);
+                            }
+                        }
+                    }
+
+                    if(column == 8)
+                    {
+                        column = 2;
+                        row++;
+                    } else {
+						column++;
+					}
+                }
+				using (MemoryStream stream = new MemoryStream())
+				{
+					workbook.SaveAs(stream);
+					return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+				}
+			}
+		}*/
+
+		public void setBorder(IXLWorksheet worksheet, int row, int column, IXLRange mergedCell)
+        {
+            if(row != -1)
+            {
+				worksheet.Cell(row, column).Style.Border.SetBottomBorder(XLBorderStyleValues.Thin);
+				worksheet.Cell(row, column).Style.Border.SetBottomBorderColor(XLColor.CoolBlack);
+				worksheet.Cell(row, column).Style.Border.SetTopBorder(XLBorderStyleValues.Thin);
+				worksheet.Cell(row, column).Style.Border.SetTopBorderColor(XLColor.CoolBlack);
+				worksheet.Cell(row, column).Style.Border.SetRightBorder(XLBorderStyleValues.Thin);
+				worksheet.Cell(row, column).Style.Border.SetRightBorderColor(XLColor.CoolBlack);
+				worksheet.Cell(row, column).Style.Border.SetLeftBorder(XLBorderStyleValues.Thin);
+				worksheet.Cell(row, column).Style.Border.SetLeftBorderColor(XLColor.CoolBlack);
+			} else
+            {
+				mergedCell.Style.Border.SetBottomBorder(XLBorderStyleValues.Thin);
+				mergedCell.Style.Border.SetBottomBorderColor(XLColor.CoolBlack);
+				mergedCell.Style.Border.SetTopBorder(XLBorderStyleValues.Thin);
+				mergedCell.Style.Border.SetTopBorderColor(XLColor.CoolBlack);
+				mergedCell.Style.Border.SetRightBorder(XLBorderStyleValues.Thin);
+				mergedCell.Style.Border.SetRightBorderColor(XLColor.CoolBlack);
+				mergedCell.Style.Border.SetLeftBorder(XLBorderStyleValues.Thin);
+				mergedCell.Style.Border.SetLeftBorderColor(XLColor.CoolBlack);
+			}
+		}
+
+        public int bottomRows(IXLWorksheet worksheet, int row, int column)
+        {
+			for (int i = 0; i < 6; i++)
+			{
+				row++;
+				//worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(XLColor.GhostWhite);
+				worksheet.Cell(row, column).Style.Border.SetRightBorder(XLBorderStyleValues.Thin);
+				worksheet.Cell(row, column).Style.Border.SetRightBorderColor(XLColor.CoolBlack);
+				worksheet.Cell(row, column).Style.Border.SetLeftBorder(XLBorderStyleValues.Thin);
+				worksheet.Cell(row, column).Style.Border.SetLeftBorderColor(XLColor.CoolBlack);
+			}
+
+            return row;
+		}
+
+		/*public async Task<FileResult> ExportExcel()
         {
             var daysOff = _context.Requests
                 .Include(r => r.User)
@@ -385,7 +743,7 @@ namespace SII_DaysOff.Controllers
                 .Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Approved"))?.StatusId));
             var fileName = "calendar.xlsx";
             return GenerateExcel(fileName, daysOff);
-        }
+        }*/
 
         private FileResult GenerateExcel(string fileName, IEnumerable<Requests> requests)
         {
@@ -421,8 +779,8 @@ namespace SII_DaysOff.Controllers
             }
         }
 
-        // GET: Requests/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+		// GET: Requests/Delete/5
+		public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null || _context.Requests == null)
             {
