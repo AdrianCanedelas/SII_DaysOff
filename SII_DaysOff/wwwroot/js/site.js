@@ -49,3 +49,10 @@ $("#printPDF").click(function () {
 document.styleSheets[0].insertRule("td { page-break-inside: avoid; }");
 /* NavBar Requests */
 
+/* Cambiar icono ordenacion */
+/*function cambiarClase() {
+	console.log('entraCambiarClase');
+	var icono = document.getElementById("miIcono");
+	icono.classList.toggle("bi bi-caret-up mx-1");
+}*/
+

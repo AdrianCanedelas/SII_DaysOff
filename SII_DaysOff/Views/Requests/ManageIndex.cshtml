@@ -1,122 +1,120 @@
 ﻿@model IEnumerable<SII_DaysOff.Models.Requests>
 
 @{
-    ViewData["notShow"] = false;
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["notShow"] = false;
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1 class="mx-5">Manage requests</h1>
 
-<div class="card-body">
-	<div class="row">
-		<div class="col-auto">
-			<!--<div class="dropdown">
-				<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown">
-					Type of request
-				</button>
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-					<li><a class="dropdown-item" href="#">Pending requests</a></li>
-					<li><hr class="dropdown-divider"></li>
-					<li><a class="dropdown-item" href="#">Approved requests</a></li>
-					<li><hr class="dropdown-divider"></li>
-					<li><a class="dropdown-item" href="#">Cancelled request</a></li>
-				</ul>
-			</div>-->
-		</div>
+<div class="card shadow my-4 mx-4">
+	<div class="card-header bg-light">
+		<form asp-controller="Requests" asp-action="ManageIndex" class="mx-2 mt-3">
+			<div class="form-actions no-color">
+				<p>
+					<input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="btn btn-outline-primary" />
+					<input type="submit" value="Search" class="btn btn-outline-primary mx-3" /> |
+					<a asp-controller="Requests" asp-action="ManageIndex" class="mx-3">Back to Full List</a>
+				</p>
+			</div>
+		</form>
+	</div>
 
-		<!-- Aquí aparecerán las solicitudes -->
-		<div class="col">
-			<ul class="list-group ">
-				<!--
-					1. Motivo
-					2. Día inicio
-					3. Es medio día?
-					4. Día fin
-					5. Es medio día ?
-					6. Días totales
-					7. Día solicitud
-					8. Estado
-				-->
-				<li class="list-group-item list-group-item-primary">
-					<div class="row text-center">
-						<div class="col fw-bold">
-							<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["ReasonOrder"]">@Html.DisplayNameFor(model => model.Reason)</a>
-						</div>
-						<div class="col fw-bold">
-							<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["StartDayOrder"]">@Html.DisplayNameFor(model => model.StartDate)</a>
-						</div>
-						<div class="col fw-bold">
-							<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["HalfDayStartOrder"]">@Html.DisplayNameFor(model => model.HalfDayStart)</a>
-						</div>
-						<div class="col fw-bold">
-							<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["EndDayOrder"]">@Html.DisplayNameFor(model => model.EndDate)</a>
-						</div>
-						<div class="col fw-bold">
-							<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["HalfDayEndOrder"]">@Html.DisplayNameFor(model => model.HalfDayEnd)</a>
-						</div>
-						<div class="col fw-bold">
-							<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["RequestDayOrder"]">@Html.DisplayNameFor(model => model.RequestDate)</a>
-						</div>
-						<div class="col fw-bold">
-							<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["CommentsOrder"]">@Html.DisplayNameFor(model => model.Comments)</a>
-						</div>
-						<div class="col fw-bold">Approve/Reject</div>
-					</div>
-				</li>
+	<div class="card-body">
+		<div class="row">
 
-				<!-- Solicitudes -->
-				@foreach (var item in Model)
-				{
-					<li class="list-group-item">
-						<div class="row text-center d-flex justify-content-center align-items-center">
-							<div class="col">@Html.DisplayFor(model => item.Reason.Name)</div>
-							<div class="col">@Html.DisplayFor(model => item.StartDate)</div>
-							<div class="col">@Html.DisplayFor(model => item.HalfDayStart)</div>
-							<div class="col">@Html.DisplayFor(model => item.EndDate)</div>
-							<div class="col">@Html.DisplayFor(model => item.HalfDayEnd)</div>
-							<div class="col">@Html.DisplayFor(model => item.RequestDate)</div>
-							<div class="col">@Html.DisplayFor(model => item.Comments)</div>
-							<div class="col">
-								<form asp-action="Manage" method="post">
-									<input type="hidden" name="id" value="@item.RequestId" />
-									<button type="submit" class="btn btn-unstyled" name="option" value="Approved"><i class="bi bi-clipboard2-check-fill"></i></button>
-									<button type="submit" class="btn btn-unstyled" name="option" value="Cancelled"><i class="bi bi-clipboard2-x-fill"></i></button>
-								</form>
+			<!-- Aquí aparecerán las solicitudes -->
+			<div class="col">
+				<ul class="list-group ">
+					<li class="list-group-item list-group-item-primary">
+						<div class="row text-center">
+							<div class="col fw-bold">
+								<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["ReasonOrder"]">@Html.DisplayNameFor(model => model.Reason)</a>
 							</div>
+							<div class="col fw-bold">
+								<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["StartDayOrder"]">@Html.DisplayNameFor(model => model.StartDate)</a>
+							</div>
+							<div class="col fw-bold">
+								<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["HalfDayStartOrder"]">@Html.DisplayNameFor(model => model.HalfDayStart)</a>
+							</div>
+							<div class="col fw-bold">
+								<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["EndDayOrder"]">@Html.DisplayNameFor(model => model.EndDate)</a>
+							</div>
+							<div class="col fw-bold">
+								<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["HalfDayEndOrder"]">@Html.DisplayNameFor(model => model.HalfDayEnd)</a>
+							</div>
+							<div class="col fw-bold">
+								<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["RequestDayOrder"]">@Html.DisplayNameFor(model => model.RequestDate)</a>
+							</div>
+							<div class="col fw-bold">
+								<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["CommentsOrder"]">@Html.DisplayNameFor(model => model.Comments)</a>
+							</div>
+							<div class="col fw-bold">Approve/Reject</div>
 						</div>
 					</li>
-				}
 
-				<!--<li class="list-group-item">
-					<div class="row text-center">
-						<div class="col">
-							Vacations
+					@if (Model.Count() == 0)
+					{
+						<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+							<strong>No requests found | </strong> Press <a asp-controller="Requests" asp-action="ManageIndex" class="alert-link">"Here"</a> to see all requests.
+							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 						</div>
-						<div class="col">
-							13/05/2024
+					}
+
+					<!-- Solicitudes -->
+					@foreach (var item in Model)
+					{
+						<li class="list-group-item">
+							<div class="row text-center d-flex justify-content-center align-items-center">
+								<div class="col">@Html.DisplayFor(model => item.Reason.Name)</div>
+								<div class="col">@Html.DisplayFor(model => item.StartDate)</div>
+								<div class="col">@Html.DisplayFor(model => item.HalfDayStart)</div>
+								<div class="col">@Html.DisplayFor(model => item.EndDate)</div>
+								<div class="col">@Html.DisplayFor(model => item.HalfDayEnd)</div>
+								<div class="col">@Html.DisplayFor(model => item.RequestDate)</div>
+								<div class="col">@Html.DisplayFor(model => item.Comments)</div>
+								<div class="col">
+									<form asp-action="Manage" method="post">
+										<input type="hidden" name="id" value="@item.RequestId" />
+										<button type="submit" class="btn btn-unstyled" name="option" value="Approved"><i class="bi bi-clipboard2-check-fill"></i></button>
+										<button type="submit" class="btn btn-unstyled" name="option" value="Cancelled"><i class="bi bi-clipboard2-x-fill"></i></button>
+									</form>
+								</div>
+							</div>
+						</li>
+					}
+
+					<!--<li class="list-group-item">
+						<div class="row text-center">
+							<div class="col">
+								Vacations
+							</div>
+							<div class="col">
+								13/05/2024
+							</div>
+							<div class="col">
+								Is half day?
+							</div>
+							<div class="col">
+								31/05/2024
+							</div>
+							<div class="col">
+								Is half day?
+							</div>
+							<div class="col">
+								15
+							</div>
+							<div class="col">
+								10/05/2024
+							</div>
+							<div class="col">
+								Pending
+							</div>
 						</div>
-						<div class="col">
-							Is half day?
-						</div>
-						<div class="col">
-							31/05/2024
-						</div>
-						<div class="col">
-							Is half day?
-						</div>
-						<div class="col">
-							15
-						</div>
-						<div class="col">
-							10/05/2024
-						</div>
-						<div class="col">
-							Pending
-						</div>
-					</div>
-				</li>-->
-			</ul>
+					</li>-->
+				</ul>
+			</div>
 		</div>
 	</div>
 </div>

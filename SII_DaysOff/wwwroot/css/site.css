@@ -81,3 +81,12 @@ a.title {
 .rotate {
     transform: rotate(-90deg);
 }
+
+.btn-xl {
+    width: 250px;
+    height: 38px;
+}
+
+.test {
+    overflow-x: auto;
+}

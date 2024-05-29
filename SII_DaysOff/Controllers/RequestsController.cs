@@ -50,7 +50,7 @@ namespace SII_DaysOff.Controllers
             return View();
         }
 
-        public async Task<IActionResult> ManageIndex(string sortOrder)
+        public async Task<IActionResult> ManageIndex(string sortOrder, string searchString)
         {
 			//Ordenación
 			ViewData["ReasonOrder"] = String.IsNullOrEmpty(sortOrder) ? "Reason_desc" : "";
@@ -60,6 +60,9 @@ namespace SII_DaysOff.Controllers
 			ViewData["HalfDayEndOrder"] = sortOrder == "HalfDayEnd" ? "HalfDayEnd_desc" : "HalfDayEnd";
 			ViewData["RequestDayOrder"] = sortOrder == "RequestDay" ? "RequestDay_desc" : "RequestDay";
 			ViewData["CommentsOrder"] = sortOrder == "Comments" ? "Comments_desc" : "Comments";
+
+			//Cuadro de búsqueda
+			ViewData["CurrentFilter"] = searchString;
 
 			var user = await _userManager.GetUserAsync(User);
 
@@ -72,6 +75,15 @@ namespace SII_DaysOff.Controllers
                 .ToList()
                 .Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId))
                 .Where(r => managerUserIds.Contains(r.UserId));
+
+			if (!String.IsNullOrEmpty(searchString))
+			{
+				requests = requests.Where(r => r.Reason.Name.Contains(searchString) 
+                || r.StartDate.ToString().Contains(searchString) 
+				|| r.EndDate.ToString().Contains(searchString)
+				|| r.RequestDate.ToString().Contains(searchString)
+				|| r.Comments.Contains(searchString));
+			}
 
 			switch (sortOrder)
 			{

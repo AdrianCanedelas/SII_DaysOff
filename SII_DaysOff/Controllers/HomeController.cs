@@ -37,16 +37,6 @@ namespace SII_DaysOff.Controllers
         public async Task<IActionResult> MainAsync(string sortOrder, string searchString, string optionStatus = "Pending")
         {
 			ViewData["status"] = optionStatus;
-			string searchSelected = null;
-			try
-			{
-				searchSelected = Request.Form["SelectedOption"];
-			} catch (InvalidOperationException)
-			{
-
-			}
-
-			Console.WriteLine("\n\n\nselected --> " + searchSelected);
 			Console.WriteLine("status --> " + optionStatus);
 
 			//Ordenación
@@ -77,36 +67,12 @@ namespace SII_DaysOff.Controllers
 
 			if (!String.IsNullOrEmpty(searchString))
 			{
-				switch (searchSelected)
-				{
-					case "select":
-						requests = requests.Where(r => r.Reason.Name.Contains(searchString));
-						break;
-					case "Reason":
-						requests = requests.Where(r => r.Reason.Name.Contains(searchString));
-						break;
-					case "StartDate":
-						requests = requests.Where(r => r.StartDate.ToString().Contains(searchString));
-						break;
-					case "HalfDayStart":
-						requests = requests.Where(r => r.HalfDayStart == Boolean.Parse(searchString));
-						break;
-					case "EndDate":
-						requests = requests.Where(r => r.EndDate.ToString().Contains(searchString));
-						break;
-					case "HalfDayEnd":
-						requests = requests.Where(r => r.HalfDayEnd == Boolean.Parse(searchString));
-						break;
-					case "RequestDate":
-						requests = requests.Where(r => r.RequestDate.ToString().Contains(searchString));
-						break;
-					case "Comments":
-						requests = requests.Where(r => r.Comments.Contains(searchString));
-						break;
-					case "Status":
-						requests = requests.Where(r => r.Status.Name.Contains(searchString));
-						break;
-				}
+				requests = requests.Where(r => r.Reason.Name.Contains(searchString) 
+				|| r.StartDate.ToString().Contains(searchString)
+				|| r.EndDate.ToString().Contains(searchString)
+				|| r.RequestDate.ToString().Contains(searchString)
+				|| r.Comments.Contains(searchString)
+				|| r.Status.Name.Contains(searchString));
 			}
 
 			switch (sortOrder)

@@ -90,20 +90,9 @@
 		<form asp-controller="Home" asp-action="Main">
 			<div class="form-actions no-color">
 				<p>
-					<input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="btn btn-outline-primary" />
+					<input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="btn btn-outline-primary" >
 					<input type="submit" value="Search" class="btn btn-outline-primary mx-3" /> |
 					<a asp-action="Main" class="mx-3">Back to Full List</a>
-					<select class="btn btn-outline-primary form-control my-2" name="SelectedOption">
-						<option value="select"> --- Select a field --- </option>
-						<option value="Reason">Reason</option>
-						<option value="StartDate">StartDate</option>
-						<option value="HalfDayStart">HalfDayStart</option>
-						<option value="EndDate">EndDate</option>
-						<option value="HalfDayEnd">HalfDayEnd</option>
-						<option value="RequestsDate">RequestsDate</option>
-						<option value="Comments">Comments</option>
-						<option value="Status">Status</option>
-					</select>
 				</p>
 			</div>
 		</form>
@@ -111,9 +100,7 @@
 
 	<div class="card-body cardRequests">
 		<div class="row">
-			<div class="col-auto">
-			</div>
-			<div class="col">
+			<div class="col test">
 				<ul class="list-group">
 					<li class="list-group-item list-group-item-primary">
 						<div class="row text-center">
@@ -144,6 +131,15 @@
 							<div class="col fw-bold">Edit/Delete</div>
 						</div>
 					</li>
+
+					@if (Model.Count() == 0)
+					{
+						<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+							<strong>No requests found | </strong> Press <a asp-controller="Home" asp-action="Main" class="alert-link">"Here"</a> to see all requests.
+							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+						</div>
+					}
+
 					@if (Model != null)
 					{
 						foreach (var item in Model)
@@ -217,7 +213,7 @@
 	});
 
 	/* Modal crear solicitud */
-	document.addEventListener('DOMContentLoaded', function () {
+	/*document.addEventListener('DOMContentLoaded', function () {
 		var newRequestButton = document.getElementById('newRequestButton');
 		var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
 
@@ -263,7 +259,7 @@
 					modal.show();
 				});
 		});
-	});
+	});*/
 
 </script>
 
