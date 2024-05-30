@@ -29,5 +29,6 @@ public class ApplicationUser : IdentityUser<Guid>
     public virtual ApplicationUser CreatedByUser { get; set; }
     public virtual ApplicationUser ModifiedByUser { get; set; }
     public virtual ApplicationUser ManagerUser { get; set; }
+	public virtual UserVacationDays UserVacationDays { get; set; }
 }
 

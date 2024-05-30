@@ -4,12 +4,13 @@
 
 @model PaginatedList<Requests>
 
+@inject UserManager<ApplicationUser> UserManager
+
 @{
 	ViewData["notShow"] = false;
 	ViewData["title"] = "Main";
+	var user = await UserManager.GetUserAsync(User);
 }
-
-@inject UserManager<ApplicationUser> UserManager
 
 @Html.Partial("../Components/ModalCreateRequest", new SII_DaysOff.Models.Requests())
 @Html.Partial("../Components/ModalEditRequest", new SII_DaysOff.Models.Requests())
@@ -25,6 +26,12 @@
 		<div class="row text-center">
 			<div class="col-6 col-sm-2">
 				<p class="fw-bold">Annual leaves</p>
+				<p>
+					@{
+						var modelo = Model.FirstOrDefault();
+						@Html.DisplayFor(m => modelo.User.UserVacationDays.AcquiredDays)
+					}
+				</p>
 			</div>
 			<div class="col-6 col-sm-2">
 				<p class="fw-bold">Available days</p>

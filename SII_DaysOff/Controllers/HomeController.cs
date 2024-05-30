@@ -71,6 +71,8 @@ namespace SII_DaysOff.Controllers
 			var requests = _context.Requests
 				.Include(r => r.Reason)
 				.Include(r => r.Status)
+				.Include(r => r.User)
+				.Include(r => r.User.UserVacationDays)
 				.Where(r => r.StatusId == statusId)
 				.Where(r => r.UserId == userId)
 				.AsQueryable();

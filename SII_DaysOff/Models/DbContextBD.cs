@@ -346,6 +346,11 @@ namespace SII_DaysOff.Models
                     .HasForeignKey(d => d.Year)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserVacationDays_VacationDays");
+                
+                entity.HasOne(d => d.User)
+                    .WithOne(d => d.UserVacationDays)
+                    .OnDelete(DeleteBehavior.NoAction)
+                    .HasConstraintName("FK_UserVacationDays_userId");
             });
 
             modelBuilder.Entity<VacationDays>(entity =>
