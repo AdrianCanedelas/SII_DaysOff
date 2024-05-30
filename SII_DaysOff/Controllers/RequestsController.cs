@@ -561,7 +561,7 @@ namespace SII_DaysOff.Controllers
 							row++;
 							worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(XLColor.BlueBell);
 						}
-                        row -= 6;
+                        row -= 5;
                         int pastRow = row;
 						foreach (Requests r in requests)
                         {
@@ -580,7 +580,7 @@ namespace SII_DaysOff.Controllers
 							row++;
 							worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(XLColor.GhostWhite);
 						}
-						row -= 6;
+						row -= 5;
 					}
 
                     if(column == 8)
@@ -589,7 +589,7 @@ namespace SII_DaysOff.Controllers
 						column = 2;
                     } else {
 						row = bottomRows(worksheet, row, column);
-						row -= 6;
+						row -= 5;
 						column++;
 					}
                 }
