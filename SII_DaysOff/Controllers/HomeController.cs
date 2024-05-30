@@ -162,7 +162,7 @@ namespace SII_DaysOff.Controllers
 
 			ViewData["PendingRequests"] = pendingRequests;
 
-			int registerCount = 5;
+			int registerCount = 30;
 
 			return View(await PaginatedList<Requests>.CreateAsync(requests.AsNoTracking(), numPage?? 1, registerCount));
 		}

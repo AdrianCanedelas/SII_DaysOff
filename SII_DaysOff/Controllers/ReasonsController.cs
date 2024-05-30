@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SII_DaysOff.Areas.Identity.Data;
 using SII_DaysOff.Models;
 
 namespace SII_DaysOff.Controllers
@@ -12,10 +14,12 @@ namespace SII_DaysOff.Controllers
     public class ReasonsController : Controller
     {
         private readonly DbContextBD _context;
+        private UserManager<ApplicationUser> _userManager;
 
-        public ReasonsController(DbContextBD context)
+        public ReasonsController(DbContextBD context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Reasons
@@ -58,18 +62,24 @@ namespace SII_DaysOff.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ReasonId,Name,Description,CreatedBy,CreationDate,ModifiedBy,ModificationDate")] Reasons reasons)
+        public async Task<IActionResult> Create([Bind("Name,Description")] Reasons reasons)
         {
             if (ModelState.IsValid)
             {
+                Console.WriteLine("entraaaa");
+                var user = await _userManager.GetUserAsync(User);
                 reasons.ReasonId = Guid.NewGuid();
+                reasons.CreatedBy = user.Id;
+                reasons.ModifiedBy = user.Id;
+                reasons.CreationDate = DateTime.Now;
+                reasons.ModificationDate = DateTime.Now;
                 _context.Add(reasons);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return LocalRedirect("~/Home/Main");
             }
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", reasons.CreatedBy);
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", reasons.ModifiedBy);
-            return View(reasons);
+            return LocalRedirect("~/Home/Main");
         }
 
         // GET: Reasons/Edit/5

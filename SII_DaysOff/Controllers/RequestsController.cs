@@ -442,11 +442,12 @@ namespace SII_DaysOff.Controllers
 			Console.WriteLine("Entra");
 			var daysOff = _context.Requests
                 .Include(r => r.User)
+                .Include(r => r.Reason)
 				.ToList()
 				.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Approved"))?.StatusId))
                 .Select(r => new
                 {
-                    title = r.User.Name + " " + r.User.Surname,
+                    title = r.User.Name + " " + r.User.Surname + " / " + r.Reason.Name,
                     start = r.StartDate.ToString("yyyy-MM-dd"),
                     end = r.EndDate.ToString("yyyy-MM-dd"),
                     description = r.Comments,
@@ -561,7 +562,7 @@ namespace SII_DaysOff.Controllers
 							row++;
 							worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(XLColor.BlueBell);
 						}
-                        row -= 5;
+                        row -= 6;
                         int pastRow = row;
 						foreach (Requests r in requests)
                         {
@@ -580,7 +581,7 @@ namespace SII_DaysOff.Controllers
 							row++;
 							worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(XLColor.GhostWhite);
 						}
-						row -= 5;
+						row -= 6;
 					}
 
                     if(column == 8)
@@ -589,7 +590,7 @@ namespace SII_DaysOff.Controllers
 						column = 2;
                     } else {
 						row = bottomRows(worksheet, row, column);
-						row -= 5;
+						row -= 6;
 						column++;
 					}
                 }
