@@ -782,6 +782,7 @@ namespace SII_DaysOff.Controllers
 		// GET: Requests/Delete/5
 		public async Task<IActionResult> Delete(Guid? id)
         {
+            Console.WriteLine("getttttt");
             if (id == null || _context.Requests == null)
             {
                 return NotFound();
@@ -807,6 +808,7 @@ namespace SII_DaysOff.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
+            Console.WriteLine("posttttttt - GUID - " + id);
             if (_context.Requests == null)
             {
                 return Problem("Entity set 'DbContextBD.Requests'  is null.");
@@ -814,12 +816,14 @@ namespace SII_DaysOff.Controllers
             var requests = await _context.Requests.FindAsync(id);
             if (requests != null)
             {
+                Console.WriteLine("|||entraRemove");
                 _context.Requests.Remove(requests);
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+
+			return LocalRedirect("~/Home/Main");
+		}
 
         private bool RequestsExists(Guid id)
         {

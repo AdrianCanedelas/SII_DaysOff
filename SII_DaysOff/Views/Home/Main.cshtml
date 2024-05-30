@@ -25,33 +25,40 @@
 	<div class="card-body shadow">
 		<div class="row text-center">
 			<div class="col-6 col-sm-2">
-				<p class="fw-bold">Annual leaves</p>
-				<p>
-					@{
-						var modelo = Model.FirstOrDefault();
-						@Html.DisplayFor(m => modelo.User.UserVacationDays.AcquiredDays)
-					}
-				</p>
+				<p class="fw-bold">Annual days off</p>
+				<p>@Model.FirstOrDefault().User.UserVacationDays.YearNavigation.DayVacations</p>
 			</div>
 			<div class="col-6 col-sm-2">
-				<p class="fw-bold">Available days</p>
-				<p>Holidays</p>
+				<p class="fw-bold">Additional days</p>
+				<p>@Model.FirstOrDefault().User.UserVacationDays.AdditionalDays</p>
 			</div>
 			<div class="col-6 col-sm-2">
 				<p class="fw-bold">Acquired days</p>
-				<p>Holidays</p>
+				<p>@Model.FirstOrDefault().User.UserVacationDays.AcquiredDays</p>
 			</div>
 			<div class="col-6 col-sm-2">
 				<p class="fw-bold">Remaining days</p>
-				<p>Holidays</p>
+				@{
+					int totalDays = Model.FirstOrDefault().User.UserVacationDays.YearNavigation.DayVacations;
+					int acquiredDays = Model.FirstOrDefault().User.UserVacationDays.AcquiredDays;
+					int additionalDays = Model.FirstOrDefault().User.UserVacationDays.AdditionalDays;
+					totalDays = (totalDays - acquiredDays) + additionalDays;
+				}
+				<p>@totalDays</p>
 			</div>
 			<div class="col-6 col-sm-2">
 				<p class="fw-bold">Validity start date</p>
-				<p>Holidays</p>
+				@{
+					Console.WriteLine(" ----> " + Model.FirstOrDefault().User.CreationDate.Year + " ===== " + DateTime.Now.Year);
+					if (Model.FirstOrDefault().User.CreationDate.Year == DateTime.Now.Year)
+					{
+						<p>@Model.FirstOrDefault().User.CreationDate.ToString("yyyy-MM-dd")</p>
+					}
+				}
 			</div>
 			<div class="col-6 col-sm-2">
 				<p class="fw-bold">Validity end date</p>
-				<p>Holidays</p>
+				<p>@DateTime.Now.Year-12-31</p>
 			</div>
 		</div>
 	</div>
@@ -206,15 +213,18 @@
 
 	<div class="card-footer py-3">
 		<a asp-action="Main" asp-route-sortOrder="@ViewData["currentOrder"]"
-			asp-route-numPage="@(Model.PageIndex -1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
-			class="btn btn-primary @previousDisabled">Previous</a>
-		@for (var i=1; i<=Model.TotalPages; i++){ var activePage = (i == Model.PageIndex) ? "active" : ""; <a
-			asp-action="Main" asp-route-sortOrder="@ViewData["currentOrder"]" asp-route-numPage="@i"
-			asp-route-currentFilter="@ViewData["CurrentFilter"]" class="btn btn-primary @activePage">@i</a>}
+		   asp-route-numPage="@(Model.PageIndex -1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
+		   class="btn btn-primary @previousDisabled">Previous</a>
+		@for (var i = 1; i <= Model.TotalPages; i++)
+		{
+			var activePage = (i == Model.PageIndex) ? "active" : "";
+			<a asp-action="Main" asp-route-sortOrder="@ViewData["currentOrder"]" asp-route-numPage="@i"
+																											asp-route-currentFilter="@ViewData["CurrentFilter"]" class="btn btn-primary @activePage">@i</a>
+		}
 
-			<a asp-action="Main" asp-route-sortOrder="@ViewData["CurrentOrder"]"
-				asp-route-numPage="@(Model.PageIndex + 1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
-				class="btn btn-primary @nextDisabled">Next</a>
+		<a asp-action="Main" asp-route-sortOrder="@ViewData["CurrentOrder"]"
+		   asp-route-numPage="@(Model.PageIndex + 1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
+		   class="btn btn-primary @nextDisabled">Next</a>
 	</div>
 </div>
 

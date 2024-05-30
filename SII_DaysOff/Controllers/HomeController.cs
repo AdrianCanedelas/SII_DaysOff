@@ -73,6 +73,7 @@ namespace SII_DaysOff.Controllers
 				.Include(r => r.Status)
 				.Include(r => r.User)
 				.Include(r => r.User.UserVacationDays)
+				.Include(r => r.User.UserVacationDays.YearNavigation)
 				.Where(r => r.StatusId == statusId)
 				.Where(r => r.UserId == userId)
 				.AsQueryable();
