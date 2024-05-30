@@ -20,46 +20,70 @@
 <!-- Tabs para admin -->
 <div class="card my-5 mx-4">
 	<div class="card-header bg-light">
-		<span>Time off balance in 2024</span>
+		<div class="row">
+			<div class="col-6">
+				<span>Time off balance in 2024</span>
+			</div>
+			<div class="col-6 d-flex justify-content-end">
+				<form asp-controller="Home" asp-action="Main" method="post">
+					<select name="year">
+						<option value="2023">2023</option>
+						<option value="2024">2024</option>
+						<option value="2025">2025</option>
+					</select>
+					<button type="submit">Enviar</button>
+				</form>
+			</div>
+		</div>
 	</div>
 	<div class="card-body shadow">
 		<div class="row text-center">
-			<div class="col-6 col-sm-2">
-				<p class="fw-bold">Annual days off</p>
-				<p>@Model.FirstOrDefault().User.UserVacationDays.YearNavigation.DayVacations</p>
-			</div>
-			<div class="col-6 col-sm-2">
-				<p class="fw-bold">Additional days</p>
-				<p>@Model.FirstOrDefault().User.UserVacationDays.AdditionalDays</p>
-			</div>
-			<div class="col-6 col-sm-2">
-				<p class="fw-bold">Acquired days</p>
-				<p>@Model.FirstOrDefault().User.UserVacationDays.AcquiredDays</p>
-			</div>
-			<div class="col-6 col-sm-2">
-				<p class="fw-bold">Remaining days</p>
-				@{
-					int totalDays = Model.FirstOrDefault().User.UserVacationDays.YearNavigation.DayVacations;
-					int acquiredDays = Model.FirstOrDefault().User.UserVacationDays.AcquiredDays;
-					int additionalDays = Model.FirstOrDefault().User.UserVacationDays.AdditionalDays;
-					totalDays = (totalDays - acquiredDays) + additionalDays;
-				}
-				<p>@totalDays</p>
-			</div>
-			<div class="col-6 col-sm-2">
-				<p class="fw-bold">Validity start date</p>
-				@{
-					Console.WriteLine(" ----> " + Model.FirstOrDefault().User.CreationDate.Year + " ===== " + DateTime.Now.Year);
-					if (Model.FirstOrDefault().User.CreationDate.Year == DateTime.Now.Year)
-					{
-						<p>@Model.FirstOrDefault().User.CreationDate.ToString("yyyy-MM-dd")</p>
+			@if (Model != null && Model.Count() != 0)
+			{
+				<div class="col-6 col-sm-2">
+					<p class="fw-bold">Annual days off</p>
+					<p>@Model.FirstOrDefault().User.UserVacationDays.YearNavigation.DayVacations</p>
+				</div>
+				<div class="col-6 col-sm-2">
+					<p class="fw-bold">Additional days</p>
+					<p>@Model.FirstOrDefault().User.UserVacationDays.AdditionalDays</p>
+				</div>
+				<div class="col-6 col-sm-2">
+					<p class="fw-bold">Acquired days</p>
+					<p>@Model.FirstOrDefault().User.UserVacationDays.AcquiredDays</p>
+				</div>
+				<div class="col-6 col-sm-2">
+					<p class="fw-bold">Remaining days</p>
+					@{
+						int totalDays = Model.FirstOrDefault().User.UserVacationDays.YearNavigation.DayVacations;
+						int acquiredDays = Model.FirstOrDefault().User.UserVacationDays.AcquiredDays;
+						int additionalDays = Model.FirstOrDefault().User.UserVacationDays.AdditionalDays;
+						totalDays = (totalDays - acquiredDays) + additionalDays;
 					}
-				}
-			</div>
-			<div class="col-6 col-sm-2">
-				<p class="fw-bold">Validity end date</p>
-				<p>@DateTime.Now.Year-12-31</p>
-			</div>
+					<p>@totalDays</p>
+				</div>
+				<div class="col-6 col-sm-2">
+					<p class="fw-bold">Validity start date</p>
+					@{
+						Console.WriteLine(" ----> " + Model.FirstOrDefault().User.CreationDate.Year + " ===== " + DateTime.Now.Year);
+						if (Model.FirstOrDefault().User.CreationDate.Year == DateTime.Now.Year)
+						{
+							<p>@Model.FirstOrDefault().User.CreationDate.ToString("yyyy-MM-dd")</p>
+						}
+					}
+				</div>
+				<div class="col-6 col-sm-2">
+					<p class="fw-bold">Validity end date</p>
+					<p>@DateTime.Now.Year-12-31</p>
+				</div>
+			}
+			else
+			{
+				<div class="alert alert-warning alert-dismissible fade show mt-3 d-flex justify-content-start" role="alert">
+					<strong>No data found | </strong> Press <a asp-controller="Home" asp-action="Main" class="alert-link">"Here"</a> to see all requests.
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+			}
 		</div>
 	</div>
 </div>

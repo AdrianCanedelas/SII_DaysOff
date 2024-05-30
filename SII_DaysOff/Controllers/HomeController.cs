@@ -35,7 +35,7 @@ namespace SII_DaysOff.Controllers
             return View();
         }
 
-		public async Task<IActionResult> MainAsync(string sortOrder, string searchString, int? numPage, string currentFilter, string optionStatus)
+		public async Task<IActionResult> MainAsync(string sortOrder, string searchString, int? numPage, string currentFilter, string optionStatus, string year)
 		{
 			if (optionStatus != null && optionStatus != "") ViewData["Status"] = optionStatus;
 			var currentOptionStatus = ViewData["status"];
@@ -78,6 +78,8 @@ namespace SII_DaysOff.Controllers
 				.Where(r => r.StatusId == statusId)
 				.Where(r => r.UserId == userId)
 				.AsQueryable();
+
+			if (year != null) requests = requests.Where(r => r.RequestDate.Year.ToString().Equals(year));
 
 			ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "Name");
 			ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Name");
