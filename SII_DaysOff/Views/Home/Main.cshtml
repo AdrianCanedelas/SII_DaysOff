@@ -107,6 +107,7 @@
 			<div class="form-actions no-color">
 				<p>
 					<input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="btn btn-outline-primary">
+					<input type="hidden" name="optionStatus" value="@ViewData["status"]" />
 					<input type="submit" value="Search" class="btn btn-outline-primary mx-3" /> |
 					<a asp-action="Main" class="mx-3">Back to Full List</a>
 				</p>
@@ -214,17 +215,17 @@
 	<div class="card-footer py-3">
 		<a asp-action="Main" asp-route-sortOrder="@ViewData["currentOrder"]"
 		   asp-route-numPage="@(Model.PageIndex -1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
-		   class="btn btn-primary @previousDisabled">Previous</a>
+		   class="btn btn-primary @previousDisabled" asp-route-optionStatus="@ViewData["Status"]">Previous</a>
 		@for (var i = 1; i <= Model.TotalPages; i++)
 		{
 			var activePage = (i == Model.PageIndex) ? "active" : "";
 			<a asp-action="Main" asp-route-sortOrder="@ViewData["currentOrder"]" asp-route-numPage="@i"
-																											asp-route-currentFilter="@ViewData["CurrentFilter"]" class="btn btn-primary @activePage">@i</a>
+			   asp-route-currentFilter="@ViewData["CurrentFilter"]" class="btn btn-primary @activePage" asp-route-optionStatus="@ViewData["Status"]">@i</a>
 		}
 
 		<a asp-action="Main" asp-route-sortOrder="@ViewData["CurrentOrder"]"
 		   asp-route-numPage="@(Model.PageIndex + 1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
-		   class="btn btn-primary @nextDisabled">Next</a>
+		   class="btn btn-primary @nextDisabled" asp-route-optionStatus="@ViewData["Status"]">Next</a>
 	</div>
 </div>
 

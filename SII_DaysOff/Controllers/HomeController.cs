@@ -35,10 +35,11 @@ namespace SII_DaysOff.Controllers
             return View();
         }
 
-		public async Task<IActionResult> MainAsync(string sortOrder, string searchString, int? numPage, string currentFilter, string optionStatus = "Pending")
+		public async Task<IActionResult> MainAsync(string sortOrder, string searchString, int? numPage, string currentFilter, string optionStatus)
 		{
-			ViewData["status"] = optionStatus;
-			Console.WriteLine("\n\n\n\n\nstatus --> " + optionStatus);
+			if (optionStatus != null && optionStatus != "") ViewData["Status"] = optionStatus;
+			var currentOptionStatus = ViewData["status"];
+			Console.WriteLine("\n\n\n\n\nstatus --> " + currentOptionStatus);
 			Console.WriteLine("currentFilter --> " + currentFilter);
 			Console.WriteLine("searchString --> " + searchString);
 			Console.WriteLine("sortOrder --> " + sortOrder);
@@ -60,7 +61,7 @@ namespace SII_DaysOff.Controllers
 			var user = await _userManager.GetUserAsync(User);
 			ViewData["notShow"] = false;
 
-			var statusId = _context.Statuses.FirstOrDefault(s => s.Name.Equals(optionStatus))?.StatusId;
+			var statusId = _context.Statuses.FirstOrDefault(s => s.Name.Equals(currentOptionStatus == null ? "Pending" : currentOptionStatus))?.StatusId;
 			var userId = _context.AspNetUsers.FirstOrDefault(u => u.Name.Equals(user.Name))?.Id;
 
 			if (statusId == null || userId == null)
@@ -162,7 +163,7 @@ namespace SII_DaysOff.Controllers
 
 			ViewData["PendingRequests"] = pendingRequests;
 
-			int registerCount = 30;
+			int registerCount = 5;
 
 			return View(await PaginatedList<Requests>.CreateAsync(requests.AsNoTracking(), numPage?? 1, registerCount));
 		}
