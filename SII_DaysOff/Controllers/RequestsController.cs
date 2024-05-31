@@ -56,6 +56,7 @@ namespace SII_DaysOff.Controllers
         {
 			//Ordenación
 			ViewData["ReasonOrder"] = String.IsNullOrEmpty(sortOrder) ? "Reason_desc" : "";
+			ViewData["NameOrder"] = sortOrder == "Name" ? "Name_desc" : "Name";
 			ViewData["StartDayOrder"] = sortOrder == "StartDay" ? "StartDay_desc" : "StartDay";
 			ViewData["HalfDayStartOrder"] = sortOrder == "HalfDayStart" ? "HalfDayStart_desc" : "HalfDayStart";
 			ViewData["EndDayOrder"] = sortOrder == "EndDay" ? "EndDay_desc" : "EndDay";
@@ -74,6 +75,7 @@ namespace SII_DaysOff.Controllers
 	            .ToList();
             var requests = _context.Requests
                 .Include(r => r.Reason)
+                .Include(r => r.User)
                 .ToList()
                 .Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId))
                 .Where(r => managerUserIds.Contains(r.UserId));
@@ -89,8 +91,11 @@ namespace SII_DaysOff.Controllers
 
 			switch (sortOrder)
 			{
-				case "Rreason_desc":
+				case "Reason_desc":
 					requests = requests.OrderByDescending(r => r.Reason.Name);
+					break;
+                case "Name_desc":
+					requests = requests.OrderByDescending(r => r.User.Name);
 					break;
 				case "StartDay_desc":
 					requests = requests.OrderByDescending(r => r.StartDate);

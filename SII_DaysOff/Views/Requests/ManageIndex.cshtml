@@ -30,6 +30,9 @@
 					<li class="list-group-item list-group-item-primary">
 						<div class="row text-center">
 							<div class="col fw-bold">
+								<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["NameOrder"]">User</a>
+							</div>
+							<div class="col fw-bold">
 								<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["ReasonOrder"]">@Html.DisplayNameFor(model => model.Reason)</a>
 							</div>
 							<div class="col fw-bold">
@@ -67,6 +70,7 @@
 					{
 						<li class="list-group-item">
 							<div class="row text-center d-flex justify-content-center align-items-center">
+								<div class="col">@Html.DisplayFor(model => item.User.Name) @Html.DisplayFor(model => item.User.Surname)</div>
 								<div class="col">@Html.DisplayFor(model => item.Reason.Name)</div>
 								<div class="col">@Html.DisplayFor(model => item.StartDate)</div>
 								<div class="col">@Html.DisplayFor(model => item.HalfDayStart)</div>
