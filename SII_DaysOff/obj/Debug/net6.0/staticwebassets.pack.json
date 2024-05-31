@@ -17,6 +17,54 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\wwwroot\\fonts\\Lato-Black.ttf",
+      "PackagePath": "staticwebassets\\fonts\\Lato-Black.ttf"
+    },
+    {
+      "Id": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\wwwroot\\fonts\\Lato-BlackItalic.ttf",
+      "PackagePath": "staticwebassets\\fonts\\Lato-BlackItalic.ttf"
+    },
+    {
+      "Id": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\wwwroot\\fonts\\Lato-Bold.ttf",
+      "PackagePath": "staticwebassets\\fonts\\Lato-Bold.ttf"
+    },
+    {
+      "Id": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\wwwroot\\fonts\\Lato-BoldItalic.ttf",
+      "PackagePath": "staticwebassets\\fonts\\Lato-BoldItalic.ttf"
+    },
+    {
+      "Id": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\wwwroot\\fonts\\Lato-Hairline.ttf",
+      "PackagePath": "staticwebassets\\fonts\\Lato-Hairline.ttf"
+    },
+    {
+      "Id": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\wwwroot\\fonts\\Lato-Italic.ttf",
+      "PackagePath": "staticwebassets\\fonts\\Lato-Italic.ttf"
+    },
+    {
+      "Id": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\wwwroot\\fonts\\Lato-Light.ttf",
+      "PackagePath": "staticwebassets\\fonts\\Lato-Light.ttf"
+    },
+    {
+      "Id": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\wwwroot\\fonts\\Lato-LightItalic.ttf",
+      "PackagePath": "staticwebassets\\fonts\\Lato-LightItalic.ttf"
+    },
+    {
+      "Id": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\wwwroot\\fonts\\Lato-Regular.ttf",
+      "PackagePath": "staticwebassets\\fonts\\Lato-Regular.ttf"
+    },
+    {
+      "Id": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\wwwroot\\fonts\\Lato-Thin.ttf",
+      "PackagePath": "staticwebassets\\fonts\\Lato-Thin.ttf"
+    },
+    {
+      "Id": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\wwwroot\\fonts\\Lato-ThinItalic.ttf",
+      "PackagePath": "staticwebassets\\fonts\\Lato-ThinItalic.ttf"
+    },
+    {
+      "Id": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\wwwroot\\fonts\\mark_my_words.otf",
+      "PackagePath": "staticwebassets\\fonts\\mark_my_words.otf"
+    },
+    {
       "Id": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\wwwroot\\fullcalendar\\fullcalendar-6.1.13\\LICENSE.md",
       "PackagePath": "staticwebassets\\fullcalendar\\fullcalendar-6.1.13\\LICENSE.md"
     },

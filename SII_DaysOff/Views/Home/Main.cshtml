@@ -22,7 +22,7 @@
 	<div class="card-header bg-light">
 		<div class="row">
 			<div class="col-6">
-				<span>Time off balance in 2024</span>
+				<span class="fw-bolder">Time off balance in 2024</span>
 			</div>
 			<div class="col-6 d-flex justify-content-end">
 				<form asp-controller="Home" asp-action="Main" method="post">
@@ -31,7 +31,7 @@
 						<option value="2024">2024</option>
 						<option value="2025">2025</option>
 					</select>
-					<button type="submit">Enviar</button>
+					<button type="submit" class="btn btn-outline-primary">Enviar</button>
 				</form>
 			</div>
 		</div>
@@ -65,7 +65,6 @@
 				<div class="col-6 col-sm-2">
 					<p class="fw-bold">Validity start date</p>
 					@{
-						Console.WriteLine(" ----> " + Model.FirstOrDefault().User.CreationDate.Year + " ===== " + DateTime.Now.Year);
 						if (Model.FirstOrDefault().User.CreationDate.Year == DateTime.Now.Year)
 						{
 							<p>@Model.FirstOrDefault().User.CreationDate.ToString("yyyy-MM-dd")</p>
@@ -80,7 +79,7 @@
 			else
 			{
 				<div class="alert alert-warning alert-dismissible fade show mt-3 d-flex justify-content-start" role="alert">
-					<strong>No data found | </strong> Press <a asp-controller="Home" asp-action="Main" class="alert-link">"Here"</a> to see all requests.
+					<strong>No data found</strong>
 					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 				</div>
 			}
@@ -91,7 +90,7 @@
 <div class="card shadow my-4 mx-4">
 	<div class="card-header bg-light">
 		<div class="row">
-			<div class="col-6 d-flex justify-content-start align-items-center">
+			<div class="col-6 d-flex justify-content-start align-items-center fw-bolder">
 				Requested time off
 			</div>
 			<div class="col-6 d-flex justify-content-end align-items-center">
@@ -178,6 +177,16 @@
 						<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
 							<strong>No requests found | </strong> Press <a asp-controller="Home" asp-action="Main" class="alert-link">"Here"</a> to see all requests.
 							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+						</div>
+						<div class="row">
+							<div class="col d-flex justify-content-center">
+								<i class="bi bi-folder-x no-data"></i>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col d-flex justify-content-center">
+								<p>No data available at this moment</p>
+							</div>
 						</div>
 					}
 

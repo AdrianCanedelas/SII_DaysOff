@@ -1,3 +1,15 @@
+@font-face {
+    font-family: 'lato';
+    src: url('~/fonts/Lato-Bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'lato';
+}
+
+
 html {
   font-size: 14px;
 }
@@ -26,6 +38,11 @@ body {
 
 img.login {
     width: 300px;
+}
+
+.no-data{
+    align-content: center;
+    font-size: 130px;
 }
 
 img.navBar {

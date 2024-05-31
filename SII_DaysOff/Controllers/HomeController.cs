@@ -104,6 +104,9 @@ namespace SII_DaysOff.Controllers
 
 			switch (sortOrder)
 			{
+				case "":
+					requests = requests.OrderBy(r => r.Reason.Name);
+					break;
 				case "Reason_desc":
 					requests = requests.OrderByDescending(r => r.Reason.Name);
 					break;
