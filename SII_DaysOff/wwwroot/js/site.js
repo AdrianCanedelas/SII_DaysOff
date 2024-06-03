@@ -56,3 +56,27 @@ document.styleSheets[0].insertRule("td { page-break-inside: avoid; }");
 	icono.classList.toggle("bi bi-caret-up mx-1");
 }*/
 
+/*var myModal = new bootstrap.Modal(document.getElementById('calendarModal'));
+myModal.show();*/
+
+/* Calendario años */
+document.addEventListener('DOMContentLoaded', function () {
+	var yearPicker = document.getElementById('yearPicker');
+	$(yearPicker).datepicker({
+		format: "yyyy",
+		viewMode: "years",
+		minViewMode: "years",
+		autoclose: true
+	});
+});
+
+/* Calendario meses */
+document.addEventListener('DOMContentLoaded', function () {
+	var yearPicker = document.getElementById('monthPicker');
+	$(yearPicker).datepicker({
+		format: "mm/yyyy",
+		viewMode: "months",
+		minViewMode: "months",
+		autoclose: true
+	});
+});
