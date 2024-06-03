@@ -13,15 +13,18 @@
             <h2>Create a new account.</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
+            <!--<div class="form-floating">
+                <label asp-for="Input.Role" class="control-label"></label>
+                <select asp-for="Input.Role" class="form-control" asp-items="ViewBag.RoleId" autocomplete="role" aria-required="true"></select>
+                <span asp-validation-for="Input.Role" class="text-danger"></span>
+
                 <input asp-for="Input.Role" class="form-control" autocomplete="role" aria-required="true" />
                 <label asp-for="Input.Role"></label>
                 <span asp-validation-for="Input.Role" class="text-danger"></span>
-            </div>
+            </div>-->
             <div class="form-floating">
-                <input asp-for="Input.Manager" class="form-control" autocomplete="manager" aria-required="true" />
-                <label asp-for="Input.Manager"></label>
-                <span asp-validation-for="Input.Manager" class="text-danger"></span>
+                <label asp-for="Input.Manager" class="control-label"></label>
+                <select asp-for="Input.Manager" class="form-control" asp-items="ViewBag.ManagerId"></select>
             </div>
             <div class="form-floating">
                 <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
@@ -31,17 +34,12 @@
             <div class="form-floating">
                 <input asp-for="Input.Name" class="form-control" autocomplete="name" aria-required="true" />
                 <label asp-for="Input.Name"></label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                <span asp-validation-for="Input.Name" class="text-danger"></span>
             </div>
             <div class="form-floating">
                 <input asp-for="Input.Surname" class="form-control" autocomplete="surname" aria-required="true" />
                 <label asp-for="Input.Surname"></label>
                 <span asp-validation-for="Input.Surname" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Input.IsActive" class="form-control" autocomplete="isactive" aria-required="true" />
-                <label asp-for="Input.IsActive"></label>
-                <span asp-validation-for="Input.IsActive" class="text-danger"></span>
             </div>
             <!--<div class="form-floating">
                 <input asp-for="Input.Manager" class="form-control" autocomplete="manager" aria-required="true" />

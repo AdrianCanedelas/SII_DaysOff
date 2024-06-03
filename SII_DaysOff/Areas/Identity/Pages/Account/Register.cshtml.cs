@@ -16,9 +16,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SII_DaysOff.Areas.Identity.Data;
+using SII_DaysOff.Models;
 
 namespace SII_DaysOff.Areas.Identity.Pages.Account
 {
@@ -30,13 +33,15 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly DbContextBD _context;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            DbContextBD context)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +49,7 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         /// <summary>
@@ -126,7 +132,15 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            //Console.WriteLine("\n\n\n\tEntraGET Register");
             ReturnUrl = returnUrl;
+            ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId");
+            ViewData["ManagerId"] = new SelectList(_context.AspNetUsers, "Id", "UserName");
+            /*
+             ViewData["ManagerId"] = new SelectList(_context.AspNetUsers.Select(u => new
+            {
+                FullName = $"{u.Name} - {u.Surname}"
+            }), "Id", "FullName");*/
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
@@ -137,18 +151,25 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+                var logedInUser = await _userManager.GetUserAsync(User);
 
                 /*user.Profile = Input.Profile;
                 user.AvailableDays = int.Parse(Input.AvailableDays);
                 user.AcquiredDays = int.Parse(Input.AcquiredDays);
                 user.RemainingDays = int.Parse(Input.RemainingDays);*/
 
-                user.RoleId = Input.Role;
+                user.Id = Guid.NewGuid();
+                user.RoleId = Guid.Parse("C4E90051-0895-4798-9A8B-19A9FBC27884");
                 user.Name = Input.Name;
                 user.Manager = Input.Manager;
                 user.Surname = Input.Surname;
-                user.IsActive = Input.IsActive;
+                user.IsActive = true;
                 user.Manager = Input.Manager;
+                user.RegisterDate = DateTime.Now;
+                user.CreatedBy = logedInUser.Id;
+                user.CreationDate = DateTime.Now;
+                user.ModifiedBy = logedInUser.Id;
+                user.ModificationDate = DateTime.Now;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -160,6 +181,7 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
 
                     // Confirmar automáticamente el usuario
                     await _userManager.ConfirmEmailAsync(user, "");
+                    return RedirectToPage("~/Views/Home/Main.cshtml");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

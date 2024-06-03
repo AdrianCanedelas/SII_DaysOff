@@ -8,23 +8,6 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<style>
-	.submenu {
-		display: none;
-		position: absolute;
-		z-index: 9999;
-	}
-
-	#manage:hover {
-		text-shadow: 2px 2px 4px white;
-	}
-
-	li:hover .submenu {
-		display: block;
-	}
-
-</style>
-
 @Html.Partial("../Components/ModalCreateReason", new SII_DaysOff.Models.Reasons())
 
 <ul class="navbar-nav">
@@ -53,7 +36,7 @@
 						 asp-area="Identity" asp-page="/Account/Register"
 						 data-bs-toggle="modal" data-bs-target="#registerModal"
 					-->
-					<a class="btn btn-outline-primary fw-bold" data-bs-toggle="modal" data-bs-target="#registerModal">Register new user</a>
+						<a class="btn btn-outline-primary fw-bold" asp-area="Identity" asp-page="/Account/Register">Register new user</a>
 				</div>
 				<div class="row my-2">
 					<!-- asp-controller="Reasons" asp-action="Create" -->

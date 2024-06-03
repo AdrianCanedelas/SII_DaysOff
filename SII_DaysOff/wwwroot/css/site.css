@@ -36,6 +36,21 @@ body {
     text-align: center;
 }
 
+/* _LoginPartial */
+.submenu {
+    display: none;
+    position: absolute;
+    z-index: 9999;
+}
+
+#manage:hover {
+    text-shadow: 2px 2px 4px white;
+}
+
+li:hover .submenu {
+    display: block;
+}
+
 /*Navbar*/
 .navbar-custom {
     background-color: #004278;

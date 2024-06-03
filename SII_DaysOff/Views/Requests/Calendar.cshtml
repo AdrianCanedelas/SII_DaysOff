@@ -8,6 +8,7 @@
 <h1>@ViewData["Title"]</h1>
 
 <a asp-controller="requests" asp-action="ExportExcel" class="btn btn-outline-success fw-bold mb-3" asp-route-type="requests">Export requests</a>
+<a asp-action="ExportExcel" asp-controller="requests" asp-route-type="calendar" class="btn btn-outline-success fw-bold mb-3">Export Excel Calendar</a>
 <button type="submit" data-bs-toggle="modal" data-bs-target="#calendarModal" class="btn btn-outline-success fw-bold mb-3">Export Excel Calendar</button>
 <button id="printPDF" class="btn btn-outline-primary fw-bold mb-3">Export calendar</button>
 

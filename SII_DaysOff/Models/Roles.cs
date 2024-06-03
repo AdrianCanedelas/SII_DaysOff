@@ -21,6 +21,6 @@ namespace SII_DaysOff.Models
 
         public virtual ApplicationUser? CreatedByNavigation { get; set; }
         public virtual ApplicationUser? ModifiedByNavigation { get; set; }
-        public virtual ICollection<ApplicationUser> AspNetUsers { get; set; }
+        public virtual ICollection<ApplicationUser>? AspNetUsers { get; set; }
     }
 }

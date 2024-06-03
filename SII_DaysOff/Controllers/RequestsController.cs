@@ -510,7 +510,8 @@ namespace SII_DaysOff.Controllers
 			var fileName = type + ".xlsx";
 
             if(type.Equals("requests")) return GenerateExcel(fileName, daysOff);
-            return GenerateExcel(fileName, daysOff, int.Parse(year), int.Parse(month));
+            //return GenerateExcel(fileName, daysOff, int.Parse(year), int.Parse(month));
+            return GenerateExcel(fileName, daysOff, 2024, 05);
 		}
 
 		private FileResult GenerateExcel(string fileName, IEnumerable<Requests> requests, int year, int month)
@@ -546,6 +547,7 @@ namespace SII_DaysOff.Controllers
                         {
                             if(r.StartDate <= new DateTime(year, month, day) && r.EndDate >= new DateTime(year, month, day))
                             {
+                                Console.WriteLine("requests -Z " + r.User.Name + " --> " + r.StartDate);
                                 row++;
                                 if (row>pastRow) worksheet.Cell(row, column).Value += ("     ");
 								worksheet.Cell(row, column).Value += ("             |" + r.User.Name + " " + r.User.Surname + "   |" + r.Reason.Name);
@@ -553,6 +555,7 @@ namespace SII_DaysOff.Controllers
                                     .Border.SetBottomBorder(XLBorderStyleValues.Thin).Border.SetBottomBorderColor(XLColor.CoolGrey)
                                     .Border.SetTopBorder(XLBorderStyleValues.Thin).Border.SetTopBorderColor(XLColor.CoolGrey);
                             }
+                            //if (row >= (pastRow + 4)) pastRow += 1;
                         }
                         row = pastRow;
                     } 
