@@ -37,14 +37,18 @@ namespace SII_DaysOff.Controllers
 
 		public async Task<IActionResult> MainAsync(string sortOrder, string searchString, int? numPage, string currentFilter, string optionStatus, string year)
 		{
+			if(year == null) year = DateTime.Now.Year.ToString();
 			if (optionStatus != null && optionStatus != "") ViewData["Status"] = optionStatus;
 			var currentOptionStatus = ViewData["status"];
-			Console.WriteLine("\n\n\n\n\nstatus --> " + currentOptionStatus);
+			Console.WriteLine("\n\n\n\n\nyear --> " + year);
+			Console.WriteLine("status --> " + currentOptionStatus);
 			Console.WriteLine("currentFilter --> " + currentFilter);
 			Console.WriteLine("searchString --> " + searchString);
 			Console.WriteLine("sortOrder --> " + sortOrder);
 
 			// Ordenación
+			ViewData["YearSelected"] = year;
+
 			ViewData["ReasonOrder"] = String.IsNullOrEmpty(sortOrder) ? "Reason_desc" : "";
 			ViewData["StartDayOrder"] = sortOrder == "StartDay" ? "StartDay_desc" : "StartDay";
 			ViewData["HalfDayStartOrder"] = sortOrder == "HalfDayStart" ? "HalfDayStart_desc" : "HalfDayStart";

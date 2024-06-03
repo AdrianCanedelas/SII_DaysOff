@@ -26,12 +26,24 @@
 			</div>
 			<div class="col-6 d-flex justify-content-end">
 				<form asp-controller="Home" asp-action="Main" method="post">
-					<select name="year">
-						<option value="2023">2023</option>
-						<option value="2024">2024</option>
-						<option value="2025">2025</option>
-					</select>
-					<button type="submit" class="btn btn-outline-primary">Enviar</button>
+					<!--<div class="input-group">-->
+					<div class="row">
+						<div class="col-5"></div>
+						<div class="col-4 d-flex justify-content-end">
+							<div class="form-group">
+								<!--<span class="input-group-btn">
+									<button type="button" class="btn- btn-primary" id="decreaseYear"><<</button>
+								</span>-->
+								<input type="text" class="form-control form-control-custom" id="yearPicker" name="year" value="@ViewData["YearSelected"]" readonly />
+								<!--<span class="input-group-btn">
+									<button type="button" class="btn btn-primary" id="increaseYear">>></button>
+								</span>-->
+							</div>
+						</div>
+						<div class="col-3 d-flex justify-content-end">
+							<button type="submit" class="btn btn-outline-primary">Enviar</button>
+						</div>
+					</div>
 				</form>
 			</div>
 		</div>

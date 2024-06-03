@@ -498,9 +498,8 @@ namespace SII_DaysOff.Controllers
                 );
         }
 
-		public async Task<FileResult> ExportExcel(int year, int month, string type)
+		public async Task<FileResult> ExportExcel(string year, string month, string type)
 		{
-            Console.WriteLine("year/month -> " + year + " - " + month);
 			var daysOff = _context.Requests
 				.Include(r => r.User)
 				.Include(r => r.Status)
@@ -511,7 +510,7 @@ namespace SII_DaysOff.Controllers
 			var fileName = type + ".xlsx";
 
             if(type.Equals("requests")) return GenerateExcel(fileName, daysOff);
-            return GenerateExcel(fileName, daysOff, year, month);
+            return GenerateExcel(fileName, daysOff, int.Parse(year), int.Parse(month));
 		}
 
 		private FileResult GenerateExcel(string fileName, IEnumerable<Requests> requests, int year, int month)

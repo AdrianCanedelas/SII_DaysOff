@@ -62,10 +62,31 @@ myModal.show();*/
 /* Calendario años */
 document.addEventListener('DOMContentLoaded', function () {
 	var yearPicker = document.getElementById('yearPicker');
+	var currentYear = new Date().getFullYear();
+	/*var decreaseYearBtn = document.getElementById('decreaseYear');
+	var increaseYearBtn = document.getElementById('increaseYear');
+
+	decreaseYearBtn.addEventListener('click', function () {
+		if (yearPicker != null) {
+			var currentYear = parseInt(yearPicker.value);
+			yearPicker.value = currentYear - 1;
+		}
+	});
+
+	increaseYearBtn.addEventListener('click', function () {
+		if (yearPicker != null) {
+			var currentYear = parseInt(yearPicker.value);
+			yearPicker.value = currentYear + 1;
+		}
+	});*/
+
 	$(yearPicker).datepicker({
 		format: "yyyy",
 		viewMode: "years",
 		minViewMode: "years",
+		startDate: "2000",
+		endDate: "2030",
+		defaultViewDate: { year: currentYear },
 		autoclose: true
 	});
 });
@@ -73,8 +94,9 @@ document.addEventListener('DOMContentLoaded', function () {
 /* Calendario meses */
 document.addEventListener('DOMContentLoaded', function () {
 	var yearPicker = document.getElementById('monthPicker');
+
 	$(yearPicker).datepicker({
-		format: "mm/yyyy",
+		format: "mm",
 		viewMode: "months",
 		minViewMode: "months",
 		autoclose: true
