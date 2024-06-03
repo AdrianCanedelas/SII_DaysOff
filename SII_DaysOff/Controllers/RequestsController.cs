@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -526,6 +527,8 @@ namespace SII_DaysOff.Controllers
                 int daysMonth = DateTime.DaysInMonth(year, month);
                 int row = 5;
                 int column = ((int)firstDayOfMonth.DayOfWeek + 1) % 7;
+                int jumpsDown = 5;
+                List<Guid> users = new List<Guid>();
 
                 //Estilos celdas y celda titulo
                 cellStyles(worksheet);
@@ -548,15 +551,18 @@ namespace SII_DaysOff.Controllers
                         {
                             if(r.StartDate <= new DateTime(year, month, day) && r.EndDate >= new DateTime(year, month, day))
                             {
-                                Console.WriteLine("requests -Z " + r.User.Name + " --> " + r.StartDate);
                                 row++;
-                                if (row>pastRow) worksheet.Cell(row, column).Value += ("     ");
-								worksheet.Cell(row, column).Value += ("             |" + r.User.Name + " " + r.User.Surname + "   |" + r.Reason.Name);
+                                if (!users.Contains(r.UserId) || !worksheet.Cell(row, (column-1)).Style.Fill.BackgroundColor.Equals(XLColor.FromHtml("#007eb5")))
+                                {
+									if (row > pastRow) worksheet.Cell(row, column).Value += ("     ");
+									worksheet.Cell(row, column).Value += ("             |" + r.User.Name + " " + r.User.Surname + "   |" + r.Reason.Name);
+								}
                                 worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(XLColor.FromHtml("#007eb5")).Font.SetFontColor(XLColor.FromHtml("#f2f2f2"))
                                     .Border.SetBottomBorder(XLBorderStyleValues.Thin).Border.SetBottomBorderColor(XLColor.CoolGrey)
                                     .Border.SetTopBorder(XLBorderStyleValues.Thin).Border.SetTopBorderColor(XLColor.CoolGrey);
-                            }
-                            //if (row >= (pastRow + 4)) pastRow += 1;
+								users.Add(r.UserId);
+							}
+                            if (row > (pastRow + 4)) jumpsDown += 1;
                         }
                         row = pastRow;
                     } 
@@ -567,8 +573,9 @@ namespace SII_DaysOff.Controllers
 
                     if(column == 8)
                     {
-                        row += 5;
+                        row += jumpsDown;
 						column = 2;
+                        jumpsDown = 5;
                     } 
                     else {
 						column++;
@@ -584,12 +591,12 @@ namespace SII_DaysOff.Controllers
 
         public void cellStyles(IXLWorksheet worksheet)
         {
-            for (int i = 2; i <= 29; i++)
+            for (int i = 2; i <= 39; i++)
             {
                 for (int j = 2; j <= 8; j++)
                 {
-                    worksheet.Cell(i, j).Style.Border.SetRightBorder(XLBorderStyleValues.Thin).Border.SetRightBorderColor(XLColor.CoolGrey);
-                    worksheet.Cell(i, j).Style.Border.SetLeftBorder(XLBorderStyleValues.Thin).Border.SetLeftBorderColor(XLColor.CoolGrey);
+                    //worksheet.Cell(i, j).Style.Border.SetRightBorder(XLBorderStyleValues.Thin).Border.SetRightBorderColor(XLColor.CoolGrey);
+                    //worksheet.Cell(i, j).Style.Border.SetLeftBorder(XLBorderStyleValues.Thin).Border.SetLeftBorderColor(XLColor.CoolGrey);
                     worksheet.Column(j).Width = 35;
                     worksheet.Cell(4, j).Style.Fill.SetBackgroundColor(XLColor.FromHtml("#004278")).Font.SetFontColor(XLColor.White).Font.Bold = true;
                     worksheet.Cell(4, j).Style.Border.SetTopBorder(XLBorderStyleValues.Thin).Border.SetTopBorderColor(XLColor.CoolGrey);
@@ -598,11 +605,11 @@ namespace SII_DaysOff.Controllers
                     worksheet.Cell(4, j).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
 
                     if (i == 2) worksheet.Cell(i, j).Style.Border.SetTopBorder(XLBorderStyleValues.Thin).Border.SetTopBorderColor(XLColor.CoolGrey);
-                    if (i == 29) worksheet.Cell(i, j).Style.Border.SetBottomBorder(XLBorderStyleValues.Thin).Border.SetBottomBorderColor(XLColor.CoolGrey);
+                    //if (i == 29) worksheet.Cell(i, j).Style.Border.SetBottomBorder(XLBorderStyleValues.Thin).Border.SetBottomBorderColor(XLColor.CoolGrey);
                 }
-                if (i > 4) worksheet.Row(i).Height = 25;
-                else worksheet.Row(i).Height = 20;
-            }
+                if (i <= 4) worksheet.Row(i).Height = 20;
+                else worksheet.Row(i).Height = 25;
+			}
         }
 
         public void bgCellStyles(IXLWorksheet worksheet, int column, int row)
@@ -655,10 +662,12 @@ namespace SII_DaysOff.Controllers
         {
             for (int i = 0; i < 4; i++)
             {
-                row++;
-                worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(color);
+				worksheet.Cell(row, column).Style.Border.SetRightBorder(XLBorderStyleValues.Thin).Border.SetRightBorderColor(XLColor.CoolGrey);
+				worksheet.Cell(row, column).Style.Border.SetLeftBorder(XLBorderStyleValues.Thin).Border.SetLeftBorderColor(XLColor.CoolGrey);
+				row++;
+				worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(color);
             }
-            worksheet.Cell(row, column).Style.Border.SetBottomBorder(XLBorderStyleValues.Thin).Border.SetBottomBorderColor(XLColor.CoolGrey);
+            //worksheet.Cell(row, column).Style.Border.SetBottomBorder(XLBorderStyleValues.Thin).Border.SetBottomBorderColor(XLColor.CoolGrey);
             return row -= 4;
         }
 
