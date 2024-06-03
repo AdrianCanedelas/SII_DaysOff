@@ -87,19 +87,27 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
             public Guid Role { get; set; }
             
             [Required]
+            [Display(Name = "VacationDays")]
+            public Guid VacationDays { get; set; }
+            
+            [Required]
+            [Display(Name = "UserVacationDays")]
+            public Guid UserVacationDays { get; set; }
+
+            [Required]
             [StringLength(100)]
             [Display(Name = "Name")]
             public string Name { get; set; }
-            
+
             [Required]
             [StringLength(100)]
             [Display(Name = "Surname")]
             public string Surname { get; set; }
-            
+
             [Required]
             [Display(Name = "IsActive")]
             public bool IsActive { get; set; }
-            
+
             [Required]
             [Display(Name = "Manager")]
             public Guid Manager { get; set; }
@@ -136,6 +144,7 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
             ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId");
             ViewData["ManagerId"] = new SelectList(_context.AspNetUsers, "Id", "UserName");
+            ViewData["VacationDaysId"] = new SelectList(_context.VacationDays, "Year", "Year");
             /*
              ViewData["ManagerId"] = new SelectList(_context.AspNetUsers.Select(u => new
             {
@@ -158,11 +167,11 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
                 user.AcquiredDays = int.Parse(Input.AcquiredDays);
                 user.RemainingDays = int.Parse(Input.RemainingDays);*/
 
-                user.Id = Guid.NewGuid();
                 user.RoleId = Guid.Parse("C4E90051-0895-4798-9A8B-19A9FBC27884");
                 user.Name = Input.Name;
                 user.Manager = Input.Manager;
                 user.Surname = Input.Surname;
+                user.UserName = Input.Name + " " + Input.Surname;
                 user.IsActive = true;
                 user.Manager = Input.Manager;
                 user.RegisterDate = DateTime.Now;
@@ -170,6 +179,17 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
                 user.CreationDate = DateTime.Now;
                 user.ModifiedBy = logedInUser.Id;
                 user.ModificationDate = DateTime.Now;
+
+                //user.UserVacationDays = userVacationDays;
+
+
+                /*user.UserVacationDays.Year = "2024";
+                user.UserVacationDays.AcquiredDays = 0;
+                user.UserVacationDays.AdditionalDays = 0;
+                user.UserVacationDays.CreatedBy = logedInUser.Id;
+                user.UserVacationDays.CreationDate = DateTime.Now;
+                user.UserVacationDays.ModifiedBy = logedInUser.Id;
+                user.UserVacationDays.ModificationDate = DateTime.Now;*/
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -181,7 +201,20 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
 
                     // Confirmar automáticamente el usuario
                     await _userManager.ConfirmEmailAsync(user, "");
-                    return RedirectToPage("~/Views/Home/Main.cshtml");
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    //Dias vacaciones
+                    var userVacationDays = new UserVacationDays();
+                    userVacationDays.UserId = user.Id;
+                    userVacationDays.Year = "2024";
+                    userVacationDays.AcquiredDays = 0;
+                    userVacationDays.AdditionalDays = 0;
+                    userVacationDays.CreatedBy = logedInUser.Id;
+                    userVacationDays.CreationDate = DateTime.Now;
+                    userVacationDays.ModifiedBy = logedInUser.Id;
+                    userVacationDays.ModificationDate = DateTime.Now;
+                    _context.Add(userVacationDays);
+                    await _context.SaveChangesAsync();
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
@@ -189,8 +222,9 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
                     }
                     else
                     {
+                        Console.WriteLine("register confirmation false");
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        return LocalRedirect("~/Home/Main");
                     }
                 }
                 foreach (var error in result.Errors)

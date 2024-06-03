@@ -416,7 +416,7 @@ namespace SII_DaysOff.Controllers
         }
 
         // GET: Requests/Edit/5
-        public async Task<IActionResult> Manage(int? id)
+        public async Task<IActionResult> Manage(int? id, string year)
         {
             if (id == null || _context.Requests == null)
             {
@@ -424,6 +424,7 @@ namespace SII_DaysOff.Controllers
             }
 
             var requests = await _context.Requests.FindAsync(id);
+            //var requests = await _context.Requests.Where(r => r.RequestDate.Year.ToString().Equals(year)).ToList();
             if (requests == null)
             {
                 return NotFound();

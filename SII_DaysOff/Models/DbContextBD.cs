@@ -107,12 +107,6 @@ namespace SII_DaysOff.Models
 
                 entity.HasIndex(e => e.NormalizedEmail, "EmailIndex");
 
-                entity.HasIndex(e => e.CreatedBy, "IX_AspNetUsers_CreatedBy").IsUnique(false);
-
-                entity.HasIndex(e => e.Manager, "IX_AspNetUsers_Manager").IsUnique(false);
-
-                entity.HasIndex(e => e.ModifiedBy, "IX_AspNetUsers_ModifiedBy").IsUnique(false);
-
                 entity.HasIndex(e => e.NormalizedUserName, "UserNameIndex")
                     .IsUnique()
                     .HasFilter("([NormalizedUserName] IS NOT NULL)");
