@@ -102,3 +102,5 @@ document.addEventListener('DOMContentLoaded', function () {
 		autoclose: true
 	});
 });
+
+/* Cambiar imagen ordenacion */

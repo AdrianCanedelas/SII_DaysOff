@@ -41,7 +41,7 @@ body {
     transition: 0.3s;
     font-size: 100%;
     margin-inline: 5px;
-    background-color: whitesmoke;
+    background-color: white;
     text-align: center;
 }
 
@@ -59,8 +59,48 @@ body {
     transition: 0.3s;
     font-size: 100%;
     margin-inline: 5px;
-    background-color: whitesmoke;
+    background-color: white;
     text-align: center;
+}
+
+.custom-button-excel {
+    border: 1px solid lightgrey;
+    padding-inline: 10px;
+    padding-block: 6px;
+    text-decoration: none;
+    box-shadow: 1px 2px 3px 1px lightgrey;
+    color: #097f03;
+    transition: 0.3s;
+    font-size: 100%;
+    margin-inline: 5px;
+    background-color: white;
+    text-align: center;
+}
+
+.custom-button-excel:hover {
+    border: 1px solid #084403;
+    box-shadow: none;
+    color: #084403;
+}
+
+.custom-button-pdf {
+    border: 1px solid lightgrey;
+    padding-inline: 10px;
+    padding-block: 6px;
+    text-decoration: none;
+    box-shadow: 1px 2px 3px 1px lightgrey;
+    color: #d30012;
+    transition: 0.3s;
+    font-size: 100%;
+    margin-inline: 5px;
+    background-color: white;
+    text-align: center;
+}
+
+.custom-button-pdf:hover {
+    border: 1px solid #70010f;
+    box-shadow: none;
+    color: #70010f;
 }
 
 .custom-button:hover {
@@ -70,15 +110,85 @@ body {
     /*font-weight: bold;*/
 }
 
+.custom-link {
+    text-decoration: none;
+    color: dimgrey;
+    transition: 0.5s;
+}
+
+..custom-link:hover {
+    color: #007eb5;
+    border: 2px solid black;
+}
+
+/* */
+.custom-icon {
+    font-size: 100px;
+    color: dimgrey;
+    opacity: 12%;
+    transition: 0.5s;
+}
+
+.custom-icon:hover {
+    font-size: 110px;
+    color: dimgrey;
+    opacity: 20%
+}
+
+.no-data-text {
+    font-size: 20px;
+    color: dimgrey;
+    opacity: 50%;
+    transition: 0.5s;
+}
+
+.no-data-text:hover {
+    font-size: 30px;
+    opacity: 70%;
+}
+
 /* _LoginPartial */
 .submenu {
     display: none;
     position: absolute;
     z-index: 9999;
+    background-color: white;
+    width: 200px;
+    padding-block: 14px;
+    box-shadow: 2px 3px 4px 2px lightgrey;
+    margin-top: 0px;
+}
+
+.submenu a {
+    text-decoration: none;
+    font-weight: bold;
+    color: dimgrey;
+    transition: 0.5s;
+}
+
+.submenu a:hover {
+    color: #007eb5;
+}
+
+.submenu button {
+    color: dimgrey;
+    transition: 0.5s;
+}
+
+.submenu button:hover {
+    color: #007eb5;
+}
+
+#manage {
+    transition: 0.3s;
 }
 
 #manage:hover {
     text-shadow: 2px 2px 4px white;
+}
+
+li .submenu{
+    transition: 2s;
 }
 
 li:hover .submenu {
@@ -123,9 +233,41 @@ a.title {
     margin-left: 10px;
 }
 
+.custom-list-group {
+    background-color: #004278;
+    color: white;
+}
+
+.custom-filter-link {
+    color: white;
+    transition: 0.5s;
+}
+
+.custom-filter-link:hover {
+    color: #007eb5;
+}
+
+.custom-icon-edit-delete {
+    transition: 0.2s;
+}
+
+.custom-icon-edit-delete:hover {
+    font-size: 20px;
+}
+
+.custom-nav-link {
+    color: black;
+    transition: 0.5s;
+}
+
+.custom-nav-link:hover {
+    color: #007eb5;
+}
+
 .cardRequests {
     max-height: 400px;
     overflow-y: auto;
+    overflow-x: auto;
 }
 
 .nav-link.active {

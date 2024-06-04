@@ -599,7 +599,7 @@ namespace SII_DaysOff.Controllers
 								worksheet.Cell(j, i).Style.Border.SetRightBorder(XLBorderStyleValues.Thin).Border.SetRightBorderColor(XLColor.CoolGrey);
 								worksheet.Cell(j, i).Style.Border.SetLeftBorder(XLBorderStyleValues.Thin).Border.SetLeftBorderColor(XLColor.CoolGrey);
 							}
-							//if (day == daysMonth) worksheet.Cell(row, column).Style.Border.SetBottomBorder(XLBorderStyleValues.Thin).Border.SetBottomBorderColor(XLColor.CoolGrey);
+							worksheet.Cell((row + jumpsDown)-1, i).Style.Border.SetBottomBorder(XLBorderStyleValues.Thin).Border.SetBottomBorderColor(XLColor.CoolGrey);
 						}
 						row += jumpsDown;
 						column = 2;

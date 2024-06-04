@@ -13,9 +13,9 @@
 		<form asp-controller="Requests" asp-action="ManageIndex" class="mx-2 mt-3">
 			<div class="form-actions no-color">
 				<p>
-					<input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="border border-1 border-primary" />
-					<input type="submit" value="Search" class="btn btn-outline-primary mx-3" /> |
-					<a asp-controller="Requests" asp-action="ManageIndex" class="mx-3">Back to Full List</a>
+					<input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="custom-button" />
+					<input type="submit" value="Search" class="custom-button" /> |
+					<a asp-controller="Requests" asp-action="ManageIndex" class="mx-2 custom-link">Back to Full List</a>
 				</p>
 			</div>
 		</form>
@@ -27,42 +27,54 @@
 			<!-- Aquí aparecerán las solicitudes -->
 			<div class="col">
 				<ul class="list-group ">
-					<li class="list-group-item list-group-item-primary">
-						<div class="row text-center">
-							<div class="col fw-bold">
-								<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["NameOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">User</a>
-							</div>
-							<div class="col fw-bold">
-								<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["ReasonOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Reason</a>
-							</div>
-							<div class="col fw-bold">
-								<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["StartDayOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Start Date</a>
-							</div>
-							<div class="col fw-bold">
-								<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["HalfDayStartOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Is Half Day?</a>
-							</div>
-							<div class="col fw-bold">
-								<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["EndDayOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">End Date</a>
-							</div>
-							<div class="col fw-bold">
-								<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["HalfDayEndOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Is Half Day?</a>
-							</div>
-							<div class="col fw-bold">
-								<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["RequestDayOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Request Date</a>
-							</div>
-							<div class="col fw-bold">
-								<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["CommentsOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Comments</a>
-							</div>
-							<div class="col fw-bold">Approve/Reject</div>
-						</div>
-					</li>
 
 					@if (Model.Count() == 0)
 					{
-						<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+						@*<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
 							<strong>No requests found </strong> <!--Press <a asp-controller="Requests" asp-action="ManageIndex" class="alert-link">"Here"</a> to see all requests.-->
 							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+						</div>*@
+						<div class="row">
+							<div class="col-12 d-flex justify-content-center">
+								<i class="bi bi-file-earmark-excel-fill custom-icon"></i>
+							</div>
 						</div>
+						<div class="row">
+							<div class="col-12 d-flex justify-content-center">
+								<p class="no-data-text">There are no requests to manage.</p>
+							</div>
+						</div>
+					} else
+					{
+						<li class="list-group-item custom-list-group">
+							<div class="row text-center">
+								<div class="col fw-bold">
+									<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["NameOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-filter-link">User</a>
+								</div>
+								<div class="col fw-bold">
+									<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["ReasonOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-filter-link">Reason</a>
+								</div>
+								<div class="col fw-bold">
+									<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["StartDayOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-filter-link">Start Date</a>
+								</div>
+								<div class="col fw-bold">
+									<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["HalfDayStartOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-filter-link">Is Half Day?</a>
+								</div>
+								<div class="col fw-bold">
+									<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["EndDayOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-filter-link">End Date</a>
+								</div>
+								<div class="col fw-bold">
+									<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["HalfDayEndOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-filter-link">Is Half Day?</a>
+								</div>
+								<div class="col fw-bold">
+									<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["RequestDayOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-filter-link">Request Date</a>
+								</div>
+								<div class="col fw-bold">
+									<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["CommentsOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-filter-link">Comments</a>
+								</div>
+								<div class="col fw-bold">Approve/Reject</div>
+							</div>
+						</li>
 					}
 
 					<!-- Solicitudes -->
@@ -130,17 +142,17 @@
 	<div class="card-footer py-3">
 		<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["currentOrder"]"
 		   asp-route-numPage="@(Model.PageIndex -1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
-		   class="btn btn-primary @previousDisabled">Previous</a>
+		   class="custom-button btn @previousDisabled">Previous</a>
 		@for (var i = 1; i <= Model.TotalPages; i++)
 		{
 			var activePage = (i == Model.PageIndex) ? "active" : "";
 			<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["currentOrder"]" asp-route-numPage="@i"
-			   asp-route-currentFilter="@ViewData["CurrentFilter"]" class="btn btn-primary @activePage">@i</a>
+			   asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-button btn @activePage">@i</a>
 		}
 
 		<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["CurrentOrder"]"
 		   asp-route-numPage="@(Model.PageIndex + 1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
-		   class="btn btn-primary @nextDisabled">Next</a>
+		   class="custom-button btn @nextDisabled">Next</a>
 	</div>
 
 </div>

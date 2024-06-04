@@ -90,10 +90,10 @@
 			}
 			else
 			{
-				<div class="alert alert-warning alert-dismissible fade show mt-3 d-flex justify-content-start" role="alert">
+				<!--<div class="alert alert-warning alert-dismissible fade show mt-3 d-flex justify-content-start" role="alert">
 					<strong>No data found</strong>
 					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-				</div>
+				</div>-->
 			}
 		</div>
 	</div>
@@ -132,13 +132,13 @@
 		<div class="col-12">
 			<ul class="nav nav-tabs m-4">
 				<li class="nav-item">
-					<a class="nav-link" aria-current="page" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Pending" asp-route-year="@ViewData["YearSelected"]"><i class="bi bi-clock-history"></i> Pending requests</a>
+					<a class="nav-link custom-nav-link" aria-current="page" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Pending" asp-route-year="@ViewData["YearSelected"]"><i class="bi bi-clock-history"></i> Pending requests</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Approved" asp-route-year="@ViewData["YearSelected"]"><i class="bi bi-check-circle"></i> Approved requests</a>
+					<a class="nav-link custom-nav-link" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Approved" asp-route-year="@ViewData["YearSelected"]"><i class="bi bi-check-circle"></i> Approved requests</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Cancelled" asp-route-year="@ViewData["YearSelected"]"><i class="bi bi-dash-circle"></i> Cancelled requests</a>
+					<a class="nav-link custom-nav-link" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Cancelled" asp-route-year="@ViewData["YearSelected"]"><i class="bi bi-dash-circle"></i> Cancelled requests</a>
 				</li>
 				<form asp-controller="Home" asp-action="Main">
 					<div class="form-actions no-color">
@@ -147,7 +147,7 @@
 							<input type="hidden" name="optionStatus" value="@ViewData["status"]" />
 							<input type="hidden" name="year" value="@ViewData["YearSelected"]" />
 							<input type="submit" value="Search" class="custom-button" /> |
-							<a asp-action="Main" asp-route-year="@ViewData["YearSelected"]" class="mx-2">Back to Full List</a>
+							<a asp-action="Main" asp-route-year="@ViewData["YearSelected"]" class="mx-2 custom-link">Back to Full List</a>
 						</p>
 					</div>
 				</form>
@@ -156,112 +156,125 @@
 	</div>
 
 	<div class="card-body cardRequests">
-		<div class="row">
-			<div class="col test">
-				<ul class="list-group">
-					<li class="list-group-item list-group-item-primary">
-						<div class="row text-center">
-							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["ReasonOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]">Reason<i class="bi bi-caret-down mx-1"></i></a>
-							</div>
-							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StartDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]">Start Date<i class="bi bi-caret-up mx-1"></i></a>
-							</div>
-							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayStartOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]">Is Half Day?</a>
-							</div>
-							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["EndDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]">End Date</a>
-							</div>
-							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayEndOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]">Is Half Day?</a>
-							</div>
-							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["RequestDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]">Request Date</a>
-							</div>
-							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["CommentsOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]">Comments</a>
-							</div>
-							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StatusOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]">Status</a>
-							</div>
-							@if (Model.Count() != 0 && Model != null && Model.FirstOrDefault().Status.Name.Equals("Pending"))
-							{
-								<div class="col fw-bold">Edit/Delete</div>
-							}
-						</div>
-					</li>
-
-					@if (Model.Count() == 0)
-					{
-						<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
-							<strong>No requests found </strong> <!--Press <a asp-controller="Home" asp-action="Main" class="alert-link" asp-route-year="@ViewData["YearSelected"]">"Here"</a> to see all requests.-->
-							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-						</div>
-						<!--<div class="row">
-							<div class="col d-flex justify-content-center">
-								<i class="bi bi-folder-x no-data"></i>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col d-flex justify-content-center">
-								<p>No data available at this moment</p>
-							</div>
-						</div>-->
-					}
-
-					@if (Model != null)
-					{
-						foreach (var item in Model)
-						{
-							<li class="list-group-item">
-								<div class="row text-center">
-									<div class="col d-flex justify-content-center align-items-center">@Html.DisplayFor(model => item.Reason.Name)</div>
-									<div class="col d-flex justify-content-center align-items-center">@Html.DisplayFor(model => item.StartDate)</div>
-									<div class="col d-flex justify-content-center align-items-center">
-										@{
-											Console.WriteLine("\n\n\n\n\n\n" + Html.DisplayFor(model => item.HalfDayStart));
-											if (Html.DisplayFor(model => item.HalfDayStart).Equals(1))
-											{
-												<i class="bi bi-check-square-fill"></i>
-											}
-											else
-											{
-												<i class="bi bi-x-square-fill"></i>
-											}
-										}
-									</div>
-									<div class="col d-flex justify-content-center align-items-center">@Html.DisplayFor(model => item.EndDate)</div>
-									<div class="col d-flex justify-content-center align-items-center">
-										@{
-											if (Html.DisplayFor(model => item.HalfDayEnd).Equals(1))
-											{
-												<i class="bi bi-check-square-fill"></i>
-											}
-											else
-											{
-												<i class="bi bi-x-square-fill"></i>
-											}
-										}
-									</div>
-									<div class="col d-flex justify-content-center align-items-center">@Html.DisplayFor(model => item.RequestDate)</div>
-									<div class="col d-flex justify-content-center align-items-center">@Html.DisplayFor(model => item.Comments)</div>
-									<div class="col d-flex justify-content-center align-items-center">@Html.DisplayFor(model => item.Status.Name)</div>
-									@if (Model.Count() != 0 && Model != null && Model.FirstOrDefault().Status.Name.Equals("Pending"))
-									{
-										<div class="col">
-											<a asp-controller="Requests" asp-action="Edit" asp-route-id="@item.RequestId" class="btn btn-unstyled"><i class="bi bi-pencil-square"></i></a>
-											@*<a asp-route-id="@item.RequestId" data-bs-toggle="modal" data-bs-target="#editModal" class="btn btn-unstyled"><i class="bi bi-pencil-square"></i></a>*@
-											<a asp-controller="Requests" asp-action="Delete" asp-route-id="@item.RequestId" method="post" class="btn btn-unstyled"><i class="bi bi-trash-fill"></i></a>
-										</div>
-									}
-								</div>
-							</li>
-						}
-					}
-				</ul>
+		@if (Model.Count() == 0)
+		{
+			@*<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+		<strong>No requests found </strong> <!--Press <a asp-controller="Home" asp-action="Main" class="alert-link" asp-route-year="@ViewData["YearSelected"]">"Here"</a> to see all requests.-->
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>*@
+			<div class="row">
+				<div class="col-12 d-flex justify-content-center">
+					<i class="bi bi-file-earmark-excel-fill custom-icon"></i>
+				</div>
 			</div>
-		</div>
+			<div class="row">
+				<div class="col-12 d-flex justify-content-center">
+					<p class="no-data-text">No data found. Add a line to submit data.</p>
+				</div>
+			</div>
+			<!--<div class="row">
+				<div class="col d-flex justify-content-center">
+					<i class="bi bi-folder-x no-data"></i>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col d-flex justify-content-center">
+					<p>No data available at this moment</p>
+				</div>
+			</div>-->
+		}
+		else
+		{
+			<div class="row">
+				<div class="col test">
+					<ul class="list-group">
+						<li class="list-group-item custom-list-group">
+							<div class="row text-center">
+								<div class="col fw-bold">
+									<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["ReasonOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" class="custom-filter-link">Reason<i id="filter-icon" class="bi bi-caret-down mx-1"></i></a>
+								</div>
+								<div class="col fw-bold">
+									<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StartDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" class="custom-filter-link">Start Date<i class="bi bi-caret-up mx-1"></i></a>
+								</div>
+								<div class="col fw-bold">
+									<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayStartOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" class="custom-filter-link">Is Half Day?</a>
+								</div>
+								<div class="col fw-bold">
+									<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["EndDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" class="custom-filter-link">End Date</a>
+								</div>
+								<div class="col fw-bold">
+									<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayEndOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" class="custom-filter-link">Is Half Day?</a>
+								</div>
+								<div class="col fw-bold">
+									<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["RequestDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" class="custom-filter-link">Request Date</a>
+								</div>
+								<div class="col fw-bold">
+									<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["CommentsOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" class="custom-filter-link">Comments</a>
+								</div>
+								<div class="col fw-bold">
+									<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StatusOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" class="custom-filter-link">Status</a>
+								</div>
+								@if (Model.Count() != 0 && Model != null && Model.FirstOrDefault().Status.Name.Equals("Pending"))
+								{
+									<div class="col fw-bold">Edit/Delete</div>
+								}
+							</div>
+						</li>
+
+						@if (Model != null)
+						{
+							foreach (var item in Model)
+							{
+								<li class="list-group-item">
+									<div class="row text-center">
+										<div class="col d-flex justify-content-center align-items-center">@Html.DisplayFor(model => item.Reason.Name)</div>
+										<div class="col d-flex justify-content-center align-items-center">@Html.DisplayFor(model => item.StartDate)</div>
+										<div class="col d-flex justify-content-center align-items-center">
+											@{
+												Console.WriteLine("\n\n\n\n\n\n" + Html.DisplayFor(model => item.HalfDayStart));
+												if (Html.DisplayFor(model => item.HalfDayStart).Equals(1))
+												{
+													<i class="bi bi-check-square-fill"></i>
+												}
+												else
+												{
+													<i class="bi bi-x-square-fill"></i>
+												}
+											}
+										</div>
+										<div class="col d-flex justify-content-center align-items-center">@Html.DisplayFor(model => item.EndDate)</div>
+										<div class="col d-flex justify-content-center align-items-center">
+											@{
+												if (Html.DisplayFor(model => item.HalfDayEnd).Equals(1))
+												{
+													<i class="bi bi-check-square-fill"></i>
+												}
+												else
+												{
+													<i class="bi bi-x-square-fill"></i>
+												}
+											}
+										</div>
+										<div class="col d-flex justify-content-center align-items-center">@Html.DisplayFor(model => item.RequestDate)</div>
+										<div class="col d-flex justify-content-center align-items-center">@Html.DisplayFor(model => item.Comments)</div>
+										<div class="col d-flex justify-content-center align-items-center">@Html.DisplayFor(model => item.Status.Name)</div>
+										@if (Model.Count() != 0 && Model != null && Model.FirstOrDefault().Status.Name.Equals("Pending"))
+										{
+											<div class="col">
+												<a asp-controller="Requests" asp-action="Edit" asp-route-id="@item.RequestId" class="btn btn-unstyled custom-icon-edit-delete"><i class="bi bi-pencil-square"></i></a>
+												@*<a asp-route-id="@item.RequestId" data-bs-toggle="modal" data-bs-target="#editModal" class="btn btn-unstyled"><i class="bi bi-pencil-square"></i></a>*@
+												<a asp-controller="Requests" asp-action="Delete" asp-route-id="@item.RequestId" method="post" class="btn btn-unstyled custom-icon-edit-delete"><i class="bi bi-trash-fill"></i></a>
+											</div>
+										}
+									</div>
+								</li>
+							}
+						}
+					</ul>
+				</div>
+			</div>
+		}
+
 	</div>
 
 	@{

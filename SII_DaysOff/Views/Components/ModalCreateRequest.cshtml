@@ -11,70 +11,67 @@
             <div class="modal-body">
                 <form asp-action="Create" asp-controller="Requests">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <!--<div class="form-group">
-                        <label asp-for="UserId" class="control-label"></label>
-                        <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-                        <input asp-for="UserId" class="form-control" />
-                    </div>-->
                     <div class="form-group">
-                        <label asp-for="ReasonId" class="control-label"></label>
-                        <select asp-for="ReasonId" class="form-control" asp-items="ViewBag.ReasonId"></select>
-                    </div>
-                    <!--<div class="form-group">
-                        <label asp-for="StatusId" class="control-label"></label>
-                        <select asp-for="StatusId" class="form-control" asp-items="ViewBag.StatusId"></select>
-                    </div>-->
-                    <!--<div class="form-group">
-                        <label asp-for="RequestDate" class="control-label"></label>
-                        <input asp-for="RequestDate" class="form-control" />
-                        <span asp-validation-for="RequestDate" class="text-danger"></span>
-                    </div>-->
+                        <div class="row p-3">
+                            <div class="col-3">
+                                <label asp-for="ReasonId" class="control-label"></label>
+                            </div>
+                            <div class="col-9">
+                                <select asp-for="ReasonId" class="form-control" asp-items="ViewBag.ReasonId"></select>
+                            </div>
+						</div>
+					</div>
                     <div class="form-group">
-                        <label asp-for="StartDate" class="control-label"></label>
-                        <input asp-for="StartDate" class="form-control" />
-                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                        <div class="row p-3">
+                            <div class=" col-3">
+                                <label asp-for="StartDate" class="control-label"></label>
+                            </div>
+                            <div class="col-9">
+                                <input asp-for="StartDate" class="form-control" />
+                                <span asp-validation-for="StartDate" class="text-danger"></span>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label asp-for="EndDate" class="control-label"></label>
-                        <input asp-for="EndDate" class="form-control" />
-                        <span asp-validation-for="EndDate" class="text-danger"></span>
+                        <div class="row p-3">
+                            <div class=" col-3">
+                                <label asp-for="EndDate" class="control-label"></label>
+                            </div>
+                            <div class="col-9">
+                                <input asp-for="EndDate" class="form-control" />
+                                <span asp-validation-for="EndDate" class="text-danger"></span>
+                            </div>
+                        </div>
                     </div>
+                    <div class="form-group">
+                        <div class="row p-3">
+                            <div class=" col-3">
+                                <label asp-for="Comments" class="control-label"></label>
+                            </div>
+                            <div class="col-9">
+                                <input asp-for="Comments" class="form-control" />
+                                <span asp-validation-for="Comments" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
                     <div class="form-group form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" asp-for="HalfDayStart" /> @Html.DisplayNameFor(model => model.HalfDayStart)
-                        </label>
+                        <div class="row p-3">
+                            <div class=" col-6 d-flex justify-content-center">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="HalfDayStart" /> @Html.DisplayNameFor(model => model.HalfDayStart)
+                                </label>
+                            </div>
+                            <div class="col-6 d-flex justify-content-center">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="HalfDayEnd" /> @Html.DisplayNameFor(model => model.HalfDayEnd)
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" asp-for="HalfDayEnd" /> @Html.DisplayNameFor(model => model.HalfDayEnd)
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Comments" class="control-label"></label>
-                        <input asp-for="Comments" class="form-control" />
-                        <span asp-validation-for="Comments" class="text-danger"></span>
-                    </div>
-                    <!--<div class="form-group">
-                        <label asp-for="CreatedBy" class="control-label"></label>
-                        <select asp-for="CreatedBy" class="form-control" asp-items="ViewBag.CreatedBy"></select>
-                    </div>-->
-                    <!--<div class="form-group">
-                        <label asp-for="CreationDate" class="control-label"></label>
-                        <input asp-for="CreationDate" class="form-control" />
-                        <span asp-validation-for="CreationDate" class="text-danger"></span>
-                    </div>-->
-                    <!--<div class="form-group">
-                        <label asp-for="ModifiedBy" class="control-label"></label>
-                        <select asp-for="ModifiedBy" class="form-control" asp-items="ViewBag.ModifiedBy"></select>
-                    </div>-->
-                    <!--<div class="form-group">
-                        <label asp-for="ModificationDate" class="control-label"></label>
-                        <input asp-for="ModificationDate" class="form-control" />
-                        <span asp-validation-for="ModificationDate" class="text-danger"></span>
-                    </div>-->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Send request</button>
+                        <!--<button type="button" class="custom-button-disabled" data-bs-dismiss="modal">Close</button>-->
+                        <button type="submit" class="custom-button">Send request</button>
                     </div>
                 </form>
             </div>
