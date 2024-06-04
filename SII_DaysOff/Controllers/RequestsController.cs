@@ -55,8 +55,12 @@ namespace SII_DaysOff.Controllers
             return View();
         }
 
-        public async Task<IActionResult> ManageIndex(string sortOrder, string searchString, int? numPage, string currentFilter)
+        public async Task<IActionResult> ManageIndex(string sortOrder, string searchString, int? numPage, string currentFilter, string year)
         {
+            Console.WriteLine("\n\n\n\n\n Year --> " + year);
+			if (year == null) year = DateTime.Now.Year.ToString();
+			Console.WriteLine("\n\n\n\n\n Year --> " + year);
+
 			//Ordenación
 			ViewData["ReasonOrder"] = String.IsNullOrEmpty(sortOrder) ? "Reason_desc" : "";
 			ViewData["NameOrder"] = sortOrder == "Name" ? "Name_desc" : "Name";
@@ -90,6 +94,8 @@ namespace SII_DaysOff.Controllers
                 .Where(r => r.StatusId == statusId)
                 .Where(r => managerUserIds.Contains(r.UserId))
                 .AsQueryable();
+
+			if (year != null) requests = requests.Where(r => r.RequestDate.Year.ToString().Equals(year));
 
 			//Paginacion
 			if (searchString != null) numPage = 1;

@@ -109,7 +109,7 @@
 				@{
 					if (ViewBag.pendingRequests > 0)
 					{
-						<a class="btn btn-outline-primary fw-bold mx-2 position-relative" asp-area="" asp-controller="Requests" asp-action="ManageIndex">
+						<a class="btn btn-outline-primary fw-bold mx-2 position-relative" asp-controller="Requests" asp-action="ManageIndex" asp-route-year="@ViewData["YearSelected"]">
 							Manage request
 							<span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
 								@ViewBag.pendingRequests

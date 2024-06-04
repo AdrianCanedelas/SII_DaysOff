@@ -21,7 +21,7 @@
 						<img src="~/img/siigroup-spain-whiteline.png" class="navBar mx-4" />
 					</div>
 					<div class="col-6 d-flex justify-content-center">
-						<a id="manage" class="nav-link text-light title" asp-controller="Home" asp-action="Main">SII DaysOff</a>
+						<a id="manage" class="nav-link text-light title" asp-controller="Home" asp-action="Main" asp-route-year="@ViewData["YearSelected"]">SII DaysOff</a>
 					</div>
 					<div class="col-3 d-flex justify-content-center">
 						<partial name="_LoginPartial" />

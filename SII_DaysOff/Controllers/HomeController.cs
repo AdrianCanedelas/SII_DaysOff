@@ -37,10 +37,10 @@ namespace SII_DaysOff.Controllers
 
 		public async Task<IActionResult> MainAsync(string sortOrder, string searchString, int? numPage, string currentFilter, string optionStatus, string year)
 		{
-			if(year == null) year = DateTime.Now.Year.ToString();
+			Console.WriteLine("\n\n\n\n\nyear --> " + year);
+			if (year == null) year = DateTime.Now.Year.ToString();
 			if (optionStatus != null && optionStatus != "") ViewData["Status"] = optionStatus;
 			var currentOptionStatus = ViewData["status"];
-			Console.WriteLine("\n\n\n\n\nyear --> " + year);
 			Console.WriteLine("status --> " + currentOptionStatus);
 			Console.WriteLine("currentFilter --> " + currentFilter);
 			Console.WriteLine("searchString --> " + searchString);
@@ -168,6 +168,7 @@ namespace SII_DaysOff.Controllers
 				.ToList()
 				.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId))
 				.Where(r => managerUserIds.Contains(r.UserId))
+				.Where(r => r.RequestDate.Year.ToString().Equals(year))
 				.Count();
 
 			ViewData["PendingRequests"] = pendingRequests;
