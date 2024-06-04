@@ -380,12 +380,13 @@ namespace SII_DaysOff.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("RequestId,UserId,ReasonId,StatusId,RequestDate,StartDate,EndDate,HalfDayStart,HalfDayEnd,Comments,CreatedBy,CreationDate,ModifiedBy,ModificationDate")] Requests requests)
+        public async Task<IActionResult> Edit(Guid id, [Bind("ReasonId,StartDate,EndDate,HalfDayStart,HalfDayEnd,Comments")] Requests requests)
         {
-            Console.WriteLine("editPOST");
+            Console.WriteLine("editPOST" + requests.ReasonId + " - " + requests.StartDate + " - " + requests.EndDate + " - " + requests.HalfDayStart + " - " + requests.HalfDayEnd + " - " + requests.Comments);
             if (id != requests.RequestId)
             {
-                return NotFound();
+				Console.WriteLine("post 1");
+				return NotFound();
             }
 
             if (ModelState.IsValid)
@@ -394,10 +395,10 @@ namespace SII_DaysOff.Controllers
                 {
                     var user = await _userManager.GetUserAsync(User);
 
-                    requests.RequestDate = DateTime.Now;
+                    //requests.RequestDate = DateTime.Now;
                     requests.ModificationDate = DateTime.Now;
                     requests.ModifiedBy = user.Id;
-                    requests.ModificationDate = DateTime.Now;
+                    //requests.ModificationDate = DateTime.Now;
                     _context.Update(requests);
                     await _context.SaveChangesAsync();
                 }

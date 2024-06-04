@@ -13,12 +13,12 @@
 }
 
 @Html.Partial("../Components/ModalCreateRequest", new SII_DaysOff.Models.Requests())
-@Html.Partial("../Components/ModalEditRequest", new SII_DaysOff.Models.Requests())
+
 
 <h1 class="mx-4">Days Off</h1>
 
 <!-- Tabs para admin -->
-<div class="card my-5 mx-4">
+<div class="card my-4 mx-4">
 	<div class="card-header bg-light">
 		<div class="row">
 			<div class="col-6">
@@ -260,10 +260,13 @@
 										<div class="col d-flex justify-content-center align-items-center">@Html.DisplayFor(model => item.Status.Name)</div>
 										@if (Model.Count() != 0 && Model != null && Model.FirstOrDefault().Status.Name.Equals("Pending"))
 										{
+											@Html.Partial("../Components/ModalEditRequest", item)
+											@Html.Partial("../Components/ModalDeleteRequest", item)
 											<div class="col">
-												<a asp-controller="Requests" asp-action="Edit" asp-route-id="@item.RequestId" class="btn btn-unstyled custom-icon-edit-delete"><i class="bi bi-pencil-square"></i></a>
-												@*<a asp-route-id="@item.RequestId" data-bs-toggle="modal" data-bs-target="#editModal" class="btn btn-unstyled"><i class="bi bi-pencil-square"></i></a>*@
-												<a asp-controller="Requests" asp-action="Delete" asp-route-id="@item.RequestId" method="post" class="btn btn-unstyled custom-icon-edit-delete"><i class="bi bi-trash-fill"></i></a>
+												@*<a asp-controller="Requests" asp-action="Edit" asp-route-id="@item.RequestId" class="btn btn-unstyled custom-icon-edit-delete"><i class="bi bi-pencil-square"></i></a>*@
+												<a data-bs-toggle="modal" data-bs-target="#editModal" class="btn btn-unstyled custom-icon-edit-delete"><i class="bi bi-pencil-square"></i></a>
+												<!--<a asp-controller="Requests" asp-action="Delete" asp-route-id="@item.RequestId" method="post" class="btn btn-unstyled custom-icon-edit-delete"><i class="bi bi-trash-fill"></i></a>-->
+												<a data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-unstyled custom-icon-edit-delete"><i class="bi bi-trash-fill"></i></a>
 											</div>
 										}
 									</div>
