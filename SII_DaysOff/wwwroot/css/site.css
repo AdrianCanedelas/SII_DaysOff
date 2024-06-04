@@ -11,18 +11,18 @@ body {
 
 
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
@@ -31,9 +31,43 @@ body {
     /*overflow-y: hidden;*/
 }
 
-.form-control-custom {
-    width: 100%;
+.custom-button-disabled {
+    border: 1px solid lightgrey;
+    padding-inline: 10px;
+    padding-block: 3px;
+    text-decoration: none;
+    box-shadow: 1px 2px 3px 1px lightgrey;
+    color: lightgrey;
+    transition: 0.3s;
+    font-size: 100%;
+    margin-inline: 5px;
+    background-color: whitesmoke;
     text-align: center;
+}
+
+.custom-button-disabled:hover {
+    color: lightgrey;
+}
+
+.custom-button {
+    border: 1px solid lightgrey;
+    padding-inline: 10px;
+    padding-block: 3px;
+    text-decoration: none;
+    box-shadow: 1px 2px 3px 1px lightgrey;
+    color: dimgrey;
+    transition: 0.3s;
+    font-size: 100%;
+    margin-inline: 5px;
+    background-color: whitesmoke;
+    text-align: center;
+}
+
+.custom-button:hover {
+    border: 1px solid #007eb5;
+    box-shadow: none;
+    color: #007eb5;
+    /*font-weight: bold;*/
 }
 
 /* _LoginPartial */
@@ -60,7 +94,7 @@ img.login {
     width: 300px;
 }
 
-.no-data{
+.no-data {
     align-content: center;
     font-size: 130px;
 }

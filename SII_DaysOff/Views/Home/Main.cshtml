@@ -34,14 +34,14 @@
 								<!--<span class="input-group-btn">
 									<button type="button" class="btn- btn-primary" id="decreaseYear"><<</button>
 								</span>-->
-								<input type="text" class="form-control form-control-custom" id="yearPicker" name="year" value="@ViewData["YearSelected"]" readonly />
+								<input type="text" class="form-control custom-button" id="yearPicker" name="year" value="@ViewData["YearSelected"]" readonly />
 								<!--<span class="input-group-btn">
 									<button type="button" class="btn btn-primary" id="increaseYear">>></button>
 								</span>-->
 							</div>
 						</div>
-						<div class="col-3 d-flex justify-content-end">
-							<button type="submit" class="btn btn-outline-primary">Enviar</button>
+						<div class="col-3 d-flex justify-content-start">
+							<button type="submit" class="custom-button"><i class="bi bi-arrow-return-right"></i></button>
 						</div>
 					</div>
 				</form>
@@ -109,7 +109,7 @@
 				@{
 					if (ViewBag.pendingRequests > 0)
 					{
-						<a class="btn btn-outline-primary fw-bold mx-2 position-relative" asp-controller="Requests" asp-action="ManageIndex" asp-route-year="@ViewData["YearSelected"]">
+						<a class="custom-button position-relative" asp-controller="Requests" asp-action="ManageIndex" asp-route-year="@ViewData["YearSelected"]">
 							Manage request
 							<span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
 								@ViewBag.pendingRequests
@@ -119,37 +119,41 @@
 					}
 					else
 					{
-						<a class="btn btn-outline-primary fw-bold mx-2 disabled" asp-area="" asp-controller="Requests" asp-action="ManageIndex">Manage request</a>
+						<a class="custom-button-disabled position-relative btn disabled" asp-area="" asp-controller="Requests" asp-action="ManageIndex">Manage request</a>
 					}
 				}
-				<button type="submit" class="btn btn-outline-primary fw-bold mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal">New request</button>
-				<a type="submit" class="btn btn-outline-primary fw-bold mx-2" asp-controller="Requests" asp-action="Calendar">Calendar</a>
+				<button type="submit" class="custom-button" data-bs-toggle="modal" data-bs-target="#exampleModal">New request</button>
+				<a type="submit" class="custom-button" asp-controller="Requests" asp-action="Calendar">Calendar</a>
 			</div>
 		</div>
 	</div>
 
-	<ul class="nav nav-tabs m-4">
-		<li class="nav-item">
-			<a class="nav-link" aria-current="page" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Pending" asp-route-year="@ViewData["YearSelected"]"><i class="bi bi-clock-history"></i> Pending requests</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Approved" asp-route-year="@ViewData["YearSelected"]"><i class="bi bi-check-circle"></i> Approved requests</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Cancelled" asp-route-year="@ViewData["YearSelected"]"><i class="bi bi-dash-circle"></i> Cancelled requests</a>
-		</li>
-		<form asp-controller="Home" asp-action="Main">
-			<div class="form-actions no-color">
-				<p>
-					<input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="btn btn-outline-primary">
-					<input type="hidden" name="optionStatus" value="@ViewData["status"]" />
-					<input type="hidden" name="year" value="@ViewData["YearSelected"]" />
-					<input type="submit" value="Search" class="btn btn-outline-primary mx-3" /> |
-					<a asp-action="Main" asp-route-year="@ViewData["YearSelected"]" class="mx-3">Back to Full List</a>
-				</p>
-			</div>
-		</form>
-	</ul>
+	<div class="row">
+		<div class="col-12">
+			<ul class="nav nav-tabs m-4">
+				<li class="nav-item">
+					<a class="nav-link" aria-current="page" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Pending" asp-route-year="@ViewData["YearSelected"]"><i class="bi bi-clock-history"></i> Pending requests</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Approved" asp-route-year="@ViewData["YearSelected"]"><i class="bi bi-check-circle"></i> Approved requests</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Cancelled" asp-route-year="@ViewData["YearSelected"]"><i class="bi bi-dash-circle"></i> Cancelled requests</a>
+				</li>
+				<form asp-controller="Home" asp-action="Main">
+					<div class="form-actions no-color">
+						<p>
+							<input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="custom-button">
+							<input type="hidden" name="optionStatus" value="@ViewData["status"]" />
+							<input type="hidden" name="year" value="@ViewData["YearSelected"]" />
+							<input type="submit" value="Search" class="custom-button" /> |
+							<a asp-action="Main" asp-route-year="@ViewData["YearSelected"]" class="mx-2">Back to Full List</a>
+						</p>
+					</div>
+				</form>
+			</ul>
+		</div>
+	</div>
 
 	<div class="card-body cardRequests">
 		<div class="row">
@@ -268,18 +272,18 @@
 	<div class="card-footer py-3">
 		<a asp-action="Main" asp-route-sortOrder="@ViewData["currentOrder"]"
 		   asp-route-numPage="@(Model.PageIndex -1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
-		   class="btn btn-primary @previousDisabled" asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]">Previous</a>
+		   class="custom-button btn @previousDisabled" asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]">Previous</a>
 		@for (var i = 1; i <= Model.TotalPages; i++)
 		{
 			var activePage = (i == Model.PageIndex) ? "active" : "";
 			<a asp-action="Main" asp-route-sortOrder="@ViewData["currentOrder"]" asp-route-numPage="@i"
-			   asp-route-currentFilter="@ViewData["CurrentFilter"]" class="btn btn-primary @activePage" asp-route-optionStatus="@ViewData["Status"]" 
+			   asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-button btn @activePage" asp-route-optionStatus="@ViewData["Status"]"
 			   asp-route-year="@ViewData["YearSelected"]">@i</a>
 		}
 
 		<a asp-action="Main" asp-route-sortOrder="@ViewData["CurrentOrder"]"
 		   asp-route-numPage="@(Model.PageIndex + 1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
-		   class="btn btn-primary @nextDisabled" asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]">Next</a>
+		   class="custom-button btn @nextDisabled" asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]">Next</a>
 	</div>
 </div>
 

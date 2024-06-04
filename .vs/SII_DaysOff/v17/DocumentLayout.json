@@ -3,28 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\controllers\\requestscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\controllers\\requestscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\views\\home\\main.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\views\\home\\main.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\views\\requests\\manageindex.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\views\\requests\\manageindex.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\views\\requests\\manageindex.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\views\\requests\\manageindex.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\controllers\\requestscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\controllers\\requestscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -47,19 +51,45 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "site.css",
+              "DocumentMoniker": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "SII_DaysOff\\wwwroot\\css\\site.css",
+              "ToolTip": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "SII_DaysOff\\wwwroot\\css\\site.css",
+              "ViewState": "AQIAABgAAAAAAAAAAAAowDAAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-06-04T10:05:57.606Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Main.cshtml",
+              "DocumentMoniker": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Views\\Home\\Main.cshtml",
+              "RelativeDocumentMoniker": "SII_DaysOff\\Views\\Home\\Main.cshtml",
+              "ToolTip": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Views\\Home\\Main.cshtml",
+              "RelativeToolTip": "SII_DaysOff\\Views\\Home\\Main.cshtml",
+              "ViewState": "AQIAAP8AAAAAAAAAAAAjwB0BAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-04T06:25:06.735Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "ManageIndex.cshtml",
               "DocumentMoniker": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Views\\Requests\\ManageIndex.cshtml",
               "RelativeDocumentMoniker": "SII_DaysOff\\Views\\Requests\\ManageIndex.cshtml",
               "ToolTip": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Views\\Requests\\ManageIndex.cshtml",
               "RelativeToolTip": "SII_DaysOff\\Views\\Requests\\ManageIndex.cshtml",
-              "ViewState": "AQIAACcAAAAAAAAAAAAAAEMAAAAZAAAA",
+              "ViewState": "AQIAAGAAAAAAAAAAAAAAAA8AAAB1AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-06-04T07:23:36.257Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "SII_DaysOff\\Views\\Shared\\_Layout.cshtml",
@@ -72,7 +102,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "_LoginPartial.cshtml",
               "DocumentMoniker": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Views\\Shared\\_LoginPartial.cshtml",
               "RelativeDocumentMoniker": "SII_DaysOff\\Views\\Shared\\_LoginPartial.cshtml",
@@ -85,7 +115,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "SII_DaysOff\\Controllers\\HomeController.cs",
@@ -98,20 +128,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Main.cshtml",
-              "DocumentMoniker": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Views\\Home\\Main.cshtml",
-              "RelativeDocumentMoniker": "SII_DaysOff\\Views\\Home\\Main.cshtml",
-              "ToolTip": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Views\\Home\\Main.cshtml",
-              "RelativeToolTip": "SII_DaysOff\\Views\\Home\\Main.cshtml",
-              "ViewState": "AQIAANAAAAAAAAAAAAAjwO8AAAAMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-06-04T06:25:06.735Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "RequestsController.cs",
               "DocumentMoniker": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Controllers\\RequestsController.cs",
               "RelativeDocumentMoniker": "SII_DaysOff\\Controllers\\RequestsController.cs",
