@@ -95,8 +95,6 @@ namespace SII_DaysOff.Controllers
                 .Where(r => managerUserIds.Contains(r.UserId))
                 .AsQueryable();
 
-			if (year != null) requests = requests.Where(r => r.RequestDate.Year.ToString().Equals(year));
-
 			//Paginacion
 			if (searchString != null) numPage = 1;
 			else searchString = currentFilter;
@@ -161,6 +159,8 @@ namespace SII_DaysOff.Controllers
 					requests = requests.OrderByDescending(r => r.Status.Name);
 					break;
 			}
+
+			if (year != null) requests = requests.Where(r => r.RequestDate.Year.ToString().Equals(year));
 
 			int registerCount = 8;
 
@@ -516,10 +516,10 @@ namespace SII_DaysOff.Controllers
 				.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Approved"))?.StatusId));
 
 			var fileName = type + ".xlsx";
-
+            Console.WriteLine("\n\n\n\n\n\n month --<> " + year + " --> " + month);
             if(type.Equals("requests")) return GenerateExcel(fileName, daysOff);
-            //return GenerateExcel(fileName, daysOff, int.Parse(year), int.Parse(month));
-            return GenerateExcel(fileName, daysOff, 2024, 05);
+            return GenerateExcel(fileName, daysOff, int.Parse(year), int.Parse(month));
+            //return GenerateExcel(fileName, daysOff, 2024, 05);
 		}
 
 		private FileResult GenerateExcel(string fileName, IEnumerable<Requests> requests, int year, int month)
@@ -530,43 +530,55 @@ namespace SII_DaysOff.Controllers
                 worksheet.Style.Fill.SetBackgroundColor(XLColor.FromHtml("#f2f2f2"));
 
                 DateTime firstDayOfMonth = new DateTime(year, month, 1);
-                int daysMonth = DateTime.DaysInMonth(year, month);
-                int row = 5;
-                int column = ((int)firstDayOfMonth.DayOfWeek + 1) % 7;
-                int jumpsDown = 5;
+				Console.WriteLine("\n\n\n\n | firstDayMonth --> " + firstDayOfMonth);
+				int daysMonth = DateTime.DaysInMonth(year, month);
+				Console.WriteLine("\n\n\n\n | daysMonth --> " + daysMonth);
+				int row = 5;
+				Console.WriteLine("\n\n\n\n | dayWeek --> " + ((int)firstDayOfMonth.DayOfWeek + 1));
+				int column = (((int)firstDayOfMonth.DayOfWeek + 1) % 8);
+				int initialColumn = (((int)firstDayOfMonth.DayOfWeek + 1) % 8);
+                //column = column + 2;
+				Console.WriteLine("\n\n\n\n | column --> " + column);
+				int jumpsDown = 5;
                 List<Guid> users = new List<Guid>();
 
                 //Estilos celdas y celda titulo
                 cellStyles(worksheet);
                 titleCell(worksheet, month, year);
                 daysCells(worksheet);
-                bgCellStyles(worksheet, column, row);
+                //bgCellStyles(worksheet, column, row);
 
                 for (int day = 1; day <= daysMonth; day++)
                 {
+                    Console.WriteLine("\n\n\n\n | day --> " + day);
                     numberCellStyles(worksheet, column, row, day);
+					Console.WriteLine("\n\n\n\n | 0 --> " + day);
 
-                    if (requests.Any(r => r.StartDate <= new DateTime(year, month, day) && r.EndDate >= new DateTime(year, month, day)))
+					if (requests.Any(r => r.StartDate <= new DateTime(year, month, day) && r.EndDate >= new DateTime(year, month, day)))
                     {
-                        //worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(XLColor.BluePigment).Font.SetFontColor(XLColor.White);
+						Console.WriteLine("\n\n\n\n | 1 --> " + day);
+						//worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(XLColor.BluePigment).Font.SetFontColor(XLColor.White);
 
-                        row = bottomCells(worksheet, row, column, XLColor.FromHtml("#f2f2f2"));
+						row = bottomCells(worksheet, row, column, XLColor.FromHtml("#f2f2f2"));
 
                         int pastRow = row;
 						foreach (Requests r in requests)
                         {
                             if(r.StartDate <= new DateTime(year, month, day) && r.EndDate >= new DateTime(year, month, day))
                             {
-                                row++;
-                                if (!users.Contains(r.UserId) || !worksheet.Cell(row, (column-1)).Style.Fill.BackgroundColor.Equals(XLColor.FromHtml("#007eb5")))
+                                if(new DateTime(year, month, day) != r.EndDate || r.EndDate == r.StartDate)
                                 {
-									if (row > pastRow) worksheet.Cell(row, column).Value += ("     ");
-									worksheet.Cell(row, column).Value += ("             |" + r.User.Name + " " + r.User.Surname + "   |" + r.Reason.Name);
+									row++;
+									if (!users.Contains(r.UserId) || checkPreviousCell(worksheet, row, column, jumpsDown))
+									{
+										if (row > pastRow) worksheet.Cell(row, column).Value += ("     ");
+										worksheet.Cell(row, column).Value += ("             |" + r.User.Name + " " + r.User.Surname + "   |" + r.Reason.Name);
+									}
+									worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(row %2 == 0 ? XLColor.FromHtml("#1c2445") : XLColor.FromHtml("#004278")).Font.SetFontColor(XLColor.FromHtml("#f2f2f2"))
+										.Border.SetBottomBorder(XLBorderStyleValues.Thin).Border.SetBottomBorderColor(XLColor.CoolGrey)
+										.Border.SetTopBorder(XLBorderStyleValues.Thin).Border.SetTopBorderColor(XLColor.CoolGrey);
+									users.Add(r.UserId);
 								}
-                                worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(XLColor.FromHtml("#007eb5")).Font.SetFontColor(XLColor.FromHtml("#f2f2f2"))
-                                    .Border.SetBottomBorder(XLBorderStyleValues.Thin).Border.SetBottomBorderColor(XLColor.CoolGrey)
-                                    .Border.SetTopBorder(XLBorderStyleValues.Thin).Border.SetTopBorderColor(XLColor.CoolGrey);
-								users.Add(r.UserId);
 							}
                             if (row > (pastRow + 4)) jumpsDown += 1;
                         }
@@ -574,12 +586,22 @@ namespace SII_DaysOff.Controllers
                     } 
                     else
                     {
+						Console.WriteLine("\n\n\n\n | 2 --> " + day);
 						row = bottomCells(worksheet, row, column, XLColor.FromHtml("#f2f2f2"));
 					}
 
-                    if(column == 8)
+                    if(column == 8 || day == daysMonth)
                     {
-                        row += jumpsDown;
+						for (int i = 2; i < (day == daysMonth ? 11 - initialColumn : 9); i++)
+						{
+							for (int j = (row + 5); j < (row + jumpsDown); j++)
+							{
+								worksheet.Cell(j, i).Style.Border.SetRightBorder(XLBorderStyleValues.Thin).Border.SetRightBorderColor(XLColor.CoolGrey);
+								worksheet.Cell(j, i).Style.Border.SetLeftBorder(XLBorderStyleValues.Thin).Border.SetLeftBorderColor(XLColor.CoolGrey);
+							}
+							//if (day == daysMonth) worksheet.Cell(row, column).Style.Border.SetBottomBorder(XLBorderStyleValues.Thin).Border.SetBottomBorderColor(XLColor.CoolGrey);
+						}
+						row += jumpsDown;
 						column = 2;
                         jumpsDown = 5;
                     } 
@@ -595,7 +617,20 @@ namespace SII_DaysOff.Controllers
 			}
 		}
 
-        public void cellStyles(IXLWorksheet worksheet)
+		public bool checkPreviousCell(IXLWorksheet worksheet, int row, int column, int jumpsDown)
+		{
+			if (column == 2)
+			{
+				if (!worksheet.Cell((row - jumpsDown), 8).Style.Fill.BackgroundColor.Equals(row % 2 == 0 ? XLColor.FromHtml("#1c2445") : XLColor.FromHtml("#004278"))) return true;
+			}
+			else
+			{
+				if (!worksheet.Cell(row, (column - 1)).Style.Fill.BackgroundColor.Equals(row % 2 == 0 ? XLColor.FromHtml("#1c2445") : XLColor.FromHtml("#004278"))) return true;
+			}
+			return false;
+		}
+
+		public void cellStyles(IXLWorksheet worksheet)
         {
             for (int i = 2; i <= 39; i++)
             {
@@ -618,7 +653,7 @@ namespace SII_DaysOff.Controllers
 			}
         }
 
-        public void bgCellStyles(IXLWorksheet worksheet, int column, int row)
+        /*public void bgCellStyles(IXLWorksheet worksheet, int column, int row)
         {
             int cont = 0;
             for (int i = (cont < (6 - column) ? 2 : column); i < (cont < (6 - column) ? column : 9); i++)
@@ -629,11 +664,13 @@ namespace SII_DaysOff.Controllers
                 }
                 cont++;
             }
-        }
+        }*/
 
         public void numberCellStyles(IXLWorksheet worksheet, int column, int row, int day)
         {
-            worksheet.Cell(row, column).Value = day;
+			Console.WriteLine("\n\n\n\n | row --> " + row);
+			Console.WriteLine("\n\n\n\n | column --> " + column);
+			worksheet.Cell(row, column).Value = day;
             worksheet.Cell(row, column).Style.Border.SetTopBorder(XLBorderStyleValues.Thin).Border.SetTopBorderColor(XLColor.CoolGrey)
                 .Font.SetFontColor(XLColor.FromHtml("#007eb5"));
             worksheet.Cell(row, column).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
@@ -664,20 +701,22 @@ namespace SII_DaysOff.Controllers
             worksheet.Cell(4, 8).Value = "Sun";
         }
 
-        public int bottomCells(IXLWorksheet worksheet, int row, int column, XLColor color)
-        {
-            for (int i = 0; i < 4; i++)
-            {
+		public int bottomCells(IXLWorksheet worksheet, int row, int column, XLColor color)
+		{
+			worksheet.Cell(row, column).Style.Border.SetRightBorder(XLBorderStyleValues.Thin).Border.SetRightBorderColor(XLColor.CoolGrey);
+			worksheet.Cell(row, column).Style.Border.SetLeftBorder(XLBorderStyleValues.Thin).Border.SetLeftBorderColor(XLColor.CoolGrey);
+			for (int i = 0; i < 4; i++)
+			{
+				row++;
 				worksheet.Cell(row, column).Style.Border.SetRightBorder(XLBorderStyleValues.Thin).Border.SetRightBorderColor(XLColor.CoolGrey);
 				worksheet.Cell(row, column).Style.Border.SetLeftBorder(XLBorderStyleValues.Thin).Border.SetLeftBorderColor(XLColor.CoolGrey);
-				row++;
 				worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(color);
-            }
-            //worksheet.Cell(row, column).Style.Border.SetBottomBorder(XLBorderStyleValues.Thin).Border.SetBottomBorderColor(XLColor.CoolGrey);
-            return row -= 4;
-        }
+			}
+			//worksheet.Cell(row, column).Style.Border.SetBottomBorder(XLBorderStyleValues.Thin).Border.SetBottomBorderColor(XLColor.CoolGrey);
+			return row -= 4;
+		}
 
-        private FileResult GenerateExcel(string fileName, IEnumerable<Requests> requests)
+		private FileResult GenerateExcel(string fileName, IEnumerable<Requests> requests)
         {
             DataTable dataTable = new DataTable("DaysOff");
             dataTable.Columns.AddRange(new DataColumn[]

@@ -130,21 +130,22 @@
 
 	<ul class="nav nav-tabs m-4">
 		<li class="nav-item">
-			<a class="nav-link" aria-current="page" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Pending"><i class="bi bi-clock-history"></i> Pending requests</a>
+			<a class="nav-link" aria-current="page" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Pending" asp-route-year="@ViewData["YearSelected"]"><i class="bi bi-clock-history"></i> Pending requests</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Approved"><i class="bi bi-check-circle"></i> Approved requests</a>
+			<a class="nav-link" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Approved" asp-route-year="@ViewData["YearSelected"]"><i class="bi bi-check-circle"></i> Approved requests</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Cancelled"><i class="bi bi-dash-circle"></i> Cancelled requests</a>
+			<a class="nav-link" asp-controller="Home" asp-action="Main" asp-route-optionStatus="Cancelled" asp-route-year="@ViewData["YearSelected"]"><i class="bi bi-dash-circle"></i> Cancelled requests</a>
 		</li>
 		<form asp-controller="Home" asp-action="Main">
 			<div class="form-actions no-color">
 				<p>
 					<input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="btn btn-outline-primary">
 					<input type="hidden" name="optionStatus" value="@ViewData["status"]" />
+					<input type="hidden" name="year" value="@ViewData["YearSelected"]" />
 					<input type="submit" value="Search" class="btn btn-outline-primary mx-3" /> |
-					<a asp-action="Main" class="mx-3">Back to Full List</a>
+					<a asp-action="Main" asp-route-year="@ViewData["YearSelected"]" class="mx-3">Back to Full List</a>
 				</p>
 			</div>
 		</form>
@@ -157,28 +158,28 @@
 					<li class="list-group-item list-group-item-primary">
 						<div class="row text-center">
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["ReasonOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Reason<i class="bi bi-caret-down mx-1"></i></a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["ReasonOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]">Reason<i class="bi bi-caret-down mx-1"></i></a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StartDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Start Date<i class="bi bi-caret-up mx-1"></i></a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StartDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]">Start Date<i class="bi bi-caret-up mx-1"></i></a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayStartOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Is Half Day?</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayStartOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]">Is Half Day?</a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["EndDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">End Date</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["EndDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]">End Date</a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayEndOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Is Half Day?</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayEndOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]">Is Half Day?</a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["RequestDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Request Date</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["RequestDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]">Request Date</a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["CommentsOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Comments</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["CommentsOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]">Comments</a>
 							</div>
 							<div class="col fw-bold">
-								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StatusOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Status</a>
+								<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StatusOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]">Status</a>
 							</div>
 							@if (Model.Count() != 0 && Model != null && Model.FirstOrDefault().Status.Name.Equals("Pending"))
 							{
@@ -190,10 +191,10 @@
 					@if (Model.Count() == 0)
 					{
 						<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
-							<strong>No requests found | </strong> Press <a asp-controller="Home" asp-action="Main" class="alert-link">"Here"</a> to see all requests.
+							<strong>No requests found </strong> <!--Press <a asp-controller="Home" asp-action="Main" class="alert-link" asp-route-year="@ViewData["YearSelected"]">"Here"</a> to see all requests.-->
 							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 						</div>
-						<div class="row">
+						<!--<div class="row">
 							<div class="col d-flex justify-content-center">
 								<i class="bi bi-folder-x no-data"></i>
 							</div>
@@ -202,7 +203,7 @@
 							<div class="col d-flex justify-content-center">
 								<p>No data available at this moment</p>
 							</div>
-						</div>
+						</div>-->
 					}
 
 					@if (Model != null)
@@ -215,6 +216,7 @@
 									<div class="col d-flex justify-content-center align-items-center">@Html.DisplayFor(model => item.StartDate)</div>
 									<div class="col d-flex justify-content-center align-items-center">
 										@{
+											Console.WriteLine("\n\n\n\n\n\n" + Html.DisplayFor(model => item.HalfDayStart));
 											if (Html.DisplayFor(model => item.HalfDayStart).Equals(1))
 											{
 												<i class="bi bi-check-square-fill"></i>
@@ -266,17 +268,18 @@
 	<div class="card-footer py-3">
 		<a asp-action="Main" asp-route-sortOrder="@ViewData["currentOrder"]"
 		   asp-route-numPage="@(Model.PageIndex -1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
-		   class="btn btn-primary @previousDisabled" asp-route-optionStatus="@ViewData["Status"]">Previous</a>
+		   class="btn btn-primary @previousDisabled" asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]">Previous</a>
 		@for (var i = 1; i <= Model.TotalPages; i++)
 		{
 			var activePage = (i == Model.PageIndex) ? "active" : "";
 			<a asp-action="Main" asp-route-sortOrder="@ViewData["currentOrder"]" asp-route-numPage="@i"
-			   asp-route-currentFilter="@ViewData["CurrentFilter"]" class="btn btn-primary @activePage" asp-route-optionStatus="@ViewData["Status"]">@i</a>
+			   asp-route-currentFilter="@ViewData["CurrentFilter"]" class="btn btn-primary @activePage" asp-route-optionStatus="@ViewData["Status"]" 
+			   asp-route-year="@ViewData["YearSelected"]">@i</a>
 		}
 
 		<a asp-action="Main" asp-route-sortOrder="@ViewData["CurrentOrder"]"
 		   asp-route-numPage="@(Model.PageIndex + 1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
-		   class="btn btn-primary @nextDisabled" asp-route-optionStatus="@ViewData["Status"]">Next</a>
+		   class="btn btn-primary @nextDisabled" asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]">Next</a>
 	</div>
 </div>
 
