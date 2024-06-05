@@ -31,9 +31,17 @@
 			@if (!ViewData["title"].Equals("Main"))
 			{
 				<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow navbar-custom-return mb-3">
-					<a id="manage" asp-controller="Home" asp-action="Main" asp-route-year="@ViewData["YearSelected"]">
-						<i class="bi bi-arrow-left-square mx-5 custom-icon-return"></i>
-					</a>
+					@if (ViewData["title"].Equals("Edit") || ViewData["title"].Equals("Delete"))
+					{
+						<a id="manage" asp-controller="Reasons" asp-action="Index" asp-route-year="@ViewData["YearSelected"]">
+							<i class="bi bi-arrow-left-square mx-5 custom-icon-return"></i>
+						</a>
+					} else
+					{
+						<a id="manage" asp-controller="Home" asp-action="Main" asp-route-year="@ViewData["YearSelected"]">
+							<i class="bi bi-arrow-left-square mx-5 custom-icon-return"></i>
+						</a>
+					}
 				</nav>
 			}
 		</header>

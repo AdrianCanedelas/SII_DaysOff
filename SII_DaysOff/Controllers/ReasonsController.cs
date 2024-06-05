@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SII_DaysOff.Areas.Identity.Data;
+using SII_DaysOff.Data;
 using SII_DaysOff.Models;
 
 namespace SII_DaysOff.Controllers
@@ -23,11 +24,50 @@ namespace SII_DaysOff.Controllers
         }
 
         // GET: Reasons
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int? numPage, string currentFilter, int registerCount)
         {
-            var dbContextBD = _context.Reasons.Include(r => r.CreatedByNavigation).Include(r => r.ModifiedByNavigation);
-            return View(await dbContextBD.ToListAsync());
-        }
+            //Ordenación
+			ViewData["NameOrder"] = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
+			ViewData["DescriptionOrder"] = sortOrder == "Description" ? "Description_desc" : "Description";
+
+			//Cuadro de búsqueda
+			ViewData["CurrentFilter"] = searchString;
+
+			var reasons = _context.Reasons.Include(r => r.CreatedByNavigation).Include(r => r.ModifiedByNavigation).AsQueryable();
+
+			//Paginacion
+			if (searchString != null) numPage = 1;
+			else searchString = currentFilter;
+
+			if (!String.IsNullOrEmpty(searchString))
+			{
+                reasons = reasons.Where(r => r.Name.Contains(searchString)
+                || r.Description.Contains(searchString));
+			}
+
+			ViewData["CurrentOrder"] = sortOrder;
+			ViewData["CurrentFilter"] = searchString;
+			if (registerCount == 0) registerCount = 5;
+			ViewData["RegisterCount"] = registerCount;
+
+			switch (sortOrder)
+			{
+				case "":
+					reasons = reasons.OrderBy(r => r.Name);
+					break;
+				case "Name_desc":
+					reasons = reasons.OrderByDescending(r => r.Name);
+					break;
+				case "Description_desc":
+					reasons = reasons.OrderByDescending(r => r.Description);
+					break;
+				case "Description":
+					reasons = reasons.OrderBy(r => r.Description);
+					break;
+			}
+
+			return View(await PaginatedList<Reasons>.CreateAsync(reasons.AsNoTracking(), numPage ?? 1, registerCount));
+		}
 
         // GET: Reasons/Details/5
         public async Task<IActionResult> Details(Guid? id)

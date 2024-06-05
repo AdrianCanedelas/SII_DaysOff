@@ -6,7 +6,7 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="mx-5">Manage requests</h1>
+<h1 class="mx-4">Manage requests</h1>
 
 <div class="card shadow my-4 mx-4">
 	<div class="card-header bg-light">
@@ -16,7 +16,8 @@
 					<input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="custom-button" />
 					<input type="submit" value="Search" class="custom-button" /> |
 					<a asp-controller="Requests" asp-action="ManageIndex" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="mx-2 custom-link">Back to Full List</a>
-					<input type="text" name="registerCount" value="@ViewData["RegisterCount"]" class="custom-button">
+					<input type="number" min="0" max="10" name="registerCount" value="@ViewData["RegisterCount"]" class="custom-button">
+					<label for="floatingInputValue" class="mx-2 custom-link">Results on page</label>
 				</p>
 			</div>
 		</form>
@@ -31,10 +32,6 @@
 
 						@if (Model.Count() == 0)
 						{
-							@*<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
-						<strong>No requests found </strong> <!--Press <a asp-controller="Requests" asp-action="ManageIndex" class="alert-link">"Here"</a> to see all requests.-->
-						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-						</div>*@
 							<div class="row">
 								<div class="col-12 d-flex justify-content-center">
 									<i class="bi bi-file-earmark-excel-fill custom-icon"></i>
@@ -125,35 +122,6 @@
 								</div>
 							</li>
 						}
-
-						<!--<li class="list-group-item">
-							<div class="row text-center">
-								<div class="col">
-									Vacations
-								</div>
-								<div class="col">
-									13/05/2024
-								</div>
-								<div class="col">
-									Is half day?
-								</div>
-								<div class="col">
-									31/05/2024
-								</div>
-								<div class="col">
-									Is half day?
-								</div>
-								<div class="col">
-									15
-								</div>
-								<div class="col">
-									10/05/2024
-								</div>
-								<div class="col">
-									Pending
-								</div>
-							</div>
-						</li>-->
 					</ul>
 				</div>
 			</div>

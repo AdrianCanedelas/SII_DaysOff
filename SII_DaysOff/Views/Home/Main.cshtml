@@ -29,7 +29,7 @@
 				<!--<div class="input-group">-->
 				<div class="col-6 col-xxl-2 col-xl-2 col-lg-2 col-md-3 col-sm-2 d-flex justify-content-end">
 					<div class="form-group">
-						<input type="text" class="form-control custom-button" id="yearPicker" name="year" value="@ViewData["YearSelected"]" readonly />
+						<input type="number" class="form-control custom-button" min="2000" max="2050" id="yearPicker" name="year" value="@ViewData["YearSelected"]" readonly />
 					</div>
 					<button type="submit" class="custom-button"><i class="bi bi-arrow-return-right"></i></button>
 				</div>
@@ -126,8 +126,9 @@
 							<input type="hidden" name="optionStatus" value="@ViewData["status"]" />
 							<input type="hidden" name="year" value="@ViewData["YearSelected"]" />
 							<input type="submit" value="Search" class="custom-button" /> |
-							<a asp-action="Main" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="mx-2 custom-link">Back to Full List</a>
-							<input type="text" name="registerCount" value="@ViewData["RegisterCount"]" class="custom-button">
+							<a asp-action="Main" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="mx-2 custom-link">Back to Full List</a> |
+							<input type="number" min="0" max="10" name="registerCount" value="@ViewData["RegisterCount"]" class="custom-button">
+							<label for="floatingInputValue" class="mx-2 custom-link">Results on page</label>
 						</p>
 					</div>
 				</form>
