@@ -3,6 +3,7 @@
 
 @{
 	ViewData["Title"] = "Change password";
+	var user = await UserManager.GetUserAsync(User);
 }
 
 @inject SignInManager<ApplicationUser> SignInManager
@@ -11,9 +12,6 @@
 @Html.Partial("../Components/ModalCreateReason", new SII_DaysOff.Models.Reasons())
 
 <ul class="navbar-nav">
-	@{
-		Console.WriteLine("SigendIn ? -> " + SignInManager.IsSignedIn(User));
-	}
 	@if (SignInManager.IsSignedIn(User))
 	{
 		<li class="nav-item">
@@ -24,19 +22,8 @@
 			{
 				<a id="manage" class="nav-link text-light">@UserManager.GetUserName(User)</a>
 				<div class="submenu">
+					@*@if (user.RoleIdUser.Name.Equals("Admin"))*@
 					<div class="row">
-						<div class="col-10 d-flex justify-content-start">
-							<!--
-								data-bs-toggle="modal" data-bs-target="#passModal"
-								asp-area="Identity" asp-page="/Account/Manage/ChangePassword"
-							-->
-							<a class="btn" asp-area="Identity" asp-page="/Account/Manage/ChangePassword">Change password</a>
-						</div>
-					</div>
-					<div class="row">
-						@{
-							var user = await UserManager.GetUserAsync(User);
-						}
 						<div class="col-12 d-flex justify-content-start">
 							<!--
 								 asp-area="Identity" asp-page="/Account/Register"
@@ -49,6 +36,21 @@
 						<div class="col-12 d-flex justify-content-start">
 							<!-- asp-controller="Reasons" asp-action="Create" -->
 							<a class="btn" data-bs-toggle="modal" data-bs-target="#reasonModal">Register new reason</a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12 d-flex justify-content-start">
+							<!-- asp-controller="Reasons" asp-action="Create" -->
+							<a class="btn" data-bs-toggle="modal" data-bs-target="#reasonModal">Manage reasons</a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-10 d-flex justify-content-start">
+							<!--
+								data-bs-toggle="modal" data-bs-target="#passModal"
+								asp-area="Identity" asp-page="/Account/Manage/ChangePassword"
+							-->
+							<a class="btn" asp-area="Identity" asp-page="/Account/Manage/ChangePassword">Change password</a>
 						</div>
 					</div>
 					<div class="row">

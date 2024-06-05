@@ -35,7 +35,7 @@ namespace SII_DaysOff.Controllers
             return View();
         }
 
-		public async Task<IActionResult> MainAsync(string sortOrder, string searchString, int? numPage, string currentFilter, string optionStatus, string year)
+		public async Task<IActionResult> MainAsync(string sortOrder, string searchString, int? numPage, string currentFilter, string optionStatus, string year, int registerCount)
 		{
 			Console.WriteLine("\n\n\n\n\nyear --> " + year);
 			if (year == null) year = DateTime.Now.Year.ToString();
@@ -105,6 +105,8 @@ namespace SII_DaysOff.Controllers
 
 			ViewData["CurrentOrder"] = sortOrder;
 			ViewData["CurrentFilter"] = searchString;
+			if (registerCount == 0) registerCount = 5;
+			ViewData["RegisterCount"] = registerCount;
 
 			switch (sortOrder)
 			{
@@ -171,9 +173,9 @@ namespace SII_DaysOff.Controllers
 				.Where(r => r.RequestDate.Year.ToString().Equals(year))
 				.Count();
 
-			ViewData["PendingRequests"] = pendingRequests;
+			Console.WriteLine("\n\n\n\n PendingRequests --> " + pendingRequests);
 
-			int registerCount = 5;
+			ViewData["PendingRequests"] = pendingRequests;
 
 			return View(await PaginatedList<Requests>.CreateAsync(requests.AsNoTracking(), numPage?? 1, registerCount));
 		}

@@ -162,7 +162,7 @@ body {
 }
 
 .custom-icon:hover {
-    font-size: 110px;
+    font-size: 105px;
     color: dimgrey;
     opacity: 20%
 }
@@ -184,7 +184,7 @@ body {
 }
 
 .no-data-text:hover {
-    font-size: 30px;
+    font-size: 21px;
     opacity: 70%;
 }
 

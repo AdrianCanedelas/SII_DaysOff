@@ -167,7 +167,7 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
                 user.AcquiredDays = int.Parse(Input.AcquiredDays);
                 user.RemainingDays = int.Parse(Input.RemainingDays);*/
 
-                user.RoleId = Guid.Parse("C4E90051-0895-4798-9A8B-19A9FBC27884");
+                user.RoleId = Guid.Parse("FA208010-179E-4121-B723-3D449297BBCC");
                 user.Name = Input.Name;
                 user.Manager = Input.Manager;
                 user.Surname = Input.Surname;
