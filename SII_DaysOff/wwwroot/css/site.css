@@ -5,6 +5,12 @@
     font-style: normal;
 }
 
+@media screen and (max-width:767px) {
+    .fc-toolbar.fc-header-toolbar {
+        font-size: 60%
+    }
+}
+
 body {
     /*font-family: 'lato';*/
 }
@@ -182,6 +188,22 @@ body {
     opacity: 70%;
 }
 
+#parentDiv {
+    /*width: 100%;*/
+}
+
+.pending-icon {
+    color: #007eb5;
+}
+
+.approved-icon {
+    color: #097f03;
+}
+
+.cancelled-icon {
+    color: #d30012;
+}
+
 /* _LoginPartial */
 .submenu {
     display: none;
@@ -243,7 +265,12 @@ li:hover .submenu {
 .custom-icon-return {
     color: dimgrey;
     opacity: 80%;
+    font-size: 20px;
+}
+
+.custom-icon-return:hover {
     font-size: 25px;
+    color: #004278;
 }
 
 img.login {
@@ -293,12 +320,39 @@ a.title {
     color: #007eb5;
 }
 
-.custom-icon-edit-delete {
+.custom-icon-edit {
     transition: 0.2s;
 }
 
-.custom-icon-edit-delete:hover {
+.custom-icon-edit:hover {
     font-size: 20px;
+}
+
+.custom-icon-delete {
+    transition: 0.2s;
+}
+
+.custom-icon-delete:hover {
+    font-size: 20px;
+    color: #d30012;
+}
+
+.custom-icon-approve {
+    transition: 0.2s;
+}
+
+.custom-icon-approve:hover {
+    font-size: 20px;
+    color: #097f03;
+}
+
+.custom-icon-cancel {
+    transition: 0.2s;
+}
+
+.custom-icon-cancel:hover {
+    font-size: 20px;
+    color: #d30012;
 }
 
 .custom-nav-link {
@@ -313,6 +367,18 @@ a.title {
 .cardRequests {
     max-height: 400px;
     overflow-y: auto;
+    white-space: nowrap;
+    min-width: 1000px;
+}
+
+.cardRequestsManage {
+    max-height: 400px;
+    overflow-y: auto;
+    white-space: nowrap;
+    min-width: 950px;
+}
+
+.parent {
     overflow-x: auto;
 }
 
