@@ -1,5 +1,9 @@
 ﻿@model SII_DaysOff.Models.Requests
 
+@{
+    var id = Model.RequestId;
+}
+
 <!-- Modal que se abre al darle a crear nueva solicitud -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog">
@@ -13,125 +17,58 @@
                 <hr />
 
                 <div class="row p-3">
-                    <div class="col-3">
-                        @Html.DisplayNameFor(model => model.RequestDate)
-                    </div>
-                    <div class="col-9">
-
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="col-3">
-                    </div>
-                    <div class="col-9">
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="col-3">
-                    </div>
-                    <div class="col-9">
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="col-3">
-                    </div>
-                    <div class="col-9">
-                    </div>
-                </div>
-                <div class="row p-3">
-                    <div class="col-3">
-                    </div>
-                    <div class="col-9">
-                    </div>
-                </div>
-
-
-
-                <dl class="row">
-                    <dt class="col-sm-2">
-                        
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.RequestDate)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.StartDate)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.StartDate)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.EndDate)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.EndDate)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.HalfDayStart)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.HalfDayStart)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.HalfDayEnd)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.HalfDayEnd)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Comments)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Comments)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.CreationDate)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.CreationDate)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.ModificationDate)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.ModificationDate)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.CreatedByNavigation)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.CreatedByNavigation.Id)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.ModifiedByNavigation)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.ModifiedByNavigation.Id)
-                    </dd>
-                    <dt class="col-sm-2">
+                    <div class="col-3 d-flex justify-content-start fw-bold">
                         @Html.DisplayNameFor(model => model.Reason)
-                    </dt>
-                    <dd class="col-sm-10">
+                    </div>
+                    <div class="col-9 d-flex justify-content-start">
                         @Html.DisplayFor(model => model.Reason.ReasonId)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Status)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Status.StatusId)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.User)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.User.Id)
-                    </dd>
-                </dl>
-
-                <form asp-controller="requests" asp-action="Delete" method="post">
-                    <input type="hidden" asp-for="RequestId" />
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col-3 d-flex justify-content-start fw-bold">
+                        @Html.DisplayNameFor(model => model.StartDate)
+                    </div>
+                    <div class="col-9 d-flex justify-content-start">
+                        @Html.DisplayFor(model => model.StartDate)
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col-3 d-flex justify-content-start fw-bold">
+                        @Html.DisplayNameFor(model => model.EndDate)
+                    </div>
+                    <div class="col-9 d-flex justify-content-start">
+                        @Html.DisplayFor(model => model.EndDate)
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col-3 d-flex justify-content-start fw-bold">
+                        @Html.DisplayNameFor(model => model.Comments)
+                    </div>
+                    <div class="col-9 d-flex justify-content-start">
+                        @Html.DisplayFor(model => model.Comments)
+                    </div>
+                </div>
+                <hr />
+                <div class="row p-3">
+                    <div class="col-3 d-flex justify-content-start fw-bold">
+                        @Html.DisplayNameFor(model => model.HalfDayStart)
+                    </div>
+                    <div class="col-2">
+                        @Html.DisplayFor(model => model.HalfDayStart)
+                    </div>
+                    <div class="col-3 d-flex justify-content-start fw-bold">
+                        @Html.DisplayNameFor(model => model.HalfDayEnd)
+                    </div>
+                    <div class="col-2">
+                        @Html.DisplayFor(model => model.HalfDayEnd)
+                    </div>
+                </div>
+                <hr />
+                <form asp-controller="requests" asp-action="Delete" asp-route-id="@id" method="post" class="d-flex justify-content-end">
+                    <!--<input type="hidden" asp-for="RequestId" />
                     <input type="submit" value="Delete" class="btn btn-danger" /> |
-                    <a asp-controller="Home" asp-action="Main">Back to List</a>
+                    <a asp-controller="Home" asp-action="Main">Back to List</a>-->
+                    <button type="submit" class="custom-button">Delete request</button>
                 </form>
             </div>
         </div>

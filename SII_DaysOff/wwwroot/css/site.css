@@ -63,6 +63,20 @@ body {
     text-align: center;
 }
 
+.custom-button-register {
+    border: 1px solid lightgrey;
+    padding-inline: 10px;
+    padding-block: 3px;
+    text-decoration: none;
+    box-shadow: 1px 2px 3px 1px lightgrey;
+    color: dimgrey;
+    transition: 0.3s;
+    font-size: 150%;
+    margin-inline: 5px;
+    background-color: white;
+    text-align: center;
+}
+
 .custom-button-excel {
     border: 1px solid lightgrey;
     padding-inline: 10px;
@@ -110,6 +124,13 @@ body {
     /*font-weight: bold;*/
 }
 
+.custom-button-register:hover {
+    border: 1px solid #007eb5;
+    box-shadow: none;
+    color: #007eb5;
+    /*font-weight: bold;*/
+}
+
 .custom-link {
     text-decoration: none;
     color: dimgrey;
@@ -129,10 +150,24 @@ body {
     transition: 0.5s;
 }
 
+.custom-icon-calendar {
+    font-size: 25px;
+    opacity: 70%;
+}
+
 .custom-icon:hover {
     font-size: 110px;
     color: dimgrey;
     opacity: 20%
+}
+
+.custom-control-label {
+    color: darkgrey;
+}
+
+.custom-div {
+    width: 30%;
+    background-color: white;
 }
 
 .no-data-text {

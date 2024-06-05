@@ -14,7 +14,7 @@
                     <div class="form-group">
                         <div class="row p-3">
                             <div class="col-3">
-                                <label asp-for="ReasonId" class="control-label"></label>
+                                <label asp-for="ReasonId" class="control-label fw-bold"></label>
                             </div>
                             <div class="col-9">
                                 <select asp-for="ReasonId" class="form-control" asp-items="ViewBag.ReasonId"></select>
@@ -24,7 +24,7 @@
                     <div class="form-group">
                         <div class="row p-3">
                             <div class=" col-3">
-                                <label asp-for="StartDate" class="control-label"></label>
+                                <label asp-for="StartDate" class="control-label fw-bold"></label>
                             </div>
                             <div class="col-9">
                                 <input asp-for="StartDate" class="form-control" />
@@ -35,7 +35,7 @@
                     <div class="form-group">
                         <div class="row p-3">
                             <div class=" col-3">
-                                <label asp-for="EndDate" class="control-label"></label>
+                                <label asp-for="EndDate" class="control-label fw-bold"></label>
                             </div>
                             <div class="col-9">
                                 <input asp-for="EndDate" class="form-control" />
@@ -46,7 +46,7 @@
                     <div class="form-group">
                         <div class="row p-3">
                             <div class=" col-3">
-                                <label asp-for="Comments" class="control-label"></label>
+                                <label asp-for="Comments" class="control-label fw-bold"></label>
                             </div>
                             <div class="col-9">
                                 <input asp-for="Comments" class="form-control" />
@@ -57,12 +57,12 @@
                     <hr />
                     <div class="form-group form-check">
                         <div class="row p-3">
-                            <div class=" col-6 d-flex justify-content-center">
+                            <div class=" col-6 d-flex justify-content-center fw-bold">
                                 <label class="form-check-label">
                                     <input class="form-check-input" asp-for="HalfDayStart" /> @Html.DisplayNameFor(model => model.HalfDayStart)
                                 </label>
                             </div>
-                            <div class="col-6 d-flex justify-content-center">
+                            <div class="col-6 d-flex justify-content-center fw-bold">
                                 <label class="form-check-label">
                                     <input class="form-check-input" asp-for="HalfDayEnd" /> @Html.DisplayNameFor(model => model.HalfDayEnd)
                                 </label>
