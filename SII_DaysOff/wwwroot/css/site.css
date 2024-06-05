@@ -235,6 +235,17 @@ li:hover .submenu {
     background-color: #004278;
 }
 
+.navbar-custom-return {
+    background-color: whitesmoke;
+    opacity: 100%;
+}
+
+.custom-icon-return {
+    color: dimgrey;
+    opacity: 80%;
+    font-size: 25px;
+}
+
 img.login {
     width: 300px;
 }
