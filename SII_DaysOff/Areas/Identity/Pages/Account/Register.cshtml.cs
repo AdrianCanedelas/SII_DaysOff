@@ -142,8 +142,9 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
         {
             //Console.WriteLine("\n\n\n\tEntraGET Register");
             ReturnUrl = returnUrl;
-            ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId");
-            ViewData["ManagerId"] = new SelectList(_context.AspNetUsers, "Id", "UserName");
+			//ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId");
+			//ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "Description");
+			ViewData["ManagerId"] = new SelectList(_context.AspNetUsers, "Id", "UserName");
             ViewData["VacationDaysId"] = new SelectList(_context.VacationDays, "Year", "Year");
             /*
              ViewData["ManagerId"] = new SelectList(_context.AspNetUsers.Select(u => new

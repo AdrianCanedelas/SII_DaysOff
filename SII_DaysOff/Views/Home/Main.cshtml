@@ -2,15 +2,13 @@
 @using SII_DaysOff.Areas.Identity.Data
 @using SII_DaysOff.Data
 
-@model PaginatedList<Requests>
+@model MainViewModel
 
 @inject UserManager<ApplicationUser> UserManager
 
 @{
 	ViewData["notShow"] = false;
 	ViewData["title"] = "Main";
-	var user = await UserManager.GetUserAsync(User);
-	Console.WriteLine("\n\n\n\n\n User -> " + user.Name);
 }
 
 @Html.Partial("../Components/ModalCreateRequest", new SII_DaysOff.Models.Requests())
@@ -39,41 +37,41 @@
 	</div>
 	<div class="card-body shadow">
 		<div class="row text-center">
-			@*<div class="col-6 col-sm-2">
-			<p class="fw-bold">Annual days off</p>
-			<p>@user.UserVacationDays.YearNavigation.DayVacations</p>
+			<div class="col-6 col-sm-2">
+				<p class="fw-bold">Annual days off</p>
+				<p>@Model.User.UserVacationDays.YearNavigation.DayVacations</p>
 			</div>
 			<div class="col-6 col-sm-2">
-			<p class="fw-bold">Additional days</p>
-			<p>@user.UserVacationDays.AdditionalDays</p>
+				<p class="fw-bold">Additional days</p>
+				<p>@Model.User.UserVacationDays.AdditionalDays</p>
 			</div>
 			<div class="col-6 col-sm-2">
-			<p class="fw-bold">Acquired days</p>
-			<p>@user.UserVacationDays.AcquiredDays</p>
+				<p class="fw-bold">Acquired days</p>
+				<p>@Model.User.UserVacationDays.AcquiredDays</p>
 			</div>
 			<div class="col-6 col-sm-2">
-			<p class="fw-bold">Remaining days</p>
-			@{
-			int totalDays = user.UserVacationDays.YearNavigation.DayVacations;
-			int acquiredDays = user.UserVacationDays.AcquiredDays;
-			int additionalDays = user.UserVacationDays.AdditionalDays;
-			totalDays = (totalDays - acquiredDays) + additionalDays;
-			}
-			<p>@totalDays</p>
+				<p class="fw-bold">Remaining days</p>
+				@{
+					int totalDays = Model.User.UserVacationDays.YearNavigation.DayVacations;
+					int acquiredDays = Model.User.UserVacationDays.AcquiredDays;
+					int additionalDays = Model.User.UserVacationDays.AdditionalDays;
+					totalDays = (totalDays - acquiredDays) + additionalDays;
+				}
+				<p>@totalDays</p>
 			</div>
 			<div class="col-6 col-sm-2">
-			<p class="fw-bold">Validity start date</p>
-			@{
-			if (user.CreationDate.Year == DateTime.Now.Year)
-			{
-			<p>@user.CreationDate.ToString("yyyy-MM-dd")</p>
-			}
-			}
+				<p class="fw-bold">Validity start date</p>
+				@{
+					if (Model.User.CreationDate.Year == DateTime.Now.Year)
+					{
+						<p>@Model.User.CreationDate.ToString("yyyy-MM-dd")</p>
+					}
+				}
 			</div>
 			<div class="col-6 col-sm-2">
-			<p class="fw-bold">Validity end date</p>
-			<p>@DateTime.Now.Year-12-31</p>
-			</div>*@
+				<p class="fw-bold">Validity end date</p>
+				<p>@DateTime.Now.Year-12-31</p>
+			</div>
 		</div>
 	</div>
 </div>
@@ -98,7 +96,7 @@
 					}
 					else
 					{
-						<a class="custom-button-disabled position-relative btn disabled" asp-area="" asp-controller="Requests" asp-action="ManageIndex">Manage requests</a>
+						<a class="custom-button-disabled position-relative btn disabled" asp-area="" asp-controller="Requests" asp-action="ManageIndex" asp-route-year="@ViewData["YearSelected"]">Manage requests</a>
 					}
 				}
 				<a type="submit" class="custom-button" asp-controller="Requests" asp-action="Calendar">Calendar</a>
@@ -138,7 +136,7 @@
 
 	<div class="parent">
 		<div class="card-body cardRequests">
-			@if (Model.Count() == 0)
+			@if (Model.Requests.Count() == 0)
 			{
 				@*<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
 			<strong>No requests found </strong> <!--Press <a asp-controller="Home" asp-action="Main" class="alert-link" asp-route-year="@ViewData["YearSelected"]">"Here"</a> to see all requests.-->
@@ -173,30 +171,30 @@
 							<li class="list-group-item custom-list-group">
 								<div class="row text-center">
 									<div class="col fw-bold">
-										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["ReasonOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link">Reason<i id="filter-icon" class="bi bi-caret-down mx-1"></i></a>
+										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["ReasonOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link" id="filter-link">Reason@*<i id="filter-icon" class="bi bi-caret-down mx-1"></i>*@</a>
 									</div>
 									<div class="col fw-bold">
-										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StartDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link">Start Date<i class="bi bi-caret-up mx-1"></i></a>
+										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StartDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link" id="filter-link">Start Date</a>
 									</div>
 									<div class="col fw-bold">
-										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayStartOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link">Is Half Day?</a>
+										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayStartOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link" id="filter-link">Is Half Day?</a>
 									</div>
 									<div class="col fw-bold">
-										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["EndDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link">End Date</a>
+										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["EndDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link" id="filter-link">End Date</a>
 									</div>
 									<div class="col fw-bold">
-										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayEndOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link">Is Half Day?</a>
+										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayEndOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link" id="filter-link">Is Half Day?</a>
 									</div>
 									<div class="col fw-bold">
-										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["RequestDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link">Request Date</a>
+										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["RequestDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link" id="filter-link">Request Date</a>
 									</div>
 									<div class="col fw-bold">
-										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["CommentsOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link">Comments</a>
+										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["CommentsOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link" id="filter-link">Comments</a>
 									</div>
 									<div class="col fw-bold">
-										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StatusOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link">Status</a>
+										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StatusOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link" id="filter-link">Status</a>
 									</div>
-									@if (Model.Count() != 0 && Model != null && Model.FirstOrDefault().Status.Name.Equals("Pending"))
+									@if (Model.Requests.Count() != 0 && Model != null && Model.Requests.FirstOrDefault().Status.Name.Equals("Pending"))
 									{
 										<div class="col fw-bold">Edit/Delete</div>
 									}
@@ -205,7 +203,7 @@
 
 							@if (Model != null)
 							{
-								foreach (var item in Model)
+								foreach (var item in Model.Requests)
 								{
 									<li class="list-group-item">
 										<div class="row text-center">
@@ -256,15 +254,15 @@
 													<span class="cancelled-icon">@Html.DisplayFor(model => item.Status.Name)</span>
 												}
 											</div>
-											@if (Model.Count() != 0 && Model != null && Model.FirstOrDefault().Status.Name.Equals("Pending"))
+											@if (Model.Requests.Any() && Model != null && item.Status.Name.Equals("Pending"))
 											{
 												@Html.Partial("../Components/ModalEditRequest", item)
 												@Html.Partial("../Components/ModalDeleteRequest", item)
 												<div class="col">
-													@*<a asp-controller="Requests" asp-action="Edit" asp-route-id="@item.RequestId" class="btn btn-unstyled custom-icon-edit-delete"><i class="bi bi-pencil-square"></i></a>*@
-													<a data-bs-toggle="modal" data-bs-target="#editModal" class="btn btn-unstyled custom-icon-edit"><i class="bi bi-pencil-square"></i></a>
-													<!--<a asp-controller="Requests" asp-action="Delete" asp-route-id="@item.RequestId" method="post" class="btn btn-unstyled custom-icon-edit-delete"><i class="bi bi-trash-fill"></i></a>-->
-													<a data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-unstyled custom-icon-delete"><i class="bi bi-trash-fill"></i></a>
+													<a asp-controller="Requests" asp-action="Edit" asp-route-id="@item.RequestId" class="btn btn-unstyled custom-icon-edit-delete"><i class="bi bi-pencil-square"></i></a>
+													@*<a data-id="@item.RequestId" data-bs-toggle="modal" data-bs-target="#editModal" class="btn btn-unstyled custom-icon-edit edit-request-button"><i class="bi bi-pencil-square"></i></a>*@
+													<a asp-controller="Requests" asp-action="Delete" asp-route-id="@item.RequestId" method="post" class="btn btn-unstyled custom-icon-edit-delete"><i class="bi bi-trash-fill"></i></a>
+													@*<a data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-unstyled custom-icon-delete"><i class="bi bi-trash-fill"></i></a>*@
 												</div>
 											}
 										</div>
@@ -279,30 +277,43 @@
 	</div>
 
 	@{
-		var previousDisabled = !Model.HasPreviousPage ? "disabled" : "";
-		var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+		var previousDisabled = !Model.Requests.HasPreviousPage ? "disabled" : "";
+		var nextDisabled = !Model.Requests.HasNextPage ? "disabled" : "";
+		var registerCount = (int)ViewData["RegisterCount"];
 	}
 
 	<div class="card-footer py-3">
 		<a asp-action="Main" asp-route-sortOrder="@ViewData["currentOrder"]"
-		   asp-route-numPage="@(Model.PageIndex -1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
-		   class="custom-button btn @previousDisabled" asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]" 
+		   asp-route-numPage="@(Model.Requests.PageIndex -1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
+		   class="custom-button btn @previousDisabled" asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]"
 		   asp-route-registerCount="@ViewData["RegisterCount"]">Previous</a>
-		@for (var i = 1; i <= Model.TotalPages; i++)
+		@for (var i = 1; i <= Model.Requests.TotalPages; i++)
 		{
-			var activePage = (i == Model.PageIndex) ? "active" : "";
+			var activePage = (i == Model.Requests.PageIndex) ? "custom-button-active" : "";
 			<a asp-action="Main" asp-route-sortOrder="@ViewData["currentOrder"]" asp-route-numPage="@i"
 			   asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-button btn @activePage" asp-route-optionStatus="@ViewData["Status"]"
 			   asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]">@i</a>
 		}
 
 		<a asp-action="Main" asp-route-sortOrder="@ViewData["CurrentOrder"]"
-		   asp-route-numPage="@(Model.PageIndex + 1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
-		   class="custom-button btn @nextDisabled" asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]" 
+		   asp-route-numPage="@(Model.Requests.PageIndex + 1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
+		   class="custom-button btn @nextDisabled" asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]"
 		   asp-route-registerCount="@ViewData["RegisterCount"]">Next</a>
+		@{
+			int start = (Model.Requests.PageIndex - 1) * Model.PageSize + 1;
+			int end = start + Model.PageSize - 1;
+			if (end > Model.TotalRequest)
+			{
+				end = Model.TotalRequest;
+			}
+		}
+
+		<span class="ms-3 custom-link">
+			Showing @start...@end of @Model.TotalRequest requests
+		</span>
 	</div>
 </div>
-
+@*
 <script>
 	var option = { animation: true, delay: 2000 };
 
@@ -373,7 +384,7 @@
 		});
 	});*/
 
-</script>
+</script> *@
 
 @section Scripts {
 	@{

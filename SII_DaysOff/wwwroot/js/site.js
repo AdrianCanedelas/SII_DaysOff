@@ -104,3 +104,30 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 /* Cambiar imagen ordenacion */
+/*document.addEventListener('DOMContentLoaded', function () {
+	var links = document.querySelectorAll('filter-link');
+
+	links.forEach(function (link) {
+		link.addEventListener('click', function (event) {
+			console.log('aaaaaaaa')
+			event.preventDefault();
+
+			links.forEach(function (otherLink) {
+				if (otherLink !== link) {
+					var otherIcon = otherLink.querySelector('.filter-icon');
+					otherIcon.classList.remove('bi-caret-down');
+					otherIcon.classList.add('bi-caret-up');
+				}
+			});
+
+			var icon = link.querySelector('.filter-icon')
+			if (icon.classList.contains('bi-caret-down')) {
+				icon.classList.remove('bi-caret-down');
+				icon.classList.add('bi-caret-up');
+			} else {
+				icon.classList.remove('bi-caret-up');
+				icon.classList.add('bi-caret-down');
+			}
+		});
+	})
+});*/

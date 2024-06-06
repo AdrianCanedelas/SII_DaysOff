@@ -37,6 +37,15 @@ body {
     /*overflow-y: hidden;*/
 }
 
+.custom-form:hover {
+    border: 2px solid #004278;
+}
+
+.custom-container-edit {
+    background-color: white;
+    padding-block: 2%;
+}
+
 .custom-button-disabled {
     border: 1px solid lightgrey;
     padding-inline: 10px;
@@ -69,6 +78,10 @@ body {
     text-align: center;
 }
 
+.custom-button-active {
+    border: 1px solid #004278;
+}
+
 .custom-button-register {
     border: 1px solid lightgrey;
     padding-inline: 10px;
@@ -77,7 +90,7 @@ body {
     box-shadow: 1px 2px 3px 1px lightgrey;
     color: dimgrey;
     transition: 0.3s;
-    font-size: 150%;
+    font-size: 100%;
     margin-inline: 5px;
     background-color: white;
     text-align: center;

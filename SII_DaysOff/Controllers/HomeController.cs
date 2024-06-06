@@ -61,8 +61,11 @@ namespace SII_DaysOff.Controllers
 			// Cuadro de búsqueda
 			//ViewData["CurrentFilter"] = searchString;
 
-			//Cargar rewuests
-			var user = await _userManager.GetUserAsync(User);
+			// Cargar requests
+			var user = await _userManager.Users
+				.Include(u => u.UserVacationDays)
+				.Include(u => u.UserVacationDays.YearNavigation)
+				.FirstOrDefaultAsync(u => u.Id == Guid.Parse(_userManager.GetUserId(User)));
 			ViewData["notShow"] = false;
 
 			var statusId = _context.Statuses.FirstOrDefault(s => s.Name.Equals(currentOptionStatus == null ? "Pending" : currentOptionStatus))?.StatusId;
@@ -89,7 +92,7 @@ namespace SII_DaysOff.Controllers
 			ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Name");
 			ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Email");
 
-			//Paginacion
+			// Paginacion
 			if (searchString != null) numPage = 1;
 			else searchString = currentFilter;
 
@@ -160,7 +163,6 @@ namespace SII_DaysOff.Controllers
 					break;
 			}
 
-			//
 			var managerUserIds = _context.Users
 				.Where(u => u.Manager == user.Id)
 				.Select(u => u.Id)
@@ -173,13 +175,22 @@ namespace SII_DaysOff.Controllers
 				.Where(r => r.RequestDate.Year.ToString().Equals(year))
 				.Count();
 
-			Console.WriteLine("\n\n\n\n PendingRequests --> " + pendingRequests);
-
 			ViewData["PendingRequests"] = pendingRequests;
 
-			return View(await PaginatedList<Requests>.CreateAsync(requests.AsNoTracking(), numPage?? 1, registerCount));
+			var paginatedRequests = await PaginatedList<Requests>.CreateAsync(requests.AsNoTracking(), numPage ?? 1, registerCount);
+
+			var viewModel = new MainViewModel
+			{
+				User = user,
+				Requests = paginatedRequests,
+				TotalRequest = requests.Count(),
+				PageSize = registerCount
+			};
+
+			return View(viewModel);
 		}
-		
+
+
 		/*public async Task<IActionResult> MainAsync(string sortOrder, string searchString, int? numPage, string currentFilter, string optionStatus = "Pending")
 		{
 			ViewData["status"] = optionStatus;

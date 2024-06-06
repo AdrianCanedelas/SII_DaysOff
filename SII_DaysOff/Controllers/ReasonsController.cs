@@ -26,6 +26,7 @@ namespace SII_DaysOff.Controllers
         // GET: Reasons
         public async Task<IActionResult> Index(string sortOrder, string searchString, int? numPage, string currentFilter, int registerCount)
         {
+            Console.WriteLine("\n\n\n\n SortOrder -> " + sortOrder);
             //Ordenación
 			ViewData["NameOrder"] = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
 			ViewData["DescriptionOrder"] = sortOrder == "Description" ? "Description_desc" : "Description";
@@ -52,16 +53,20 @@ namespace SII_DaysOff.Controllers
 
 			switch (sortOrder)
 			{
-				case "":
+				default:
+                    Console.WriteLine("1");
 					reasons = reasons.OrderBy(r => r.Name);
 					break;
 				case "Name_desc":
+					Console.WriteLine("2");
 					reasons = reasons.OrderByDescending(r => r.Name);
 					break;
 				case "Description_desc":
+					Console.WriteLine("3");
 					reasons = reasons.OrderByDescending(r => r.Description);
 					break;
 				case "Description":
+					Console.WriteLine("4");
 					reasons = reasons.OrderBy(r => r.Description);
 					break;
 			}

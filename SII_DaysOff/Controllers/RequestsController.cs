@@ -61,6 +61,8 @@ namespace SII_DaysOff.Controllers
 			if (year == null) year = DateTime.Now.Year.ToString();
 			Console.WriteLine("\n\n\n\n\n Year --> " + year);
 
+			ViewData["YearSelected"] = year;
+
 			//Ordenación
 			ViewData["ReasonOrder"] = String.IsNullOrEmpty(sortOrder) ? "Reason_desc" : "";
 			ViewData["NameOrder"] = sortOrder == "Name" ? "Name_desc" : "Name";
@@ -95,8 +97,10 @@ namespace SII_DaysOff.Controllers
                 .Where(r => managerUserIds.Contains(r.UserId))
                 .AsQueryable();
 
-			//Paginacion
-			if (searchString != null) numPage = 1;
+            if (year != null) requests = requests.Where(r => r.RequestDate.Year.ToString().Equals(year));
+
+            //Paginacion
+            if (searchString != null) numPage = 1;
 			else searchString = currentFilter;
 
 			if (!String.IsNullOrEmpty(searchString))
@@ -380,14 +384,10 @@ namespace SII_DaysOff.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ReasonId,StartDate,EndDate,HalfDayStart,HalfDayEnd,Comments")] Requests requests)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Reasons,StartDate,EndDate,HalfDayStart,HalfDayEnd,Comments")] Requests requests)
         {
+            Console.WriteLine("editPOST" + requests.RequestId + " <==> " + id);
             Console.WriteLine("editPOST" + requests.ReasonId + " - " + requests.StartDate + " - " + requests.EndDate + " - " + requests.HalfDayStart + " - " + requests.HalfDayEnd + " - " + requests.Comments);
-            if (id != requests.RequestId)
-            {
-				Console.WriteLine("post 1");
-				return NotFound();
-            }
 
             if (ModelState.IsValid)
             {

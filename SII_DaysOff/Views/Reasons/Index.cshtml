@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SII_DaysOff.Models.Reasons>
+﻿@model SII_DaysOff.Data.PaginatedList<Reasons>
 
 @{
 	ViewData["notShow"] = false;
@@ -11,7 +11,7 @@
 
 <div class="card shadow my-4 mx-4">
 	<div class="card-header bg-light">
-		<form asp-controller="Requests" asp-action="ManageIndex" class="mx-2 mt-3">
+		<form asp-controller="Reasons" asp-action="Index" class="mx-2 mt-3">
 			<div class="form-actions no-color">
 				<p>
 					<input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="custom-button" />
@@ -49,10 +49,10 @@
 							<li class="list-group-item custom-list-group">
 								<div class="row text-center">
 									<div class="col fw-bold">
-										<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["NameOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link">Name</a>
+										<a asp-controller="Reasons" asp-action="Index" asp-route-sortOrder="@ViewData["NameOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link">Name</a>
 									</div>
 									<div class="col fw-bold">
-										<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["ReasonOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link">Description</a>
+										<a asp-controller="Reasons" asp-action="Index" asp-route-sortOrder="@ViewData["DescriptionOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link">Description</a>
 									</div>
 									<div class="col fw-bold">
 										<div class="col fw-bold">Edit/Delete</div>
@@ -85,26 +85,26 @@
 		</div>
 	</div>
 
-	@*@{
+	@{
 		var previousDisabled = !Model.HasPreviousPage ? "disabled" : "";
 		var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 	}
 
 	<div class="card-footer py-3">
-		<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["currentOrder"]"
+		<a asp-controller="Reasons" asp-action="Index" asp-route-sortOrder="@ViewData["currentOrder"]"
 		   asp-route-numPage="@(Model.PageIndex -1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
 		   class="custom-button btn @previousDisabled" asp-route-registerCount="@ViewData["RegisterCount"]">Previous</a>
 		@for (var i = 1; i <= Model.TotalPages; i++)
 		{
-			var activePage = (i == Model.PageIndex) ? "active" : "";
-			<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["currentOrder"]" asp-route-numPage="@i"
+			var activePage = (i == Model.PageIndex) ? "custom-button-active" : "";
+			<a asp-controller="Reasons" asp-action="Index" asp-route-sortOrder="@ViewData["currentOrder"]" asp-route-numPage="@i"
 			   asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-button btn @activePage" asp-route-registerCount="@ViewData["RegisterCount"]">@i</a>
 		}
 
-		<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["CurrentOrder"]"
+		<a asp-controller="Reasons" asp-action="Index" asp-route-sortOrder="@ViewData["CurrentOrder"]"
 		   asp-route-numPage="@(Model.PageIndex + 1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
 		   class="custom-button btn @nextDisabled" asp-route-registerCount="@ViewData["RegisterCount"]">Next</a>
-	</div>*@
+	</div>
 
 </div>
 
