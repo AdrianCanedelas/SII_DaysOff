@@ -131,3 +131,18 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	})
 });*/
+
+/* DropDown */
+const myDropDown = document.getElementById("myDropdown")
+
+myDropDown.addEventListener('show.bs.dropdown', event => {
+	console.log('mostrado')
+})
+myDropDown.addEventListener('hide.bs.dropdown', event => {
+	console.log('cerrado')
+})
+
+//
+
+const myDropDownI = bootstrap.Dropdown.getOrCreateInstance('#myDropdown')
+myDropDownI.show()

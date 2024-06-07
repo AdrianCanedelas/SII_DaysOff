@@ -12,28 +12,28 @@ using System.Diagnostics;
 
 namespace SII_DaysOff.Controllers
 {
-    public class HomeController : Controller
-    {
-        private readonly ILogger<HomeController> _logger;
+	public class HomeController : Controller
+	{
+		private readonly ILogger<HomeController> _logger;
 		private readonly DbContextBD _context;
-        private UserManager<ApplicationUser> _userManager;
+		private UserManager<ApplicationUser> _userManager;
 
-        /*public HomeController(ILogger<HomeController> logger)
+		/*public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }*/
 
-        public HomeController (DbContextBD context, UserManager<ApplicationUser> userManager)
-        {
+		public HomeController(DbContextBD context, UserManager<ApplicationUser> userManager)
+		{
 			_context = context;
-            _userManager = userManager;
-        }
+			_userManager = userManager;
+		}
 
-        public IActionResult Index()
-        {
-            ViewData["notShow"] = false;
-            return View();
-        }
+		public IActionResult Index()
+		{
+			ViewData["notShow"] = false;
+			return View();
+		}
 
 		public async Task<IActionResult> MainAsync(string sortOrder, string searchString, int? numPage, string currentFilter, string optionStatus, string year, int registerCount)
 		{
@@ -178,13 +178,32 @@ namespace SII_DaysOff.Controllers
 			ViewData["PendingRequests"] = pendingRequests;
 
 			var paginatedRequests = await PaginatedList<Requests>.CreateAsync(requests.AsNoTracking(), numPage ?? 1, registerCount);
+			var logedUser = await _userManager.Users
+				.Include(u => u.UserVacationDays)
+				.Include(u => u.UserVacationDays.YearNavigation)
+				.Where(u => u.UserVacationDays.Year == year)
+				.FirstOrDefaultAsync(u => u.Id == Guid.Parse(_userManager.GetUserId(User)));
+
+			//var adminRole = _context.Roles
+			//	.FirstOrDefault(r => r.Name.Equals("Admin"));
+			
+			//var adminId = new Guid();
+			//if (adminRole != null)
+			//{
+			//	adminId = adminRole.RoleId;
+			//}
+			//else
+			//{
+			//	throw new Exception("El rol de administrador no existe.");
+			//}
 
 			var viewModel = new MainViewModel
 			{
-				User = user,
+				User = logedUser,
 				Requests = paginatedRequests,
 				TotalRequest = requests.Count(),
-				PageSize = registerCount
+				PageSize = registerCount,
+				//AdminId = adminId
 			};
 
 			return View(viewModel);
@@ -317,22 +336,22 @@ namespace SII_DaysOff.Controllers
 		}*/
 
 		public IActionResult Reasons()
-        {
-            ViewData["notShow"] = false;
-            var reasons = _context.Reasons.ToList();
-            return View(reasons);
-        }
+		{
+			ViewData["notShow"] = false;
+			var reasons = _context.Reasons.ToList();
+			return View(reasons);
+		}
 
-        public IActionResult Privacy()
-        {
-            ViewData["notShow"] = false;
-            return View();
-        }
+		public IActionResult Privacy()
+		{
+			ViewData["notShow"] = false;
+			return View();
+		}
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-    }
+		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+		public IActionResult Error()
+		{
+			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+		}
+	}
 }

@@ -37,7 +37,9 @@
 	</div>
 	<div class="card-body shadow">
 		<div class="row text-center">
-			<div class="col-6 col-sm-2">
+			@if(Model.User != null)
+			{
+				<div class="col-6 col-sm-2">
 				<p class="fw-bold">Annual days off</p>
 				<p>@Model.User.UserVacationDays.YearNavigation.DayVacations</p>
 			</div>
@@ -71,7 +73,8 @@
 			<div class="col-6 col-sm-2">
 				<p class="fw-bold">Validity end date</p>
 				<p>@DateTime.Now.Year-12-31</p>
-			</div>
+			</div>	
+			}
 		</div>
 	</div>
 </div>
@@ -96,7 +99,10 @@
 					}
 					else
 					{
-						<a class="custom-button-disabled position-relative btn disabled" asp-area="" asp-controller="Requests" asp-action="ManageIndex" asp-route-year="@ViewData["YearSelected"]">Manage requests</a>
+						// if (Model.User.RoleId.Equals(Model.AdminId))
+						// {
+							<a class="custom-button-disabled position-relative btn disabled" asp-area="" asp-controller="Requests" asp-action="ManageIndex" asp-route-year="@ViewData["YearSelected"]">Manage requests</a>
+						// }
 					}
 				}
 				<a type="submit" class="custom-button" asp-controller="Requests" asp-action="Calendar">Calendar</a>

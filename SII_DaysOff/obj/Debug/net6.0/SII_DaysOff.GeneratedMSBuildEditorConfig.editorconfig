@@ -98,6 +98,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcG9uZW50c1xNb2RhbENyZWF0ZVJlcXVlc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/Components/ModalCreateStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcG9uZW50c1xNb2RhbENyZWF0ZVN0YXR1cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/Components/ModalCreateVacationDays.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcG9uZW50c1xNb2RhbENyZWF0ZVZhY2F0aW9uRGF5cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/Components/ModalDeleteRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcG9uZW50c1xNb2RhbERlbGV0ZVJlcXVlc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SII_DaysOff.Areas.Identity.Data;
 using SII_DaysOff.Data;
 using SII_DaysOff.Models;
 
@@ -13,10 +15,12 @@ namespace SII_DaysOff.Controllers
     public class StatusesController : Controller
     {
         private readonly DbContextBD _context;
+        private UserManager<ApplicationUser> _userManager;
 
-        public StatusesController(DbContextBD context)
+        public StatusesController(DbContextBD context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Statuses
@@ -97,18 +101,23 @@ namespace SII_DaysOff.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StatusId,Name,Description,CreatedBy,CreationDate,ModifiedBy,ModificationDate")] Statuses statuses)
+        public async Task<IActionResult> Create([Bind("Name,Description")] Statuses statuses)
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.GetUserAsync(User);
                 statuses.StatusId = Guid.NewGuid();
+                statuses.CreatedBy = user.Id;
+                statuses.ModifiedBy = user.Id;
+                statuses.CreationDate = DateTime.Now;
+                statuses.ModificationDate = DateTime.Now;
                 _context.Add(statuses);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return LocalRedirect("~/Home/Main");
             }
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", statuses.CreatedBy);
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", statuses.ModifiedBy);
-            return View(statuses);
+            return LocalRedirect("~/Home/Main");
         }
 
         // GET: Statuses/Edit/5

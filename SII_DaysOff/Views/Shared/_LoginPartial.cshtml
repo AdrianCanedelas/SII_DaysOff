@@ -10,6 +10,8 @@
 @inject UserManager<ApplicationUser> UserManager
 
 @Html.Partial("../Components/ModalCreateReason", new SII_DaysOff.Models.Reasons())
+@Html.Partial("../Components/ModalCreateStatus", new SII_DaysOff.Models.Statuses())
+@Html.Partial("../Components/ModalCreateVacationDays", new SII_DaysOff.Models.VacationDays())
 
 <ul class="navbar-nav">
 	@if (SignInManager.IsSignedIn(User))
@@ -30,27 +32,6 @@
 								 data-bs-toggle="modal" data-bs-target="#registerModal"
 							-->
 							<a class="btn" asp-area="Identity" asp-page="/Account/Register">Register new user</a>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-12 d-flex justify-content-start">
-							<!-- asp-controller="Reasons" asp-action="Create" -->
-							<a class="btn" data-bs-toggle="modal" data-bs-target="#reasonModal">Register new reason</a>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-12 d-flex justify-content-start">
-							<a class="btn" asp-controller="Reasons" asp-action="Index">Manage reasons</a>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-12 d-flex justify-content-start">
-							<a class="btn" asp-controller="Statuses" asp-action="Index">Manage statuses</a>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-12 d-flex justify-content-start">
-							<a class="btn" asp-controller="VacationDays" asp-action="Index">Manage vacation days</a>
 						</div>
 					</div>
 					<div class="row">

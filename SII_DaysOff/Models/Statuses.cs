@@ -19,8 +19,8 @@ namespace SII_DaysOff.Models
         public Guid ModifiedBy { get; set; }
         public DateTime ModificationDate { get; set; }
 
-        public virtual ApplicationUser CreatedByNavigation { get; set; } = null!;
-        public virtual ApplicationUser ModifiedByNavigation { get; set; } = null!;
-        public virtual ICollection<Requests> Requests { get; set; }
+        public virtual ApplicationUser? CreatedByNavigation { get; set; } = null!;
+        public virtual ApplicationUser? ModifiedByNavigation { get; set; } = null!;
+        public virtual ICollection<Requests>? Requests { get; set; }
     }
 }

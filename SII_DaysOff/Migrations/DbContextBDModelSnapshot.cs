@@ -279,7 +279,7 @@ namespace SII_DaysOff.Migrations
 
                     b.HasIndex("ModifiedBy");
 
-                    b.ToTable("Reasons");
+                    b.ToTable("Reasons", (string)null);
                 });
 
             modelBuilder.Entity("SII_DaysOff.Models.Requests", b =>
@@ -347,7 +347,7 @@ namespace SII_DaysOff.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Requests");
+                    b.ToTable("Requests", (string)null);
                 });
 
             modelBuilder.Entity("SII_DaysOff.Models.Roles", b =>
@@ -443,7 +443,7 @@ namespace SII_DaysOff.Migrations
 
                     b.HasIndex("ModifiedBy");
 
-                    b.ToTable("Statuses");
+                    b.ToTable("Statuses", (string)null);
                 });
 
             modelBuilder.Entity("SII_DaysOff.Models.UserVacationDays", b =>
@@ -484,7 +484,7 @@ namespace SII_DaysOff.Migrations
 
                     b.HasIndex("Year");
 
-                    b.ToTable("UserVacationDays");
+                    b.ToTable("UserVacationDays", (string)null);
                 });
 
             modelBuilder.Entity("SII_DaysOff.Models.VacationDays", b =>
@@ -515,7 +515,7 @@ namespace SII_DaysOff.Migrations
 
                     b.HasIndex("ModifiedBy");
 
-                    b.ToTable("VacationDays");
+                    b.ToTable("VacationDays", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SII_DaysOff.Areas.Identity.Data;
 using SII_DaysOff.Data;
 using SII_DaysOff.Models;
 
@@ -13,10 +15,12 @@ namespace SII_DaysOff.Controllers
     public class VacationDaysController : Controller
     {
         private readonly DbContextBD _context;
+        private UserManager<ApplicationUser> _userManager;
 
-        public VacationDaysController(DbContextBD context)
+        public VacationDaysController(DbContextBD context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: VacationDays
@@ -103,17 +107,22 @@ namespace SII_DaysOff.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Year,DayVacations,CreatedBy,CreationDate,ModifiedBy,ModificationDate")] VacationDays vacationDays)
+        public async Task<IActionResult> Create([Bind("Year,DayVacations")] VacationDays vacationDays)
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.GetUserAsync(User);
+                vacationDays.CreatedBy = user.Id;
+                vacationDays.ModifiedBy = user.Id;
+                vacationDays.CreationDate = DateTime.Now;
+                vacationDays.ModificationDate = DateTime.Now;
                 _context.Add(vacationDays);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return LocalRedirect("~/Home/Main");
             }
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", vacationDays.CreatedBy);
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", vacationDays.ModifiedBy);
-            return View(vacationDays);
+            return LocalRedirect("~/Home/Main");
         }
 
         // GET: VacationDays/Edit/5

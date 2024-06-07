@@ -9,5 +9,6 @@ namespace SII_DaysOff.Models
 		public PaginatedList<Requests> Requests { get; set; }
 		public int TotalRequest {  get; set; }
 		public int PageSize {  get; set; }
+		public Guid AdminId { get; set; }
 	}
 }
