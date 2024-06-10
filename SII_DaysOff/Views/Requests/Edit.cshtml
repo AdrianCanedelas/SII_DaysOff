@@ -16,6 +16,12 @@
 					<div class="row d-flex justify-content-start py-2">
 						<div class="col-12">
 							<input type="hidden" asp-for="RequestId" />
+							<input type="hidden" asp-for="StatusId" />
+							<input type="hidden" asp-for="CreationDate" />
+							<input type="hidden" asp-for="RequestDate" />
+							<input type="hidden" asp-for="UserId" />
+							<input type="hidden" asp-for="RequestId" />
+							<input type="hidden" asp-for="CreatedBy" />
 							<div class="form-group">
 								<label asp-for="ReasonId" class="control-label fw-bold"></label>
 								<select asp-for="ReasonId" class="form-control custom-form" asp-items="ViewBag.ReasonId"></select>

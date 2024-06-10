@@ -373,10 +373,11 @@ namespace SII_DaysOff.Controllers
             }
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.CreatedBy);
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.ModifiedBy);
-            ViewData["ReasonId"] = new SelectList(_context.Reasons, "Name", "Name");
+            ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "Name");
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", requests.StatusId);
             ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.UserId);
-            return View(requests);
+
+			return View(requests);
         }
 
         // POST: Requests/Edit/5
@@ -384,24 +385,20 @@ namespace SII_DaysOff.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Reasons,StartDate,EndDate,HalfDayStart,HalfDayEnd,Comments")] Requests requests)
+        public async Task<IActionResult> Edit(Guid id, [Bind("ReasonId,StartDate,EndDate,HalfDayStart,HalfDayEnd,Comments,StatusId,RequestDate,CreationDate,UserId,RequestId,CreatedBy")] Requests requests)
         {
-            Console.WriteLine("editPOST" + requests.RequestId + " <==> " + id);
-            Console.WriteLine("editPOST" + requests.ReasonId + " - " + requests.StartDate + " - " + requests.EndDate + " - " + requests.HalfDayStart + " - " + requests.HalfDayEnd + " - " + requests.Comments);
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var user = await _userManager.GetUserAsync(User);
+					var user = await _userManager.GetUserAsync(User);
 
-                    //requests.RequestDate = DateTime.Now;
-                    requests.ModificationDate = DateTime.Now;
-                    requests.ModifiedBy = user.Id;
-                    //requests.ModificationDate = DateTime.Now;
-                    _context.Update(requests);
-                    await _context.SaveChangesAsync();
-                }
+					requests.ModificationDate = DateTime.Now;
+					requests.ModifiedBy = user.Id;
+
+					_context.Update(requests);
+					await _context.SaveChangesAsync();
+				}
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!RequestsExists(requests.RequestId))
