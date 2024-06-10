@@ -49,7 +49,10 @@ namespace SII_DaysOff.Controllers
             if (registerCount == 0) registerCount = 5;
             ViewData["RegisterCount"] = registerCount;
 
-            switch (sortOrder)
+			ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Email");
+			ViewData["YearId"] = new SelectList(_context.VacationDays, "Year", "Year");
+
+			switch (sortOrder)
             {
                 default:
                     statuses = statuses.OrderBy(r => r.Name);

@@ -102,6 +102,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcG9uZW50c1xNb2RhbENyZWF0ZVN0YXR1cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/Components/ModalCreateUserVacationDays.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcG9uZW50c1xNb2RhbENyZWF0ZVVzZXJWYWNhdGlvbkRheXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/Components/ModalCreateVacationDays.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcG9uZW50c1xNb2RhbENyZWF0ZVZhY2F0aW9uRGF5cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -216,6 +220,26 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/Statuses/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RhdHVzZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/UserVacationDays/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclZhY2F0aW9uRGF5c1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/UserVacationDays/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclZhY2F0aW9uRGF5c1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/UserVacationDays/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclZhY2F0aW9uRGF5c1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/UserVacationDays/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclZhY2F0aW9uRGF5c1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/UserVacationDays/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclZhY2F0aW9uRGF5c1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/adrian.candelas/source/repos/SII_DaysOff/SII_DaysOff/Views/VacationDays/Create.cshtml]

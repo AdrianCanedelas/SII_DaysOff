@@ -1,0 +1,89 @@
+﻿@model SII_DaysOff.Models.UserVacationDays
+
+<!-- Modal que se abre al darle a crear nueva solicitud -->
+<div class="modal fade" id="UserVacationDaysModal" tabindex="-1" aria-labelledby="UserVacationDaysModalLabel" aria-hidden="true" data-bs-backdrop="static">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="UserVacationDaysModalLabel"><i class="bi bi-clipboard2-plus-fill"></i>   New user vacation days</h4>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form asp-controller="UserVacationDays" asp-action="Create">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<div class="form-group">
+						<div class="row p-3">
+							<div class="col-4 fw-bold">
+								<label asp-for="UserId" class="control-label"></label>
+							</div>
+							<div class="col-8">
+								<select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="row p-3">
+							<div class="col-4 fw-bold">
+								<label asp-for="Year" class="control-label"></label>
+							</div>
+							<div class="col-8">
+								<select asp-for="Year" class="form-control" asp-items="ViewBag.YearId"></select>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="row p-3">
+							<div class="col-4 fw-bold">
+								<label asp-for="AcquiredDays" class="control-label"></label>
+							</div>
+							<div class="col-8">
+								<input asp-for="AcquiredDays" class="form-control" />
+								<span asp-validation-for="AcquiredDays" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="row p-3">
+							<div class="col-4 fw-bold">
+								<label asp-for="AdditionalDays" class="control-label"></label>
+							</div>
+							<div class="col-8">
+								<input asp-for="AdditionalDays" class="form-control" />
+								<span asp-validation-for="AdditionalDays" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+					@* <div class="form-group">
+					<label asp-for="CreatedBy" class="control-label"></label>
+					<select asp-for="CreatedBy" class="form-control" asp-items="ViewBag.CreatedBy"></select>
+					</div>
+					<div class="form-group">
+					<label asp-for="CreationDate" class="control-label"></label>
+					<input asp-for="CreationDate" class="form-control" />
+					<span asp-validation-for="CreationDate" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+					<label asp-for="ModifiedBy" class="control-label"></label>
+					<select asp-for="ModifiedBy" class="form-control" asp-items="ViewBag.ModifiedBy"></select>
+					</div>
+					<div class="form-group">
+					<label asp-for="ModificationDate" class="control-label"></label>
+					<input asp-for="ModificationDate" class="form-control" />
+					<span asp-validation-for="ModificationDate" class="text-danger"></span>
+					</div> *@
+					<div class="modal-footer">
+						<!--<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+						<button type="submit" class="custom-button">Create user vacation days</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

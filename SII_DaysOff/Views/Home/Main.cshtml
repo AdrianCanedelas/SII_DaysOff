@@ -37,43 +37,43 @@
 	</div>
 	<div class="card-body shadow">
 		<div class="row text-center">
-			@if(Model.User != null)
+			@if (Model.User != null)
 			{
 				<div class="col-6 col-sm-2">
-				<p class="fw-bold">Annual days off</p>
-				<p>@Model.User.UserVacationDays.YearNavigation.DayVacations</p>
-			</div>
-			<div class="col-6 col-sm-2">
-				<p class="fw-bold">Additional days</p>
-				<p>@Model.User.UserVacationDays.AdditionalDays</p>
-			</div>
-			<div class="col-6 col-sm-2">
-				<p class="fw-bold">Acquired days</p>
-				<p>@Model.User.UserVacationDays.AcquiredDays</p>
-			</div>
-			<div class="col-6 col-sm-2">
-				<p class="fw-bold">Remaining days</p>
-				@{
-					int totalDays = Model.User.UserVacationDays.YearNavigation.DayVacations;
-					int acquiredDays = Model.User.UserVacationDays.AcquiredDays;
-					int additionalDays = Model.User.UserVacationDays.AdditionalDays;
-					totalDays = (totalDays - acquiredDays) + additionalDays;
-				}
-				<p>@totalDays</p>
-			</div>
-			<div class="col-6 col-sm-2">
-				<p class="fw-bold">Validity start date</p>
-				@{
-					if (Model.User.CreationDate.Year == DateTime.Now.Year)
-					{
-						<p>@Model.User.CreationDate.ToString("yyyy-MM-dd")</p>
+					<p class="fw-bold">Annual days off</p>
+					<p>@Model.User.UserVacationDays.YearNavigation.DayVacations</p>
+				</div>
+				<div class="col-6 col-sm-2">
+					<p class="fw-bold">Additional days</p>
+					<p>@Model.User.UserVacationDays.AdditionalDays</p>
+				</div>
+				<div class="col-6 col-sm-2">
+					<p class="fw-bold">Acquired days</p>
+					<p>@Model.User.UserVacationDays.AcquiredDays</p>
+				</div>
+				<div class="col-6 col-sm-2">
+					<p class="fw-bold">Remaining days</p>
+					@{
+						int totalDays = Model.User.UserVacationDays.YearNavigation.DayVacations;
+						int acquiredDays = Model.User.UserVacationDays.AcquiredDays;
+						int additionalDays = Model.User.UserVacationDays.AdditionalDays;
+						totalDays = (totalDays - acquiredDays) + additionalDays;
 					}
-				}
-			</div>
-			<div class="col-6 col-sm-2">
-				<p class="fw-bold">Validity end date</p>
-				<p>@DateTime.Now.Year-12-31</p>
-			</div>	
+					<p>@totalDays</p>
+				</div>
+				<div class="col-6 col-sm-2">
+					<p class="fw-bold">Validity start date</p>
+					@{
+						if (Model.User.CreationDate.Year == DateTime.Now.Year)
+						{
+							<p>@Model.User.CreationDate.ToString("yyyy-MM-dd")</p>
+						}
+					}
+				</div>
+				<div class="col-6 col-sm-2">
+					<p class="fw-bold">Validity end date</p>
+					<p>@DateTime.Now.Year-12-31</p>
+				</div>
 			}
 		</div>
 	</div>
@@ -101,11 +101,11 @@
 					{
 						// if (Model.User.RoleId.Equals(Model.AdminId))
 						// {
-							<a class="custom-button-disabled position-relative btn disabled" asp-area="" asp-controller="Requests" asp-action="ManageIndex" asp-route-year="@ViewData["YearSelected"]">Manage requests</a>
+						<a class="custom-button-disabled position-relative btn disabled" asp-area="" asp-controller="Requests" asp-action="ManageIndex" asp-route-year="@ViewData["YearSelected"]">Manage requests</a>
 						// }
 					}
+					<a type="submit" class="custom-button" asp-controller="Requests" asp-action="Calendar">Calendar</a>
 				}
-				<a type="submit" class="custom-button" asp-controller="Requests" asp-action="Calendar">Calendar</a>
 				<button type="submit" class="custom-button" data-bs-toggle="modal" data-bs-target="#exampleModal">New request</button>
 			</div>
 		</div>

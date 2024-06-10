@@ -12,7 +12,6 @@ namespace SII_DaysOff.Models
             AspNetUsers = new HashSet<ApplicationUser>();
         }
 
-        public Guid RoleId { get; set; }
         public string Description { get; set; } = null!;
         public Guid? CreatedBy { get; set; }
         public DateTime? CreationDate { get; set; }

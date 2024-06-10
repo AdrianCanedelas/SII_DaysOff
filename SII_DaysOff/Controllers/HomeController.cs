@@ -31,12 +31,15 @@ namespace SII_DaysOff.Controllers
 
 		public IActionResult Index()
 		{
+			Console.WriteLine("\n\n Index Main");
 			ViewData["notShow"] = false;
 			return View();
 		}
 
 		public async Task<IActionResult> MainAsync(string sortOrder, string searchString, int? numPage, string currentFilter, string optionStatus, string year, int registerCount)
 		{
+
+			Console.WriteLine("\n\n  Main directamente");
 			Console.WriteLine("\n\n\n\n\nyear --> " + year);
 			if (year == null) year = DateTime.Now.Year.ToString();
 			if (optionStatus != null && optionStatus != "") ViewData["Status"] = optionStatus;
@@ -57,7 +60,7 @@ namespace SII_DaysOff.Controllers
 			ViewData["RequestDayOrder"] = sortOrder == "RequestDay" ? "RequestDay_desc" : "RequestDay";
 			ViewData["CommentsOrder"] = sortOrder == "Comments" ? "Comments_desc" : "Comments";
 			ViewData["StatusOrder"] = sortOrder == "Status" ? "Status_desc" : "Status";
-
+			Console.WriteLine("\n\n  1");
 			// Cuadro de búsqueda
 			//ViewData["CurrentFilter"] = searchString;
 
@@ -67,15 +70,16 @@ namespace SII_DaysOff.Controllers
 				.Include(u => u.UserVacationDays.YearNavigation)
 				.FirstOrDefaultAsync(u => u.Id == Guid.Parse(_userManager.GetUserId(User)));
 			ViewData["notShow"] = false;
-
+			Console.WriteLine("\n\n  2");
 			var statusId = _context.Statuses.FirstOrDefault(s => s.Name.Equals(currentOptionStatus == null ? "Pending" : currentOptionStatus))?.StatusId;
 			var userId = _context.AspNetUsers.FirstOrDefault(u => u.Name.Equals(user.Name))?.Id;
 
 			if (statusId == null || userId == null)
 			{
-				return View(new List<Requests>());
+				Console.WriteLine("\n\n  3 -- " + statusId + " - " + userId);
+				return View(new MainViewModel());
 			}
-
+			Console.WriteLine("\n\n  4");
 			var requests = _context.Requests
 				.Include(r => r.Reason)
 				.Include(r => r.Status)
@@ -85,12 +89,13 @@ namespace SII_DaysOff.Controllers
 				.Where(r => r.StatusId == statusId)
 				.Where(r => r.UserId == userId)
 				.AsQueryable();
-
+			Console.WriteLine("\n\n  5");
 			if (year != null) requests = requests.Where(r => r.RequestDate.Year.ToString().Equals(year));
 
 			ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "Name");
 			ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Name");
 			ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Email");
+			ViewData["YearId"] = new SelectList(_context.VacationDays, "Year", "Year");
 
 			// Paginacion
 			if (searchString != null) numPage = 1;

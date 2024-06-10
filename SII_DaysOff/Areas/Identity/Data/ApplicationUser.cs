@@ -26,9 +26,9 @@ public class ApplicationUser : IdentityUser<Guid>
     public DateTime ModificationDate { get; set; }
     public Guid? Manager { get; set; }
 
-    public virtual ApplicationUser CreatedByUser { get; set; }
-    public virtual ApplicationUser ModifiedByUser { get; set; }
-    public virtual ApplicationUser ManagerUser { get; set; }
-	public virtual UserVacationDays UserVacationDays { get; set; }
+    public virtual ApplicationUser? CreatedByUser { get; set; }
+    public virtual ApplicationUser? ModifiedByUser { get; set; }
+    public virtual ApplicationUser? ManagerUser { get; set; }
+	public virtual UserVacationDays? UserVacationDays { get; set; }
 }
 

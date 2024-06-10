@@ -143,7 +143,7 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
             //Console.WriteLine("\n\n\n\tEntraGET Register");
             ReturnUrl = returnUrl;
 			//ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId");
-			//ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "Description");
+			ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Description");
 			ViewData["ManagerId"] = new SelectList(_context.AspNetUsers, "Id", "UserName");
             ViewData["VacationDaysId"] = new SelectList(_context.VacationDays, "Year", "Year");
             /*
@@ -168,7 +168,7 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
                 user.AcquiredDays = int.Parse(Input.AcquiredDays);
                 user.RemainingDays = int.Parse(Input.RemainingDays);*/
 
-                user.RoleId = Guid.Parse("FA208010-179E-4121-B723-3D449297BBCC");
+                //user.RoleId = Guid.Parse("FA208010-179E-4121-B723-3D449297BBCC");
                 user.Name = Input.Name;
                 user.Manager = Input.Manager;
                 user.Surname = Input.Surname;
@@ -176,9 +176,11 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
                 user.IsActive = true;
                 user.Manager = Input.Manager;
                 user.RegisterDate = DateTime.Now;
-                user.CreatedBy = logedInUser.Id;
-                user.CreationDate = DateTime.Now;
-                user.ModifiedBy = logedInUser.Id;
+                user.RoleId = Guid.Parse("9EF701FB-6834-4434-BDCA-7BA87FA108FA");
+                user.Manager = Guid.Parse("DAB39DCC-4845-438C-B64D-9C3E1E0596B1");
+				//user.CreatedBy = logedInUser.Id;
+				user.CreationDate = DateTime.Now;
+                //user.ModifiedBy = logedInUser.Id;
                 user.ModificationDate = DateTime.Now;
 
                 //user.UserVacationDays = userVacationDays;
@@ -205,7 +207,7 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
                     //await _signInManager.SignInAsync(user, isPersistent: false);
 
                     //Dias vacaciones
-                    var userVacationDays = new UserVacationDays();
+                    /*var userVacationDays = new UserVacationDays();
                     userVacationDays.UserId = user.Id;
                     userVacationDays.Year = "2024";
                     userVacationDays.AcquiredDays = 0;
@@ -213,8 +215,8 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
                     userVacationDays.CreatedBy = logedInUser.Id;
                     userVacationDays.CreationDate = DateTime.Now;
                     userVacationDays.ModifiedBy = logedInUser.Id;
-                    userVacationDays.ModificationDate = DateTime.Now;
-                    _context.Add(userVacationDays);
+                    userVacationDays.ModificationDate = DateTime.Now;*
+                    _context.Add(userVacationDays);*/
                     await _context.SaveChangesAsync();
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)

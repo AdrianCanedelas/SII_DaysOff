@@ -1,103 +1,112 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - SII DaysOff</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/SII_DaysOff.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap-datepicker-master/bootstrap-datepicker-master/dist/css/bootstrap-datepicker.min.css" />
-    <link href="~/fullcalendar/fullcalendar-6.1.13/dist/index.global.min.js" rel="stylesheet" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - SII DaysOff</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/SII_DaysOff.styles.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+	<link rel="stylesheet" href="~/lib/bootstrap-datepicker-master/bootstrap-datepicker-master/dist/css/bootstrap-datepicker.min.css" />
+	<link href="~/fullcalendar/fullcalendar-6.1.13/dist/index.global.min.js" rel="stylesheet" />
 </head>
 <body>
-    @if (!ViewData["notShow"].Equals(true) || ViewData["notShow"] == null)
-    {
-        <header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow navbar-custom">
-                <div class="row container-fluid">
-                    <div class="col-1">
-                        <img src="~/img/siigroup-spain-whiteline.png" class="navBar mx-4" />
-                    </div>
-                    <div class="col-4">
-                        <div class="row">
-                            <div class="dropdown col-3">
-                                <a type="button" class="custom-progressive-link fw-bold" data-bs-toggle="dropdown">
-                                    Reasons
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#reasonModal">New reason</a></li>
-                                    <li><a class="btn dropdown-item" asp-controller="Reasons" asp-action="Index">Manage reasons</a></li>
-                                </ul>
-                            </div>
-                            <div class="dropdown col-3">
-                                <a type="button" class="custom-progressive-link fw-bold" data-bs-toggle="dropdown">
-                                    Statuses
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#statusModal">New status</a></li>
-                                    <a class="btn dropdown-item" asp-controller="Statuses" asp-action="Index">Manage statuses</a>
-                                </ul>
-                            </div>
-                            <div class="dropdown col-3">
-                                <a type="button" class="custom-progressive-link fw-bold" data-bs-toggle="dropdown">
-                                    Vacation days
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#VacationDaysModal">New vacation days</a></li>
-                                    <a class="btn" asp-controller="VacationDays" asp-action="Index">Manage vacation days</a>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-2 d-flex justify-content-center">
-                        <a id="manage" class="nav-link text-light title fw-bold" asp-controller="Home" asp-action="Main" asp-route-year="@ViewData["YearSelected"]">SII DaysOff</a>
-                    </div>
-@*                     <div class="col-12 col-md-3 d-flex justify-content-start fw-bold mt-2 ms-4 ms-md-0 justify-content-md-end">
- *@                 <div class="col-5 d-flex justify-content-end">
-                        <partial name="_LoginPartial" />
-                    </div>
-                </div>
-            </nav>
-            @if (!ViewData["title"].Equals("Main"))
-            {
-                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow navbar-custom-return mb-3">
-                    @if (ViewData["title"].Equals("Edit") || ViewData["title"].Equals("Delete"))
-                    {
-                        <a id="manage" asp-controller="Reasons" asp-action="Index" asp-route-year="@ViewData["YearSelected"]">
-                            <i class="bi bi-arrow-left-square mx-5 custom-icon-return"></i>
-                        </a>
-                    }
-                    else
-                    {
-                        <a id="manage" asp-controller="Home" asp-action="Main" asp-route-year="@ViewData["YearSelected"]">
-                            <i class="bi bi-arrow-left-square mx-5 custom-icon-return"></i>
-                        </a>
-                    }
-                </nav>
-            }
-        </header>
-    }
+	@if (!ViewData["notShow"].Equals(true) || ViewData["notShow"] == null)
+	{
+		<header>
+			<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow navbar-custom">
+				<div class="row container-fluid">
+					<div class="col-1 col-md-1 col-lg-2 col-xl-1">
+						<img src="~/img/siigroup-spain-whiteline.png" class="navBar mx-4" />
+					</div>
+					<div class="col-6 col-md-6 col-lg-2 col-xl-2 d-flex justify-content-start">
+						<a id="manage" class="nav-link text-light title fw-bold" asp-controller="Home" asp-action="Main" asp-route-year="@ViewData["YearSelected"]">SII DaysOff</a>
+					</div>
+					<div class="col-12 col-md-11 col-lg-6 col-xl-6 mt-4 mt-md-0 ms-1 ms-md-0">
+						<div class="row">
+							<div class="dropdown col-3">
+								<a type="button" class="custom-progressive-link fw-bold" data-bs-toggle="dropdown">
+									Reasons
+								</a>
+								<ul class="dropdown-menu">
+									<li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#reasonModal">New reason</a></li>
+									<li><a class="btn dropdown-item" asp-controller="Reasons" asp-action="Index">Manage reasons</a></li>
+								</ul>
+							</div>
+							<div class="dropdown col-3">
+								<a type="button" class="custom-progressive-link fw-bold" data-bs-toggle="dropdown">
+									Statuses
+								</a>
+								<ul class="dropdown-menu">
+									<li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#statusModal">New status</a></li>
+									<a class="btn dropdown-item" asp-controller="Statuses" asp-action="Index">Manage statuses</a>
+								</ul>
+							</div>
+							<div class="dropdown col-3">
+								<a type="button" class="custom-progressive-link fw-bold" data-bs-toggle="dropdown">
+									Vacation days
+								</a>
+								<ul class="dropdown-menu">
+									<li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#VacationDaysModal">New vacation days</a></li>
+									<a class="btn" asp-controller="VacationDays" asp-action="Index">Manage vacation days</a>
+								</ul>
+							</div>
+							<div class="dropdown col-3">
+								<a type="button" class="custom-progressive-link fw-bold" data-bs-toggle="dropdown">
+									User vacation days
+								</a>
+								<ul class="dropdown-menu">
+									<li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#UserVacationDaysModal">New vacation days</a></li>
+									<a class="btn" asp-controller="UserVacationDays" asp-action="Index">Manage vacation days</a>
+								</ul>
+							</div>
+						</div>
+					</div>
+					@*<div class="col-12 col-md-3 d-flex justify-content-start fw-bold mt-2 ms-4 ms-md-0 justify-content-md-end">*@
+					<div class="col-6 col-md-6 col-lg-2 col-xl-2 d-flex justify-content-center justify-content-lg-end">
+						<partial name="_LoginPartial" />
+					</div>
+				</div>
+			</nav>
+			@if (!ViewData["title"].Equals("Main"))
+			{
+				<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow navbar-custom-return mb-3">
+					@if (ViewData["title"].Equals("Edit") || ViewData["title"].Equals("Delete"))
+					{
+						<a id="manage" asp-controller="Reasons" asp-action="Index" asp-route-year="@ViewData["YearSelected"]">
+							<i class="bi bi-arrow-left-square mx-5 custom-icon-return"></i>
+						</a>
+					}
+					else
+					{
+						<a id="manage" asp-controller="Home" asp-action="Main" asp-route-year="@ViewData["YearSelected"]">
+							<i class="bi bi-arrow-left-square mx-5 custom-icon-return"></i>
+						</a>
+					}
+				</nav>
+			}
+		</header>
+	}
 
-    <div class="container-fluid">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+	<div class="container-fluid">
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
+	</div>
 
-    <footer class="footer text-muted">
-        <div class="align-content-start mx-5">
-            &copy; SII
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-    <script src="~/fullcalendar/fullcalendar-6.1.13/dist/index.global.js"></script>
-    <script src="~/lib/bootstrap-datepicker-master/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+	<footer class="footer text-muted">
+		<div class="align-content-start mx-5">
+			&copy; SII
+		</div>
+	</footer>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+	<script src="~/fullcalendar/fullcalendar-6.1.13/dist/index.global.js"></script>
+	<script src="~/lib/bootstrap-datepicker-master/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

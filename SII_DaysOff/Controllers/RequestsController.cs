@@ -117,6 +117,9 @@ namespace SII_DaysOff.Controllers
 			if (registerCount == 0) registerCount = 5;
 			ViewData["RegisterCount"] = registerCount;
 
+			ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Email");
+			ViewData["YearId"] = new SelectList(_context.VacationDays, "Year", "Year");
+
 			switch (sortOrder)
 			{
 				case "Reason_desc":
@@ -457,12 +460,12 @@ namespace SII_DaysOff.Controllers
 
 			if (option == "Approved")
 			{
-				request.StatusId = Guid.Parse("98D18765-5BF7-41BD-8727-A39F7F95B9AC"); 
+				request.StatusId = _context.Statuses.Where(s => s.Name.Equals("Approved")).FirstOrDefault().StatusId; 
 			}
 			else if (option == "Cancelled")
 			{
-				request.StatusId = Guid.Parse("67AD8346-6F99-4465-9F33-4E0AC387D5D1");
-			}
+				request.StatusId = _context.Statuses.Where(s => s.Name.Equals("Cancelled")).FirstOrDefault().StatusId;
+            }
 
 			await _context.SaveChangesAsync();
 
@@ -572,7 +575,7 @@ namespace SII_DaysOff.Controllers
 										if (row > pastRow) worksheet.Cell(row, column).Value += ("     ");
 										worksheet.Cell(row, column).Value += ("             |" + r.User.Name + " " + r.User.Surname + "   |" + r.Reason.Name);
 									}
-									worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(row %2 == 0 ? XLColor.FromHtml("#1c2445") : XLColor.FromHtml("#004278")).Font.SetFontColor(XLColor.FromHtml("#f2f2f2"))
+									worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(row %2 == 0 ? XLColor.FromHtml("#b8d1ec") : XLColor.FromHtml("#004278")).Font.SetFontColor(XLColor.FromHtml("#f2f2f2"))
 										.Border.SetBottomBorder(XLBorderStyleValues.Thin).Border.SetBottomBorderColor(XLColor.CoolGrey)
 										.Border.SetTopBorder(XLBorderStyleValues.Thin).Border.SetTopBorderColor(XLColor.CoolGrey);
 									users.Add(r.UserId);
@@ -619,11 +622,11 @@ namespace SII_DaysOff.Controllers
 		{
 			if (column == 2)
 			{
-				if (!worksheet.Cell((row - jumpsDown), 8).Style.Fill.BackgroundColor.Equals(row % 2 == 0 ? XLColor.FromHtml("#1c2445") : XLColor.FromHtml("#004278"))) return true;
+				if (!worksheet.Cell((row - jumpsDown), 8).Style.Fill.BackgroundColor.Equals(row % 2 == 0 ? XLColor.FromHtml("#b8d1ec") : XLColor.FromHtml("#004278"))) return true;
 			}
 			else
 			{
-				if (!worksheet.Cell(row, (column - 1)).Style.Fill.BackgroundColor.Equals(row % 2 == 0 ? XLColor.FromHtml("#1c2445") : XLColor.FromHtml("#004278"))) return true;
+				if (!worksheet.Cell(row, (column - 1)).Style.Fill.BackgroundColor.Equals(row % 2 == 0 ? XLColor.FromHtml("#b8d1ec") : XLColor.FromHtml("#004278"))) return true;
 			}
 			return false;
 		}
@@ -710,7 +713,7 @@ namespace SII_DaysOff.Controllers
 				worksheet.Cell(row, column).Style.Border.SetLeftBorder(XLBorderStyleValues.Thin).Border.SetLeftBorderColor(XLColor.CoolGrey);
 				worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(color);
 			}
-			//worksheet.Cell(row, column).Style.Border.SetBottomBorder(XLBorderStyleValues.Thin).Border.SetBottomBorderColor(XLColor.CoolGrey);
+			worksheet.Cell(row, column).Style.Border.SetBottomBorder(XLBorderStyleValues.Thin).Border.SetBottomBorderColor(XLColor.CoolGrey);
 			return row -= 4;
 		}
 

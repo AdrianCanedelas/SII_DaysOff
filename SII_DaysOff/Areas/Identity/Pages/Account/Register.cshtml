@@ -20,6 +20,12 @@
 								<select asp-for="Input.Manager" class="form-control custom-form" asp-items="ViewBag.ManagerId"></select>
 							</div>
 						</div>
+						<div class="col-12 col-md-6">
+							<div class="form-floating py-3">
+								<label asp-for="Input.Role" class="control-label custom-control-label"></label>
+								<select asp-for="Input.Role" class="form-control custom-form" asp-items="ViewBag.RoleId"></select>
+							</div>
+						</div>
 						<div class="col-12 col-md-6 py-3">
 							<div class="form-floating">
 								<input asp-for="Input.Email" class="form-control custom-form" autocomplete="username" aria-required="true" />

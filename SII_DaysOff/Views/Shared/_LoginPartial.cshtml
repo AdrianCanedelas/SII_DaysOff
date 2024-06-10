@@ -12,6 +12,7 @@
 @Html.Partial("../Components/ModalCreateReason", new SII_DaysOff.Models.Reasons())
 @Html.Partial("../Components/ModalCreateStatus", new SII_DaysOff.Models.Statuses())
 @Html.Partial("../Components/ModalCreateVacationDays", new SII_DaysOff.Models.VacationDays())
+@Html.Partial("../Components/ModalCreateUserVacationDays", new SII_DaysOff.Models.UserVacationDays())
 
 <ul class="navbar-nav">
 	@if (SignInManager.IsSignedIn(User))
@@ -22,7 +23,7 @@
 		<li class="nav-item">
 			@if (SignInManager.IsSignedIn(User))
 			{
-				<a id="manage" class="nav-link text-light">@UserManager.GetUserName(User)</a>
+				<a id="manage" class="nav-link text-light custom-progressive-link">@UserManager.GetUserName(User)</a>
 				<div class="submenu">
 					@*@if (user.RoleIdUser.Name.Equals("Admin"))*@
 					<div class="row">

@@ -279,7 +279,7 @@ namespace SII_DaysOff.Migrations
 
                     b.HasIndex("ModifiedBy");
 
-                    b.ToTable("Reasons", (string)null);
+                    b.ToTable("Reasons");
                 });
 
             modelBuilder.Entity("SII_DaysOff.Models.Requests", b =>
@@ -347,16 +347,13 @@ namespace SII_DaysOff.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Requests", (string)null);
+                    b.ToTable("Requests");
                 });
 
             modelBuilder.Entity("SII_DaysOff.Models.Roles", b =>
                 {
-                    b.Property<Guid>("RoleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("RoleID")
-                        .HasDefaultValueSql("(newid())");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -374,9 +371,6 @@ namespace SII_DaysOff.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("datetime");
 
@@ -391,7 +385,7 @@ namespace SII_DaysOff.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.HasKey("RoleId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CreatedBy");
 
@@ -443,7 +437,7 @@ namespace SII_DaysOff.Migrations
 
                     b.HasIndex("ModifiedBy");
 
-                    b.ToTable("Statuses", (string)null);
+                    b.ToTable("Statuses");
                 });
 
             modelBuilder.Entity("SII_DaysOff.Models.UserVacationDays", b =>
@@ -484,7 +478,7 @@ namespace SII_DaysOff.Migrations
 
                     b.HasIndex("Year");
 
-                    b.ToTable("UserVacationDays", (string)null);
+                    b.ToTable("UserVacationDays");
                 });
 
             modelBuilder.Entity("SII_DaysOff.Models.VacationDays", b =>
@@ -515,7 +509,7 @@ namespace SII_DaysOff.Migrations
 
                     b.HasIndex("ModifiedBy");
 
-                    b.ToTable("VacationDays", (string)null);
+                    b.ToTable("VacationDays");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

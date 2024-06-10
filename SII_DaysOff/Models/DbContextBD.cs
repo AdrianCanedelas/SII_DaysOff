@@ -243,13 +243,10 @@ namespace SII_DaysOff.Models
 
             modelBuilder.Entity<Roles>(entity =>
             {
-                entity.HasKey(e => e.RoleId);
 
-                entity.Property(e => e.RoleId)
-                    .HasColumnName("RoleID")
-                    .HasDefaultValueSql("(newid())");
+				entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.CreationDate).HasColumnType("datetime");
+				entity.Property(e => e.CreationDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Description)
                     .HasMaxLength(255)
