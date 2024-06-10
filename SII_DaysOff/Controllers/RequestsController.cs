@@ -413,7 +413,7 @@ namespace SII_DaysOff.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return LocalRedirect("~/Home/Main");
             }
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.CreatedBy);
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.ModifiedBy);

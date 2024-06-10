@@ -45,20 +45,20 @@ body {
     padding-bottom: 8px;
 }
 
-    .custom-progressive-link::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 0;
-        height: 5px;
-        background-color: white;
-        transition: width 0.3s ease-in-out;
-    }
+.custom-progressive-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 5px;
+    background-color: white;
+    transition: width 0.3s ease-in-out;
+}
 
-    .custom-progressive-link:hover::after {
-        width: 100%;
-    }
+.custom-progressive-link:hover::after {
+    width: 100%;
+}
 
 .custom-form:hover {
     border: 2px solid #004278;

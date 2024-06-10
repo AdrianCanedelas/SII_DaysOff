@@ -130,7 +130,7 @@
 							<input type="hidden" name="optionStatus" value="@ViewData["status"]" />
 							<input type="hidden" name="year" value="@ViewData["YearSelected"]" />
 							<input type="submit" value="Search" class="custom-button" /> |
-							<a asp-action="Main" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="mx-2 custom-link">Back to Full List</a> |
+							<a asp-action="Main" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-optionStatus="@ViewData["status"]" class="mx-2 custom-link">Back to Full List</a> |
 							<input type="number" min="0" max="10" name="registerCount" value="@ViewData["RegisterCount"]" class="custom-button">
 							<label for="floatingInputValue" class="mx-2 custom-link">Results on page</label>
 						</p>
