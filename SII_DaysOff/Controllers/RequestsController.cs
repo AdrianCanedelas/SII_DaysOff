@@ -522,9 +522,9 @@ namespace SII_DaysOff.Controllers
 				.Include(r => r.Status)
 				.Include(r => r.Reason)
 				.ToList()
-				.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals(""))?.StatusId));
+				.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Approved"))?.StatusId));
 
-            if (pending && !approved && !cancelled) daysOff = daysOff.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId));
+            /*if (pending && !approved && !cancelled) daysOff = daysOff.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId));
             if (!pending && approved && !cancelled) daysOff = daysOff.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Approved"))?.StatusId));
             if (!pending && !approved && cancelled) daysOff = daysOff.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Cancelled"))?.StatusId));
             if (pending && approved && !cancelled) daysOff = daysOff.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Approved"))?.StatusId) 
@@ -535,7 +535,7 @@ namespace SII_DaysOff.Controllers
                 || r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Cancelled"))?.StatusId));
             if (pending && approved && cancelled) daysOff = daysOff.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Approved"))?.StatusId) 
                 || r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Cancelled"))?.StatusId) 
-                || r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId));
+                || r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId));*/
 
 			var fileName = type + ".xlsx";
             Console.WriteLine("\n\n\n\n\n\n month --<> " + year + " --> " + month);
@@ -558,7 +558,7 @@ namespace SII_DaysOff.Controllers
                 Console.WriteLine("dayOfWeek -> " + (int)firstDayOfMonth.DayOfWeek);
 				int row = 5; int column = (((int)firstDayOfMonth.DayOfWeek + 1) % 8);
                 Console.WriteLine("Row -> " + row + "  Column -> " + column);
-				int initialColumn = (((int)firstDayOfMonth.DayOfWeek + 1) % 8);
+                int initialColumn = (((int)firstDayOfMonth.DayOfWeek + 1) % 8), cont = 0;
                 Console.WriteLine("InitialColumn -> " + initialColumn);
                 if (initialColumn == 1)
                 {
@@ -587,15 +587,17 @@ namespace SII_DaysOff.Controllers
                         {
                             if(r.StartDate <= new DateTime(year, month, day) && r.EndDate >= new DateTime(year, month, day))
                             {
+                                Console.WriteLine(" --> encontrado");
                                 if(new DateTime(year, month, day) != r.EndDate || r.EndDate == r.StartDate)
                                 {
+                                    cont++;
 									row++;
-									if (!users.Contains(r.UserId) || checkPreviousCell(worksheet, row, column, jumpsDown))
+									if (!users.Contains(r.UserId) || checkPreviousCell(worksheet, row, column, jumpsDown, cont))
 									{
 										if (row > pastRow) worksheet.Cell(row, column).Value += ("     ");
 										worksheet.Cell(row, column).Value += ("             |" + r.User.Name + " " + r.User.Surname + "   |" + r.Reason.Name);
 									}
-									worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(row %2 == 0 ? XLColor.FromHtml("#b8d1ec") : XLColor.FromHtml("#004278")).Font.SetFontColor(XLColor.FromHtml("#f2f2f2"))
+									worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(cont %2 == 0 ? XLColor.FromHtml("#b8d1ec") : XLColor.FromHtml("#004278")).Font.SetFontColor(XLColor.FromHtml("#f2f2f2"))
 										.Border.SetBottomBorder(XLBorderStyleValues.Thin).Border.SetBottomBorderColor(XLColor.CoolGrey)
 										.Border.SetTopBorder(XLBorderStyleValues.Thin).Border.SetTopBorderColor(XLColor.CoolGrey);
 									users.Add(r.UserId);
@@ -603,6 +605,7 @@ namespace SII_DaysOff.Controllers
 							}
                             if (row > (pastRow + 4)) jumpsDown += 1;
                         }
+                        cont = 0;
                         row = pastRow;
                     } 
                     else
@@ -646,15 +649,15 @@ namespace SII_DaysOff.Controllers
 			}
 		}
 
-		public bool checkPreviousCell(IXLWorksheet worksheet, int row, int column, int jumpsDown)
+		public bool checkPreviousCell(IXLWorksheet worksheet, int row, int column, int jumpsDown, int cont)
 		{
 			if (column == 2)
 			{
-				if (!worksheet.Cell((row - jumpsDown), 8).Style.Fill.BackgroundColor.Equals(row % 2 == 0 ? XLColor.FromHtml("#b8d1ec") : XLColor.FromHtml("#004278"))) return true;
+				if (!worksheet.Cell((row - jumpsDown), 8).Style.Fill.BackgroundColor.Equals(cont % 2 == 0 ? XLColor.FromHtml("#b8d1ec") : XLColor.FromHtml("#004278"))) return true;
 			}
 			else
 			{
-				if (!worksheet.Cell(row, (column - 1)).Style.Fill.BackgroundColor.Equals(row % 2 == 0 ? XLColor.FromHtml("#b8d1ec") : XLColor.FromHtml("#004278"))) return true;
+				if (!worksheet.Cell(row, (column - 1)).Style.Fill.BackgroundColor.Equals(cont % 2 == 0 ? XLColor.FromHtml("#b8d1ec") : XLColor.FromHtml("#004278"))) return true;
 			}
 			return false;
 		}
