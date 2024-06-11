@@ -1,6 +1,7 @@
 ﻿@model SII_DaysOff.Models.VacationDays
 
 @{
+    ViewData["Navigation"] = "VacationDays";
     ViewData["notShow"] = false;
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -32,7 +33,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label asp-for="DayVacations" class="control-label fw-bold"></label>
-                                <input asp-for="DayVacations" class="form-control" />
+                                <input asp-for="DayVacations" class="form-control" min="0" />
                                 <span asp-validation-for="DayVacations" class="text-danger"></span>
                             </div>
                         </div>

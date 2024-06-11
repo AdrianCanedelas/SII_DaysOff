@@ -170,7 +170,7 @@ namespace SII_DaysOff.Controllers
             }
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", userVacationDays.CreatedBy);
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", userVacationDays.ModifiedBy);
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", userVacationDays.UserId);
+            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Email", userVacationDays.UserId);
             ViewData["Year"] = new SelectList(_context.VacationDays, "Year", "Year", userVacationDays.Year);
             return View(userVacationDays);
         }

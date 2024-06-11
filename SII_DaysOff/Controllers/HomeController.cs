@@ -119,10 +119,10 @@ namespace SII_DaysOff.Controllers
 			switch (sortOrder)
 			{
 				case "":
-					requests = requests.OrderBy(r => r.Reason.Name);
+					requests = requests.OrderBy(r => r.Reason);
 					break;
 				case "Reason_desc":
-					requests = requests.OrderByDescending(r => r.Reason.Name);
+					requests = requests.OrderByDescending(r => r.Reason);
 					break;
 				case "StartDay_desc":
 					requests = requests.OrderByDescending(r => r.StartDate);
@@ -182,26 +182,17 @@ namespace SII_DaysOff.Controllers
 
 			ViewData["PendingRequests"] = pendingRequests;
 
-			var paginatedRequests = await PaginatedList<Requests>.CreateAsync(requests.AsNoTracking(), numPage ?? 1, registerCount);
+			Console.WriteLine(" || Year -> " + year);
 			var logedUser = await _userManager.Users
 				.Include(u => u.UserVacationDays)
 				.Include(u => u.UserVacationDays.YearNavigation)
 				.Where(u => u.UserVacationDays.Year == year)
 				.FirstOrDefaultAsync(u => u.Id == Guid.Parse(_userManager.GetUserId(User)));
 
-			//var adminRole = _context.Roles
-			//	.FirstOrDefault(r => r.Name.Equals("Admin"));
-			
-			//var adminId = new Guid();
-			//if (adminRole != null)
-			//{
-			//	adminId = adminRole.RoleId;
-			//}
-			//else
-			//{
-			//	throw new Exception("El rol de administrador no existe.");
-			//}
-
+			Console.WriteLine("Requests -> " + requests.Count() + " - RegisterCount -> " + registerCount);
+			var paginatedRequests = await PaginatedList<Requests>.CreateAsync(requests.AsNoTracking(), numPage ?? 1, registerCount);
+			Console.WriteLine("|1 PaginatedRequests -> " + paginatedRequests.Count());
+			Console.WriteLine("|2 paginatedRequests -> " + paginatedRequests.Count());
 			var viewModel = new MainViewModel
 			{
 				User = logedUser,

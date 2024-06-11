@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "iMwqnBz1/1Nk8e1BB0ult+qrGVFw3DbhocT07iGknQiAhr95x3Rj8RGsREGhC+7OzzjrPM/gYRLiARTQAGiKPw==",
+  "dgSpecHash": "5M95aPqqGobZanQRlCDULT+gKt3BIJLg/gpLfBMawFv56OQySxaMvROMJiyjzRjqVjAlT5TybBf0q47Y/mAVKg==",
   "success": true,
   "projectFilePath": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\SII_DaysOff.csproj",
   "expectedPackageFiles": [
@@ -58,6 +58,7 @@
     "C:\\Users\\adrian.candelas\\.nuget\\packages\\humanizer.core.zh-hans\\2.14.1\\humanizer.core.zh-hans.2.14.1.nupkg.sha512",
     "C:\\Users\\adrian.candelas\\.nuget\\packages\\humanizer.core.zh-hant\\2.14.1\\humanizer.core.zh-hant.2.14.1.nupkg.sha512",
     "C:\\Users\\adrian.candelas\\.nuget\\packages\\irony.netcore\\1.0.11\\irony.netcore.1.0.11.nupkg.sha512",
+    "C:\\Users\\adrian.candelas\\.nuget\\packages\\jquery\\1.6.3\\jquery.1.6.3.nupkg.sha512",
     "C:\\Users\\adrian.candelas\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
     "C:\\Users\\adrian.candelas\\.nuget\\packages\\messagepack.annotations\\2.1.152\\messagepack.annotations.2.1.152.nupkg.sha512",
     "C:\\Users\\adrian.candelas\\.nuget\\packages\\messagepackanalyzer\\2.1.152\\messagepackanalyzer.2.1.152.nupkg.sha512",
@@ -243,6 +244,7 @@
     "C:\\Users\\adrian.candelas\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512",
     "C:\\Users\\adrian.candelas\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\adrian.candelas\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
+    "C:\\Users\\adrian.candelas\\.nuget\\packages\\toastr\\2.1.1\\toastr.2.1.1.nupkg.sha512",
     "C:\\Users\\adrian.candelas\\.nuget\\packages\\xlparser\\1.5.2\\xlparser.1.5.2.nupkg.sha512"
   ],
   "logs": []

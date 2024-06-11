@@ -22,6 +22,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
     <PackageReference Include="Select.HtmlToPdf.NetCore" Version="23.2.0" />
+    <PackageReference Include="toastr" Version="2.1.1" />
   </ItemGroup>
 
 </Project>

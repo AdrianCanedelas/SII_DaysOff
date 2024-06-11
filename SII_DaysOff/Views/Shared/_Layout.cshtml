@@ -3,13 +3,14 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@ViewData["Title"] - SII DaysOff</title>
+	<title>SII DaysOff</title>
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/SII_DaysOff.styles.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" />
 	<link rel="stylesheet" href="~/lib/bootstrap-datepicker-master/bootstrap-datepicker-master/dist/css/bootstrap-datepicker.min.css" />
 	<link href="~/fullcalendar/fullcalendar-6.1.13/dist/index.global.min.js" rel="stylesheet" />
+	<link rel="icon" type="image/png" href="~/img/siigroup-spain-blueline.png" sizes="32x32">
 </head>
 <body>
 	@if (!ViewData["notShow"].Equals(true) || ViewData["notShow"] == null)
@@ -72,11 +73,31 @@
 			@if (!ViewData["title"].Equals("Main"))
 			{
 				<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow navbar-custom-return mb-3">
-					@if (ViewData["title"].Equals("Edit") || ViewData["title"].Equals("Delete"))
+					@if (!ViewData["Navigation"].Equals("Main"))
 					{
-						<a id="manage" asp-controller="Reasons" asp-action="Index" asp-route-year="@ViewData["YearSelected"]">
-							<i class="bi bi-arrow-left-square mx-5 custom-icon-return"></i>
-						</a>
+						switch (ViewData["Navigation"])
+						{
+							case "Reasons":
+								<a id="manage" asp-controller="Reasons" asp-action="Index" asp-route-year="@ViewData["YearSelected"]">
+									<i class="bi bi-arrow-left-square mx-5 custom-icon-return"></i>
+								</a>
+								break;
+							case "Statuses":
+								<a id="manage" asp-controller="Statuses" asp-action="Index" asp-route-year="@ViewData["YearSelected"]">
+									<i class="bi bi-arrow-left-square mx-5 custom-icon-return"></i>
+								</a>
+								break;
+							case "VacationDays":
+								<a id="manage" asp-controller="VacationDays" asp-action="Index" asp-route-year="@ViewData["YearSelected"]">
+									<i class="bi bi-arrow-left-square mx-5 custom-icon-return"></i>
+								</a>
+								break;
+							case "UserVacationDays":
+								<a id="manage" asp-controller="UserVacationDays" asp-action="Index" asp-route-year="@ViewData["YearSelected"]">
+									<i class="bi bi-arrow-left-square mx-5 custom-icon-return"></i>
+								</a>
+								break;
+						}
 					}
 					else
 					{

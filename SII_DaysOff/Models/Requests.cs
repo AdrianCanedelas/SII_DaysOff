@@ -1,6 +1,7 @@
 ﻿using SII_DaysOff.Areas.Identity.Data;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SII_DaysOff.Models
 {
@@ -11,8 +12,10 @@ namespace SII_DaysOff.Models
         public Guid ReasonId { get; set; }
         public Guid StatusId { get; set; }
         public DateTime RequestDate { get; set; }
+        [DataType(DataType.DateTime)]
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+		[DataType(DataType.DateTime)]
+		public DateTime EndDate { get; set; }
         public bool HalfDayStart { get; set; }
         public bool HalfDayEnd { get; set; }
         public string Comments { get; set; } = null!;

@@ -251,12 +251,12 @@
 												}
 												else if (item.Status.Name.Equals("Approved"))
 												{
-													<i class="bi bi-check-circle me-2 approved-icon"></i>
+													<i class="bi bi-check-circle me-2 approved-icon my-2"></i>
 													<span class="approved-icon">@Html.DisplayFor(model => item.Status.Name)</span>
 												}
 												else
 												{
-													<i class="bi bi-dash-circle me-2 cancelled-icon"></i>
+													<i class="bi bi-dash-circle me-2 cancelled-icon my-2"></i>
 													<span class="cancelled-icon">@Html.DisplayFor(model => item.Status.Name)</span>
 												}
 											</div>
@@ -293,6 +293,10 @@
 		   asp-route-numPage="@(Model.Requests.PageIndex -1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
 		   class="custom-button btn @previousDisabled" asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]"
 		   asp-route-registerCount="@ViewData["RegisterCount"]">Previous</a>
+		@if(Model.Requests.TotalPages > 3)
+		{
+			
+		}
 		@for (var i = 1; i <= Model.Requests.TotalPages; i++)
 		{
 			var activePage = (i == Model.Requests.PageIndex) ? "custom-button-active" : "";
@@ -319,6 +323,7 @@
 		</span>
 	</div>
 </div>
+
 @*
 <script>
 	var option = { animation: true, delay: 2000 };

@@ -153,6 +153,7 @@ namespace SII_DaysOff.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("Year,DayVacations,CreatedBy,CreationDate,ModifiedBy,ModificationDate")] VacationDays vacationDays)
         {
+            Console.WriteLine("year --> " + vacationDays.Year);
             if (id != vacationDays.Year)
             {
                 return NotFound();

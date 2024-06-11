@@ -37,7 +37,7 @@
 								<label asp-for="AcquiredDays" class="control-label"></label>
 							</div>
 							<div class="col-8">
-								<input asp-for="AcquiredDays" class="form-control" />
+								<input asp-for="AcquiredDays" class="form-control" min="0" />
 								<span asp-validation-for="AcquiredDays" class="text-danger"></span>
 							</div>
 						</div>
@@ -48,7 +48,7 @@
 								<label asp-for="AdditionalDays" class="control-label"></label>
 							</div>
 							<div class="col-8">
-								<input asp-for="AdditionalDays" class="form-control" />
+								<input asp-for="AdditionalDays" class="form-control" min="0" />
 								<span asp-validation-for="AdditionalDays" class="text-danger"></span>
 							</div>
 						</div>
