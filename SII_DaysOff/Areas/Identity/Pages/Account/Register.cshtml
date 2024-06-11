@@ -7,108 +7,104 @@
 	ViewData["Title"] = "Register a new user";
 }
 
-<h1 class="d-flex ms-3">@ViewData["Title"]</h1>
-<hr />
-<div class="container-fluid">
-	<div class="custom-container-edit mx-auto">
-		<div class="row p-3 d-flex justify-content-center">
-			<div class="col-12 col-lg-10 col-xl-8 col-xxl-6">
+<div class="container mb-5">
+	<div class="row my-3">
+		<img src="~/img/siigroup-spain-blueline.png" alt="Alternate Text" class="login mx-auto d-block" />
+	</div>
+	<h1 class="text-center fw-bold">@ViewData["Title"]</h1>
+	<div class="row my-4">
+		<div class="col-md-5 container-fluid">
+			<section>
 				<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-					<div class="row d-flex justify-content-start py-2">
-						<div class="col-12 col-md-6">
-							<div class="form-floating py-3">
-								<label asp-for="Input.Manager" class="control-label custom-control-label"></label>
+					<div class="form-floating mb-3">
+						<div class="row">
+							<div class="col-4">
+								<label asp-for="Input.Manager" class="control-label custom-control-label fw-bold"></label>
+							</div>
+							<div class="col-8">
 								<select asp-for="Input.Manager" class="form-control custom-form" asp-items="ViewBag.ManagerId"></select>
 							</div>
 						</div>
-						<div class="col-12 col-md-6">
-							<div class="form-floating py-3">
-								<label asp-for="Input.Role" class="control-label custom-control-label"></label>
+					</div>
+					<div class="form-floating mb-3">
+						<div class="row">
+							<div class="col-4">
+								<label asp-for="Input.Role" class="control-label custom-control-label fw-bold"></label>
+							</div>
+							<div class="col-8">
 								<select asp-for="Input.Role" class="form-control custom-form" asp-items="ViewBag.RoleId"></select>
 							</div>
 						</div>
-						<div class="col-12 col-md-6 py-3">
-							<div class="form-floating">
+					</div>
+					<div class="form-floating mb-3">
+						<div class="row">
+							<div class="col-4">
+								<label asp-for="Input.Email" class="control-label custom-control-label fw-bold"></label>
+							</div>
+							<div class="col-8">
 								<input asp-for="Input.Email" class="form-control custom-form" autocomplete="username" aria-required="true" />
-								<label asp-for="Input.Email"></label>
 								<span asp-validation-for="Input.Email" class="text-danger"></span>
 							</div>
 						</div>
 					</div>
-					<div class="row d-flex justify-content-start py-2">
-						<div class="col-12 col-md-6 py-3">
-							<div class="form-floating">
+					<div class="form-floating mb-3">
+						<div class="row">
+							<div class="col-4">
+								<label asp-for="Input.Name" class="control-label custom-control-label fw-bold"></label>
+							</div>
+							<div class="col-8">
 								<input asp-for="Input.Name" class="form-control custom-form" autocomplete="name" aria-required="true" />
-								<label asp-for="Input.Name"></label>
 								<span asp-validation-for="Input.Name" class="text-danger"></span>
 							</div>
 						</div>
-						<div class="col-12 col-md-6 py-3">
-							<div class="form-floating">
+					</div>
+					<div class="form-floating mb-3">
+						<div class="row">
+							<div class="col-4">
+								<label asp-for="Input.Surname" class="control-label custom-control-label fw-bold"></label>
+							</div>
+							<div class="col-8">
 								<input asp-for="Input.Surname" class="form-control custom-form" autocomplete="surname" aria-required="true" />
-								<label asp-for="Input.Surname"></label>
 								<span asp-validation-for="Input.Surname" class="text-danger"></span>
 							</div>
 						</div>
 					</div>
-					<div class="row d-flex justify-content-start py-2">
-						<div class="col-12 col-md-6 py-3">
-							<div class="form-floating">
+					<div class="form-floating mb-3">
+						<div class="row">
+							<div class="col-4">
+								<label asp-for="Input.Password" class="control-label custom-control-label fw-bold"></label>
+							</div>
+							<div class="col-8">
 								<input asp-for="Input.Password" class="form-control custom-form" autocomplete="new-password" aria-required="true" />
-								<label asp-for="Input.Password"></label>
 								<span asp-validation-for="Input.Password" class="text-danger"></span>
 							</div>
 						</div>
-						<div class="col-12 col-md-6 py-3">
-							<div class="form-floating">
+					</div>
+					<div class="form-floating mb-3">
+						<div class="row">
+							<div class="col-4">
+								<label asp-for="Input.ConfirmPassword" class="control-label custom-control-label fw-bold"></label>
+							</div>
+							<div class="col-8">
 								<input asp-for="Input.ConfirmPassword" class="form-control custom-form" autocomplete="new-password" aria-required="true" />
-								<label asp-for="Input.ConfirmPassword"></label>
 								<span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
 							</div>
 						</div>
 					</div>
-					<div class="row d-flex justify-content-start py-2">
-						<div class="col-4 py-3">
-							<button id="registerSubmit" type="submit" class="custom-button-register">Register</button>
-						</div>
+
+					<div>
+						<button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-outline-primary my-3"
+								asp-for="ReturnUrl" value="~/Home/Main" asp-route-optionStatus="Pending">
+							Register
+						</button>
 					</div>
+					<hr class="my-3" />
 				</form>
-			</div>
+			</section>
 		</div>
 	</div>
 </div>
-
-<!--<div class="col-md-6 col-md-offset-2">
-	<section>
-		<h3>Use another service to register.</h3>
-		<hr />
-@{
-	if ((Model.ExternalLogins?.Count ?? 0) == 0)
-	{
-						<div>
-							<p>
-								There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-								about setting up this ASP.NET application to support logging in via external services</a>.
-							</p>
-						</div>
-	}
-	else
-	{
-						<form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-							<div>
-								<p>
-					@foreach (var provider in Model.ExternalLogins!)
-					{
-											<button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-					}
-								</p>
-							</div>
-						</form>
-	}
-}
-	</section>
-</div-->
 @section Scripts {
 	<partial name="_ValidationScriptsPartial" />
 }

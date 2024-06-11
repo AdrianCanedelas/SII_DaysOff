@@ -34,19 +34,6 @@
                         <label asp-for="Input.Password" class="form-label"><i class="bi bi-key-fill"></i>  Password</label>
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
-                    <!--<div class="modal fade" id="exampleModal">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title">Bienvenido!</h1>
-                                    <button class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
-                                <div class="modal-body">
-                                    @UserManager.GetUserName(User)
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
                     <div>
                         <button id="" type="submit" class="w-100 btn btn-lg btn-outline-primary my-3" 
                                 asp-for="ReturnUrl" value="~/Home/Main" asp-route-optionStatus="Pending">
@@ -59,22 +46,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    
-    const myModal = document.getElementById("myAlert")
-
-    myModal.addEventListener('show.bs.modal', event => {
-        console.log('mostrado')
-    })
-    myModal.addEventListener('hide.bs.modal', event => {
-        console.log('cerrado')
-    })
-
-    const myModalI = bootstrap.Modal.getOrCreateInstance('#exampleModal')
-    myModalI.show()
-
-</script>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
