@@ -1,0 +1,73 @@
+﻿@model SII_DaysOff.Models.Requests
+
+@{
+    var id = Model.RequestId;
+}
+
+<!-- Modal que se abre al darle a crear nueva solicitud -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="deleteModalLabel">Delete request</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row p-3">
+                    <div class="col-3 d-flex justify-content-start fw-bold">
+                        @Html.DisplayNameFor(model => model.Reason)
+                    </div>
+                    <div class="col-9 d-flex justify-content-start">
+                        @Html.DisplayFor(model => model.Reason.ReasonId)
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col-3 d-flex justify-content-start fw-bold">
+                        @Html.DisplayNameFor(model => model.StartDate)
+                    </div>
+                    <div class="col-9 d-flex justify-content-start">
+                        @Html.DisplayFor(model => model.StartDate)
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col-3 d-flex justify-content-start fw-bold">
+                        @Html.DisplayNameFor(model => model.EndDate)
+                    </div>
+                    <div class="col-9 d-flex justify-content-start">
+                        @Html.DisplayFor(model => model.EndDate)
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col-3 d-flex justify-content-start fw-bold">
+                        @Html.DisplayNameFor(model => model.Comments)
+                    </div>
+                    <div class="col-9 d-flex justify-content-start">
+                        @Html.DisplayFor(model => model.Comments)
+                    </div>
+                </div>
+                <hr />
+                <div class="row p-3">
+                    <div class="col-3 d-flex justify-content-start fw-bold">
+                        @Html.DisplayNameFor(model => model.HalfDayStart)
+                    </div>
+                    <div class="col-2">
+                        @Html.DisplayFor(model => model.HalfDayStart)
+                    </div>
+                    <div class="col-3 d-flex justify-content-start fw-bold">
+                        @Html.DisplayNameFor(model => model.HalfDayEnd)
+                    </div>
+                    <div class="col-2">
+                        @Html.DisplayFor(model => model.HalfDayEnd)
+                    </div>
+                </div>
+                <hr />
+                <form asp-controller="requests" asp-action="Delete" asp-route-id="@id" method="post" class="d-flex justify-content-end">
+                    <!--<input type="hidden" asp-for="RequestId" />
+                    <input type="submit" value="Delete" class="btn btn-danger" /> |
+                    <a asp-controller="Home" asp-action="Main">Back to List</a>-->
+                    <button type="submit" class="custom-button">Delete request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

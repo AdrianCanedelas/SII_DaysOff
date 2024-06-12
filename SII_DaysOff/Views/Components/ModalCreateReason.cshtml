@@ -5,27 +5,39 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="reasonModalLabel">New reason</h4>
+                <h4 class="modal-title" id="reasonModalLabel"><i class="bi bi-clipboard2-plus-fill"></i>   New reason</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="reasonForm" asp-controller="Reasons" asp-action="Create" method="post">
+                <form asp-action="Create" asp-controller="Reasons" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
-                        <label asp-for="ReasonName" class="control-label"></label>
-                        <input asp-for="ReasonName" class="form-control" />
-                        <span asp-validation-for="ReasonName" class="text-danger"></span>
+                        <div class="row p-3">
+                            <div class="col-3 fw-bold">
+                                <label asp-for="Name" class="control-label"></label>
+                            </div>
+                            <div class="col-9">
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label asp-for="DaysAssigned" class="control-label"></label>
-                        <input asp-for="DaysAssigned" class="form-control" />
-                        <span asp-validation-for="DaysAssigned" class="text-danger"></span>
+                        <div class="row p-3">
+                            <div class="col-3 fw-bold">
+                                <label asp-for="Description" class="control-label"></label>
+                            </div>
+                            <div class="col-9">
+                                <input asp-for="Description" class="form-control" />
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <!--<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+                        <button type="submit" class="custom-button">Create reason</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="reasonForm">Create reason</button>
             </div>
         </div>
     </div>

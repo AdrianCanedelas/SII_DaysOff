@@ -1,0 +1,63 @@
+﻿<div class="modal fade" id="statusExportModal" tabindex="-1" aria-labelledby="statusExportModalLabel" aria-hidden="true" data-bs-backdrop="static">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="statusExportModalLabel"><i class="bi bi-clipboard2-plus-fill"></i>   Select status / statuses</h4>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form asp-action="ExportExcel" asp-controller="requests" asp-route-type="requests">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<div class="row p-3">
+						<div class="col-4 fw-bold">
+							<label for="year" class="control-label">Pending</label>
+						</div>
+						<div class="col-5">
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" value="true" name="Pending" id="flexCheckDefault">
+								<label class="form-check-label" for="flexCheckDefault">
+									<i class="bi bi-clock-history ms-2"></i>
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="row p-3">
+						<div class="col-4 fw-bold">
+							<label for="month" class="control-label">Approved</label>
+						</div>
+						<div class="col-5">
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" value="" name="Approved" id="flexCheckDefault">
+								<label class="form-check-label" for="flexCheckDefault">
+									<i class="bi bi-check-circle ms-2"></i>
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="row p-3">
+						<div class="col-4 fw-bold">
+							<label for="month" class="control-label">Cancelled</label>
+						</div>
+						<div class="col-5">
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" value="" name="Cancelled" id="flexCheckDefault">
+								<label class="form-check-label" for="flexCheckDefault">
+									<i class="bi bi-dash-circle ms-2"></i>
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="custom-button">Export</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

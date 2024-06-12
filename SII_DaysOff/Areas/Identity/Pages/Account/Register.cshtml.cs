@@ -16,9 +16,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SII_DaysOff.Areas.Identity.Data;
+using SII_DaysOff.Models;
 
 namespace SII_DaysOff.Areas.Identity.Pages.Account
 {
@@ -30,13 +33,15 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly DbContextBD _context;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            DbContextBD context)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +49,7 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         /// <summary>
@@ -77,20 +83,34 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
             /// </summary>
 
             [Required]
-            [Display(Name = "Profile")]
-            public string Profile { get; set; }
+            [Display(Name = "Role")]
+            public Guid Role { get; set; }
             
             [Required]
-            [Display(Name = "AvailableDays")]
-            public string AvailableDays { get; set; }
+            [Display(Name = "VacationDays")]
+            public Guid VacationDays { get; set; }
             
             [Required]
-            [Display(Name = "AcquiredDays")]
-            public string AcquiredDays { get; set; }
-            
+            [Display(Name = "UserVacationDays")]
+            public Guid UserVacationDays { get; set; }
+
             [Required]
-            [Display(Name = "RemainingDays")]
-            public string RemainingDays { get; set; }
+            [StringLength(100)]
+            [Display(Name = "Name")]
+            public string Name { get; set; }
+
+            [Required]
+            [StringLength(100)]
+            [Display(Name = "Surname")]
+            public string Surname { get; set; }
+
+            [Required]
+            [Display(Name = "IsActive")]
+            public bool IsActive { get; set; }
+
+            [Required]
+            [Display(Name = "Manager")]
+            public Guid Manager { get; set; }
 
             [Required]
             [EmailAddress]
@@ -120,7 +140,17 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            //Console.WriteLine("\n\n\n\tEntraGET Register");
             ReturnUrl = returnUrl;
+			//ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId");
+			ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Description");
+			ViewData["ManagerId"] = new SelectList(_context.AspNetUsers, "Id", "UserName");
+            ViewData["VacationDaysId"] = new SelectList(_context.VacationDays, "Year", "Year");
+            /*
+             ViewData["ManagerId"] = new SelectList(_context.AspNetUsers.Select(u => new
+            {
+                FullName = $"{u.Name} - {u.Surname}"
+            }), "Id", "FullName");*/
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
@@ -131,11 +161,38 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+                var logedInUser = await _userManager.GetUserAsync(User);
 
-                user.Profile = Input.Profile;
+                /*user.Profile = Input.Profile;
                 user.AvailableDays = int.Parse(Input.AvailableDays);
                 user.AcquiredDays = int.Parse(Input.AcquiredDays);
-                user.RemainingDays = int.Parse(Input.RemainingDays);
+                user.RemainingDays = int.Parse(Input.RemainingDays);*/
+
+                //user.RoleId = Guid.Parse("FA208010-179E-4121-B723-3D449297BBCC");
+                user.Name = Input.Name;
+                user.Manager = Input.Manager;
+                user.Surname = Input.Surname;
+                user.UserName = Input.Name + " " + Input.Surname;
+                user.IsActive = true;
+                user.Manager = Input.Manager;
+                user.RegisterDate = DateTime.Now;
+                user.RoleId = Guid.Parse("9EF701FB-6834-4434-BDCA-7BA87FA108FA");
+                user.Manager = Guid.Parse("DAB39DCC-4845-438C-B64D-9C3E1E0596B1");
+				//user.CreatedBy = logedInUser.Id;
+				user.CreationDate = DateTime.Now;
+                //user.ModifiedBy = logedInUser.Id;
+                user.ModificationDate = DateTime.Now;
+
+                //user.UserVacationDays = userVacationDays;
+
+
+                /*user.UserVacationDays.Year = "2024";
+                user.UserVacationDays.AcquiredDays = 0;
+                user.UserVacationDays.AdditionalDays = 0;
+                user.UserVacationDays.CreatedBy = logedInUser.Id;
+                user.UserVacationDays.CreationDate = DateTime.Now;
+                user.UserVacationDays.ModifiedBy = logedInUser.Id;
+                user.UserVacationDays.ModificationDate = DateTime.Now;*/
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -145,17 +202,22 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
+                    // Confirmar automáticamente el usuario
+                    await _userManager.ConfirmEmailAsync(user, "");
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    //Dias vacaciones
+                    /*var userVacationDays = new UserVacationDays();
+                    userVacationDays.UserId = user.Id;
+                    userVacationDays.Year = "2024";
+                    userVacationDays.AcquiredDays = 0;
+                    userVacationDays.AdditionalDays = 0;
+                    userVacationDays.CreatedBy = logedInUser.Id;
+                    userVacationDays.CreationDate = DateTime.Now;
+                    userVacationDays.ModifiedBy = logedInUser.Id;
+                    userVacationDays.ModificationDate = DateTime.Now;*
+                    _context.Add(userVacationDays);*/
+                    await _context.SaveChangesAsync();
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
@@ -163,8 +225,9 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
                     }
                     else
                     {
+                        Console.WriteLine("register confirmation false");
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        return LocalRedirect("~/Home/Main");
                     }
                 }
                 foreach (var error in result.Errors)
@@ -177,11 +240,14 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
             return Page();
         }
 
+
         private ApplicationUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<ApplicationUser>();
+                var user = new ApplicationUser();
+                user.Id = Guid.NewGuid(); // Generar un nuevo GUID
+                return user;
             }
             catch
             {

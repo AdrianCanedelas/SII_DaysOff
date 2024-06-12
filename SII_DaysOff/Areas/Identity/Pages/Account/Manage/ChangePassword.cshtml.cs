@@ -29,11 +29,11 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account.Manage
             _logger = logger;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        [BindProperty]
+		/// <summary>
+		///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+		///     directly from your code. This API may change or be removed in future releases.
+		/// </summary>
+		[BindProperty]
         public InputModel Input { get; set; }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Console.WriteLine("1111111111111111111111");
+            Console.WriteLine("22222222222222222222222222");
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -124,7 +124,7 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account.Manage
             _logger.LogInformation("User changed their password successfully.");
             StatusMessage = "Your password has been changed.";
 
-            return RedirectToPage();
+            return LocalRedirect("~/Home/Main");
         }
     }
 }

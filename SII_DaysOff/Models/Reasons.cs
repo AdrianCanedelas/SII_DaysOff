@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SII_DaysOff.Areas.Identity.Data;
+using System;
 using System.Collections.Generic;
 
 namespace SII_DaysOff.Models
@@ -10,10 +11,16 @@ namespace SII_DaysOff.Models
             Requests = new HashSet<Requests>();
         }
 
-        public int IdReason { get; set; }
-        public string ReasonName { get; set; } = null!;
-        public int DaysAssigned { get; set; }
+        public Guid ReasonId { get; set; }
+        public string Name { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public Guid CreatedBy { get; set; }
+        public DateTime CreationDate { get; set; }
+        public Guid ModifiedBy { get; set; }
+        public DateTime ModificationDate { get; set; }
 
+        public virtual ApplicationUser? CreatedByNavigation { get; set; } = null!;
+        public virtual ApplicationUser? ModifiedByNavigation { get; set; } = null!;
         public virtual ICollection<Requests> Requests { get; set; }
     }
 }

@@ -1,0 +1,10 @@
+@{
+    ViewData["notShow"] = false;
+    ViewData["Title"] = "Calendar";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<a asp-controller="requests" asp-action="ExportarCalendario">Export</a>
+
+<div id="calendar"></div>

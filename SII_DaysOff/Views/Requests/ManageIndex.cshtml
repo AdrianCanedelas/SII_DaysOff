@@ -1,141 +1,201 @@
-﻿@model IEnumerable<SII_DaysOff.Models.Requests>
+﻿@model MainViewModel
 
 @{
-    ViewData["notShow"] = false;
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Navigation"] = "Main";
+	ViewData["notShow"] = false;
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="mx-5">Manage requests</h1>
+<h1 class="mx-4">Manage requests</h1>
 
-<div class="card-body">
-	<div class="row">
-		<div class="col-auto">
-			<!--<div class="dropdown">
-				<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown">
-					Type of request
-				</button>
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-					<li><a class="dropdown-item" href="#">Pending requests</a></li>
-					<li><hr class="dropdown-divider"></li>
-					<li><a class="dropdown-item" href="#">Approved requests</a></li>
-					<li><hr class="dropdown-divider"></li>
-					<li><a class="dropdown-item" href="#">Cancelled request</a></li>
-				</ul>
-			</div>-->
-		</div>
+<div class="card shadow my-4 mx-4">
+	<div class="card-header bg-light">
+		<form asp-controller="Requests" asp-action="ManageIndex" class="mx-2 mt-3">
+			<div class="form-actions no-color">
+				<p>
+					<input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="custom-button" />
+					<input type="hidden" name="year" value="@ViewData["YearSelected"]" />
+					<input type="submit" value="Search" class="custom-button" /> |
+					<a asp-controller="Requests" asp-action="ManageIndex" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-year="@ViewData["YearSelected"]" class="mx-2 custom-link">Back to Full List</a>
+					<input type="number" min="0" max="10" name="registerCount" value="@ViewData["RegisterCount"]" class="custom-button">
+					<label for="floatingInputValue" class="mx-2 custom-link">Results on page</label>
+				</p>
+			</div>
+		</form>
+	</div>
+	<div class="parent">
+		<div class="card-body cardRequestsManage">
+			<div class="row">
 
-		<!-- Aquí aparecerán las solicitudes -->
-		<div class="col">
-			<ul class="list-group ">
-				<!--
-					1. Motivo
-					2. Día inicio
-					3. Es medio día?
-					4. Día fin
-					5. Es medio día ?
-					6. Días totales
-					7. Día solicitud
-					8. Estado
-				-->
-				<li class="list-group-item list-group-item-primary">
-					<div class="row text-center">
-						<div class="col fw-bold">
-							User
-						</div>
-						<div class="col fw-bold">
-							Reason for the request
-						</div>
-						<div class="col fw-bold">
-							Start day
-						</div>
-						<div class="col fw-bold">
-							Is half day?
-						</div>
-						<div class="col fw-bold">
-							End day
-						</div>
-						<div class="col fw-bold">
-							Is half day?
-						</div>
-						<div class="col fw-bold">
-							Total days
-						</div>
-						<div class="col fw-bold">
-							Request day
-						</div>
-						<div class="col fw-bold">
-							Status
-						</div>
-					</div>
-				</li>
+				<!-- Aquí aparecerán las solicitudes -->
+				<div class="col">
+					<ul class="list-group ">
 
-				<!-- Solicitudes -->
-				@foreach (var item in Model)
-				{
-					<li class="list-group-item">
-						<div class="row text-center">
-							<div class="col">
-								@Html.DisplayFor(model => item.IdUser)
+						@if (Model.Requests.Count() == 0)
+						{
+							<div class="row">
+								<div class="col-12 d-flex justify-content-center">
+									<i class="bi bi-file-earmark-excel-fill custom-icon"></i>
+								</div>
 							</div>
-							<div class="col">
-								@Html.DisplayFor(model => item.IdReason)
+							<div class="row">
+								<div class="col-12 d-flex justify-content-center">
+									<p class="no-data-text">There are no requests to manage.</p>
+								</div>
 							</div>
-							<div class="col">
-								@Html.DisplayFor(model => item.StartDate)
-							</div>
-							<div class="col">
-								@Html.DisplayFor(model => item.HalfDayStart)
-							</div>
-							<div class="col">
-								@Html.DisplayFor(model => item.EndDate)
-							</div>
-							<div class="col">
-								@Html.DisplayFor(model => item.HalfDayEnd)
-							</div>
-							<div class="col">
-								@Html.DisplayFor(model => item.TotalDays)
-							</div>
-							<div class="col">
-								@Html.DisplayFor(model => item.RequestDate)
-							</div>
-							<div class="col">
-								<a asp-area="" asp-route-id="@item.IdRequest" asp-controller="Requests" asp-action="Manage" value="Approved" name="option"><i class="bi bi-check-square-fill iconManageAccept"></i></a>
-								<a asp-area="" asp-route-id="@item.IdRequest" asp-controller="Requests" asp-action="Manage" value="Canceled" name="option"><i class="bi bi-x-square-fill iconManageCancel"></i></a>
-							</div>
-						</div>
-					</li>
-				}
+						}
+						else
+						{
+							<li class="list-group-item custom-list-group">
+								<div class="row text-center">
+									<div class="col fw-bold">
+										<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["NameOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-year="@ViewData["YearSelected"]" asp-route-numPage="@Model.Requests.PageIndex" class="custom-filter-link">User</a>
+									</div>
+									<div class="col fw-bold">
+										<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["ReasonOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-year="@ViewData["YearSelected"]" asp-route-numPage="@Model.Requests.PageIndex" class="custom-filter-link">Reason</a>
+									</div>
+									<div class="col fw-bold">
+										<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["StartDayOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-year="@ViewData["YearSelected"]" asp-route-numPage="@Model.Requests.PageIndex" class="custom-filter-link">Start Date</a>
+									</div>
+									<div class="col fw-bold">
+										<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["HalfDayStartOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-year="@ViewData["YearSelected"]" asp-route-numPage="@Model.Requests.PageIndex" class="custom-filter-link">Is Half Day?</a>
+									</div>
+									<div class="col fw-bold">
+										<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["EndDayOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-year="@ViewData["YearSelected"]" asp-route-numPage="@Model.Requests.PageIndex" class="custom-filter-link">End Date</a>
+									</div>
+									<div class="col fw-bold">
+										<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["HalfDayEndOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-year="@ViewData["YearSelected"]" asp-route-numPage="@Model.Requests.PageIndex" class="custom-filter-link">Is Half Day?</a>
+									</div>
+									<div class="col fw-bold">
+										<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["RequestDayOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-year="@ViewData["YearSelected"]" asp-route-numPage="@Model.Requests.PageIndex" class="custom-filter-link">Request Date</a>
+									</div>
+									<div class="col fw-bold">
+										<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["CommentsOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-year="@ViewData["YearSelected"]" asp-route-numPage="@Model.Requests.PageIndex" class="custom-filter-link">Comments</a>
+									</div>
+									<div class="col fw-bold">Approve/Reject</div>
+								</div>
+							</li>
+						}
 
-				<!--<li class="list-group-item">
-					<div class="row text-center">
-						<div class="col">
-							Vacations
-						</div>
-						<div class="col">
-							13/05/2024
-						</div>
-						<div class="col">
-							Is half day?
-						</div>
-						<div class="col">
-							31/05/2024
-						</div>
-						<div class="col">
-							Is half day?
-						</div>
-						<div class="col">
-							15
-						</div>
-						<div class="col">
-							10/05/2024
-						</div>
-						<div class="col">
-							Pending
-						</div>
-					</div>
-				</li>-->
-			</ul>
+						<!-- Solicitudes -->
+						@foreach (var item in Model.Requests)
+						{
+							<li class="list-group-item">
+								<div class="row text-center d-flex justify-content-center align-items-center">
+									<div class="col">@Html.DisplayFor(model => item.User.Name) @Html.DisplayFor(model => item.User.Surname)</div>
+									<div class="col">@Html.DisplayFor(model => item.Reason.Name)</div>
+									<div class="col">@Html.DisplayFor(model => item.StartDate)</div>
+									<div class="col d-flex justify-content-center align-items-center">
+										@{
+											Console.WriteLine("\n\n\n\n\n\n" + item.HalfDayStart);
+											if (item.HalfDayStart.Equals(true))
+											{
+												<i class="bi bi-check-square-fill"></i>
+											}
+											else
+											{
+												<i class="bi bi-x-square-fill"></i>
+											}
+										}
+									</div>
+									<div class="col">@Html.DisplayFor(model => item.EndDate)</div>
+									<div class="col d-flex justify-content-center align-items-center">
+										@{
+											if (item.HalfDayEnd.Equals(true))
+											{
+												<i class="bi bi-check-square-fill"></i>
+											}
+											else
+											{
+												<i class="bi bi-x-square-fill"></i>
+											}
+										}
+									</div>
+									<div class="col">@Html.DisplayFor(model => item.RequestDate)</div>
+									<div class="col">@Html.DisplayFor(model => item.Comments)</div>
+									<div class="col">
+										<form asp-action="Manage" method="post">
+											<input type="hidden" name="id" value="@item.RequestId" />
+											<button type="submit" class="btn btn-unstyled" name="option" value="Approved"><i class="bi bi-clipboard2-check-fill custom-icon-approve"></i></button>
+											<button type="submit" class="btn btn-unstyled" name="option" value="Cancelled"><i class="bi bi-clipboard2-x-fill custom-icon-cancel"></i></button>
+										</form>
+									</div>
+								</div>
+							</li>
+						}
+					</ul>
+				</div>
+			</div>
 		</div>
 	</div>
+
+	@{
+		var previousDisabled = !Model.Requests.HasPreviousPage ? "disabled" : "";
+		var nextDisabled = !Model.Requests.HasNextPage ? "disabled" : "";
+	}
+
+	<div class="card-footer py-3">
+		<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["currentOrder"]"
+		   asp-route-numPage="@(Model.Requests.PageIndex -1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
+		   class="custom-button btn @previousDisabled" asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]"
+		   asp-route-registerCount="@ViewData["RegisterCount"]">Previous</a>
+
+		@{
+			int maxPageButtons = 3;
+			int totalPages = Model.Requests.TotalPages;
+			int currentPage = Model.Requests.PageIndex;
+			int startPage = Math.Max(1, currentPage - maxPageButtons / 2);
+			int endPage = Math.Min(totalPages, startPage + maxPageButtons - 1);
+
+			if (startPage > 1)
+			{
+				<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["currentOrder"]"
+				   asp-route-numPage="1" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-button btn"
+				   asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]"
+				   asp-route-registerCount="@ViewData["RegisterCount"]">1</a>
+				if (startPage > 2)
+				{
+					<span class="custom-button btn">...</span>
+				}
+			}
+
+			for (var i = startPage; i <= endPage; i++)
+			{
+				var activePage = (i == currentPage) ? "custom-button-active" : "";
+				<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["currentOrder"]" asp-route-numPage="@i"
+				   asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-button btn @activePage" asp-route-optionStatus="@ViewData["Status"]"
+				   asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]">@i</a>
+			}
+
+			if (endPage < totalPages)
+			{
+				if (endPage < totalPages - 1)
+				{
+					<span class="custom-button btn">...</span>
+				}
+				<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["currentOrder"]"
+				   asp-route-numPage="@totalPages" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-button btn"
+				   asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]"
+				   asp-route-registerCount="@ViewData["RegisterCount"]">@totalPages</a>
+			}
+		}
+		<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["CurrentOrder"]"
+		   asp-route-numPage="@(Model.Requests.PageIndex + 1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
+		   class="custom-button btn @nextDisabled" asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]"
+		   asp-route-registerCount="@ViewData["RegisterCount"]">Next</a>
+		@{
+			int start = (Model.Requests.PageIndex - 1) * Model.PageSize + 1;
+			int end = start + Model.PageSize - 1;
+			if (end > Model.TotalRequest)
+			{
+				end = Model.TotalRequest;
+			}
+		}
+
+		<span class="ms-3 custom-link">
+			Showing @start...@end of @Model.TotalRequest requests
+		</span>
+	</div>
+
 </div>

@@ -1,88 +1,111 @@
 ﻿@page
 @model RegisterModel
+
 @{
-    ViewData["notShow"] = false;
-    ViewData["Title"] = "Register";
+	ViewData["Navigation"] = "Main";
+	ViewData["notShow"] = false;
+	ViewData["Title"] = "Register a new user";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="container mb-5">
+	<div class="row my-3">
+		<img src="~/img/siigroup-spain-blueline.png" alt="Alternate Text" class="login mx-auto d-block" />
+	</div>
+	<h1 class="text-center fw-bold">@ViewData["Title"]</h1>
+	<div class="row my-4">
+		<div class="col-md-4 container-fluid">
+			<section>
+				<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<div class="form-floating mb-3">
+						<div class="row">
+							<div class="col-6">
+								<label asp-for="Input.Manager" class="control-label custom-control-label fw-bold"></label>
+							</div>
+							<div class="col-6">
+								<select asp-for="Input.Manager" class="form-control custom-form" asp-items="ViewBag.ManagerId"></select>
+							</div>
+						</div>
+					</div>
+					<div class="form-floating mb-3">
+						<div class="row">
+							<div class="col-6">
+								<label asp-for="Input.Role" class="control-label custom-control-label fw-bold"></label>
+							</div>
+							<div class="col-6">
+								<select asp-for="Input.Role" class="form-control custom-form" asp-items="ViewBag.RoleId"></select>
+							</div>
+						</div>
+					</div>
+					<div class="form-floating mb-3">
+						<div class="row">
+							<div class="col-6">
+								<label asp-for="Input.Email" class="control-label custom-control-label fw-bold"></label>
+							</div>
+							<div class="col-6">
+								<input asp-for="Input.Email" class="form-control custom-form" autocomplete="username" aria-required="true" />
+								<span asp-validation-for="Input.Email" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+					<div class="form-floating mb-3">
+						<div class="row">
+							<div class="col-6">
+								<label asp-for="Input.Name" class="control-label custom-control-label fw-bold"></label>
+							</div>
+							<div class="col-6">
+								<input asp-for="Input.Name" class="form-control custom-form" autocomplete="name" aria-required="true" />
+								<span asp-validation-for="Input.Name" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+					<div class="form-floating mb-3">
+						<div class="row">
+							<div class="col-6">
+								<label asp-for="Input.Surname" class="control-label custom-control-label fw-bold"></label>
+							</div>
+							<div class="col-6">
+								<input asp-for="Input.Surname" class="form-control custom-form" autocomplete="surname" aria-required="true" />
+								<span asp-validation-for="Input.Surname" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+					<div class="form-floating mb-3">
+						<div class="row">
+							<div class="col-6">
+								<label asp-for="Input.Password" class="control-label custom-control-label fw-bold"></label>
+							</div>
+							<div class="col-6">
+								<input asp-for="Input.Password" class="form-control custom-form" autocomplete="new-password" aria-required="true" />
+								<span asp-validation-for="Input.Password" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+					<div class="form-floating mb-3">
+						<div class="row">
+							<div class="col-6">
+								<label asp-for="Input.ConfirmPassword" class="control-label custom-control-label fw-bold"></label>
+							</div>
+							<div class="col-6">
+								<input asp-for="Input.ConfirmPassword" class="form-control custom-form" autocomplete="new-password" aria-required="true" />
+								<span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
 
-<div class="row">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
-                <label asp-for="Input.Email"></label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Input.Profile" class="form-control" autocomplete="profiule" aria-required="true" />
-                <label asp-for="Input.Profile"></label>
-                <span asp-validation-for="Input.Profile" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Input.AvailableDays" class="form-control" autocomplete="availabledays" aria-required="true" />
-                <label asp-for="Input.AvailableDays"></label>
-                <span asp-validation-for="Input.AvailableDays" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Input.AcquiredDays" class="form-control" autocomplete="acquireddays" aria-required="true" />
-                <label asp-for="Input.AcquiredDays"></label>
-                <span asp-validation-for="Input.AcquiredDays" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Input.RemainingDays" class="form-control" autocomplete="remainingdays" aria-required="true" />
-                <label asp-for="Input.RemainingDays"></label>
-                <span asp-validation-for="Input.RemainingDays" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
-                <label asp-for="Input.Password"></label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
-                <label asp-for="Input.ConfirmPassword"></label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-        </form>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to register.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
-    </div>
+					<div>
+						<button id="registerSubmit" type="submit" class="w-100 custom-button-LogIn-Register my-3"
+								asp-for="ReturnUrl" value="~/Home/Main" asp-route-optionStatus="Pending">
+							Register
+						</button>
+					</div>
+					<hr class="my-3" />
+				</form>
+			</section>
+		</div>
+	</div>
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+	<partial name="_ValidationScriptsPartial" />
 }

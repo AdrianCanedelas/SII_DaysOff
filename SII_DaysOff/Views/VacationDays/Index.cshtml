@@ -1,0 +1,212 @@
+﻿@model MainViewModel
+
+@{
+	ViewData["Navigation"] = "Main";
+    ViewData["notShow"] = false;
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="mx-4">Vacation days</h1>
+
+
+<div class="card shadow my-4 mx-4">
+	<div class="card-header bg-light">
+		<form asp-controller="VacationDays" asp-action="Index" class="mx-2 mt-3">
+			<div class="form-actions no-color">
+				<p>
+					<input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="custom-button" />
+					<input type="submit" value="Search" class="custom-button" /> |
+					<a asp-controller="VacationDays" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="mx-2 custom-link">Back to Full List</a>
+					<input type="number" min="0" max="10" name="registerCount" value="@ViewData["RegisterCount"]" class="custom-button">
+					<label for="floatingInputValue" class="mx-2 custom-link">Results on page</label>
+				</p>
+			</div>
+		</form>
+	</div>
+	<div class="parent">
+		<div class="card-body cardRequestsManage">
+			<div class="row">
+
+				<!-- Aquí aparecerán las solicitudes -->
+				<div class="col">
+					<ul class="list-group ">
+
+						@if (Model.VacationDays.Count() == 0)
+						{
+							<div class="row">
+								<div class="col-12 d-flex justify-content-center">
+									<i class="bi bi-file-earmark-excel-fill custom-icon"></i>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-12 d-flex justify-content-center">
+									<p class="no-data-text">There are no requests to manage.</p>
+								</div>
+							</div>
+						}
+						else
+						{
+							<li class="list-group-item custom-list-group">
+								<div class="row text-center">
+									<div class="col fw-bold">
+										<a asp-controller="VacationDays" asp-action="Index" asp-route-sortOrder="@ViewData["YearOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-numPage="@Model.VacationDays.PageIndex" class="custom-filter-link">Year</a>
+									</div>
+									<div class="col fw-bold">
+										<a asp-controller="VacationDays" asp-action="Index" asp-route-sortOrder="@ViewData["DaysVacationOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-numPage="@Model.VacationDays.PageIndex" class="custom-filter-link">Days vacations</a>
+									</div>
+									<div class="col fw-bold">
+										<div class="col fw-bold">Edit/Delete</div>
+									</div>
+								</div>
+							</li>
+						}
+
+						<!-- Solicitudes -->
+						@foreach (var item in Model.VacationDays)
+						{
+							<li class="list-group-item">
+								<div class="row text-center d-flex justify-content-center align-items-center">
+									<div class="col">@Html.DisplayFor(model => item.Year)</div>
+									<div class="col">@Html.DisplayFor(model => item.DayVacations)</div>
+									<div class="col">
+										<!--<a data-bs-toggle="modal" data-bs-target="#editModal" class="btn btn-unstyled custom-icon-edit"><i class="bi bi-pencil-square"></i></a>
+										<a data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-unstyled custom-icon-delete"><i class="bi bi-trash-fill"></i></a>-->
+										<a asp-controller="VacationDays" asp-action="Edit" asp-route-id="@item.Year" class="btn btn-unstyled custom-icon-edit"><i class="bi bi-pencil-square"></i></a>
+										<a asp-controller="VacationDays" asp-action="Delete" asp-route-id="@item.Year" class="btn btn-unstyled custom-icon-delete"><i class="bi bi-trash-fill"></i></a>
+									</div>
+								</div>
+							</li>
+							@*@Html.Partial("../Components/ModalEditRequest", item)
+						@Html.Partial("../Components/ModalDeleteRequest", item)*@
+						}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	@{
+		var previousDisabled = !Model.VacationDays.HasPreviousPage ? "disabled" : "";
+		var nextDisabled = !Model.VacationDays.HasNextPage ? "disabled" : "";
+	}
+
+	<div class="card-footer py-3">
+		<a asp-controller="VacationDays" asp-action="Index" asp-route-sortOrder="@ViewData["currentOrder"]"
+		   asp-route-numPage="@(Model.VacationDays.PageIndex -1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
+		   class="custom-button btn @previousDisabled" asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]"
+		   asp-route-registerCount="@ViewData["RegisterCount"]">Previous</a>
+
+		@{
+			int maxPageButtons = 3;
+			int totalPages = Model.VacationDays.TotalPages;
+			int currentPage = Model.VacationDays.PageIndex;
+			int startPage = Math.Max(1, currentPage - maxPageButtons / 2);
+			int endPage = Math.Min(totalPages, startPage + maxPageButtons - 1);
+
+			if (startPage > 1)
+			{
+				<a asp-controller="VacationDays" asp-action="Index" asp-route-sortOrder="@ViewData["currentOrder"]"
+				   asp-route-numPage="1" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-button btn"
+				   asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]"
+				   asp-route-registerCount="@ViewData["RegisterCount"]">1</a>
+				if (startPage > 2)
+				{
+					<span class="custom-button btn">...</span>
+				}
+			}
+
+			for (var i = startPage; i <= endPage; i++)
+			{
+				var activePage = (i == currentPage) ? "custom-button-active" : "";
+				<a asp-controller="VacationDays" asp-action="Index" asp-route-sortOrder="@ViewData["currentOrder"]" asp-route-numPage="@i"
+				   asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-button btn @activePage" asp-route-optionStatus="@ViewData["Status"]"
+				   asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]">@i</a>
+			}
+
+			if (endPage < totalPages)
+			{
+				if (endPage < totalPages - 1)
+				{
+					<span class="custom-button btn">...</span>
+				}
+				<a asp-controller="VacationDays" asp-action="Index" asp-route-sortOrder="@ViewData["currentOrder"]"
+				   asp-route-numPage="@totalPages" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-button btn"
+				   asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]"
+				   asp-route-registerCount="@ViewData["RegisterCount"]">@totalPages</a>
+			}
+		}
+		<a asp-controller="VacationDays" asp-action="Index" asp-route-sortOrder="@ViewData["CurrentOrder"]"
+		   asp-route-numPage="@(Model.VacationDays.PageIndex + 1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
+		   class="custom-button btn @nextDisabled" asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]"
+		   asp-route-registerCount="@ViewData["RegisterCount"]">Next</a>
+		@{
+			int start = (Model.VacationDays.PageIndex - 1) * Model.PageSize + 1;
+			int end = start + Model.PageSize - 1;
+			if (end > Model.TotalRequest)
+			{
+				end = Model.TotalRequest;
+			}
+		}
+
+		<span class="ms-3 custom-link">
+			Showing @start...@end of @Model.TotalRequest requests
+		</span>
+	</div>
+
+</div>
+
+
+@* <h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DayVacations)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModificationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedByNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedByNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DayVacations)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModificationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedByNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedByNavigation.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Year">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Year">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Year">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table> *@

@@ -29,27 +29,14 @@
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
                     <p class="my-2">Password</p>
-                    <div class="form-floating">
-                        <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
-                        <label asp-for="Input.Password" class="form-label"><i class="bi bi-key-fill"></i>  Password</label>
+                    <div class="form-floating password-container">
+                        <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" id="password" type="password"/>
+                        <label asp-for="Input.Password" class="form-label"><i class="bi bi-key-fill"></i>  Password</label><i class="bi bi-eye-fill password-toggle me-2" onclick="togglePasswordVisibility()"></i>
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
-                    <!--<div class="modal fade" id="exampleModal">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title">Bienvenido!</h1>
-                                    <button class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
-                                <div class="modal-body">
-                                    @UserManager.GetUserName(User)
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
                     <div>
-                        <button id="" type="submit" class="w-100 btn btn-lg btn-outline-primary my-3" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                asp-controller="Home" asp-action="Main" value="Pending" name="optionStatus">
+                        <button id="" type="submit" class="w-100 custom-button-LogIn-Register my-3"
+                                asp-for="ReturnUrl" value="~/Home/Main" asp-route-optionStatus="Pending">
                             <i class="bi bi-box-arrow-in-right"></i> Log in
                         </button>
                     </div>
@@ -60,22 +47,23 @@
     </div>
 </div>
 
-<script>
-    
-    const myModal = document.getElementById("myAlert")
-
-    myModal.addEventListener('show.bs.modal', event => {
-        console.log('mostrado')
-    })
-    myModal.addEventListener('hide.bs.modal', event => {
-        console.log('cerrado')
-    })
-
-    const myModalI = bootstrap.Modal.getOrCreateInstance('#exampleModal')
-    myModalI.show()
-
-</script>
-
 @section Scripts {
+    <script>
+        //Pass
+        function togglePasswordVisibility() {
+            var passwordField = document.getElementById('password');
+            var passwordToggle = document.querySelector(".password-toggle");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                passwordToggle.classList.remove("bi-eye-fill");
+                passwordToggle.classList.add("bi-eye-slash-fill");
+            } else {
+                passwordField.type = "password";
+                passwordToggle.classList.remove("bi-eye-slash-fill");
+                passwordToggle.classList.add("bi-eye-fill");
+            }
+        }
+    </script>
     <partial name="_ValidationScriptsPartial" />
 }
