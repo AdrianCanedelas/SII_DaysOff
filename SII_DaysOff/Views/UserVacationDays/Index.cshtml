@@ -49,16 +49,16 @@
 							<li class="list-group-item custom-list-group">
 								<div class="row text-center">
 									<div class="col fw-bold">
-										<a asp-controller="UserVacationDays" asp-action="Index" asp-route-sortOrder="@ViewData["UserOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link">User</a>
+										<a asp-controller="UserVacationDays" asp-action="Index" asp-route-sortOrder="@ViewData["UserOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-numPage="@Model.UserVacationDays.PageIndex" class="custom-filter-link">User</a>
 									</div>
 									<div class="col fw-bold">
-										<a asp-controller="UserVacationDays" asp-action="Index" asp-route-sortOrder="@ViewData["YearOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link">Year</a>
+										<a asp-controller="UserVacationDays" asp-action="Index" asp-route-sortOrder="@ViewData["YearOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-numPage="@Model.UserVacationDays.PageIndex" class="custom-filter-link">Year</a>
 									</div>
 									<div class="col fw-bold">
-										<a asp-controller="UserVacationDays" asp-action="Index" asp-route-sortOrder="@ViewData["AcquiredDaysOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link">Acquired days</a>
+										<a asp-controller="UserVacationDays" asp-action="Index" asp-route-sortOrder="@ViewData["AcquiredDaysOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-numPage="@Model.UserVacationDays.PageIndex" class="custom-filter-link">Acquired days</a>
 									</div>
 									<div class="col fw-bold">
-										<a asp-controller="UserVacationDays" asp-action="Index" asp-route-sortOrder="@ViewData["AdditionalDaysOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link">Additional days</a>
+										<a asp-controller="UserVacationDays" asp-action="Index" asp-route-sortOrder="@ViewData["AdditionalDaysOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-numPage="@Model.UserVacationDays.PageIndex" class="custom-filter-link">Additional days</a>
 									</div>
 									<div class="col fw-bold">
 										<div class="col fw-bold">Edit/Delete</div>

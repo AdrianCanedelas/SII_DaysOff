@@ -110,7 +110,7 @@
 						<a class="custom-button-disabled position-relative btn disabled" asp-area="" asp-controller="Requests" asp-action="ManageIndex" asp-route-year="@ViewData["YearSelected"]">Manage requests</a>
 						// }
 					}
-					<a type="submit" class="custom-button" asp-controller="Requests" asp-action="Calendar">Calendar</a>
+					<a type="submit" class="custom-button" asp-controller="Requests" asp-action="Calendar" asp-route-year="@ViewData["YearSelected"]">Calendar</a>
 				}
 				<button type="submit" class="custom-button" data-bs-toggle="modal" data-bs-target="#exampleModal">New request</button>
 			</div>
@@ -183,28 +183,28 @@
 							<li class="list-group-item custom-list-group">
 								<div class="row text-center">
 									<div class="col fw-bold">
-										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["ReasonOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link" id="filter-link">Reason@*<i id="filter-icon" class="bi bi-caret-down mx-1"></i>*@</a>
+										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["ReasonOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-numPage="@Model.Requests.PageIndex" class="custom-filter-link" id="filter-link">Reason@*<i id="filter-icon" class="bi bi-caret-down mx-1"></i>*@</a>
 									</div>
 									<div class="col fw-bold">
-										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StartDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link" id="filter-link">Start Date</a>
+										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StartDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-numPage="@Model.Requests.PageIndex" class="custom-filter-link" id="filter-link">Start Date</a>
 									</div>
 									<div class="col fw-bold">
-										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayStartOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link" id="filter-link">Is Half Day?</a>
+										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayStartOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-numPage="@Model.Requests.PageIndex" class="custom-filter-link" id="filter-link">Is Half Day?</a>
 									</div>
 									<div class="col fw-bold">
-										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["EndDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link" id="filter-link">End Date</a>
+										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["EndDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-numPage="@Model.Requests.PageIndex" class="custom-filter-link" id="filter-link">End Date</a>
 									</div>
 									<div class="col fw-bold">
-										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayEndOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link" id="filter-link">Is Half Day?</a>
+										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["HalfDayEndOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-numPage="@Model.Requests.PageIndex" class="custom-filter-link" id="filter-link">Is Half Day?</a>
 									</div>
 									<div class="col fw-bold">
-										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["RequestDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link" id="filter-link">Request Date</a>
+										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["RequestDayOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-numPage="@Model.Requests.PageIndex" class="custom-filter-link" id="filter-link">Request Date</a>
 									</div>
 									<div class="col fw-bold">
-										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["CommentsOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link" id="filter-link">Comments</a>
+										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["CommentsOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-numPage="@Model.Requests.PageIndex" class="custom-filter-link" id="filter-link">Comments</a>
 									</div>
 									<div class="col fw-bold">
-										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StatusOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link" id="filter-link">Status</a>
+										<a asp-controller="Home" asp-action="Main" asp-route-sortOrder="@ViewData["StatusOrder"]" asp-route-optionStatus="@ViewData["status"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-numPage="@Model.Requests.PageIndex" class="custom-filter-link" id="filter-link">Status</a>
 									</div>
 									@if (Model.Requests.Count() != 0 && Model != null && Model.Requests.FirstOrDefault().Status.Name.Equals("Pending"))
 									{

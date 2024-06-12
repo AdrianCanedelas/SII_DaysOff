@@ -27,7 +27,7 @@
                                 <label asp-for="StartDate" class="control-label fw-bold"></label>
                             </div>
                             <div class="col-9">
-                                <input asp-for="StartDate" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+                                <input asp-for="StartDate" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" min="1900" max="2100"/>
                                 <span asp-validation-for="StartDate" class="text-danger"></span>
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                                 <label asp-for="EndDate" class="control-label fw-bold"></label>
                             </div>
                             <div class="col-9">
-                                <input asp-for="EndDate" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+                                <input asp-for="EndDate" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" min="1900" max="2100"/>
                                 <span asp-validation-for="EndDate" class="text-danger"></span>
                             </div>
                         </div>

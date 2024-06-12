@@ -50,10 +50,10 @@
 							<li class="list-group-item custom-list-group">
 								<div class="row text-center">
 									<div class="col fw-bold">
-										<a asp-controller="VacationDays" asp-action="Index" asp-route-sortOrder="@ViewData["YearOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link">Year</a>
+										<a asp-controller="VacationDays" asp-action="Index" asp-route-sortOrder="@ViewData["YearOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-numPage="@Model.VacationDays.PageIndex" class="custom-filter-link">Year</a>
 									</div>
 									<div class="col fw-bold">
-										<a asp-controller="VacationDays" asp-action="Index" asp-route-sortOrder="@ViewData["DaysVacationOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="custom-filter-link">Days vacations</a>
+										<a asp-controller="VacationDays" asp-action="Index" asp-route-sortOrder="@ViewData["DaysVacationOrder"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-numPage="@Model.VacationDays.PageIndex" class="custom-filter-link">Days vacations</a>
 									</div>
 									<div class="col fw-bold">
 										<div class="col fw-bold">Edit/Delete</div>
