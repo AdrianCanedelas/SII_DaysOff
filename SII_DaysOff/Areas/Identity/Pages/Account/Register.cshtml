@@ -13,36 +13,36 @@
 	</div>
 	<h1 class="text-center fw-bold">@ViewData["Title"]</h1>
 	<div class="row my-4">
-		<div class="col-md-5 container-fluid">
+		<div class="col-md-4 container-fluid">
 			<section>
 				<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 					<div class="form-floating mb-3">
 						<div class="row">
-							<div class="col-4">
+							<div class="col-6">
 								<label asp-for="Input.Manager" class="control-label custom-control-label fw-bold"></label>
 							</div>
-							<div class="col-8">
+							<div class="col-6">
 								<select asp-for="Input.Manager" class="form-control custom-form" asp-items="ViewBag.ManagerId"></select>
 							</div>
 						</div>
 					</div>
 					<div class="form-floating mb-3">
 						<div class="row">
-							<div class="col-4">
+							<div class="col-6">
 								<label asp-for="Input.Role" class="control-label custom-control-label fw-bold"></label>
 							</div>
-							<div class="col-8">
+							<div class="col-6">
 								<select asp-for="Input.Role" class="form-control custom-form" asp-items="ViewBag.RoleId"></select>
 							</div>
 						</div>
 					</div>
 					<div class="form-floating mb-3">
 						<div class="row">
-							<div class="col-4">
+							<div class="col-6">
 								<label asp-for="Input.Email" class="control-label custom-control-label fw-bold"></label>
 							</div>
-							<div class="col-8">
+							<div class="col-6">
 								<input asp-for="Input.Email" class="form-control custom-form" autocomplete="username" aria-required="true" />
 								<span asp-validation-for="Input.Email" class="text-danger"></span>
 							</div>
@@ -50,10 +50,10 @@
 					</div>
 					<div class="form-floating mb-3">
 						<div class="row">
-							<div class="col-4">
+							<div class="col-6">
 								<label asp-for="Input.Name" class="control-label custom-control-label fw-bold"></label>
 							</div>
-							<div class="col-8">
+							<div class="col-6">
 								<input asp-for="Input.Name" class="form-control custom-form" autocomplete="name" aria-required="true" />
 								<span asp-validation-for="Input.Name" class="text-danger"></span>
 							</div>
@@ -61,10 +61,10 @@
 					</div>
 					<div class="form-floating mb-3">
 						<div class="row">
-							<div class="col-4">
+							<div class="col-6">
 								<label asp-for="Input.Surname" class="control-label custom-control-label fw-bold"></label>
 							</div>
-							<div class="col-8">
+							<div class="col-6">
 								<input asp-for="Input.Surname" class="form-control custom-form" autocomplete="surname" aria-required="true" />
 								<span asp-validation-for="Input.Surname" class="text-danger"></span>
 							</div>
@@ -72,10 +72,10 @@
 					</div>
 					<div class="form-floating mb-3">
 						<div class="row">
-							<div class="col-4">
+							<div class="col-6">
 								<label asp-for="Input.Password" class="control-label custom-control-label fw-bold"></label>
 							</div>
-							<div class="col-8">
+							<div class="col-6">
 								<input asp-for="Input.Password" class="form-control custom-form" autocomplete="new-password" aria-required="true" />
 								<span asp-validation-for="Input.Password" class="text-danger"></span>
 							</div>
@@ -83,10 +83,10 @@
 					</div>
 					<div class="form-floating mb-3">
 						<div class="row">
-							<div class="col-4">
+							<div class="col-6">
 								<label asp-for="Input.ConfirmPassword" class="control-label custom-control-label fw-bold"></label>
 							</div>
-							<div class="col-8">
+							<div class="col-6">
 								<input asp-for="Input.ConfirmPassword" class="form-control custom-form" autocomplete="new-password" aria-required="true" />
 								<span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
 							</div>
@@ -94,7 +94,7 @@
 					</div>
 
 					<div>
-						<button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-outline-primary my-3"
+						<button id="registerSubmit" type="submit" class="w-100 custom-button-LogIn-Register my-3"
 								asp-for="ReturnUrl" value="~/Home/Main" asp-route-optionStatus="Pending">
 							Register
 						</button>

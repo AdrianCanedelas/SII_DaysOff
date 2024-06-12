@@ -37,6 +37,18 @@ body {
     /*overflow-y: hidden;*/
 }
 
+.password-container {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
 .custom-progressive-link {
     position: relative;
     display: inline-block;
@@ -83,9 +95,23 @@ body {
     text-align: center;
 }
 
-    .custom-button-disabled:hover {
-        color: lightgrey;
-    }
+.custom-button-LogIn-Register {
+    border: 1px solid lightgrey;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    font-size: 120%;
+    color: #828991;
+    border-radius: 3px;
+}
+
+.custom-button-LogIn-Register:hover {
+    background-color: #004278;
+    color: white;
+}
+
+.custom-button-disabled:hover {
+    color: lightgrey;
+}
 
 .custom-button {
     border: 1px solid lightgrey;

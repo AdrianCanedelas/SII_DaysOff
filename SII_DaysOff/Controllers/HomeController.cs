@@ -65,12 +65,19 @@ namespace SII_DaysOff.Controllers
 			//ViewData["CurrentFilter"] = searchString;
 
 			// Cargar requests
+			Console.WriteLine(" || Year -> " + year);
+			var logedUser = await _userManager.Users
+				.Include(u => u.UserVacationDays)
+				.Include(u => u.UserVacationDays.YearNavigation)
+				.Where(u => u.UserVacationDays.Year == year)
+				.FirstOrDefaultAsync(u => u.Id == Guid.Parse(_userManager.GetUserId(User)));
+
 			var user = await _userManager.Users
 				.Include(u => u.UserVacationDays)
 				.Include(u => u.UserVacationDays.YearNavigation)
 				.FirstOrDefaultAsync(u => u.Id == Guid.Parse(_userManager.GetUserId(User)));
 			ViewData["notShow"] = false;
-			Console.WriteLine("\n\n  2");
+
 			var statusId = _context.Statuses.FirstOrDefault(s => s.Name.Equals(currentOptionStatus == null ? "Pending" : currentOptionStatus))?.StatusId;
 			var userId = _context.AspNetUsers.FirstOrDefault(u => u.Name.Equals(user.Name))?.Id;
 
@@ -84,8 +91,6 @@ namespace SII_DaysOff.Controllers
 				.Include(r => r.Reason)
 				.Include(r => r.Status)
 				.Include(r => r.User)
-				.Include(r => r.User.UserVacationDays)
-				.Include(r => r.User.UserVacationDays.YearNavigation)
 				.Where(r => r.StatusId == statusId)
 				.Where(r => r.UserId == userId)
 				.AsQueryable();
@@ -182,13 +187,6 @@ namespace SII_DaysOff.Controllers
 
 			ViewData["PendingRequests"] = pendingRequests;
 
-			Console.WriteLine(" || Year -> " + year);
-			var logedUser = await _userManager.Users
-				.Include(u => u.UserVacationDays)
-				.Include(u => u.UserVacationDays.YearNavigation)
-				.Where(u => u.UserVacationDays.Year == year)
-				.FirstOrDefaultAsync(u => u.Id == Guid.Parse(_userManager.GetUserId(User)));
-
 			Console.WriteLine("Requests -> " + requests.Count() + " - RegisterCount -> " + registerCount);
 			var paginatedRequests = await PaginatedList<Requests>.CreateAsync(requests.AsNoTracking(), numPage ?? 1, registerCount);
 			Console.WriteLine("|1 PaginatedRequests -> " + paginatedRequests.Count());
@@ -199,7 +197,7 @@ namespace SII_DaysOff.Controllers
 				Requests = paginatedRequests,
 				TotalRequest = requests.Count(),
 				PageSize = registerCount,
-				//AdminId = adminId
+				Year = year
 			};
 
 			return View(viewModel);

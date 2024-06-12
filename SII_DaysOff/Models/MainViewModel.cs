@@ -13,6 +13,7 @@ namespace SII_DaysOff.Models
 		public PaginatedList<UserVacationDays>? UserVacationDays { get; set; }
 		public int TotalRequest {  get; set; }
 		public int PageSize {  get; set; }
+		public string Year {  get; set; }
 		public Guid AdminId { get; set; }
 	}
 }

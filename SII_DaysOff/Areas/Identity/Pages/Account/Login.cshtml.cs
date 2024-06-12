@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using SII_DaysOff.Areas.Identity.Data;
+using Microsoft.Net.Http.Headers;
 
 namespace SII_DaysOff.Areas.Identity.Pages.Account
 {

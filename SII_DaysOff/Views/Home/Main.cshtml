@@ -39,6 +39,8 @@
 		<div class="row text-center">
 			@if (Model.User != null)
 			{
+
+				Console.WriteLine("\n\n  2 User -> " + Model.User.UserVacationDays.Year);
 				<div class="col-6 col-sm-2">
 					<p class="fw-bold">Annual days off</p>
 					<p>@Model.User.UserVacationDays.YearNavigation.DayVacations</p>
@@ -64,15 +66,19 @@
 				<div class="col-6 col-sm-2">
 					<p class="fw-bold">Validity start date</p>
 					@{
-						if (Model.User.CreationDate.Year == DateTime.Now.Year)
+						Console.WriteLine(" ||| CreationDate -> " + Model.User.CreationDate.Year + " <==> " + DateTime.Now.Year);
+						if (Model.User.CreationDate.Year == int.Parse(Model.Year))
 						{
 							<p>@Model.User.CreationDate.ToString("yyyy-MM-dd")</p>
+						} else
+						{
+							<p>@Model.User.UserVacationDays.Year-01-01</p>
 						}
 					}
 				</div>
 				<div class="col-6 col-sm-2">
 					<p class="fw-bold">Validity end date</p>
-					<p>@DateTime.Now.Year-12-31</p>
+					<p>@Model.User.UserVacationDays.Year-12-31</p>
 				</div>
 			}
 		</div>
