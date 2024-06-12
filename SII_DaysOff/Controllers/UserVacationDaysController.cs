@@ -93,8 +93,16 @@ namespace SII_DaysOff.Controllers
 					userVacationDays = userVacationDays.OrderBy(r => r.AdditionalDays);
 					break;
 			}
-            Console.WriteLine("\n\n\nvaaaaaaaa");
-			return View(await PaginatedList<UserVacationDays>.CreateAsync(userVacationDays.AsNoTracking(), numPage ?? 1, registerCount));
+
+			var paginatedUserVacationDays = await PaginatedList<UserVacationDays>.CreateAsync(userVacationDays.AsNoTracking(), numPage ?? 1, registerCount);
+			var viewModel = new MainViewModel
+			{
+				UserVacationDays = paginatedUserVacationDays,
+				TotalRequest = userVacationDays.Count(),
+				PageSize = registerCount,
+			};
+
+			return View(viewModel);
         }
 
         // GET: UserVacationDays/Details/5

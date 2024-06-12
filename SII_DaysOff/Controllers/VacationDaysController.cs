@@ -74,7 +74,15 @@ namespace SII_DaysOff.Controllers
 					break;
 			}
 
-			return View(await PaginatedList<VacationDays>.CreateAsync(vacationDays.AsNoTracking(), numPage ?? 1, registerCount));
+			var paginatedVacationDays = await PaginatedList<VacationDays>.CreateAsync(vacationDays.AsNoTracking(), numPage ?? 1, registerCount);
+			var viewModel = new MainViewModel
+			{
+				VacationDays = paginatedVacationDays,
+				TotalRequest = vacationDays.Count(),
+				PageSize = registerCount,
+			};
+
+			return View(viewModel);
         }
 
         // GET: VacationDays/Details/5

@@ -74,6 +74,17 @@ namespace SII_DaysOff.Controllers
 					break;
 			}
 
+			var paginatedReasons = await PaginatedList<Reasons>.CreateAsync(reasons.AsNoTracking(), numPage ?? 1, registerCount);
+			var viewModel = new MainViewModel
+			{
+				Reasons = paginatedReasons,
+				TotalRequest = reasons.Count(),
+				PageSize = registerCount,
+				//AdminId = adminId
+			};
+
+			return View(viewModel);
+
 			return View(await PaginatedList<Reasons>.CreateAsync(reasons.AsNoTracking(), numPage ?? 1, registerCount));
 		}
 

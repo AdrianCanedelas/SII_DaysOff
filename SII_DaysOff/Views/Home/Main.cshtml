@@ -100,7 +100,7 @@
 					else
 					{
 						// if (Model.User.RoleId.Equals(Model.AdminId))
-						// {
+				// {
 						<a class="custom-button-disabled position-relative btn disabled" asp-area="" asp-controller="Requests" asp-action="ManageIndex" asp-route-year="@ViewData["YearSelected"]">Manage requests</a>
 						// }
 					}
@@ -293,18 +293,46 @@
 		   asp-route-numPage="@(Model.Requests.PageIndex -1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
 		   class="custom-button btn @previousDisabled" asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]"
 		   asp-route-registerCount="@ViewData["RegisterCount"]">Previous</a>
-		@if(Model.Requests.TotalPages > 3)
-		{
-			
-		}
-		@for (var i = 1; i <= Model.Requests.TotalPages; i++)
-		{
-			var activePage = (i == Model.Requests.PageIndex) ? "custom-button-active" : "";
-			<a asp-action="Main" asp-route-sortOrder="@ViewData["currentOrder"]" asp-route-numPage="@i"
-			   asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-button btn @activePage" asp-route-optionStatus="@ViewData["Status"]"
-			   asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]">@i</a>
-		}
 
+		@{
+			int maxPageButtons = 3; 
+			int totalPages = Model.Requests.TotalPages;
+			int currentPage = Model.Requests.PageIndex;
+			int startPage = Math.Max(1, currentPage - maxPageButtons / 2);
+			int endPage = Math.Min(totalPages, startPage + maxPageButtons - 1);
+
+			if (startPage > 1)
+			{
+				<a asp-action="Main" asp-route-sortOrder="@ViewData["currentOrder"]"
+				   asp-route-numPage="1" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-button btn"
+				   asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]"
+				   asp-route-registerCount="@ViewData["RegisterCount"]">1</a>
+				if (startPage > 2)
+				{
+					<span class="custom-button btn">...</span>
+				}
+			}
+
+			for (var i = startPage; i <= endPage; i++)
+			{
+				var activePage = (i == currentPage) ? "custom-button-active" : "";
+				<a asp-action="Main" asp-route-sortOrder="@ViewData["currentOrder"]" asp-route-numPage="@i"
+				   asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-button btn @activePage" asp-route-optionStatus="@ViewData["Status"]"
+				   asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]">@i</a>
+			}
+
+			if (endPage < totalPages)
+			{
+				if (endPage < totalPages - 1)
+				{
+					<span class="custom-button btn">...</span>
+				}
+				<a asp-action="Main" asp-route-sortOrder="@ViewData["currentOrder"]"
+				   asp-route-numPage="@totalPages" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-button btn"
+				   asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]"
+				   asp-route-registerCount="@ViewData["RegisterCount"]">@totalPages</a>
+			}
+		}
 		<a asp-action="Main" asp-route-sortOrder="@ViewData["CurrentOrder"]"
 		   asp-route-numPage="@(Model.Requests.PageIndex + 1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
 		   class="custom-button btn @nextDisabled" asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]"

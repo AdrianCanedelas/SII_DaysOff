@@ -177,7 +177,18 @@ namespace SII_DaysOff.Controllers
 
 			if (year != null) requests = requests.Where(r => r.RequestDate.Year.ToString().Equals(year));
 
-			return View(await PaginatedList<Requests>.CreateAsync(requests.AsNoTracking(), numPage ?? 1, registerCount));
+			var paginatedRequests = await PaginatedList<Requests>.CreateAsync(requests.AsNoTracking(), numPage ?? 1, registerCount);
+			Console.WriteLine("|1 PaginatedRequests -> " + paginatedRequests.Count());
+			Console.WriteLine("|2 paginatedRequests -> " + paginatedRequests.Count());
+			var viewModel = new MainViewModel
+			{
+				Requests = paginatedRequests,
+				TotalRequest = requests.Count(),
+				PageSize = registerCount,
+				//AdminId = adminId
+			};
+
+			return View(viewModel);
 		}
 
 		/*

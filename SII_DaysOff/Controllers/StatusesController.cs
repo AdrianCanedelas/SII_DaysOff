@@ -68,7 +68,15 @@ namespace SII_DaysOff.Controllers
                     break;
             }
 
-            return View(await PaginatedList<Statuses>.CreateAsync(statuses.AsNoTracking(), numPage ?? 1, registerCount));
+			var paginatedStatuses = await PaginatedList<Statuses>.CreateAsync(statuses.AsNoTracking(), numPage ?? 1, registerCount);
+			var viewModel = new MainViewModel
+			{
+				Statuses = paginatedStatuses,
+				TotalRequest = statuses.Count(),
+				PageSize = registerCount,
+			};
+
+			return View(viewModel);
         }
 
         // GET: Statuses/Details/5
