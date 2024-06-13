@@ -127,17 +127,44 @@ namespace SII_DaysOff.Controllers
             return View(userVacationDays);
         }
 
-        /*public SelectList yearSelectList(Guid selectedUserId)
-        {
-            Console.WriteLine("entra yearSelectList");
-            var occupedYears = _context.UserVacationDays.Where(u => u.UserId.Equals(selectedUserId)).Select(u => u.Year);
-            var allYears = _context.VacationDays.Select(v => v.Year);
+		public void yearSelectList(Guid selectedUserId)
+		{
+			Console.WriteLine("entra yearSelectList");
 
-            return allYears.Where(y => !y.Contains(occupedYears));
-        }*/
+			var occupiedYears = _context.UserVacationDays
+				.Where(u => u.UserId.Equals(selectedUserId))
+				.Select(u => u.Year)
+				.ToList();
 
-        // GET: UserVacationDays/Create
-        public IActionResult Create()
+			var allYears = _context.VacationDays
+				.Select(v => v.Year)
+				.Distinct()
+				.ToList();
+
+			var availableYears = allYears.Except(occupiedYears).ToList();
+			ViewBag.YearId = new SelectList(availableYears);
+		}
+
+		public IActionResult YearSelectList(Guid selectedUserId)
+		{
+			Console.WriteLine($"Recibida solicitud para UserId: {selectedUserId}");
+
+			yearSelectList(selectedUserId); // Actualiza ViewBag.YearId
+
+			var years = ((SelectList)ViewBag.YearId).Select(x => new { value = x.Value, text = x.Text }).ToList();
+
+			Console.WriteLine("Años disponibles:");
+			foreach (var year in years)
+			{
+				Console.WriteLine($"{year.value}: {year.text}");
+			}
+
+			return Json(years);
+		}
+
+
+		// GET: UserVacationDays/Create
+		public IActionResult Create()
         {
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id");

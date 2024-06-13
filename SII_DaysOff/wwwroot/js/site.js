@@ -99,35 +99,52 @@ if (toastButton) {
 }
 
 //
-/*document.getElementById("selectUser").addEventListener("change", function () {
-    var selectedValue = this.value;
-})*/
+    /*function changeYears() {
+        var selectedUserId = document.getElementById('selectUser').value;
+
+    $.ajax({
+        url: '@Url.Action("YearSelectList", "UserVacationDays")', // Ajusta el nombre del controlador según corresponda
+    type: 'GET',
+    data: {selectedUserId: selectedUserId },
+    success: function (data) {
+        $('#Year').empty(); // Limpiar opciones actuales
+    $.each(data, function (index, item) {
+        $('#Year').append($('<option>').text(item.text).attr('value', item.value));
+                });
+            },
+    error: function (xhr, status, error) {
+        console.error("Error al obtener los años disponibles:", error);
+            }
+        });
+    }*/
+
+
 
 //
 /*
 document.addEventListener('DOMContentLoaded', (event) => {
-			console.log('Script is running');
-			let yearPicker = document.getElementById('yearPickerMain');
-			var currentYear = new Date().getFullYear();
+            console.log('Script is running');
+            let yearPicker = document.getElementById('yearPickerMain');
+            var currentYear = new Date().getFullYear();
 
-			$(yearPicker).datepicker({
-				format: "yyyy",
-				viewMode: "years",
-				minViewMode: "years",
-				startDate: "2000",
-				endDate: "2030",
-				defaultViewDate: { year: currentYear },
-				autoclose: true
-			});
-			yearPicker.addEventListener('blur', function () {
-				console.log('Blur event triggered');
-				document.getElementById('autoSubmitForm').submit();
-			});
-			yearPicker.addEventListener('input', function () {
-				console.log('Input event triggered');
-			});
-			yearPicker.addEventListener('click', function () {
-				console.log('Click event triggered');
-			});
-		});
+            $(yearPicker).datepicker({
+                format: "yyyy",
+                viewMode: "years",
+                minViewMode: "years",
+                startDate: "2000",
+                endDate: "2030",
+                defaultViewDate: { year: currentYear },
+                autoclose: true
+            });
+            yearPicker.addEventListener('blur', function () {
+                console.log('Blur event triggered');
+                document.getElementById('autoSubmitForm').submit();
+            });
+            yearPicker.addEventListener('input', function () {
+                console.log('Input event triggered');
+            });
+            yearPicker.addEventListener('click', function () {
+                console.log('Click event triggered');
+            });
+        });
 */
