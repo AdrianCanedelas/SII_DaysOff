@@ -170,8 +170,13 @@ namespace SII_DaysOff.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
-                    _context.Update(vacationDays);
+				{
+					var user = await _userManager.GetUserAsync(User);
+
+					vacationDays.ModificationDate = DateTime.Now;
+					vacationDays.ModifiedBy = user.Id;
+
+					_context.Update(vacationDays);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

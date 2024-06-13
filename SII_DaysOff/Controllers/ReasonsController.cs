@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -174,8 +175,13 @@ namespace SII_DaysOff.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
-                    _context.Update(reasons);
+				{
+					var user = await _userManager.GetUserAsync(User);
+
+					reasons.ModificationDate = DateTime.Now;
+					reasons.ModifiedBy = user.Id;
+
+					_context.Update(reasons);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

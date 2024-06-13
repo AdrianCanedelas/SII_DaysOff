@@ -148,7 +148,7 @@
 
 	<div class="parent">
 		<div class="card-body cardRequests">
-			@if (Model.Requests.Count() == 0)
+			@if (!Model.Requests.Any())
 			{
 				@*<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
 			<strong>No requests found </strong> <!--Press <a asp-controller="Home" asp-action="Main" class="alert-link" asp-route-year="@ViewData["YearSelected"]">"Here"</a> to see all requests.-->

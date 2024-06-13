@@ -216,8 +216,13 @@ namespace SII_DaysOff.Controllers
             {
                 Console.WriteLine("\n\nUserVacationDays 1");
                 try
-                {
-                    Console.WriteLine("\n\nUserVacationDays 2");
+				{
+					var user = await _userManager.GetUserAsync(User);
+
+					userVacationDays.ModificationDate = DateTime.Now;
+					userVacationDays.ModifiedBy = user.Id;
+
+					Console.WriteLine("\n\nUserVacationDays 2");
                     _context.Update(userVacationDays);
                     await _context.SaveChangesAsync();
                 }

@@ -164,8 +164,13 @@ namespace SII_DaysOff.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
-                    _context.Update(statuses);
+				{
+					var user = await _userManager.GetUserAsync(User);
+
+					statuses.ModificationDate = DateTime.Now;
+					statuses.ModifiedBy = user.Id;
+
+					_context.Update(statuses);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
