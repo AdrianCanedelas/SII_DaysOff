@@ -127,6 +127,15 @@ namespace SII_DaysOff.Controllers
             return View(userVacationDays);
         }
 
+        /*public SelectList yearSelectList(Guid selectedUserId)
+        {
+            Console.WriteLine("entra yearSelectList");
+            var occupedYears = _context.UserVacationDays.Where(u => u.UserId.Equals(selectedUserId)).Select(u => u.Year);
+            var allYears = _context.VacationDays.Select(v => v.Year);
+
+            return allYears.Where(y => !y.Contains(occupedYears));
+        }*/
+
         // GET: UserVacationDays/Create
         public IActionResult Create()
         {
@@ -134,6 +143,7 @@ namespace SII_DaysOff.Controllers
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             ViewData["Year"] = new SelectList(_context.VacationDays, "Year", "Year");
+            Console.WriteLine("\n\n\n\n\n\nYear 11111");
             return View();
         }
 
@@ -191,8 +201,10 @@ namespace SII_DaysOff.Controllers
         public async Task<IActionResult> Edit(Guid id, [Bind("UserId,Year,AcquiredDays,AdditionalDays,CreatedBy,CreationDate,ModifiedBy,ModificationDate")] UserVacationDays userVacationDays)
         {
             Console.WriteLine("\n\nUserVacationDays entraPOST");
+            Console.WriteLine("\n\nUserVacationDays: " + userVacationDays.UserId + " - " + userVacationDays.Year);
             if (id != userVacationDays.UserId)
             {
+                Console.WriteLine("1");
                 return NotFound();
             }
 
@@ -211,7 +223,6 @@ namespace SII_DaysOff.Controllers
                 }
             }
 
-
             if (ModelState.IsValid)
             {
                 Console.WriteLine("\n\nUserVacationDays 1");
@@ -223,6 +234,7 @@ namespace SII_DaysOff.Controllers
 					userVacationDays.ModifiedBy = user.Id;
 
 					Console.WriteLine("\n\nUserVacationDays 2");
+                    Console.WriteLine("\n\nUserVacationDays: " + userVacationDays.UserId + " - " + userVacationDays.Year);
                     _context.Update(userVacationDays);
                     await _context.SaveChangesAsync();
                 }

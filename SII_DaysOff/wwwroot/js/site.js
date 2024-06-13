@@ -99,6 +99,11 @@ if (toastButton) {
 }
 
 //
+/*document.getElementById("selectUser").addEventListener("change", function () {
+    var selectedValue = this.value;
+})*/
+
+//
 /*
 document.addEventListener('DOMContentLoaded', (event) => {
 			console.log('Script is running');

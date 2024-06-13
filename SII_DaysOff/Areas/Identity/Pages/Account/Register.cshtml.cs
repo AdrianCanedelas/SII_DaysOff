@@ -176,8 +176,8 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
                 user.IsActive = true;
                 user.Manager = Input.Manager;
                 user.RegisterDate = DateTime.Now;
-                user.RoleId = Guid.Parse("9EF701FB-6834-4434-BDCA-7BA87FA108FA");
-                user.Manager = Guid.Parse("DAB39DCC-4845-438C-B64D-9C3E1E0596B1");
+                user.RoleId = Input.Role;
+                //user.Manager = Guid.Parse("DAB39DCC-4845-438C-B64D-9C3E1E0596B1");
 				//user.CreatedBy = logedInUser.Id;
 				user.CreationDate = DateTime.Now;
                 //user.ModifiedBy = logedInUser.Id;

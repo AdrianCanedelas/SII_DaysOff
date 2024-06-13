@@ -70,7 +70,8 @@
 						if (Model.User.CreationDate.Year == int.Parse(Model.Year))
 						{
 							<p>@Model.User.CreationDate.ToString("yyyy-MM-dd")</p>
-						} else
+						}
+						else
 						{
 							<p>@Model.User.UserVacationDays.Year-01-01</p>
 						}
@@ -93,24 +94,29 @@
 			</div>
 			<div class="col-12 col-md-6 d-flex justify-content-end align-items-center ms-2 ms-md-0">
 				@{
-					if (ViewBag.pendingRequests > 0)
+					var user = await UserManager.GetUserAsync(User);
+					if (user != null)
 					{
-						<a class="custom-button position-relative" asp-controller="Requests" asp-action="ManageIndex" asp-route-year="@ViewData["YearSelected"]">
-							Manage request
-							<span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
-								@ViewBag.pendingRequests
-								<span class="visually-hidden">unread messages</span>
-							</span>
-						</a>
+						Console.WriteLine("\n\n\n\n\n " + user.RoleId + "  -  " + Model.AdminId);
+						if (user.RoleId.Equals(Model.AdminId))
+						{
+							if (ViewBag.pendingRequests > 0)
+							{
+								<a class="custom-button position-relative" asp-controller="Requests" asp-action="ManageIndex" asp-route-year="@ViewData["YearSelected"]">
+									Manage request
+									<span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
+										@ViewBag.pendingRequests
+										<span class="visually-hidden">unread messages</span>
+									</span>
+								</a>
+							}
+							else
+							{
+								<a class="custom-button-disabled position-relative btn disabled" asp-area="" asp-controller="Requests" asp-action="ManageIndex" asp-route-year="@ViewData["YearSelected"]">Manage requests</a>
+							}
+							<a type="submit" class="custom-button" asp-controller="Requests" asp-action="Calendar" asp-route-year="@ViewData["YearSelected"]">Calendar</a>
+						}
 					}
-					else
-					{
-						// if (Model.User.RoleId.Equals(Model.AdminId))
-				// {
-						<a class="custom-button-disabled position-relative btn disabled" asp-area="" asp-controller="Requests" asp-action="ManageIndex" asp-route-year="@ViewData["YearSelected"]">Manage requests</a>
-						// }
-					}
-					<a type="submit" class="custom-button" asp-controller="Requests" asp-action="Calendar" asp-route-year="@ViewData["YearSelected"]">Calendar</a>
 				}
 				<button type="submit" class="custom-button" data-bs-toggle="modal" data-bs-target="#exampleModal">New request</button>
 			</div>
@@ -301,7 +307,7 @@
 		   asp-route-registerCount="@ViewData["RegisterCount"]">Previous</a>
 
 		@{
-			int maxPageButtons = 3; 
+			int maxPageButtons = 3;
 			int totalPages = Model.Requests.TotalPages;
 			int currentPage = Model.Requests.PageIndex;
 			int startPage = Math.Max(1, currentPage - maxPageButtons / 2);

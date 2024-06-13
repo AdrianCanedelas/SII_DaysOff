@@ -100,6 +100,7 @@ namespace SII_DaysOff.Controllers
 			ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "Name");
 			ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Name");
 			ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Email");
+			Console.WriteLine("Year 11111");
 			ViewData["YearId"] = new SelectList(_context.VacationDays, "Year", "Year");
 
 			// Paginacion
@@ -197,7 +198,8 @@ namespace SII_DaysOff.Controllers
 				Requests = paginatedRequests,
 				TotalRequest = requests.Count(),
 				PageSize = registerCount,
-				Year = year
+				Year = year,
+				AdminId = _context.Roles.Where(r => r.Name.Equals("Admin")).Select(r => r.Id).FirstOrDefault()
 			};
 
 			return View(viewModel);
