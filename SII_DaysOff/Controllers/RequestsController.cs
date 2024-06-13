@@ -52,7 +52,7 @@ namespace SII_DaysOff.Controllers
         
         public IActionResult Calendar()
         {
-            return View();
+            return View(new SelectableStatuses());
         }
 
         public async Task<IActionResult> ManageIndex(string sortOrder, string searchString, int? numPage, string currentFilter, string year, int registerCount)
@@ -190,100 +190,6 @@ namespace SII_DaysOff.Controllers
 
 			return View(viewModel);
 		}
-
-		/*
-         public async Task<IActionResult> ManageIndex(string sortOrder, string searchString, int? numPage, string currentFilter)
-        {
-			//Ordenación
-			ViewData["ReasonOrder"] = String.IsNullOrEmpty(sortOrder) ? "Reason_desc" : "";
-			ViewData["StartDayOrder"] = sortOrder == "StartDay" ? "StartDay_desc" : "StartDay";
-			ViewData["HalfDayStartOrder"] = sortOrder == "HalfDayStart" ? "HalfDayStart_desc" : "HalfDayStart";
-			ViewData["EndDayOrder"] = sortOrder == "EndDay" ? "EndDay_desc" : "EndDay";
-			ViewData["HalfDayEndOrder"] = sortOrder == "HalfDayEnd" ? "HalfDayEnd_desc" : "HalfDayEnd";
-			ViewData["RequestDayOrder"] = sortOrder == "RequestDay" ? "RequestDay_desc" : "RequestDay";
-			ViewData["CommentsOrder"] = sortOrder == "Comments" ? "Comments_desc" : "Comments";
-
-			//Cuadro de búsqueda
-			ViewData["CurrentFilter"] = searchString;
-
-			var user = await _userManager.GetUserAsync(User);
-			var userId = _context.AspNetUsers.FirstOrDefault(u => u.Name.Equals(user.Name))?.Id;
-
-			var managerUserIds = _context.Users
-	            .Where(u => u.Manager == user.Id)
-	            .Select(u => u.Id)
-	            .ToList();
-            var requests = _context.Requests
-                .Include(r => r.Reason)
-                .Where(r => r.StatusId == userId)
-                .Where(r => managerUserIds.Contains(r.UserId)).AsQueryable();
-
-			if (searchString != null) numPage = 1;
-			else searchString = currentFilter;
-
-			if (!String.IsNullOrEmpty(searchString))
-			{
-				requests = requests.Where(r => r.Reason.Name.Contains(searchString) 
-                || r.StartDate.ToString().Contains(searchString) 
-				|| r.EndDate.ToString().Contains(searchString)
-				|| r.RequestDate.ToString().Contains(searchString)
-				|| r.Comments.Contains(searchString));
-			}
-
-			ViewData["CurrentOrder"] = sortOrder;
-			ViewData["CurrentFilter"] = currentFilter;
-
-			switch (sortOrder)
-			{
-				case "Rreason_desc":
-					requests = requests.OrderByDescending(r => r.Reason.Name);
-					break;
-				case "StartDay_desc":
-					requests = requests.OrderByDescending(r => r.StartDate);
-					break;
-				case "StartDay":
-					requests = requests.OrderBy(r => r.StartDate);
-					break;
-				case "HalfDayStart":
-					requests = requests.OrderBy(r => r.HalfDayStart);
-					break;
-				case "HalfDayStart_desc":
-					requests = requests.OrderByDescending(r => r.HalfDayStart);
-					break;
-				case "EndDay":
-					requests = requests.OrderBy(r => r.EndDate);
-					break;
-				case "EndDay_desc":
-					requests = requests.OrderByDescending(r => r.EndDate);
-					break;
-				case "HalfDayEnd":
-					requests = requests.OrderBy(r => r.HalfDayEnd);
-					break;
-				case "HalfDayEnd_desc":
-					requests = requests.OrderByDescending(r => r.HalfDayEnd);
-					break;
-				case "RequestDay":
-					requests = requests.OrderBy(r => r.RequestDate);
-					break;
-				case "RequestDay_desc":
-					requests = requests.OrderByDescending(r => r.RequestDate);
-					break;
-				case "Comments":
-					requests = requests.OrderBy(r => r.Comments);
-					break;
-				case "Comments_desc":
-					requests = requests.OrderByDescending(r => r.Comments);
-					break;
-				case "Status_desc":
-					requests = requests.OrderByDescending(r => r.Status.Name);
-					break;
-			}
-
-			int registerCount = 5;
-
-			return View(await PaginatedList<Requests>.CreateAsync(requests.AsNoTracking(), numPage?? 1, registerCount));
-        }
-         */
 
 		// GET: Requests/Details/5
 		public async Task<IActionResult> Details(Guid? id)
@@ -525,33 +431,34 @@ namespace SII_DaysOff.Controllers
                 );
         }
 
-		public async Task<FileResult> ExportExcel(string year, string month, string type, bool pending, bool approved, bool cancelled)
+		public async Task<FileResult> ExportExcel(string year, string month, string type, [Bind("isPending, isApproved, isCancelled")] SelectableStatuses selectableStatuses)
 		{
-            Console.WriteLine("\n\n\n\nPending -> " + pending + " - Approved -> " + approved + " - Cancelled -> " + cancelled);
-			var daysOff = _context.Requests
+            Console.WriteLine("\n\n\n\nPending -> " + selectableStatuses.isPending + " - Approved -> " + selectableStatuses.isApproved + " - Cancelled -> " + selectableStatuses.isCancelled);
+            var daysOff = _context.Requests
+                .Include(r => r.User)
+                .Include(r => r.Status)
+                .Include(r => r.Reason)
+                .AsQueryable();
+            
+            var daysOffCalendar = _context.Requests
 				.Include(r => r.User)
 				.Include(r => r.Status)
 				.Include(r => r.Reason)
 				.ToList()
 				.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Approved"))?.StatusId));
 
-            /*if (pending && !approved && !cancelled) daysOff = daysOff.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId));
-            if (!pending && approved && !cancelled) daysOff = daysOff.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Approved"))?.StatusId));
-            if (!pending && !approved && cancelled) daysOff = daysOff.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Cancelled"))?.StatusId));
-            if (pending && approved && !cancelled) daysOff = daysOff.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Approved"))?.StatusId) 
-                || r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId));
-            if (pending && !approved && cancelled) daysOff = daysOff.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Cancelled"))?.StatusId) 
-                || r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId));
-            if (!pending && approved && cancelled) daysOff = daysOff.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Approved"))?.StatusId) 
-                || r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Cancelled"))?.StatusId));
-            if (pending && approved && cancelled) daysOff = daysOff.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Approved"))?.StatusId) 
-                || r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Cancelled"))?.StatusId) 
-                || r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId));*/
+			if (selectableStatuses.isPending || selectableStatuses.isApproved || selectableStatuses.isCancelled)
+			{
+				daysOff = daysOff.Where(r =>
+					(selectableStatuses.isPending && r.Status.Name == "Pending") ||
+					(selectableStatuses.isApproved && r.Status.Name == "Approved") ||
+					(selectableStatuses.isCancelled && r.Status.Name == "Cancelled")).OrderBy(r => r.Status.Name);
+			}
 
 			var fileName = type + ".xlsx";
             Console.WriteLine("\n\n\n\n\n\n month --<> " + year + " --> " + month);
             if(type.Equals("requests")) return GenerateExcel(fileName, daysOff);
-            return GenerateExcel(fileName, daysOff, int.Parse(year), int.Parse(month));
+            return GenerateExcel(fileName, daysOffCalendar, int.Parse(year), int.Parse(month));
             //return GenerateExcel(fileName, daysOff, 2024, 05);
 		}
 
