@@ -131,7 +131,7 @@ namespace SII_DaysOff.Controllers
 		{
 			Console.WriteLine("entra yearSelectList");
 
-			var occupiedYears = _context.UserVacationDays
+			var occupedYears = _context.UserVacationDays
 				.Where(u => u.UserId.Equals(selectedUserId))
 				.Select(u => u.Year)
 				.ToList();
@@ -141,25 +141,8 @@ namespace SII_DaysOff.Controllers
 				.Distinct()
 				.ToList();
 
-			var availableYears = allYears.Except(occupiedYears).ToList();
-			ViewBag.YearId = new SelectList(availableYears);
-		}
-
-		public IActionResult YearSelectList(Guid selectedUserId)
-		{
-			Console.WriteLine($"Recibida solicitud para UserId: {selectedUserId}");
-
-			yearSelectList(selectedUserId); // Actualiza ViewBag.YearId
-
-			var years = ((SelectList)ViewBag.YearId).Select(x => new { value = x.Value, text = x.Text }).ToList();
-
-			Console.WriteLine("Años disponibles:");
-			foreach (var year in years)
-			{
-				Console.WriteLine($"{year.value}: {year.text}");
-			}
-
-			return Json(years);
+			var availableYears = allYears.Except(occupedYears).ToList();
+			ViewData["YearId"] = new SelectList(availableYears);
 		}
 
 

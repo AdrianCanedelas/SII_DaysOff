@@ -433,7 +433,6 @@ namespace SII_DaysOff.Controllers
 
 		public async Task<FileResult> ExportExcel(string year, string month, string type, [Bind("isPending, isApproved, isCancelled")] SelectableStatuses selectableStatuses)
 		{
-            Console.WriteLine("\n\n\n\nPending -> " + selectableStatuses.isPending + " - Approved -> " + selectableStatuses.isApproved + " - Cancelled -> " + selectableStatuses.isCancelled);
             var daysOff = _context.Requests
                 .Include(r => r.User)
                 .Include(r => r.Status)
@@ -455,11 +454,16 @@ namespace SII_DaysOff.Controllers
 					(selectableStatuses.isCancelled && r.Status.Name == "Cancelled")).OrderBy(r => r.Status.Name);
 			}
 
+            if(year == null && month == null)
+            {
+                year = DateTime.Now.Year + "";
+                month = DateTime.Now.Month + "";
+            }
+
 			var fileName = type + ".xlsx";
-            Console.WriteLine("\n\n\n\n\n\n month --<> " + year + " --> " + month);
             if(type.Equals("requests")) return GenerateExcel(fileName, daysOff);
             return GenerateExcel(fileName, daysOffCalendar, int.Parse(year), int.Parse(month));
-            //return GenerateExcel(fileName, daysOff, 2024, 05);
+
 		}
 
 		private FileResult GenerateExcel(string fileName, IEnumerable<Requests> requests, int year, int month)
