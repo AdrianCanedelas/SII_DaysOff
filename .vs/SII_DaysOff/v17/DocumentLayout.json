@@ -3,24 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\controllers\\vacationdayscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\controllers\\vacationdayscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\views\\home\\main.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\views\\home\\main.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\controllers\\uservacationdayscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\controllers\\uservacationdayscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\models\\selectablestatuses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\models\\selectablestatuses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\views\\vacationdays\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\views\\vacationdays\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\models\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\models\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\views\\uservacationdays\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\views\\uservacationdays\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\models\\datamodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\models\\datamodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|c:\\users\\adrian.candelas\\source\\repos\\sii_daysoff\\sii_daysoff\\data\\sessionvariables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ECBCD0A5-31DB-403E-BA22-5064E300E178}|SII_DaysOff\\SII_DaysOff.csproj|solutionrelative:sii_daysoff\\data\\sessionvariables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,67 +46,80 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Main.cshtml",
+              "DocumentMoniker": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Views\\Home\\Main.cshtml",
+              "RelativeDocumentMoniker": "SII_DaysOff\\Views\\Home\\Main.cshtml",
+              "ToolTip": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Views\\Home\\Main.cshtml",
+              "RelativeToolTip": "SII_DaysOff\\Views\\Home\\Main.cshtml",
+              "ViewState": "AQIAABUAAAAAAAAAAAAAABsAAAB3AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-14T11:33:23.256Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "_LoginPartial.cshtml",
-              "DocumentMoniker": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Views\\Shared\\_LoginPartial.cshtml",
-              "RelativeDocumentMoniker": "SII_DaysOff\\Views\\Shared\\_LoginPartial.cshtml",
-              "ToolTip": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Views\\Shared\\_LoginPartial.cshtml",
-              "RelativeToolTip": "SII_DaysOff\\Views\\Shared\\_LoginPartial.cshtml",
-              "ViewState": "AQIAACEAAAAAAAAAAAAAACkAAABtAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-06-14T10:55:29.234Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Edit.cshtml",
-              "DocumentMoniker": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Views\\VacationDays\\Edit.cshtml",
-              "RelativeDocumentMoniker": "SII_DaysOff\\Views\\VacationDays\\Edit.cshtml",
-              "ToolTip": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Views\\VacationDays\\Edit.cshtml",
-              "RelativeToolTip": "SII_DaysOff\\Views\\VacationDays\\Edit.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAABCAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-06-14T10:42:38.575Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Edit.cshtml",
-              "DocumentMoniker": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Views\\UserVacationDays\\Edit.cshtml",
-              "RelativeDocumentMoniker": "SII_DaysOff\\Views\\UserVacationDays\\Edit.cshtml",
-              "ToolTip": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Views\\UserVacationDays\\Edit.cshtml",
-              "RelativeToolTip": "SII_DaysOff\\Views\\UserVacationDays\\Edit.cshtml",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-06-14T10:42:36.898Z",
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "SII_DaysOff\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "SII_DaysOff\\Controllers\\HomeController.cs",
+              "ViewState": "AQIAAKQAAAAAAAAAAAAAALYAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-14T11:27:08.916Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "UserVacationDaysController.cs",
-              "DocumentMoniker": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Controllers\\UserVacationDaysController.cs",
-              "RelativeDocumentMoniker": "SII_DaysOff\\Controllers\\UserVacationDaysController.cs",
-              "ToolTip": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Controllers\\UserVacationDaysController.cs",
-              "RelativeToolTip": "SII_DaysOff\\Controllers\\UserVacationDaysController.cs",
-              "ViewState": "AQIAANEAAAAAAAAAAAAuwN4AAAA2AAAA",
+              "Title": "SelectableStatuses.cs",
+              "DocumentMoniker": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Models\\SelectableStatuses.cs",
+              "RelativeDocumentMoniker": "SII_DaysOff\\Models\\SelectableStatuses.cs",
+              "ToolTip": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Models\\SelectableStatuses.cs",
+              "RelativeToolTip": "SII_DaysOff\\Models\\SelectableStatuses.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-14T10:34:47.658Z",
+              "WhenOpened": "2024-06-14T11:23:44.958Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "VacationDaysController.cs",
-              "DocumentMoniker": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Controllers\\VacationDaysController.cs",
-              "RelativeDocumentMoniker": "SII_DaysOff\\Controllers\\VacationDaysController.cs",
-              "ToolTip": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Controllers\\VacationDaysController.cs",
-              "RelativeToolTip": "SII_DaysOff\\Controllers\\VacationDaysController.cs",
-              "ViewState": "AQIAAKIAAAAAAAAAAAAwwLAAAAAFAAAA",
+              "DocumentIndex": 3,
+              "Title": "MainViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Models\\MainViewModel.cs",
+              "RelativeDocumentMoniker": "SII_DaysOff\\Models\\MainViewModel.cs",
+              "ToolTip": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Models\\MainViewModel.cs",
+              "RelativeToolTip": "SII_DaysOff\\Models\\MainViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-14T10:33:18.821Z",
+              "WhenOpened": "2024-06-14T11:23:40.655Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DataModel.cs",
+              "DocumentMoniker": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Models\\DataModel.cs",
+              "RelativeDocumentMoniker": "SII_DaysOff\\Models\\DataModel.cs",
+              "ToolTip": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Models\\DataModel.cs",
+              "RelativeToolTip": "SII_DaysOff\\Models\\DataModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-14T11:23:35.895Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SessionVariables.cs",
+              "DocumentMoniker": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Data\\SessionVariables.cs",
+              "RelativeDocumentMoniker": "SII_DaysOff\\Data\\SessionVariables.cs",
+              "ToolTip": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\Data\\SessionVariables.cs",
+              "RelativeToolTip": "SII_DaysOff\\Data\\SessionVariables.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-14T11:22:16.59Z",
               "EditorCaption": ""
             }
           ]

@@ -17,16 +17,18 @@ namespace SII_DaysOff.Controllers
 		private readonly ILogger<HomeController> _logger;
 		private readonly DbContextBD _context;
 		private UserManager<ApplicationUser> _userManager;
+		public readonly IHttpContextAccessor _contextAccessor;
 
 		/*public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }*/
 
-		public HomeController(DbContextBD context, UserManager<ApplicationUser> userManager)
+		public HomeController(DbContextBD context, UserManager<ApplicationUser> userManager, IHttpContextAccessor contextAccessor)
 		{
 			_context = context;
 			_userManager = userManager;
+			_contextAccessor = contextAccessor;
 		}
 
 		public IActionResult Index()
@@ -37,9 +39,11 @@ namespace SII_DaysOff.Controllers
 
 		public async Task<IActionResult> MainAsync(string sortOrder, string searchString, int? numPage, string currentFilter, string optionStatus, string year, int registerCount)
 		{
-			if (year == null) year = DateTime.Now.Year.ToString();
+			//if (year == null) year = DateTime.Now.Year.ToString();
 			if (optionStatus != null && optionStatus != "") ViewData["Status"] = optionStatus;
 			var currentOptionStatus = ViewData["status"];
+
+			if(year != null) _contextAccessor.HttpContext.Session.SetString("sessionYear", year);
 
 			ViewData["YearSelected"] = year;
 			ViewData["ReasonOrder"] = String.IsNullOrEmpty(sortOrder) ? "Reason_desc" : "";
@@ -54,7 +58,7 @@ namespace SII_DaysOff.Controllers
 			var logedUser = await _userManager.Users
 				.Include(u => u.UserVacationDays)
 				.Include(u => u.UserVacationDays.YearNavigation)
-				.Where(u => u.UserVacationDays.Year == year)
+				.Where(u => u.UserVacationDays.Year == _contextAccessor.HttpContext.Session.GetString("sessionYear"))
 				.FirstOrDefaultAsync(u => u.Id == Guid.Parse(_userManager.GetUserId(User)));
 
 			var user = await _userManager.Users
@@ -80,7 +84,7 @@ namespace SII_DaysOff.Controllers
 				.Where(r => r.UserId == userId)
 				.AsQueryable();
 
-			if (year != null) requests = requests.Where(r => r.RequestDate.Year.ToString().Equals(year));
+			if (_contextAccessor.HttpContext.Session.GetString("sessionYear") != null) requests = requests.Where(r => r.RequestDate.Year.ToString().Equals(_contextAccessor.HttpContext.Session.GetString("sessionYear")));
 
 			ViewData["ReasonId"] = new SelectList(_context.Reasons, "ReasonId", "Name");
 			ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Name");
@@ -167,7 +171,7 @@ namespace SII_DaysOff.Controllers
 				.ToList()
 				.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId))
 				.Where(r => managerUserIds.Contains(r.UserId))
-				.Where(r => r.RequestDate.Year.ToString().Equals(year))
+				.Where(r => r.RequestDate.Year.ToString().Equals(_contextAccessor.HttpContext.Session.GetString("sessionYear")))
 				.Count();
 
 			ViewData["PendingRequests"] = pendingRequests;
@@ -179,7 +183,7 @@ namespace SII_DaysOff.Controllers
 				Requests = paginatedRequests,
 				TotalRequest = requests.Count(),
 				PageSize = registerCount,
-				Year = year,
+				Year = _contextAccessor.HttpContext.Session.GetString("sessionYear"),
 				AdminId = _context.Roles.Where(r => r.Name.Equals("Admin")).Select(r => r.Id).FirstOrDefault()
 			};
 
