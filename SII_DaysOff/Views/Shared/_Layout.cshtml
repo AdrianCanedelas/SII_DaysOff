@@ -93,37 +93,37 @@
 			</nav>
 			@if (!ViewData["title"].Equals("Main"))
 			{
-				<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow navbar-custom-return mb-3">
+				<nav class="navbar navbar-expand-sm navbar-toggleable-sm mb-3">
 					@if (!ViewData["Navigation"].Equals("Main"))
 					{
 						switch (ViewData["Navigation"])
 						{
 							case "Reasons":
-								<a id="manage" asp-controller="Reasons" asp-action="Index" asp-route-year="@ViewData["YearSelected"]">
-									<i class="bi bi-arrow-left-square mx-5 custom-icon-return"></i>
+								<a id="manage" asp-controller="Reasons" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" class="custom-go-back-link mt-2">
+									<span class="custom-go-back"><i class="bi bi-arrow-left"></i>  Go back</span>
 								</a>
 								break;
 							case "Statuses":
-								<a id="manage" asp-controller="Statuses" asp-action="Index" asp-route-year="@ViewData["YearSelected"]">
-									<i class="bi bi-arrow-left-square mx-5 custom-icon-return"></i>
+								<a id="manage" asp-controller="Statuses" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" class="custom-go-back-link mt-2">
+									<span class="custom-go-back"><i class="bi bi-arrow-left"></i>  Go back</span>
 								</a>
 								break;
 							case "VacationDays":
-								<a id="manage" asp-controller="VacationDays" asp-action="Index" asp-route-year="@ViewData["YearSelected"]">
-									<i class="bi bi-arrow-left-square mx-5 custom-icon-return"></i>
+								<a id="manage" asp-controller="VacationDays" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" class="custom-go-back-link mt-2">
+									<span class="custom-go-back"><i class="bi bi-arrow-left"></i>  Go back</span>
 								</a>
 								break;
 							case "UserVacationDays":
-								<a id="manage" asp-controller="UserVacationDays" asp-action="Index" asp-route-year="@ViewData["YearSelected"]">
-									<i class="bi bi-arrow-left-square mx-5 custom-icon-return"></i>
+								<a id="manage" asp-controller="UserVacationDays" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" class="custom-go-back-link mt-2">
+									<span class="custom-go-back"><i class="bi bi-arrow-left"></i>  Go back</span>
 								</a>
 								break;
 						}
 					}
 					else
 					{
-						<a id="manage" asp-controller="Home" asp-action="Main" asp-route-year="@ViewData["YearSelected"]">
-							<i class="bi bi-arrow-left-square mx-5 custom-icon-return"></i>
+						<a id="manage" asp-controller="Home" asp-action="Main" asp-route-year="@ViewData["YearSelected"]" class="custom-go-back-link mt-2">
+							<span class="custom-go-back"><i class="bi bi-arrow-left"></i>  Go back</span>
 						</a>
 					}
 				</nav>

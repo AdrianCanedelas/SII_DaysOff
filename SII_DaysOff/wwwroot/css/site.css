@@ -15,6 +15,24 @@ body {
     /*font-family: 'lato';*/
 }
 
+.custom-go-back {
+    text-decoration: none;
+    color: #999999;
+    border: 1px solid #DFDFDF;
+    padding-inline: 7px;
+    padding-block: 4px;
+    transition: 0.3s;
+    margin-left: 33px;
+}
+
+.custom-go-back:hover {
+    background-color: #EEEEEE;
+}
+
+.custom-go-back-link {
+    text-decoration: none;
+}
+
 .toast {
     background-color: red;
     color: yellow;
@@ -61,20 +79,20 @@ body {
     padding-bottom: 8px;
 }
 
-.custom-progressive-link::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 5px;
-    background-color: white;
-    transition: width 0.3s ease-in-out;
-}
+    .custom-progressive-link::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 5px;
+        background-color: white;
+        transition: width 0.3s ease-in-out;
+    }
 
-.custom-progressive-link:hover::after {
-    width: 100%;
-}
+    .custom-progressive-link:hover::after {
+        width: 100%;
+    }
 
 .custom-form:hover {
     border: 2px solid #004278;
@@ -109,10 +127,10 @@ body {
     transition: 0.3s;
 }
 
-.custom-button-LogIn-Register:hover {
-    background-color: #004278;
-    color: white;
-}
+    .custom-button-LogIn-Register:hover {
+        background-color: #004278;
+        color: white;
+    }
 
 .custom-button-disabled:hover {
     color: lightgrey;
@@ -281,39 +299,39 @@ body {
     padding-block: 14px;
     box-shadow: 2px 3px 4px 2px lightgrey;
     margin-top: 0px;
-    right: 0; 
+    right: 0;
     transform-origin: top right;
     transform: scaleX(0);
     transition: transform 0.5s ease;
 }
 
-.submenu a {
-    text-decoration: none;
-    font-weight: bold;
-    color: dimgrey;
-    transition: 0.5s;
-}
+    .submenu a {
+        text-decoration: none;
+        font-weight: bold;
+        color: dimgrey;
+        transition: 0.5s;
+    }
 
-.submenu a:hover {
-    color: #007eb5;
-}
+        .submenu a:hover {
+            color: #007eb5;
+        }
 
-.submenu button {
-color: dimgrey;
-transition: 0.5s;
-}
+    .submenu button {
+        color: dimgrey;
+        transition: 0.5s;
+    }
 
-.submenu button:hover {
-    color: #007eb5;
-}
+        .submenu button:hover {
+            color: #007eb5;
+        }
 
 #manage {
     transition: 0.3s;
 }
 
-#manage:hover {
-    text-shadow: 2px 2px 4px white;
-}
+    #manage:hover {
+        text-shadow: 2px 2px 4px white;
+    }
 
 li .submenu {
     transition: transform 0.5s ease; /* Ajusta la transición aquí también */
@@ -327,11 +345,6 @@ li:hover .submenu {
 /*Navbar*/
 .navbar-custom {
     background-color: #004278;
-}
-
-.navbar-custom-return {
-    background-color: whitesmoke;
-    opacity: 100%;
 }
 
 .custom-icon-return {
