@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\css\\Login.css"
     },
     {
+      "Id": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\wwwroot\\css\\LoginRegister.css",
+      "PackagePath": "staticwebassets\\css\\LoginRegister.css"
+    },
+    {
       "Id": "C:\\Users\\adrian.candelas\\source\\repos\\SII_DaysOff\\SII_DaysOff\\wwwroot\\css\\Main.css",
       "PackagePath": "staticwebassets\\css\\Main.css"
     },

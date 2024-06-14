@@ -25,10 +25,9 @@ namespace SII_DaysOff.Data
 
         public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
         {
-            Console.WriteLine("pageIndex -> " + pageIndex + " - pageSize -> " + pageSize);
             var count = await source.CountAsync();
             var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
-			Console.WriteLine("count -> " + count + " - items -> " + items.Count());
+
 			return new PaginatedList<T>(items, count, pageIndex, pageSize);
         }
     }

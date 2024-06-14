@@ -26,17 +26,13 @@ namespace SII_DaysOff.Controllers
         // GET: VacationDays
         public async Task<IActionResult> Index(string sortOrder, string searchString, int? numPage, string currentFilter, int registerCount)
         {
-			Console.WriteLine("\n\n\n\n SortOrder -> " + sortOrder);
-			//Ordenación
 			ViewData["YearOrder"] = String.IsNullOrEmpty(sortOrder) ? "Year_desc" : "";
 			ViewData["DaysVacationOrder"] = sortOrder == "DaysVacation" ? "DaysVacation_desc" : "DaysVacation";
 
-			//Cuadro de búsqueda
 			ViewData["CurrentFilter"] = searchString;
 
 			var vacationDays = _context.VacationDays.Include(r => r.CreatedByNavigation).Include(r => r.ModifiedByNavigation).AsQueryable();
 
-			//Paginacion
 			if (searchString != null) numPage = 1;
 			else searchString = currentFilter;
 
@@ -57,19 +53,15 @@ namespace SII_DaysOff.Controllers
 			switch (sortOrder)
 			{
 				default:
-					Console.WriteLine("1");
 					vacationDays = vacationDays.OrderBy(r => r.Year);
 					break;
 				case "Year_desc":
-					Console.WriteLine("2");
 					vacationDays = vacationDays.OrderByDescending(r => r.Year);
 					break;
 				case "DaysVacation_desc":
-					Console.WriteLine("3");
 					vacationDays = vacationDays.OrderByDescending(r => r.DayVacations);
 					break;
 				case "DaysVacation":
-					Console.WriteLine("4");
 					vacationDays = vacationDays.OrderBy(r => r.DayVacations);
 					break;
 			}
@@ -123,13 +115,17 @@ namespace SII_DaysOff.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.GetUserAsync(User);
+
                 vacationDays.CreatedBy = user.Id;
                 vacationDays.ModifiedBy = user.Id;
                 vacationDays.CreationDate = DateTime.Now;
                 vacationDays.ModificationDate = DateTime.Now;
+
                 _context.Add(vacationDays);
                 await _context.SaveChangesAsync();
+
 				TempData["toastMessage"] = "The vacation days has been created";
+
 				return LocalRedirect("~/Home/Main");
             }
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", vacationDays.CreatedBy);
@@ -162,7 +158,6 @@ namespace SII_DaysOff.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("Year,DayVacations,CreatedBy,CreationDate,ModifiedBy,ModificationDate")] VacationDays vacationDays)
         {
-            Console.WriteLine("year --> " + vacationDays.Year);
             if (id != vacationDays.Year)
             {
                 return NotFound();

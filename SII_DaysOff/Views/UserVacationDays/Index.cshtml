@@ -26,8 +26,6 @@
 	<div class="parent">
 		<div class="card-body cardRequestsManage">
 			<div class="row">
-
-				<!-- Aquí aparecerán las solicitudes -->
 				<div class="col">
 					<ul class="list-group ">
 
@@ -67,7 +65,6 @@
 							</li>
 						}
 
-						<!-- Solicitudes -->
 						@foreach (var item in Model.UserVacationDays)
 						{
 							<li class="list-group-item">
@@ -77,15 +74,11 @@
 									<div class="col">@Html.DisplayFor(model => item.AcquiredDays)</div>
 									<div class="col">@Html.DisplayFor(model => item.AdditionalDays)</div>
 									<div class="col">
-										<!--<a data-bs-toggle="modal" data-bs-target="#editModal" class="btn btn-unstyled custom-icon-edit"><i class="bi bi-pencil-square"></i></a>
-										<a data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-unstyled custom-icon-delete"><i class="bi bi-trash-fill"></i></a>-->
 										<a asp-controller="UserVacationDays" asp-action="Edit" asp-route-id="@item.UserId" class="btn btn-unstyled custom-icon-edit"><i class="bi bi-pencil-square"></i></a>
 										<a asp-controller="UserVacationDays" asp-action="Delete" asp-route-id="@item.UserId" class="btn btn-unstyled custom-icon-delete"><i class="bi bi-trash-fill"></i></a>
 									</div>
 								</div>
 							</li>
-							@*@Html.Partial("../Components/ModalEditRequest", item)
-						@Html.Partial("../Components/ModalDeleteRequest", item)*@
 						}
 					</ul>
 				</div>

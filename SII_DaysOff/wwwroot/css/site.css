@@ -117,3 +117,29 @@ a.title {
 .test {
     overflow-x: auto;
 }
+
+/* LOGIN */
+.custom-button-LogIn-Register {
+    border: 1px solid lightgrey;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    font-size: 120%;
+    color: #828991;
+    border-radius: 3px;
+    transition: 0.3s;
+}
+
+    .custom-button-LogIn-Register:hover {
+        background-color: #004278;
+        color: white;
+    }
+
+
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}

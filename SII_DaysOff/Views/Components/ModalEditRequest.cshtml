@@ -1,6 +1,5 @@
 ﻿@model SII_DaysOff.Models.Requests
 
-<!-- Modal que se abre al darle a crear nueva solicitud -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -11,7 +10,6 @@
             <div class="modal-body">
                 <form asp-action="Edit" asp-controller="requests" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <!--<input type="hidden" asp-for="RequestId" />-->
                     <div class="form-group">
                         <div class="row p-3">
                             <div class="col-3 fw-bold">
@@ -72,7 +70,6 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <!--<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
                         <button type="submit" class="custom-button">Update request</button>
                     </div>
                 </form>

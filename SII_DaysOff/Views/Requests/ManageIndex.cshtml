@@ -27,11 +27,8 @@
 	<div class="parent">
 		<div class="card-body cardRequestsManage">
 			<div class="row">
-
-				<!-- Aquí aparecerán las solicitudes -->
 				<div class="col">
 					<ul class="list-group ">
-
 						@if (Model.Requests.Count() == 0)
 						{
 							<div class="row">
@@ -78,7 +75,6 @@
 							</li>
 						}
 
-						<!-- Solicitudes -->
 						@foreach (var item in Model.Requests)
 						{
 							<li class="list-group-item">
@@ -88,7 +84,6 @@
 									<div class="col">@Html.DisplayFor(model => item.StartDate)</div>
 									<div class="col d-flex justify-content-center align-items-center">
 										@{
-											Console.WriteLine("\n\n\n\n\n\n" + item.HalfDayStart);
 											if (item.HalfDayStart.Equals(true))
 											{
 												<i class="bi bi-check-square-fill"></i>

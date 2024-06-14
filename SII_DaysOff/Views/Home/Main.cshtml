@@ -16,7 +16,6 @@
 
 <h1 class="mx-4 mt-4">Days Off</h1>
 
-<!-- Tabs para admin -->
 <div class="card my-4 mx-4">
 	<div class="card-header bg-light">
 		<form asp-controller="Home" asp-action="Main" method="post">
@@ -24,7 +23,6 @@
 				<div class="col-12 col-xxl-10 col-xl-10 col-lg-10 col-md-9 col-sm-10 mb-2">
 					<span class="fw-bolder">Time off balance in 2024</span>
 				</div>
-				<!--<div class="input-group">-->
 				<div class="col-6 col-xxl-2 col-xl-2 col-lg-2 col-md-3 col-sm-2 d-flex justify-content-end">
 					<div class="form-group">
 						<input type="number" class="form-control custom-button" min="2000" max="2050" id="yearPicker" name="year" value="@ViewData["YearSelected"]" readonly />
@@ -39,8 +37,6 @@
 		<div class="row text-center">
 			@if (Model.User != null)
 			{
-
-				Console.WriteLine("\n\n  2 User -> " + Model.User.UserVacationDays.Year);
 				<div class="col-6 col-sm-2">
 					<p class="fw-bold">Annual days off</p>
 					<p>@Model.User.UserVacationDays.YearNavigation.DayVacations</p>
@@ -66,7 +62,6 @@
 				<div class="col-6 col-sm-2">
 					<p class="fw-bold">Validity start date</p>
 					@{
-						Console.WriteLine(" ||| CreationDate -> " + Model.User.CreationDate.Year + " <==> " + DateTime.Now.Year);
 						if (Model.User.CreationDate.Year == int.Parse(Model.Year))
 						{
 							<p>@Model.User.CreationDate.ToString("yyyy-MM-dd")</p>
@@ -97,7 +92,6 @@
 					var user = await UserManager.GetUserAsync(User);
 					if (user != null)
 					{
-						Console.WriteLine("\n\n\n\n\n " + user.RoleId + "  -  " + Model.AdminId);
 						if (user.RoleId.Equals(Model.AdminId))
 						{
 							if (ViewBag.pendingRequests > 0)
@@ -156,10 +150,6 @@
 		<div class="card-body cardRequests">
 			@if (!Model.Requests.Any())
 			{
-				@*<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
-			<strong>No requests found </strong> <!--Press <a asp-controller="Home" asp-action="Main" class="alert-link" asp-route-year="@ViewData["YearSelected"]">"Here"</a> to see all requests.-->
-			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-			</div>*@
 				<div class="row">
 					<div class="col-12 d-flex justify-content-center">
 						<i class="bi bi-file-earmark-excel-fill custom-icon"></i>
@@ -170,16 +160,6 @@
 						<p class="no-data-text">No data found. Add a line to submit data.</p>
 					</div>
 				</div>
-				<!--<div class="row">
-					<div class="col d-flex justify-content-center">
-						<i class="bi bi-folder-x no-data"></i>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col d-flex justify-content-center">
-						<p>No data available at this moment</p>
-					</div>
-				</div>-->
 			}
 			else
 			{
@@ -229,7 +209,6 @@
 											<div class="col d-flex justify-content-center align-items-center">@Html.DisplayFor(model => item.StartDate)</div>
 											<div class="col d-flex justify-content-center align-items-center">
 												@{
-													Console.WriteLine("\n\n\n\n\n\n" + item.HalfDayStart);
 													if (item.HalfDayStart.Equals(true))
 													{
 														<i class="bi bi-check-square-fill"></i>
@@ -278,9 +257,7 @@
 												@Html.Partial("../Components/ModalDeleteRequest", item)
 												<div class="col">
 													<a asp-controller="Requests" asp-action="Edit" asp-route-id="@item.RequestId" class="btn btn-unstyled custom-icon-edit-delete"><i class="bi bi-pencil-square"></i></a>
-													@*<a data-id="@item.RequestId" data-bs-toggle="modal" data-bs-target="#editModal" class="btn btn-unstyled custom-icon-edit edit-request-button"><i class="bi bi-pencil-square"></i></a>*@
 													<a asp-controller="Requests" asp-action="Delete" asp-route-id="@item.RequestId" method="post" class="btn btn-unstyled custom-icon-edit-delete"><i class="bi bi-trash-fill"></i></a>
-													@*<a data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-unstyled custom-icon-delete"><i class="bi bi-trash-fill"></i></a>*@
 												</div>
 											}
 										</div>

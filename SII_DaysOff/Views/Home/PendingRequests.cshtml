@@ -4,7 +4,6 @@
 
 <h1 class="mx-4">Days Off</h1>
 
-<!-- Primer div con información de días disponibles, tomados... -->
 <div class="card my-5 mx-4">
 	<div class="card-header bg-light">
 		<span>Time off balance in 2024</span>
@@ -39,10 +38,7 @@
 	</div>
 </div>
 
-<!-- Segundo div -->
 <div class="card shadow my-4 mx-4">
-
-	<!-- Parte superior con botón para iniciar solicitud nueva -->
 	<div class="card-header bg-light">
 		<div class="row">
 			<div class="col-6 d-flex justify-content-start align-items-center">
@@ -54,7 +50,6 @@
 		</div>
 	</div>
 
-	<!-- Dropdown con las 3 opciones de visualización de solicictudes -->
 	<div class="card-body">
 		<div class="row">
 			<div class="col-auto">
@@ -72,19 +67,8 @@
 				</div>
 			</div>
 
-			<!-- Aquí aparecerán las solicitudes -->
 			<div class="col">
 				<ul class="list-group ">
-					<!--
-						1. Motivo
-						2. Día inicio
-						3. Es medio día?
-						4. Día fin
-						5. Es medio día ?
-						6. Días totales
-						7. Día solicitud
-						8. Estado
-					-->
 					<li class="list-group-item list-group-item-primary">
 						<div class="row text-center">
 							<div class="col fw-bold">
@@ -114,7 +98,6 @@
 						</div>
 					</li>
 
-					<!-- Solicitudes -->
 					<li class="list-group-item">
 						<div class="row text-center">
 							<div class="col">
@@ -176,7 +159,6 @@
 		</div>
 	</div>
 
-	<!-- Modal que se abre al darle a crear nueva solicitud -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -241,7 +223,6 @@
 		</div>
 	</div>
 
-	<!-- Mensaje de solicitud enviada (toast) -->
 	<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
 		<div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
 			<div class="toast-header">
@@ -259,18 +240,8 @@
 </div>
 
 <script>
-
-	/* Modal enviar solicitud */
 	var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), options)
 	myModal.show();
-
-	/* Toast */
-	/*document.getElementById('showToast').addEventListener('click', function () {
-		var toast = document.getElementById('#liveToast');
-
-		var bsToast = new bootstrap.Toast(toast);
-		bsToast.show();
-	});*/
 
 	var option = {
 		animation: true,

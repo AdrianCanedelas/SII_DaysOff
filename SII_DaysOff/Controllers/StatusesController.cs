@@ -26,15 +26,12 @@ namespace SII_DaysOff.Controllers
         // GET: Statuses
         public async Task<IActionResult> Index(string sortOrder, string searchString, int? numPage, string currentFilter, int registerCount)
         {
-            //Ordenación
             ViewData["NameOrder"] = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
             ViewData["DescriptionOrder"] = sortOrder == "Description" ? "Description_desc" : "Description";
 
-            //Cuadro de búsqueda
             ViewData["CurrentFilter"] = searchString;
 
             var statuses = _context.Statuses.Include(r => r.CreatedByNavigation).Include(r => r.ModifiedByNavigation).AsQueryable();
-            //Paginacion
             if (searchString != null) numPage = 1;
             else searchString = currentFilter;
 
@@ -117,14 +114,18 @@ namespace SII_DaysOff.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.GetUserAsync(User);
+
                 statuses.StatusId = Guid.NewGuid();
                 statuses.CreatedBy = user.Id;
                 statuses.ModifiedBy = user.Id;
                 statuses.CreationDate = DateTime.Now;
                 statuses.ModificationDate = DateTime.Now;
+
                 _context.Add(statuses);
                 await _context.SaveChangesAsync();
+
 				TempData["toastMessage"] = "The status has been created";
+
 				return LocalRedirect("~/Home/Main");
             }
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", statuses.CreatedBy);
@@ -173,6 +174,7 @@ namespace SII_DaysOff.Controllers
 
 					_context.Update(statuses);
                     await _context.SaveChangesAsync();
+
 					TempData["toastMessage"] = "The status has been edited";
 				}
                 catch (DbUpdateConcurrencyException)
@@ -229,7 +231,9 @@ namespace SII_DaysOff.Controllers
             }
             
             await _context.SaveChangesAsync();
+
 			TempData["toastMessage"] = "The status has been deleted";
+
 			return RedirectToAction(nameof(Index));
         }
 

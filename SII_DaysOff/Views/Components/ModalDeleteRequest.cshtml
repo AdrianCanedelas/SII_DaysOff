@@ -4,7 +4,6 @@
     var id = Model.RequestId;
 }
 
-<!-- Modal que se abre al darle a crear nueva solicitud -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -62,9 +61,6 @@
                 </div>
                 <hr />
                 <form asp-controller="requests" asp-action="Delete" asp-route-id="@id" method="post" class="d-flex justify-content-end">
-                    <!--<input type="hidden" asp-for="RequestId" />
-                    <input type="submit" value="Delete" class="btn btn-danger" /> |
-                    <a asp-controller="Home" asp-action="Main">Back to List</a>-->
                     <button type="submit" class="custom-button">Delete request</button>
                 </form>
             </div>
