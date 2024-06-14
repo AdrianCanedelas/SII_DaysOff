@@ -1,0 +1,49 @@
+﻿.custom-icon-calendar {
+    font-size: 25px;
+    opacity: 70%;
+}
+
+.toast {
+    background-color: red;
+    color: yellow;
+}
+
+.custom-button-excel {
+    border: 1px solid lightgrey;
+    padding-inline: 10px;
+    padding-block: 6px;
+    text-decoration: none;
+    box-shadow: 1px 2px 3px 1px lightgrey;
+    color: #097f03;
+    transition: 0.3s;
+    font-size: 100%;
+    margin-inline: 5px;
+    background-color: white;
+    text-align: center;
+}
+
+    .custom-button-excel:hover {
+        border: 1px solid #084403;
+        box-shadow: none;
+        color: #084403;
+    }
+
+.custom-button-pdf {
+    border: 1px solid lightgrey;
+    padding-inline: 10px;
+    padding-block: 6px;
+    text-decoration: none;
+    box-shadow: 1px 2px 3px 1px lightgrey;
+    color: #d30012;
+    transition: 0.3s;
+    font-size: 100%;
+    margin-inline: 5px;
+    background-color: white;
+    text-align: center;
+}
+
+    .custom-button-pdf:hover {
+        border: 1px solid #70010f;
+        box-shadow: none;
+        color: #70010f;
+    }
