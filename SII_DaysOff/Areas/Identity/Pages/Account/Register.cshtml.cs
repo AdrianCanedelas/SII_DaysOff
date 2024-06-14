@@ -144,7 +144,7 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
 			//ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId");
 			ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Description");
-			ViewData["ManagerId"] = new SelectList(_context.AspNetUsers, "Id", "UserName");
+			ViewData["ManagerId"] = new SelectList(_context.AspNetUsers.Include(m => m.RoleIdUser).Where(m => m.RoleIdUser.Name.Equals("Admin")), "Id", "UserName");
             ViewData["VacationDaysId"] = new SelectList(_context.VacationDays, "Year", "Year");
             /*
              ViewData["ManagerId"] = new SelectList(_context.AspNetUsers.Select(u => new

@@ -227,27 +227,9 @@ namespace SII_DaysOff.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("UserId,Year,AcquiredDays,AdditionalDays,CreatedBy,CreationDate,ModifiedBy,ModificationDate")] UserVacationDays userVacationDays)
         {
-            Console.WriteLine("\n\nUserVacationDays entraPOST");
-            Console.WriteLine("\n\nUserVacationDays: " + userVacationDays.UserId + " - " + userVacationDays.Year);
             if (id != userVacationDays.UserId)
             {
-                Console.WriteLine("1");
                 return NotFound();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                foreach (var entry in ModelState)
-                {
-                    var fieldName = entry.Key;
-                    var fieldValue = entry.Value;
-
-                    foreach (var error in fieldValue.Errors)
-                    {
-                        var errorMessage = error.ErrorMessage;
-                        Console.WriteLine($"Error en el campo: {fieldName}. Mensaje: {errorMessage}");
-                    }
-                }
             }
 
             if (ModelState.IsValid)
@@ -271,7 +253,6 @@ namespace SII_DaysOff.Controllers
 
 					var userVacationDaysTemp = _context.UserVacationDays.Where(u => u.Year.Equals(userVacationDays.Year)).Where(u => u.UserId.Equals(userVacationDays.UserId)).FirstOrDefault();
 					
-                    //Console.WriteLine("\n\ntemp -> " + userVacationDaysTemp.UserId + " - " + userVacationDaysTemp.Year);
 					if (userVacationDaysTemp != null)
 					{
 						_context.UserVacationDays.Remove(userVacationDaysTemp);
