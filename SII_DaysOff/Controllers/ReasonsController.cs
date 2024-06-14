@@ -135,7 +135,8 @@ namespace SII_DaysOff.Controllers
                 reasons.ModificationDate = DateTime.Now;
                 _context.Add(reasons);
                 await _context.SaveChangesAsync();
-                return LocalRedirect("~/Home/Main");
+				TempData["toastMessage"] = "The reasons has been created";
+				return LocalRedirect("~/Home/Main");
             }
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", reasons.CreatedBy);
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", reasons.ModifiedBy);
@@ -183,7 +184,8 @@ namespace SII_DaysOff.Controllers
 
 					_context.Update(reasons);
                     await _context.SaveChangesAsync();
-                }
+					TempData["toastMessage"] = "The reasons has been edited";
+				}
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!ReasonsExists(reasons.ReasonId))
@@ -238,7 +240,8 @@ namespace SII_DaysOff.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+			TempData["toastMessage"] = "The reasons has been deleted";
+			return RedirectToAction(nameof(Index));
         }
 
         private bool ReasonsExists(Guid id)

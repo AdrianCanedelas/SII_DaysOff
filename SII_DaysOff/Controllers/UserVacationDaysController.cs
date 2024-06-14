@@ -173,7 +173,8 @@ namespace SII_DaysOff.Controllers
 				userVacationDays.ModificationDate = DateTime.Now;
                 _context.Add(userVacationDays);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+				TempData["toastMessage"] = "The user vacation days has been created";
+				return RedirectToAction(nameof(Index));
             }
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", userVacationDays.CreatedBy);
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", userVacationDays.ModifiedBy);
@@ -244,6 +245,7 @@ namespace SII_DaysOff.Controllers
 
 					_context.Add(userVacationDays);
 					await _context.SaveChangesAsync();
+					TempData["toastMessage"] = "The user vacation days has been edited";
 				}
                 catch (DbUpdateConcurrencyException)
                 {
@@ -303,7 +305,8 @@ namespace SII_DaysOff.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+			TempData["toastMessage"] = "The user vacation days has been deleted";
+			return RedirectToAction(nameof(Index));
         }
 
         private bool UserVacationDaysExists(Guid id)

@@ -15,6 +15,10 @@ body {
     /*font-family: 'lato';*/
 }
 
+.toast {
+    background-color: red;
+    color: yellow;
+}
 
 html {
     font-size: 14px;

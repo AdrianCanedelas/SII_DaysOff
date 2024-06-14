@@ -271,8 +271,8 @@ namespace SII_DaysOff.Controllers
                         
                 _context.Add(requests);
                 await _context.SaveChangesAsync();
-                TempData["message"] = "Your request has been created!";
-                return LocalRedirect("~/Home/Main");
+				TempData["toastMessage"] = "Your request has been created";
+				return LocalRedirect("~/Home/Main");
             }
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.CreatedBy);
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.ModifiedBy);
@@ -325,6 +325,7 @@ namespace SII_DaysOff.Controllers
 
 					_context.Update(requests);
 					await _context.SaveChangesAsync();
+					TempData["toastMessage"] = "Your request has been edited";
 				}
                 catch (DbUpdateConcurrencyException)
                 {
@@ -392,6 +393,7 @@ namespace SII_DaysOff.Controllers
             }
 
 			await _context.SaveChangesAsync();
+			TempData["toastMessage"] = "The request has been " + option;
 
 			return RedirectToAction(nameof(ManageIndex));
 		}
@@ -731,6 +733,7 @@ namespace SII_DaysOff.Controllers
             }
             
             await _context.SaveChangesAsync();
+			TempData["toastMessage"] = "Your request has been deleted";
 
 			return LocalRedirect("~/Home/Main");
 		}

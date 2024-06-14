@@ -124,7 +124,8 @@ namespace SII_DaysOff.Controllers
                 statuses.ModificationDate = DateTime.Now;
                 _context.Add(statuses);
                 await _context.SaveChangesAsync();
-                return LocalRedirect("~/Home/Main");
+				TempData["toastMessage"] = "The status has been created";
+				return LocalRedirect("~/Home/Main");
             }
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", statuses.CreatedBy);
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", statuses.ModifiedBy);
@@ -172,7 +173,8 @@ namespace SII_DaysOff.Controllers
 
 					_context.Update(statuses);
                     await _context.SaveChangesAsync();
-                }
+					TempData["toastMessage"] = "The status has been edited";
+				}
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!StatusesExists(statuses.StatusId))
@@ -227,7 +229,8 @@ namespace SII_DaysOff.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+			TempData["toastMessage"] = "The status has been deleted";
+			return RedirectToAction(nameof(Index));
         }
 
         private bool StatusesExists(Guid id)

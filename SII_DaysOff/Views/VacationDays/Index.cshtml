@@ -156,6 +156,20 @@
 
 </div>
 
+@section Scripts {
+	@if (TempData["toastMessage"] != null)
+	{
+		<script type="text/javascript">
+			toastr.options = {
+				closeButton: true,
+				HTMLProgressElement: true,
+				positionClass: 'toast-bottom-right',
+				toastClass: 'toast'
+			}
+			toastr.success('@TempData["toastMessage"]');
+		</script>
+	}
+}
 
 @* <h1>Index</h1>
 
