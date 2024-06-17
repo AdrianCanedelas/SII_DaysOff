@@ -84,6 +84,11 @@ a.title {
     color: white;
 }
 
+.custom-list-group-delete {
+    background-color: white;
+    color: black;
+}
+
 .nav-link.active {
     background-color: var(--bs-primary) !important;
     color: white !important;

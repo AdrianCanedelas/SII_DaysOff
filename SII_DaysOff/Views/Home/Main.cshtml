@@ -256,8 +256,8 @@
 												@Html.Partial("../Components/ModalEditRequest", item)
 												@Html.Partial("../Components/ModalDeleteRequest", item)
 												<div class="col">
-													<a asp-controller="Requests" asp-action="Edit" asp-route-id="@item.RequestId" class="btn btn-unstyled custom-icon-edit-delete"><i class="bi bi-pencil-square"></i></a>
-													<a asp-controller="Requests" asp-action="Delete" asp-route-id="@item.RequestId" method="post" class="btn btn-unstyled custom-icon-edit-delete"><i class="bi bi-trash-fill"></i></a>
+													<a asp-controller="Requests" asp-action="Edit" asp-route-id="@item.RequestId" class="btn btn-unstyled custom-icon-edit"><i class="bi bi-pencil-square"></i></a>
+													<a asp-controller="Requests" asp-action="Delete" asp-route-id="@item.RequestId" method="post" class="btn btn-unstyled custom-icon-delete"><i class="bi bi-trash-fill"></i></a>
 												</div>
 											}
 										</div>

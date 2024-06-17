@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Manage.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -43,9 +44,10 @@ namespace SII_DaysOff.Controllers
 			if (optionStatus != null && optionStatus != "") ViewData["Status"] = optionStatus;
 			var currentOptionStatus = ViewData["status"];
 
-			if(year != null) _contextAccessor.HttpContext.Session.SetString("sessionYear", year);
+			if (_contextAccessor.HttpContext.Session.GetString("sessionYear") == null) _contextAccessor.HttpContext.Session.SetString("sessionYear", DateTime.Now.Year+"");
+			if (year != null) _contextAccessor.HttpContext.Session.SetString("sessionYear", year);
 
-			ViewData["YearSelected"] = year;
+			ViewData["YearSelected"] = _contextAccessor.HttpContext.Session.GetString("sessionYear");
 			ViewData["ReasonOrder"] = String.IsNullOrEmpty(sortOrder) ? "Reason_desc" : "";
 			ViewData["StartDayOrder"] = sortOrder == "StartDay" ? "StartDay_desc" : "StartDay";
 			ViewData["HalfDayStartOrder"] = sortOrder == "HalfDayStart" ? "HalfDayStart_desc" : "HalfDayStart";

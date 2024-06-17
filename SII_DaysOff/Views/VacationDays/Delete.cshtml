@@ -9,32 +9,36 @@
 
 <h1 class="ms-3">Delete vacation days</h1>
 <hr />
-<div class="row custom-container-edit mx-auto">
-    <div class="col-12 ms-3">
-        <div class="row py-2">
-            <div class="col-12">
+<div class="row d-flex justify-content-center bg-white py-2">
+    <div class="col-4 p-5">
+        <div class="row">
+            <div class="col-12 mb-3">
                 <h3 style="color: #d30012;">Are you sure you want to delete this?</h3>
             </div>
         </div>
-        <div class="row py-3">
-            <div class="col-6 col-md-2 fw-bold">
+        <div class="row">
+            <div class="col-6 fw-bold">
                 @Html.DisplayNameFor(model => model.Year)
             </div>
-            <div class="col-6">
+            <div class="col-6 custom-form-delete">
                 <span>@Html.DisplayNameFor(model => model.Year)</span>
             </div>
         </div>
-        <div class="row py-3">
-            <div class="col-6 col-md-2 fw-bold">
+        <div class="row">
+            <div class="col-6 fw-bold">
                 @Html.DisplayNameFor(model => model.DayVacations)
             </div>
-            <div class="col-6">
+            <div class="col-6 custom-form-delete">
                 @Html.DisplayFor(model => model.DayVacations)
             </div>
         </div>
-        <form asp-action="Delete" class="my-4">
-            <input type="hidden" asp-for="Year" />
-            <input type="submit" value="Delete" class="custom-button" />
-        </form>
+        <div class="row">
+            <div class="col-12">
+                <form asp-action="Delete" class="my-4">
+                    <input type="hidden" asp-for="Year" />
+                    <input type="submit" value="Delete" class="custom-button" />
+                </form>
+            </div>
+        </div>
     </div>
 </div>
