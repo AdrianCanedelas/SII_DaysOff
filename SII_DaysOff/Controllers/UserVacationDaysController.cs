@@ -175,14 +175,19 @@ namespace SII_DaysOff.Controllers
         }
 
         // GET: UserVacationDays/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid? id, string year)
         {
             if (id == null || _context.UserVacationDays == null)
             {
                 return NotFound();
             }
 
-            var userVacationDays = await _context.UserVacationDays.FindAsync(id);
+            if (year == null || _context.UserVacationDays == null)
+            {
+                return NotFound();
+            }
+
+            var userVacationDays = _context.UserVacationDays.Where(u => u.UserId.Equals(id) && u.Year.Equals(year)).FirstOrDefault();
             if (userVacationDays == null)
             {
                 return NotFound();
@@ -259,19 +264,24 @@ namespace SII_DaysOff.Controllers
         }
 
         // GET: UserVacationDays/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(Guid? id, string year)
         {
             if (id == null || _context.UserVacationDays == null)
             {
                 return NotFound();
             }
 
-            var userVacationDays = await _context.UserVacationDays
+            if (year == null || _context.UserVacationDays == null)
+            {
+                return NotFound();
+            }
+
+            var userVacationDays = _context.UserVacationDays
                 .Include(u => u.CreatedByNavigation)
                 .Include(u => u.ModifiedByNavigation)
                 .Include(u => u.User)
                 .Include(u => u.YearNavigation)
-                .FirstOrDefaultAsync(m => m.UserId == id);
+                .Where(u => u.UserId.Equals(id) && u.Year.Equals(year)).FirstOrDefault();
             if (userVacationDays == null)
             {
                 return NotFound();

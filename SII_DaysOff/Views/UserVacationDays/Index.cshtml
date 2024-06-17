@@ -74,8 +74,8 @@
 									<div class="col">@Html.DisplayFor(model => item.AcquiredDays)</div>
 									<div class="col">@Html.DisplayFor(model => item.AdditionalDays)</div>
 									<div class="col">
-										<a asp-controller="UserVacationDays" asp-action="Edit" asp-route-id="@item.UserId" class="btn btn-unstyled custom-icon-edit"><i class="bi bi-pencil-square"></i></a>
-										<a asp-controller="UserVacationDays" asp-action="Delete" asp-route-id="@item.UserId" class="btn btn-unstyled custom-icon-delete"><i class="bi bi-trash-fill"></i></a>
+										<a asp-controller="UserVacationDays" asp-action="Edit" asp-route-id="@item.UserId" asp-route-year="@item.Year" class="btn btn-unstyled custom-icon-edit"><i class="bi bi-pencil-square"></i></a>
+										<a asp-controller="UserVacationDays" asp-action="Delete" asp-route-id="@item.UserId" asp-route-year="@item.Year" class="btn btn-unstyled custom-icon-delete"><i class="bi bi-trash-fill"></i></a>
 									</div>
 								</div>
 							</li>
