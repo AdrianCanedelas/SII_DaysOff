@@ -93,6 +93,14 @@ namespace SII_DaysOff.Controllers
 			return View(viewModel);
         }
 
+        public SelectList getYearsByUserId(Guid id)
+        {
+            var totalYears = _context.VacationDays.Select(v => v.Year).Distinct().ToList();
+            var userSelectedYears = _context.UserVacationDays.Where(u => u.UserId.Equals(id)).Select(u => u.Year).ToList();
+
+            return new SelectList(totalYears.Where(v => !userSelectedYears.Contains(v)).ToList());
+        }
+
         // GET: UserVacationDays/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {

@@ -342,6 +342,30 @@
 </div>
 
 @section Scripts {
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('#selectUser').change(function () {
+				var selectedUser = $(this).val();
+				if (selectedUser) {
+					$.ajax({
+						url: '@Url.Action("getYearsByUserId", "UserVacationDays")',
+						data: { id: selectedUser },
+						success: function (data) {
+							console.log('success');
+							var years = $('#selectYears');
+							years.empty();
+							$.each(data, function (i, item) {
+								years.append($('<option>', { value: item.value, text: item.text }));
+							});
+						}
+					});
+				} else {
+					$('#selectYears').empty();
+				}
+			});
+		});
+	</script>
 	@if (TempData["toastMessage"] != null)
 	{
 		<script type="text/javascript">
