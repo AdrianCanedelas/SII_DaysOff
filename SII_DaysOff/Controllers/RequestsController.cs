@@ -474,6 +474,12 @@ namespace SII_DaysOff.Controllers
                 month = DateTime.Now.Month + "";
             }
 
+            Console.WriteLine("\n\n\n\n");
+            foreach(Requests i in daysOffCalendar)
+            {
+                Console.WriteLine(" | " + i.User.Name + " -> " + i.StartDate + " -> " + i.EndDate);
+            }
+
 			var fileName = type + ".xlsx";
             if(type.Equals("requests")) return GenerateExcel(fileName, daysOff);
             return GenerateExcel(fileName, daysOffCalendar, int.Parse(year), int.Parse(month));
@@ -511,14 +517,14 @@ namespace SII_DaysOff.Controllers
 
 					if (requests.Any(r => r.StartDate <= new DateTime(year, month, day) && r.EndDate >= new DateTime(year, month, day)))
                     {
-                        row = bottomCells(worksheet, row, column, XLColor.FromHtml("#f2f2f2"));
+                        //row = bottomCells(worksheet, row, column, XLColor.FromHtml("#f2f2f2"));
 
                         int pastRow = row;
 						foreach (Requests r in requests)
                         {
                             if(r.StartDate <= new DateTime(year, month, day) && r.EndDate >= new DateTime(year, month, day))
-                            {
-                                if(new DateTime(year, month, day) != r.EndDate || r.EndDate == r.StartDate)
+							{
+								if (new DateTime(year, month, day) != r.EndDate || r.EndDate == r.StartDate)
                                 {
                                     cont++;
 									row++;
