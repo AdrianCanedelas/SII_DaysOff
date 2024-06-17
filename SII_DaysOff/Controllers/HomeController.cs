@@ -38,9 +38,8 @@ namespace SII_DaysOff.Controllers
 			return View();
 		}
 
-		public async Task<IActionResult> MainAsync(string sortOrder, string searchString, int? numPage, string currentFilter, string optionStatus, string year, int registerCount)
+		public async Task<IActionResult> MainAsync(string sortOrder, string searchString, int? numPage, string optionStatus, string year, int registerCount)
 		{
-			//if (year == null) year = DateTime.Now.Year.ToString();
 			if (optionStatus != null && optionStatus != "") ViewData["Status"] = optionStatus;
 			var currentOptionStatus = ViewData["status"];
 
@@ -94,23 +93,32 @@ namespace SII_DaysOff.Controllers
 			ViewData["YearId"] = new SelectList(_context.VacationDays, "Year", "Year");
 
 			// Paginacion
-			if (searchString != null) numPage = 1;
-			else searchString = currentFilter;
-
-			if (!String.IsNullOrEmpty(searchString))
+			if (searchString != null && !searchString.Equals("-1"))
 			{
-				requests = requests.Where(r => r.Reason.Name.Contains(searchString)
-					|| r.StartDate.ToString().Contains(searchString)
-					|| r.EndDate.ToString().Contains(searchString)
-					|| r.RequestDate.ToString().Contains(searchString)
-					|| r.Comments.Contains(searchString)
-					|| r.Status.Name.Contains(searchString));
+				numPage = 1;
+				_contextAccessor.HttpContext.Session.SetString("searchStringMain", searchString);
+			} else if(searchString == null)
+			{
+				_contextAccessor.HttpContext.Session.SetString("searchStringMain", "");
+			}
+
+			if (!String.IsNullOrEmpty(_contextAccessor.HttpContext.Session.GetString("searchStringMain")))
+			{
+				requests = requests.Where(r => r.Reason.Name.Contains(_contextAccessor.HttpContext.Session.GetString("searchStringMain"))
+					|| r.StartDate.ToString().Contains(_contextAccessor.HttpContext.Session.GetString("searchStringMain"))
+					|| r.EndDate.ToString().Contains(_contextAccessor.HttpContext.Session.GetString("searchStringMain"))
+					|| r.RequestDate.ToString().Contains(_contextAccessor.HttpContext.Session.GetString("searchStringMain"))
+					|| r.Comments.Contains(_contextAccessor.HttpContext.Session.GetString("searchStringMain"))
+					|| r.Status.Name.Contains(_contextAccessor.HttpContext.Session.GetString("searchStringMain")));
 			}
 
 			ViewData["CurrentOrder"] = sortOrder;
-			ViewData["CurrentFilter"] = searchString;
-			if (registerCount == 0) registerCount = 5;
-			ViewData["RegisterCount"] = registerCount;
+			ViewData["CurrentFilter"] = _contextAccessor.HttpContext.Session.GetString("searchStringMain");
+			if (registerCount == 0) _contextAccessor.HttpContext.Session.SetInt32("registerCountMain", 5);
+			else if(registerCount == null) _contextAccessor.HttpContext.Session.SetInt32("registerCountMain", 5);
+			else if(registerCount != 11) _contextAccessor.HttpContext.Session.SetInt32("registerCountMain", registerCount);
+			ViewData["RegisterCount"] = _contextAccessor.HttpContext.Session.GetInt32("registerCountMain");
+			if (ViewData["RegisterCount"] == null) ViewData["RegisterCount"] = 5;
 
 			switch (sortOrder)
 			{
@@ -178,13 +186,15 @@ namespace SII_DaysOff.Controllers
 
 			ViewData["PendingRequests"] = pendingRequests;
 
-			var paginatedRequests = await PaginatedList<Requests>.CreateAsync(requests.AsNoTracking(), numPage ?? 1, registerCount);
+			var registerCountMain = 5;
+			if (_contextAccessor.HttpContext.Session.GetInt32("registerCountMain") != null) registerCountMain = (int)_contextAccessor.HttpContext.Session.GetInt32("registerCountMain");
+			var paginatedRequests = await PaginatedList<Requests>.CreateAsync(requests.AsNoTracking(), numPage ?? 1, registerCountMain);
 			var viewModel = new MainViewModel
 			{
 				User = logedUser,
 				Requests = paginatedRequests,
 				TotalRequest = requests.Count(),
-				PageSize = registerCount,
+				PageSize = registerCountMain,
 				Year = _contextAccessor.HttpContext.Session.GetString("sessionYear"),
 				AdminId = _context.Roles.Where(r => r.Name.Equals("Admin")).Select(r => r.Id).FirstOrDefault()
 			};

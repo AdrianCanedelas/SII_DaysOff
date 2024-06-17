@@ -96,7 +96,7 @@
 						{
 							if (ViewBag.pendingRequests > 0)
 							{
-								<a class="custom-button position-relative" asp-controller="Requests" asp-action="ManageIndex" asp-route-year="@ViewData["YearSelected"]">
+								<a class="custom-button position-relative" asp-controller="Requests" asp-action="ManageIndex" asp-route-registerCount="11" asp-route-searchString="-1" asp-route-year="@ViewData["YearSelected"]">
 									Manage request
 									<span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
 										@ViewBag.pendingRequests
@@ -106,9 +106,9 @@
 							}
 							else
 							{
-								<a class="custom-button-disabled position-relative btn disabled" asp-area="" asp-controller="Requests" asp-action="ManageIndex" asp-route-year="@ViewData["YearSelected"]">Manage requests</a>
+								<a class="custom-button-disabled position-relative btn disabled" asp-controller="Requests" asp-action="ManageIndex" asp-route-registerCount="11" asp-route-searchString="-1">Manage requests</a>
 							}
-							<a type="submit" class="custom-button" asp-controller="Requests" asp-action="Calendar" asp-route-year="@ViewData["YearSelected"]">Calendar</a>
+							<a type="submit" class="custom-button" asp-controller="Requests" asp-action="Calendar">Calendar</a>
 						}
 					}
 				}
@@ -137,7 +137,7 @@
 							<input type="hidden" name="year" value="@ViewData["YearSelected"]" />
 							<input type="submit" value="Search" class="custom-button" /> |
 							<a asp-action="Main" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" asp-route-optionStatus="@ViewData["status"]" class="mx-2 custom-link">Back to Full List</a> |
-							<input type="number" min="0" max="10" name="registerCount" value="@ViewData["RegisterCount"]" class="custom-button">
+							<input type="number" min="1" max="10" name="registerCount" value="@ViewData["RegisterCount"]" class="custom-button">
 							<label for="floatingInputValue" class="mx-2 custom-link">Results on page</label>
 						</p>
 					</div>
@@ -274,7 +274,7 @@
 	@{
 		var previousDisabled = !Model.Requests.HasPreviousPage ? "disabled" : "";
 		var nextDisabled = !Model.Requests.HasNextPage ? "disabled" : "";
-		var registerCount = (int)ViewData["RegisterCount"];
+		//var registerCount = (int)ViewData["RegisterCount"];
 	}
 
 	<div class="card-footer py-3">
@@ -342,7 +342,7 @@
 </div>
 
 @section Scripts {
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
 			$('#selectUser').change(function () {
@@ -365,7 +365,7 @@
 				}
 			});
 		});
-	</script>
+	</script>*@
 	@if (TempData["toastMessage"] != null)
 	{
 		<script type="text/javascript">

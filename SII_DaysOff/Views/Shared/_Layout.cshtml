@@ -35,7 +35,7 @@
 								<img src="~/img/siigroup-spain-whiteline.png" class="navBar" />
 							</div>
 							<div class="col-7">
-								<a id="manage" class="nav-link text-light title fw-bold" asp-controller="Home" asp-action="Main" asp-route-year="@ViewData["YearSelected"]">SII DaysOff</a>
+								<a id="manage" class="nav-link text-light title fw-bold" asp-controller="Home" asp-action="Main" asp-route-registerCount="11" asp-route-searchString="-1">SII DaysOff</a>
 							</div>
 						</div>
 					</div>
@@ -54,7 +54,7 @@
 											</a>
 											<ul class="dropdown-menu">
 												<li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#reasonModal">New reason</a></li>
-												<li><a class="btn dropdown-item" asp-controller="Reasons" asp-action="Index">Manage reasons</a></li>
+												<li><a class="btn dropdown-item" asp-controller="Reasons" asp-action="Index" asp-route-registerCount="11" asp-route-searchString="-1">Manage reasons</a></li>
 											</ul>
 										</div>
 										<div class="dropdown col-3">
@@ -63,7 +63,7 @@
 											</a>
 											<ul class="dropdown-menu">
 												<li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#statusModal">New status</a></li>
-												<a class="btn dropdown-item" asp-controller="Statuses" asp-action="Index">Manage statuses</a>
+												<a class="btn dropdown-item" asp-controller="Statuses" asp-action="Index" asp-route-registerCount="11" asp-route-searchString="-1">Manage statuses</a>
 											</ul>
 										</div>
 										<div class="dropdown col-3">
@@ -72,7 +72,7 @@
 											</a>
 											<ul class="dropdown-menu">
 												<li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#VacationDaysModal">New vacation days</a></li>
-												<a class="btn" asp-controller="VacationDays" asp-action="Index">Manage vacation days</a>
+												<a class="btn" asp-controller="VacationDays" asp-action="Index" asp-route-registerCount="11" asp-route-searchString="-1">Manage vacation days</a>
 											</ul>
 										</div>
 										<div class="dropdown col-3">
@@ -81,7 +81,7 @@
 											</a>
 											<ul class="dropdown-menu">
 												<li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#UserVacationDaysModal">New vacation days</a></li>
-												<a class="btn" asp-controller="UserVacationDays" asp-action="Index">Manage vacation days</a>
+												<a class="btn" asp-controller="UserVacationDays" asp-action="Index" asp-route-registerCount="11" asp-route-searchString="-1">Manage vacation days</a>
 											</ul>
 										</div>
 									</div>
@@ -103,22 +103,22 @@
 						switch (ViewData["Navigation"])
 						{
 							case "Reasons":
-								<a id="manage" asp-controller="Reasons" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" class="custom-go-back-link mt-2">
+								<a id="manage" asp-controller="Reasons" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="11" asp-route-searchString="-1" class="custom-go-back-link mt-2">
 									<span class="custom-go-back"><i class="bi bi-arrow-left"></i>  Go back</span>
 								</a>
 								break;
 							case "Statuses":
-								<a id="manage" asp-controller="Statuses" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" class="custom-go-back-link mt-2">
+								<a id="manage" asp-controller="Statuses" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="11" asp-route-searchString="-1" class="custom-go-back-link mt-2">
 									<span class="custom-go-back"><i class="bi bi-arrow-left"></i>  Go back</span>
 								</a>
 								break;
 							case "VacationDays":
-								<a id="manage" asp-controller="VacationDays" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" class="custom-go-back-link mt-2">
+								<a id="manage" asp-controller="VacationDays" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="11" asp-route-searchString="-1" class="custom-go-back-link mt-2">
 									<span class="custom-go-back"><i class="bi bi-arrow-left"></i>  Go back</span>
 								</a>
 								break;
 							case "UserVacationDays":
-								<a id="manage" asp-controller="UserVacationDays" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" class="custom-go-back-link mt-2">
+								<a id="manage" asp-controller="UserVacationDays" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="11" asp-route-searchString="-1" class="custom-go-back-link mt-2">
 									<span class="custom-go-back"><i class="bi bi-arrow-left"></i>  Go back</span>
 								</a>
 								break;
@@ -126,7 +126,7 @@
 					}
 					else
 					{
-						<a id="manage" asp-controller="Home" asp-action="Main" asp-route-year="@ViewData["YearSelected"]" class="custom-go-back-link mt-2">
+						<a id="manage" asp-controller="Home" asp-action="Main" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="11" asp-route-searchString="-1" class="custom-go-back-link mt-2">
 							<span class="custom-go-back"><i class="bi bi-arrow-left"></i>  Go back</span>
 						</a>
 					}

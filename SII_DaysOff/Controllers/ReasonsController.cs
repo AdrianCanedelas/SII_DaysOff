@@ -17,15 +17,17 @@ namespace SII_DaysOff.Controllers
     {
         private readonly DbContextBD _context;
         private UserManager<ApplicationUser> _userManager;
+		public readonly IHttpContextAccessor _contextAccessor;
 
-        public ReasonsController(DbContextBD context, UserManager<ApplicationUser> userManager)
+		public ReasonsController(DbContextBD context, UserManager<ApplicationUser> userManager, IHttpContextAccessor contextAccesor)
         {
             _context = context;
             _userManager = userManager;
+            _contextAccessor = contextAccesor;
         }
 
         // GET: Reasons
-        public async Task<IActionResult> Index(string sortOrder, string searchString, int? numPage, string currentFilter, int registerCount)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int? numPage, int registerCount)
         {
 			ViewData["NameOrder"] = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
 			ViewData["DescriptionOrder"] = sortOrder == "Description" ? "Description_desc" : "Description";
@@ -34,19 +36,32 @@ namespace SII_DaysOff.Controllers
 
 			var reasons = _context.Reasons.Include(r => r.CreatedByNavigation).Include(r => r.ModifiedByNavigation).AsQueryable();
 
-			if (searchString != null) numPage = 1;
-			else searchString = currentFilter;
+			/*if (searchString != null) numPage = 1;
+			else searchString = currentFilter;*/
 
-			if (!String.IsNullOrEmpty(searchString))
+			if (searchString != null && !searchString.Equals("-1"))
 			{
-                reasons = reasons.Where(r => r.Name.Contains(searchString)
-                || r.Description.Contains(searchString));
+				numPage = 1;
+				_contextAccessor.HttpContext.Session.SetString("searchStringReason", searchString);
+			}
+			else if (searchString == null)
+			{
+				_contextAccessor.HttpContext.Session.SetString("searchStringReason", "");
+			}
+
+			if (!String.IsNullOrEmpty(_contextAccessor.HttpContext.Session.GetString("searchStringReason")))
+			{
+                reasons = reasons.Where(r => r.Name.Contains(_contextAccessor.HttpContext.Session.GetString("searchStringReason"))
+                || r.Description.Contains(_contextAccessor.HttpContext.Session.GetString("searchStringReason")));
 			}
 
 			ViewData["CurrentOrder"] = sortOrder;
-			ViewData["CurrentFilter"] = searchString;
-			if (registerCount == 0) registerCount = 5;
-			ViewData["RegisterCount"] = registerCount;
+			ViewData["CurrentFilter"] = _contextAccessor.HttpContext.Session.GetString("searchStringReason");
+			if (registerCount == 0) _contextAccessor.HttpContext.Session.SetInt32("registerCountReason", 5);
+			else if (registerCount == null) _contextAccessor.HttpContext.Session.SetInt32("registerCountReason", 5);
+			else if (registerCount != 11) _contextAccessor.HttpContext.Session.SetInt32("registerCountReason", registerCount);
+			ViewData["RegisterCount"] = _contextAccessor.HttpContext.Session.GetInt32("registerCountReason");
+			if (ViewData["RegisterCount"] == null) ViewData["RegisterCount"] = 5;
 
 			ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Email");
 			ViewData["YearId"] = new SelectList(_context.VacationDays, "Year", "Year");
@@ -67,12 +82,14 @@ namespace SII_DaysOff.Controllers
 					break;
 			}
 
-			var paginatedReasons = await PaginatedList<Reasons>.CreateAsync(reasons.AsNoTracking(), numPage ?? 1, registerCount);
+			var registerCountReason = 5;
+			if (_contextAccessor.HttpContext.Session.GetInt32("registerCountReason") != null) registerCountReason = (int)_contextAccessor.HttpContext.Session.GetInt32("registerCountReason");
+			var paginatedReasons = await PaginatedList<Reasons>.CreateAsync(reasons.AsNoTracking(), numPage ?? 1, registerCountReason);
 			var viewModel = new MainViewModel
 			{
 				Reasons = paginatedReasons,
 				TotalRequest = reasons.Count(),
-				PageSize = registerCount,
+				PageSize = registerCountReason,
 			};
 
 			return View(viewModel);

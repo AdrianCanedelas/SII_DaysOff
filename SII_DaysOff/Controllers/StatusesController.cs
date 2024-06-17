@@ -16,11 +16,13 @@ namespace SII_DaysOff.Controllers
     {
         private readonly DbContextBD _context;
         private UserManager<ApplicationUser> _userManager;
+		public readonly IHttpContextAccessor _contextAccessor;
 
-        public StatusesController(DbContextBD context, UserManager<ApplicationUser> userManager)
+		public StatusesController(DbContextBD context, UserManager<ApplicationUser> userManager, IHttpContextAccessor contextAccesor)
         {
             _context = context;
             _userManager = userManager;
+            _contextAccessor = contextAccesor;
         }
 
         // GET: Statuses
@@ -29,22 +31,33 @@ namespace SII_DaysOff.Controllers
             ViewData["NameOrder"] = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
             ViewData["DescriptionOrder"] = sortOrder == "Description" ? "Description_desc" : "Description";
 
-            ViewData["CurrentFilter"] = searchString;
+			ViewData["CurrentFilter"] = searchString;
 
-            var statuses = _context.Statuses.Include(r => r.CreatedByNavigation).Include(r => r.ModifiedByNavigation).AsQueryable();
-            if (searchString != null) numPage = 1;
-            else searchString = currentFilter;
+			var statuses = _context.Statuses.Include(r => r.CreatedByNavigation).Include(r => r.ModifiedByNavigation).AsQueryable();
 
-            if (!String.IsNullOrEmpty(searchString))
+			if (searchString != null && !searchString.Equals("-1"))
+			{
+				numPage = 1;
+				_contextAccessor.HttpContext.Session.SetString("searchStringStatus", searchString);
+			}
+			else if (searchString == null)
+			{
+				_contextAccessor.HttpContext.Session.SetString("searchStringStatus", "");
+			}
+
+			if (!String.IsNullOrEmpty(_contextAccessor.HttpContext.Session.GetString("searchStringStatus")))
             {
-                statuses = statuses.Where(r => r.Name.Contains(searchString)
-                || r.Description.Contains(searchString));
+                statuses = statuses.Where(r => r.Name.Contains(_contextAccessor.HttpContext.Session.GetString("searchStringStatus"))
+                || r.Description.Contains(_contextAccessor.HttpContext.Session.GetString("searchStringStatus")));
             }
 
             ViewData["CurrentOrder"] = sortOrder;
-            ViewData["CurrentFilter"] = searchString;
-            if (registerCount == 0) registerCount = 5;
-            ViewData["RegisterCount"] = registerCount;
+			ViewData["CurrentFilter"] = _contextAccessor.HttpContext.Session.GetString("searchStringStatus");
+			if (registerCount == 0) _contextAccessor.HttpContext.Session.SetInt32("registerCountStatus", 5);
+			else if (registerCount == null) _contextAccessor.HttpContext.Session.SetInt32("registerCountStatus", 5);
+			else if (registerCount != 11) _contextAccessor.HttpContext.Session.SetInt32("registerCountStatus", registerCount);
+			ViewData["RegisterCount"] = _contextAccessor.HttpContext.Session.GetInt32("registerCountStatus");
+			if (ViewData["RegisterCount"] == null) ViewData["RegisterCount"] = 5;
 
 			ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Email");
 			ViewData["YearId"] = new SelectList(_context.VacationDays, "Year", "Year");
@@ -65,12 +78,14 @@ namespace SII_DaysOff.Controllers
                     break;
             }
 
-			var paginatedStatuses = await PaginatedList<Statuses>.CreateAsync(statuses.AsNoTracking(), numPage ?? 1, registerCount);
+			var registerCountStatus = 5;
+			if (_contextAccessor.HttpContext.Session.GetInt32("registerCountStatus") != null) registerCountStatus = (int)_contextAccessor.HttpContext.Session.GetInt32("registerCountStatus");
+			var paginatedStatuses = await PaginatedList<Statuses>.CreateAsync(statuses.AsNoTracking(), numPage ?? 1, registerCountStatus);
 			var viewModel = new MainViewModel
 			{
 				Statuses = paginatedStatuses,
 				TotalRequest = statuses.Count(),
-				PageSize = registerCount,
+				PageSize = registerCountStatus,
 			};
 
 			return View(viewModel);
