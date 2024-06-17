@@ -26,19 +26,15 @@ namespace SII_DaysOff.Controllers
         // GET: UserVacationDays
         public async Task<IActionResult> Index(string sortOrder, string searchString, int? numPage, string currentFilter, int registerCount)
         {
-			Console.WriteLine("\n\n\n\n SortOrder -> " + sortOrder);
-			//Ordenación
 			ViewData["UserOrder"] = String.IsNullOrEmpty(sortOrder) ? "User_desc" : "";
 			ViewData["YearOrder"] = sortOrder == "Year" ? "Year_desc" : "Year";
 			ViewData["AcquiredDaysOrder"] = sortOrder == "AcquiredDays" ? "AcquiredDays_desc" : "AcquiredDays";
 			ViewData["AdditionalDaysOrder"] = sortOrder == "AdditionalDays" ? "AdditionalDays_desc" : "AdditionalDays";
 
-			//Cuadro de búsqueda
 			ViewData["CurrentFilter"] = searchString;
 
 			var userVacationDays = _context.UserVacationDays.Include(r => r.CreatedByNavigation).Include(r => r.ModifiedByNavigation).Include(r => r.User).AsQueryable();
 
-			//Paginacion
 			if (searchString != null) numPage = 1;
 			else searchString = currentFilter;
 
@@ -61,35 +57,27 @@ namespace SII_DaysOff.Controllers
 			switch (sortOrder)
 			{
 				default:
-					Console.WriteLine("1");
 					userVacationDays = userVacationDays.OrderBy(r => r.User.Name);
 					break;
 				case "User_desc":
-					Console.WriteLine("2");
 					userVacationDays = userVacationDays.OrderByDescending(r => r.User.Name);
 					break;
 				case "Year_desc":
-					Console.WriteLine("3");
 					userVacationDays = userVacationDays.OrderByDescending(r => r.Year);
 					break;
 				case "Year":
-					Console.WriteLine("4");
 					userVacationDays = userVacationDays.OrderBy(r => r.Year);
 					break;
 				case "AcquiredDays_desc":
-					Console.WriteLine("3");
 					userVacationDays = userVacationDays.OrderByDescending(r => r.AcquiredDays);
 					break;
 				case "AcquiredDays":
-					Console.WriteLine("4");
 					userVacationDays = userVacationDays.OrderBy(r => r.AcquiredDays);
 					break;
 				case "AdditionalDays_desc":
-					Console.WriteLine("3");
 					userVacationDays = userVacationDays.OrderByDescending(r => r.AdditionalDays);
 					break;
 				case "AdditionalDays":
-					Console.WriteLine("4");
 					userVacationDays = userVacationDays.OrderBy(r => r.AdditionalDays);
 					break;
 			}
@@ -119,6 +107,7 @@ namespace SII_DaysOff.Controllers
                 .Include(u => u.User)
                 .Include(u => u.YearNavigation)
                 .FirstOrDefaultAsync(m => m.UserId == id);
+
             if (userVacationDays == null)
             {
                 return NotFound();
@@ -127,13 +116,31 @@ namespace SII_DaysOff.Controllers
             return View(userVacationDays);
         }
 
-        // GET: UserVacationDays/Create
-        public IActionResult Create()
+		public void yearSelectList(Guid selectedUserId)
+		{
+			var occupedYears = _context.UserVacationDays
+				.Where(u => u.UserId.Equals(selectedUserId))
+				.Select(u => u.Year)
+				.ToList();
+
+			var allYears = _context.VacationDays
+				.Select(v => v.Year)
+				.Distinct()
+				.ToList();
+
+			var availableYears = allYears.Except(occupedYears).ToList();
+			ViewData["YearId"] = new SelectList(availableYears);
+		}
+
+
+		// GET: UserVacationDays/Create
+		public IActionResult Create()
         {
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             ViewData["Year"] = new SelectList(_context.VacationDays, "Year", "Year");
+
             return View();
         }
 
@@ -147,13 +154,18 @@ namespace SII_DaysOff.Controllers
             if (ModelState.IsValid)
 			{
 				var user = await _userManager.GetUserAsync(User);
+
 				userVacationDays.CreatedBy = user.Id;
 				userVacationDays.ModifiedBy = user.Id;
 				userVacationDays.CreationDate = DateTime.Now;
 				userVacationDays.ModificationDate = DateTime.Now;
+
                 _context.Add(userVacationDays);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+				TempData["toastMessage"] = "The user vacation days has been created";
+
+				return RedirectToAction(nameof(Index));
             }
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", userVacationDays.CreatedBy);
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", userVacationDays.ModifiedBy);
@@ -163,15 +175,19 @@ namespace SII_DaysOff.Controllers
         }
 
         // GET: UserVacationDays/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid? id, string year)
         {
-            Console.WriteLine("\n\nUserVacationDays entraGET");
             if (id == null || _context.UserVacationDays == null)
             {
                 return NotFound();
             }
 
-            var userVacationDays = await _context.UserVacationDays.FindAsync(id);
+            if (year == null || _context.UserVacationDays == null)
+            {
+                return NotFound();
+            }
+
+            var userVacationDays = _context.UserVacationDays.Where(u => u.UserId.Equals(id) && u.Year.Equals(year)).FirstOrDefault();
             if (userVacationDays == null)
             {
                 return NotFound();
@@ -190,76 +206,82 @@ namespace SII_DaysOff.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("UserId,Year,AcquiredDays,AdditionalDays,CreatedBy,CreationDate,ModifiedBy,ModificationDate")] UserVacationDays userVacationDays)
         {
-            Console.WriteLine("\n\nUserVacationDays entraPOST");
             if (id != userVacationDays.UserId)
             {
                 return NotFound();
             }
 
-            if (!ModelState.IsValid)
-            {
-                foreach (var entry in ModelState)
-                {
-                    var fieldName = entry.Key;
-                    var fieldValue = entry.Value;
-
-                    foreach (var error in fieldValue.Errors)
-                    {
-                        var errorMessage = error.ErrorMessage;
-                        Console.WriteLine($"Error en el campo: {fieldName}. Mensaje: {errorMessage}");
-                    }
-                }
-            }
-
-
             if (ModelState.IsValid)
             {
-                Console.WriteLine("\n\nUserVacationDays 1");
                 try
-                {
-                    Console.WriteLine("\n\nUserVacationDays 2");
-                    _context.Update(userVacationDays);
-                    await _context.SaveChangesAsync();
-                }
+				{
+					var user = await _userManager.GetUserAsync(User);
+
+					userVacationDays.ModificationDate = DateTime.Now;
+					userVacationDays.ModifiedBy = user.Id;
+
+                    var userVacationDaysInsert = new UserVacationDays();
+                    userVacationDaysInsert.UserId = userVacationDays.UserId;
+                    userVacationDaysInsert.Year = userVacationDays.Year;
+					userVacationDaysInsert.AcquiredDays = userVacationDays.AcquiredDays;
+					userVacationDaysInsert.AdditionalDays = userVacationDays.AdditionalDays;
+                    userVacationDaysInsert.CreatedBy = userVacationDays.CreatedBy;
+                    userVacationDaysInsert.CreationDate = userVacationDays.CreationDate;
+                    userVacationDaysInsert.ModifiedBy = userVacationDays.ModifiedBy;
+					userVacationDaysInsert.ModificationDate = userVacationDays.ModificationDate;
+
+					var userVacationDaysTemp = _context.UserVacationDays.Where(u => u.Year.Equals(userVacationDays.Year)).Where(u => u.UserId.Equals(userVacationDays.UserId)).FirstOrDefault();
+					
+					if (userVacationDaysTemp != null)
+					{
+						_context.UserVacationDays.Remove(userVacationDaysTemp);
+						await _context.SaveChangesAsync();
+					}
+
+					_context.Add(userVacationDays);
+					await _context.SaveChangesAsync();
+
+					TempData["toastMessage"] = "The user vacation days has been edited";
+				}
                 catch (DbUpdateConcurrencyException)
                 {
-                    Console.WriteLine("\n\nUserVacationDays 3");
                     if (!UserVacationDaysExists(userVacationDays.UserId))
                     {
-                        Console.WriteLine("\n\nUserVacationDays 4");
                         return NotFound();
                     }
                     else
                     {
-                        Console.WriteLine("\n\nUserVacationDays 5");
                         throw;
                     }
                 }
-                Console.WriteLine("\n\nUserVacationDays 6");
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", userVacationDays.CreatedBy);
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", userVacationDays.ModifiedBy);
             ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", userVacationDays.UserId);
             ViewData["Year"] = new SelectList(_context.VacationDays, "Year", "Year", userVacationDays.Year);
-            Console.WriteLine("\n\nUserVacationDays 7");
             return View(userVacationDays);
         }
 
         // GET: UserVacationDays/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(Guid? id, string year)
         {
             if (id == null || _context.UserVacationDays == null)
             {
                 return NotFound();
             }
 
-            var userVacationDays = await _context.UserVacationDays
+            if (year == null || _context.UserVacationDays == null)
+            {
+                return NotFound();
+            }
+
+            var userVacationDays = _context.UserVacationDays
                 .Include(u => u.CreatedByNavigation)
                 .Include(u => u.ModifiedByNavigation)
                 .Include(u => u.User)
                 .Include(u => u.YearNavigation)
-                .FirstOrDefaultAsync(m => m.UserId == id);
+                .Where(u => u.UserId.Equals(id) && u.Year.Equals(year)).FirstOrDefault();
             if (userVacationDays == null)
             {
                 return NotFound();
@@ -284,7 +306,10 @@ namespace SII_DaysOff.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+			TempData["toastMessage"] = "The user vacation days has been deleted";
+
+			return RedirectToAction(nameof(Index));
         }
 
         private bool UserVacationDaysExists(Guid id)

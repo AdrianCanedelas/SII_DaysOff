@@ -1,0 +1,32 @@
+﻿.password-container {
+    position: relative;
+}
+
+.custom-container-edit {
+    background-color: white;
+    padding-block: 2%;
+}
+
+.custom-button-register {
+    border: 1px solid lightgrey;
+    padding-inline: 10px;
+    padding-block: 3px;
+    text-decoration: none;
+    box-shadow: 1px 2px 3px 1px lightgrey;
+    color: dimgrey;
+    transition: 0.3s;
+    font-size: 100%;
+    margin-inline: 5px;
+    background-color: white;
+    text-align: center;
+}
+
+.custom-button-register:hover {
+    border: 1px solid #007eb5;
+    box-shadow: none;
+    color: #007eb5;
+}
+
+.custom-control-label {
+    color: darkgrey;
+}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SII_DaysOff.Models;
 
 namespace SII_DaysOff.Data
 {
@@ -25,11 +26,15 @@ namespace SII_DaysOff.Data
 
         public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
         {
-            Console.WriteLine("pageIndex -> " + pageIndex + " - pageSize -> " + pageSize);
             var count = await source.CountAsync();
             var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
-			Console.WriteLine("count -> " + count + " - items -> " + items.Count());
+
 			return new PaginatedList<T>(items, count, pageIndex, pageSize);
         }
-    }
+
+		internal static async Task<PaginatedList<Requests>> CreateAsync(IQueryable<Requests> requests, int v1, int? v2)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

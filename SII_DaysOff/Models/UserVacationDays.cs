@@ -9,8 +9,10 @@ namespace SII_DaysOff.Models
     public partial class UserVacationDays
     {
         [Key]
+		[ConcurrencyCheck]
 		public Guid UserId { get; set; }
-        public string Year { get; set; } = null!;
+		[ConcurrencyCheck]
+		public string Year { get; set; } = null!;
         public int AcquiredDays { get; set; }
         public int AdditionalDays { get; set; }
         public Guid CreatedBy { get; set; }

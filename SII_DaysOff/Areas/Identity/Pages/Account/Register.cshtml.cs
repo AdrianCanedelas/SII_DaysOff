@@ -144,7 +144,7 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
 			//ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId");
 			ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Description");
-			ViewData["ManagerId"] = new SelectList(_context.AspNetUsers, "Id", "UserName");
+			ViewData["ManagerId"] = new SelectList(_context.AspNetUsers.Include(m => m.RoleIdUser).Where(m => m.RoleIdUser.Name.Equals("Admin")), "Id", "UserName");
             ViewData["VacationDaysId"] = new SelectList(_context.VacationDays, "Year", "Year");
             /*
              ViewData["ManagerId"] = new SelectList(_context.AspNetUsers.Select(u => new
@@ -176,8 +176,8 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account
                 user.IsActive = true;
                 user.Manager = Input.Manager;
                 user.RegisterDate = DateTime.Now;
-                user.RoleId = Guid.Parse("9EF701FB-6834-4434-BDCA-7BA87FA108FA");
-                user.Manager = Guid.Parse("DAB39DCC-4845-438C-B64D-9C3E1E0596B1");
+                user.RoleId = Input.Role;
+                //user.Manager = Guid.Parse("DAB39DCC-4845-438C-B64D-9C3E1E0596B1");
 				//user.CreatedBy = logedInUser.Id;
 				user.CreationDate = DateTime.Now;
                 //user.ModifiedBy = logedInUser.Id;

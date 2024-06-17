@@ -1,4 +1,6 @@
-﻿<div class="modal fade" id="statusExportModal" tabindex="-1" aria-labelledby="statusExportModalLabel" aria-hidden="true" data-bs-backdrop="static">
+﻿@model SII_DaysOff.Models.SelectableStatuses
+
+<div class="modal fade" id="statusExportModal" tabindex="-1" aria-labelledby="statusExportModalLabel" aria-hidden="true" data-bs-backdrop="static">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -14,7 +16,7 @@
 						</div>
 						<div class="col-5">
 							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="true" name="Pending" id="flexCheckDefault">
+								<input class="form-check-input" type="checkbox" asp-for="isPending" id="flexCheckDefault">
 								<label class="form-check-label" for="flexCheckDefault">
 									<i class="bi bi-clock-history ms-2"></i>
 								</label>
@@ -27,7 +29,7 @@
 						</div>
 						<div class="col-5">
 							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="" name="Approved" id="flexCheckDefault">
+								<input class="form-check-input" type="checkbox" asp-for="isApproved" id="flexCheckDefault">
 								<label class="form-check-label" for="flexCheckDefault">
 									<i class="bi bi-check-circle ms-2"></i>
 								</label>
@@ -40,7 +42,7 @@
 						</div>
 						<div class="col-5">
 							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="" name="Cancelled" id="flexCheckDefault">
+								<input class="form-check-input" type="checkbox" asp-for="isCancelled" id="flexCheckDefault">
 								<label class="form-check-label" for="flexCheckDefault">
 									<i class="bi bi-dash-circle ms-2"></i>
 								</label>

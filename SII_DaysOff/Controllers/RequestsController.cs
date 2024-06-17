@@ -52,18 +52,15 @@ namespace SII_DaysOff.Controllers
         
         public IActionResult Calendar()
         {
-            return View();
+            return View(new SelectableStatuses());
         }
 
         public async Task<IActionResult> ManageIndex(string sortOrder, string searchString, int? numPage, string currentFilter, string year, int registerCount)
         {
-            Console.WriteLine("\n\n\n\n\n Year --> " + year);
 			if (year == null) year = DateTime.Now.Year.ToString();
-			Console.WriteLine("\n\n\n\n\n Year --> " + year);
 
 			ViewData["YearSelected"] = year;
 
-			//Ordenación
 			ViewData["ReasonOrder"] = String.IsNullOrEmpty(sortOrder) ? "Reason_desc" : "";
 			ViewData["NameOrder"] = sortOrder == "Name" ? "Name_desc" : "Name";
 			ViewData["StartDayOrder"] = sortOrder == "StartDay" ? "StartDay_desc" : "StartDay";
@@ -73,13 +70,11 @@ namespace SII_DaysOff.Controllers
 			ViewData["RequestDayOrder"] = sortOrder == "RequestDay" ? "RequestDay_desc" : "RequestDay";
 			ViewData["CommentsOrder"] = sortOrder == "Comments" ? "Comments_desc" : "Comments";
 
-			//Cuadro de búsqueda
 			ViewData["CurrentFilter"] = searchString;
 
 			var user = await _userManager.GetUserAsync(User);
 
 			var statusId = _context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId;
-			//var userId = _context.AspNetUsers.FirstOrDefault(u => u.Name.Equals(user.Name))?.Id;
 
 			if (statusId == null)
 			{
@@ -99,7 +94,6 @@ namespace SII_DaysOff.Controllers
 
             if (year != null) requests = requests.Where(r => r.RequestDate.Year.ToString().Equals(year));
 
-            //Paginacion
             if (searchString != null) numPage = 1;
 			else searchString = currentFilter;
 
@@ -178,112 +172,15 @@ namespace SII_DaysOff.Controllers
 			if (year != null) requests = requests.Where(r => r.RequestDate.Year.ToString().Equals(year));
 
 			var paginatedRequests = await PaginatedList<Requests>.CreateAsync(requests.AsNoTracking(), numPage ?? 1, registerCount);
-			Console.WriteLine("|1 PaginatedRequests -> " + paginatedRequests.Count());
-			Console.WriteLine("|2 paginatedRequests -> " + paginatedRequests.Count());
 			var viewModel = new MainViewModel
 			{
 				Requests = paginatedRequests,
 				TotalRequest = requests.Count(),
 				PageSize = registerCount,
-				//AdminId = adminId
 			};
 
 			return View(viewModel);
 		}
-
-		/*
-         public async Task<IActionResult> ManageIndex(string sortOrder, string searchString, int? numPage, string currentFilter)
-        {
-			//Ordenación
-			ViewData["ReasonOrder"] = String.IsNullOrEmpty(sortOrder) ? "Reason_desc" : "";
-			ViewData["StartDayOrder"] = sortOrder == "StartDay" ? "StartDay_desc" : "StartDay";
-			ViewData["HalfDayStartOrder"] = sortOrder == "HalfDayStart" ? "HalfDayStart_desc" : "HalfDayStart";
-			ViewData["EndDayOrder"] = sortOrder == "EndDay" ? "EndDay_desc" : "EndDay";
-			ViewData["HalfDayEndOrder"] = sortOrder == "HalfDayEnd" ? "HalfDayEnd_desc" : "HalfDayEnd";
-			ViewData["RequestDayOrder"] = sortOrder == "RequestDay" ? "RequestDay_desc" : "RequestDay";
-			ViewData["CommentsOrder"] = sortOrder == "Comments" ? "Comments_desc" : "Comments";
-
-			//Cuadro de búsqueda
-			ViewData["CurrentFilter"] = searchString;
-
-			var user = await _userManager.GetUserAsync(User);
-			var userId = _context.AspNetUsers.FirstOrDefault(u => u.Name.Equals(user.Name))?.Id;
-
-			var managerUserIds = _context.Users
-	            .Where(u => u.Manager == user.Id)
-	            .Select(u => u.Id)
-	            .ToList();
-            var requests = _context.Requests
-                .Include(r => r.Reason)
-                .Where(r => r.StatusId == userId)
-                .Where(r => managerUserIds.Contains(r.UserId)).AsQueryable();
-
-			if (searchString != null) numPage = 1;
-			else searchString = currentFilter;
-
-			if (!String.IsNullOrEmpty(searchString))
-			{
-				requests = requests.Where(r => r.Reason.Name.Contains(searchString) 
-                || r.StartDate.ToString().Contains(searchString) 
-				|| r.EndDate.ToString().Contains(searchString)
-				|| r.RequestDate.ToString().Contains(searchString)
-				|| r.Comments.Contains(searchString));
-			}
-
-			ViewData["CurrentOrder"] = sortOrder;
-			ViewData["CurrentFilter"] = currentFilter;
-
-			switch (sortOrder)
-			{
-				case "Rreason_desc":
-					requests = requests.OrderByDescending(r => r.Reason.Name);
-					break;
-				case "StartDay_desc":
-					requests = requests.OrderByDescending(r => r.StartDate);
-					break;
-				case "StartDay":
-					requests = requests.OrderBy(r => r.StartDate);
-					break;
-				case "HalfDayStart":
-					requests = requests.OrderBy(r => r.HalfDayStart);
-					break;
-				case "HalfDayStart_desc":
-					requests = requests.OrderByDescending(r => r.HalfDayStart);
-					break;
-				case "EndDay":
-					requests = requests.OrderBy(r => r.EndDate);
-					break;
-				case "EndDay_desc":
-					requests = requests.OrderByDescending(r => r.EndDate);
-					break;
-				case "HalfDayEnd":
-					requests = requests.OrderBy(r => r.HalfDayEnd);
-					break;
-				case "HalfDayEnd_desc":
-					requests = requests.OrderByDescending(r => r.HalfDayEnd);
-					break;
-				case "RequestDay":
-					requests = requests.OrderBy(r => r.RequestDate);
-					break;
-				case "RequestDay_desc":
-					requests = requests.OrderByDescending(r => r.RequestDate);
-					break;
-				case "Comments":
-					requests = requests.OrderBy(r => r.Comments);
-					break;
-				case "Comments_desc":
-					requests = requests.OrderByDescending(r => r.Comments);
-					break;
-				case "Status_desc":
-					requests = requests.OrderByDescending(r => r.Status.Name);
-					break;
-			}
-
-			int registerCount = 5;
-
-			return View(await PaginatedList<Requests>.CreateAsync(requests.AsNoTracking(), numPage?? 1, registerCount));
-        }
-         */
 
 		// GET: Requests/Details/5
 		public async Task<IActionResult> Details(Guid? id)
@@ -346,13 +243,13 @@ namespace SII_DaysOff.Controllers
                     foreach (var error in fieldValue.Errors)
                     {
                         var errorMessage = error.ErrorMessage;
-                        Console.WriteLine($"Error en el campo: {fieldName}. Mensaje: {errorMessage}");
                     }
                 }
             }
 			if (ModelState.IsValid)
             {
                 var user = await _userManager.GetUserAsync(User);
+
                 requests.RequestId = Guid.NewGuid();
                 requests.UserId = user.Id;
                 requests.StatusId = _context.Statuses
@@ -365,8 +262,10 @@ namespace SII_DaysOff.Controllers
                         
                 _context.Add(requests);
                 await _context.SaveChangesAsync();
-                TempData["message"] = "Your request has been created!";
-                return LocalRedirect("~/Home/Main");
+
+				TempData["toastMessage"] = "Your request has been created";
+
+				return LocalRedirect("~/Home/Main");
             }
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.CreatedBy);
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.ModifiedBy);
@@ -381,7 +280,6 @@ namespace SII_DaysOff.Controllers
         // GET: Requests/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            Console.WriteLine("editGET");
             if (id == null || _context.Requests == null)
             {
                 return NotFound();
@@ -419,6 +317,8 @@ namespace SII_DaysOff.Controllers
 
 					_context.Update(requests);
 					await _context.SaveChangesAsync();
+
+					TempData["toastMessage"] = "Your request has been edited";
 				}
                 catch (DbUpdateConcurrencyException)
                 {
@@ -450,7 +350,6 @@ namespace SII_DaysOff.Controllers
             }
 
             var requests = await _context.Requests.FindAsync(id);
-            //var requests = await _context.Requests.Where(r => r.RequestDate.Year.ToString().Equals(year)).ToList();
             if (requests == null)
             {
                 return NotFound();
@@ -486,13 +385,13 @@ namespace SII_DaysOff.Controllers
             }
 
 			await _context.SaveChangesAsync();
+			TempData["toastMessage"] = "The request has been " + option;
 
 			return RedirectToAction(nameof(ManageIndex));
 		}
 
         public JsonResult getDaysOff()
 		{
-			Console.WriteLine("Entra");
 			var daysOff = _context.Requests
                 .Include(r => r.User)
                 .Include(r => r.Reason)
@@ -525,34 +424,39 @@ namespace SII_DaysOff.Controllers
                 );
         }
 
-		public async Task<FileResult> ExportExcel(string year, string month, string type, bool pending, bool approved, bool cancelled)
+		public async Task<FileResult> ExportExcel(string year, string month, string type, [Bind("isPending, isApproved, isCancelled")] SelectableStatuses selectableStatuses)
 		{
-            Console.WriteLine("\n\n\n\nPending -> " + pending + " - Approved -> " + approved + " - Cancelled -> " + cancelled);
-			var daysOff = _context.Requests
+            var daysOff = _context.Requests
+                .Include(r => r.User)
+                .Include(r => r.Status)
+                .Include(r => r.Reason)
+                .AsQueryable();
+            
+            var daysOffCalendar = _context.Requests
 				.Include(r => r.User)
 				.Include(r => r.Status)
 				.Include(r => r.Reason)
 				.ToList()
 				.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Approved"))?.StatusId));
 
-            /*if (pending && !approved && !cancelled) daysOff = daysOff.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId));
-            if (!pending && approved && !cancelled) daysOff = daysOff.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Approved"))?.StatusId));
-            if (!pending && !approved && cancelled) daysOff = daysOff.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Cancelled"))?.StatusId));
-            if (pending && approved && !cancelled) daysOff = daysOff.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Approved"))?.StatusId) 
-                || r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId));
-            if (pending && !approved && cancelled) daysOff = daysOff.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Cancelled"))?.StatusId) 
-                || r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId));
-            if (!pending && approved && cancelled) daysOff = daysOff.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Approved"))?.StatusId) 
-                || r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Cancelled"))?.StatusId));
-            if (pending && approved && cancelled) daysOff = daysOff.Where(r => r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Approved"))?.StatusId) 
-                || r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Cancelled"))?.StatusId) 
-                || r.StatusId == (_context.Statuses.FirstOrDefault(s => s.Name.Equals("Pending"))?.StatusId));*/
+			if (selectableStatuses.isPending || selectableStatuses.isApproved || selectableStatuses.isCancelled)
+			{
+				daysOff = daysOff.Where(r =>
+					(selectableStatuses.isPending && r.Status.Name == "Pending") ||
+					(selectableStatuses.isApproved && r.Status.Name == "Approved") ||
+					(selectableStatuses.isCancelled && r.Status.Name == "Cancelled")).OrderBy(r => r.Status.Name);
+			}
+
+            if(year == null && month == null)
+            {
+                year = DateTime.Now.Year + "";
+                month = DateTime.Now.Month + "";
+            }
 
 			var fileName = type + ".xlsx";
-            Console.WriteLine("\n\n\n\n\n\n month --<> " + year + " --> " + month);
             if(type.Equals("requests")) return GenerateExcel(fileName, daysOff);
-            return GenerateExcel(fileName, daysOff, int.Parse(year), int.Parse(month));
-            //return GenerateExcel(fileName, daysOff, 2024, 05);
+            return GenerateExcel(fileName, daysOffCalendar, int.Parse(year), int.Parse(month));
+
 		}
 
 		private FileResult GenerateExcel(string fileName, IEnumerable<Requests> requests, int year, int month)
@@ -563,24 +467,19 @@ namespace SII_DaysOff.Controllers
                 worksheet.Style.Fill.SetBackgroundColor(XLColor.FromHtml("#f2f2f2"));
 
                 DateTime firstDayOfMonth = new DateTime(year, month, 1);
-                Console.WriteLine("\n\n\n\n\nfirstDayOfMonth -> " + firstDayOfMonth);
-				int daysMonth = DateTime.DaysInMonth(year, month);
-                Console.WriteLine("daysInMonth -> " + daysMonth);
-                Console.WriteLine("dayOfWeek -> " + (int)firstDayOfMonth.DayOfWeek);
-				int row = 5; int column = (((int)firstDayOfMonth.DayOfWeek + 1) % 8);
-                Console.WriteLine("Row -> " + row + "  Column -> " + column);
-                int initialColumn = (((int)firstDayOfMonth.DayOfWeek + 1) % 8), cont = 0;
-                Console.WriteLine("InitialColumn -> " + initialColumn);
+                int daysMonth = DateTime.DaysInMonth(year, month), 
+                    row = 5, 
+                    column = (((int)firstDayOfMonth.DayOfWeek + 1) % 8), 
+                    initialColumn = (((int)firstDayOfMonth.DayOfWeek + 1) % 8), cont = 0;
+
                 if (initialColumn == 1)
                 {
                     initialColumn = 8;
                     column = 8;
                 }
-                Console.WriteLine("InitialColumn -> " + initialColumn);
 				int jumpsDown = 5;
                 List<Guid> users = new List<Guid>();
 
-                //Estilos celdas y celda titulo
                 cellStyles(worksheet);
                 titleCell(worksheet, month, year);
                 daysCells(worksheet);
@@ -598,7 +497,6 @@ namespace SII_DaysOff.Controllers
                         {
                             if(r.StartDate <= new DateTime(year, month, day) && r.EndDate >= new DateTime(year, month, day))
                             {
-                                Console.WriteLine(" --> encontrado");
                                 if(new DateTime(year, month, day) != r.EndDate || r.EndDate == r.StartDate)
                                 {
                                     cont++;
@@ -679,8 +577,6 @@ namespace SII_DaysOff.Controllers
             {
                 for (int j = 2; j <= 8; j++)
                 {
-                    //worksheet.Cell(i, j).Style.Border.SetRightBorder(XLBorderStyleValues.Thin).Border.SetRightBorderColor(XLColor.CoolGrey);
-                    //worksheet.Cell(i, j).Style.Border.SetLeftBorder(XLBorderStyleValues.Thin).Border.SetLeftBorderColor(XLColor.CoolGrey);
                     worksheet.Column(j).Width = 35;
                     worksheet.Cell(4, j).Style.Fill.SetBackgroundColor(XLColor.FromHtml("#004278")).Font.SetFontColor(XLColor.White).Font.Bold = true;
                     worksheet.Cell(4, j).Style.Border.SetTopBorder(XLBorderStyleValues.Thin).Border.SetTopBorderColor(XLColor.CoolGrey);
@@ -689,7 +585,6 @@ namespace SII_DaysOff.Controllers
                     worksheet.Cell(4, j).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
 
                     if (i == 2) worksheet.Cell(i, j).Style.Border.SetTopBorder(XLBorderStyleValues.Thin).Border.SetTopBorderColor(XLColor.CoolGrey);
-                    //if (i == 29) worksheet.Cell(i, j).Style.Border.SetBottomBorder(XLBorderStyleValues.Thin).Border.SetBottomBorderColor(XLColor.CoolGrey);
                 }
                 if (i <= 4) worksheet.Row(i).Height = 20;
                 else worksheet.Row(i).Height = 25;
@@ -731,13 +626,9 @@ namespace SII_DaysOff.Controllers
 
 		public int bottomCells(IXLWorksheet worksheet, int row, int column, XLColor color)
 		{
-			/*worksheet.Cell(row, column).Style.Border.SetRightBorder(XLBorderStyleValues.Thin).Border.SetRightBorderColor(XLColor.CoolGrey);
-			worksheet.Cell(row, column).Style.Border.SetLeftBorder(XLBorderStyleValues.Thin).Border.SetLeftBorderColor(XLColor.CoolGrey);*/
 			for (int i = 0; i < 4; i++)
 			{
 				row++;
-				/*worksheet.Cell(row, column).Style.Border.SetRightBorder(XLBorderStyleValues.Thin).Border.SetRightBorderColor(XLColor.CoolGrey);
-				worksheet.Cell(row, column).Style.Border.SetLeftBorder(XLBorderStyleValues.Thin).Border.SetLeftBorderColor(XLColor.CoolGrey);*/
 				worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(color);
 			}
             worksheet.Cell(row, column).Style.Border.SetBottomBorder(XLBorderStyleValues.Thin).Border.SetBottomBorderColor(XLColor.CoolGrey);
@@ -781,7 +672,6 @@ namespace SII_DaysOff.Controllers
 		// GET: Requests/Delete/5
 		public async Task<IActionResult> Delete(Guid? id)
         {
-            Console.WriteLine("getttttt");
             if (id == null || _context.Requests == null)
             {
                 return NotFound();
@@ -807,19 +697,20 @@ namespace SII_DaysOff.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            Console.WriteLine("posttttttt - GUID - " + id);
             if (_context.Requests == null)
             {
                 return Problem("Entity set 'DbContextBD.Requests'  is null.");
             }
+
             var requests = await _context.Requests.FindAsync(id);
+
             if (requests != null)
             {
-                Console.WriteLine("|||entraRemove");
                 _context.Requests.Remove(requests);
             }
             
             await _context.SaveChangesAsync();
+			TempData["toastMessage"] = "Your request has been deleted";
 
 			return LocalRedirect("~/Home/Main");
 		}

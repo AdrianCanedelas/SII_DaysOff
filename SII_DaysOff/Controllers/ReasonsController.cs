@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -26,17 +27,13 @@ namespace SII_DaysOff.Controllers
         // GET: Reasons
         public async Task<IActionResult> Index(string sortOrder, string searchString, int? numPage, string currentFilter, int registerCount)
         {
-            Console.WriteLine("\n\n\n\n SortOrder -> " + sortOrder);
-            //Ordenación
 			ViewData["NameOrder"] = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
 			ViewData["DescriptionOrder"] = sortOrder == "Description" ? "Description_desc" : "Description";
 
-			//Cuadro de búsqueda
 			ViewData["CurrentFilter"] = searchString;
 
 			var reasons = _context.Reasons.Include(r => r.CreatedByNavigation).Include(r => r.ModifiedByNavigation).AsQueryable();
 
-			//Paginacion
 			if (searchString != null) numPage = 1;
 			else searchString = currentFilter;
 
@@ -57,19 +54,15 @@ namespace SII_DaysOff.Controllers
 			switch (sortOrder)
 			{
 				default:
-                    Console.WriteLine("1");
 					reasons = reasons.OrderBy(r => r.Name);
 					break;
 				case "Name_desc":
-					Console.WriteLine("2");
 					reasons = reasons.OrderByDescending(r => r.Name);
 					break;
 				case "Description_desc":
-					Console.WriteLine("3");
 					reasons = reasons.OrderByDescending(r => r.Description);
 					break;
 				case "Description":
-					Console.WriteLine("4");
 					reasons = reasons.OrderBy(r => r.Description);
 					break;
 			}
@@ -80,12 +73,9 @@ namespace SII_DaysOff.Controllers
 				Reasons = paginatedReasons,
 				TotalRequest = reasons.Count(),
 				PageSize = registerCount,
-				//AdminId = adminId
 			};
 
 			return View(viewModel);
-
-			return View(await PaginatedList<Reasons>.CreateAsync(reasons.AsNoTracking(), numPage ?? 1, registerCount));
 		}
 
         // GET: Reasons/Details/5
@@ -125,16 +115,20 @@ namespace SII_DaysOff.Controllers
         {
             if (ModelState.IsValid)
             {
-                Console.WriteLine("entraaaa");
                 var user = await _userManager.GetUserAsync(User);
+
                 reasons.ReasonId = Guid.NewGuid();
                 reasons.CreatedBy = user.Id;
                 reasons.ModifiedBy = user.Id;
                 reasons.CreationDate = DateTime.Now;
                 reasons.ModificationDate = DateTime.Now;
+
                 _context.Add(reasons);
                 await _context.SaveChangesAsync();
-                return LocalRedirect("~/Home/Main");
+
+				TempData["toastMessage"] = "The reasons has been created";
+
+				return LocalRedirect("~/Home/Main");
             }
             ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", reasons.CreatedBy);
             ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", reasons.ModifiedBy);
@@ -174,10 +168,16 @@ namespace SII_DaysOff.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
-                    _context.Update(reasons);
+				{
+					var user = await _userManager.GetUserAsync(User);
+
+					reasons.ModificationDate = DateTime.Now;
+					reasons.ModifiedBy = user.Id;
+
+					_context.Update(reasons);
                     await _context.SaveChangesAsync();
-                }
+					TempData["toastMessage"] = "The reasons has been edited";
+				}
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!ReasonsExists(reasons.ReasonId))
@@ -232,7 +232,8 @@ namespace SII_DaysOff.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+			TempData["toastMessage"] = "The reasons has been deleted";
+			return RedirectToAction(nameof(Index));
         }
 
         private bool ReasonsExists(Guid id)
