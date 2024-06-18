@@ -9,11 +9,8 @@ using SII_DaysOff.Models;
 
 namespace SII_DaysOff.Areas.Identity.Data;
 
-// Add profile data for application users by adding properties to the ApplicationUser class
 public class ApplicationUser : IdentityUser<Guid>
 {
-    /*public Guid? RoleID { get; set; }
-    public Roles? RoleIDUser { get; set; }*/
     public Guid RoleId { get; set; }
     public virtual Roles? RoleIdUser { get; set; }
     public string Name { get; set; }

@@ -1,4 +1,5 @@
 ﻿@{
+	ViewData["pageNavigation"] = "true";
 	ViewData["Navigation"] = "Main";
 	ViewData["notShow"] = false;
 	ViewData["Title"] = "Calendar";
@@ -7,15 +8,25 @@
 @Html.Partial("../Components/ModalSelectYear")
 @Html.Partial("../Components/ModalSelectStatusExport")
 
-<h1>@ViewData["Title"]</h1>
-
-<div class="my-4">
-	<button type="submit" data-bs-toggle="modal" data-bs-target="#statusExportModal" class="custom-button-excel">Export requests</button>
-	<button type="submit" data-bs-toggle="modal" data-bs-target="#calendarModal" class="custom-button-excel">Export Excel Calendar</button>
-	<button id="printPDF" class="custom-button-pdf">Export PDF calendar</button>
+<div class="row mb-5">
+	<div class="dropdown col-12 col-md-3">
+		<a type="button" class="custom-progressive-link-calendar fw-bold" data-bs-toggle="dropdown">
+			<div class="row">
+				<div class="col-10">
+					<h1 class="ms-3">@ViewData["Title"]</h1>
+				</div>
+				<div class="col-2 mt-2">
+					<i class="bi bi-caret-down-fill"></i>
+				</div>
+			</div>
+		</a>
+		<ul class="dropdown-menu">
+			<li class="mb-2"><button type="submit" data-bs-toggle="modal" data-bs-target="#statusExportModal" class="custom-dropddown-item fw-bold">Export requests</button></li>
+			<li class="mb-2"><button type="submit" data-bs-toggle="modal" data-bs-target="#calendarModal" class="custom-dropddown-item fw-bold">Export Excel Calendar</button></li>
+			<li><button id="printPDF" class="custom-dropddown-item fw-bold">Export PDF calendar</button></li>
+		</ul>
+	</div>
 </div>
-
-
 
 <div class="toast">
 	<div class="toast-header">

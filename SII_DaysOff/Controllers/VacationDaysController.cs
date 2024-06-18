@@ -16,11 +16,13 @@ namespace SII_DaysOff.Controllers
     {
         private readonly DbContextBD _context;
         private UserManager<ApplicationUser> _userManager;
+		public readonly IHttpContextAccessor _contextAccessor;
 
-        public VacationDaysController(DbContextBD context, UserManager<ApplicationUser> userManager)
+		public VacationDaysController(DbContextBD context, UserManager<ApplicationUser> userManager, IHttpContextAccessor contextAccesor)
         {
             _context = context;
             _userManager = userManager;
+            _contextAccessor = contextAccesor;
         }
 
         // GET: VacationDays
@@ -33,19 +35,29 @@ namespace SII_DaysOff.Controllers
 
 			var vacationDays = _context.VacationDays.Include(r => r.CreatedByNavigation).Include(r => r.ModifiedByNavigation).AsQueryable();
 
-			if (searchString != null) numPage = 1;
-			else searchString = currentFilter;
-
-			if (!String.IsNullOrEmpty(searchString))
+			if (searchString != null && !searchString.Equals("-1"))
 			{
-				vacationDays = vacationDays.Where(r => r.Year.Contains(searchString)
-				|| r.DayVacations.ToString().Contains(searchString));
+				numPage = 1;
+				_contextAccessor.HttpContext.Session.SetString("searchStringVacationDays", searchString);
+			}
+			else if (searchString == null)
+			{
+				_contextAccessor.HttpContext.Session.SetString("searchStringVacationDays", "");
+			}
+
+			if (!String.IsNullOrEmpty(_contextAccessor.HttpContext.Session.GetString("searchStringVacationDays")))
+			{
+				vacationDays = vacationDays.Where(r => r.Year.Contains(_contextAccessor.HttpContext.Session.GetString("searchStringVacationDays"))
+				|| r.DayVacations.ToString().Contains(_contextAccessor.HttpContext.Session.GetString("searchStringVacationDays")));
 			}
 
 			ViewData["CurrentOrder"] = sortOrder;
-			ViewData["CurrentFilter"] = searchString;
-			if (registerCount == 0) registerCount = 5;
-			ViewData["RegisterCount"] = registerCount;
+			ViewData["CurrentFilter"] = _contextAccessor.HttpContext.Session.GetString("searchStringVacationDays");
+			if (registerCount == 0) _contextAccessor.HttpContext.Session.SetInt32("registerCountVacationDays", 5);
+			else if (registerCount == null) _contextAccessor.HttpContext.Session.SetInt32("registerCountVacationDays", 5);
+			else if (registerCount != 11) _contextAccessor.HttpContext.Session.SetInt32("registerCountVacationDays", registerCount);
+			ViewData["RegisterCount"] = _contextAccessor.HttpContext.Session.GetInt32("registerCountVacationDays");
+			if (ViewData["RegisterCount"] == null) ViewData["RegisterCount"] = 5;
 
 			ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Email");
 			ViewData["YearId"] = new SelectList(_context.VacationDays, "Year", "Year");
@@ -66,12 +78,14 @@ namespace SII_DaysOff.Controllers
 					break;
 			}
 
-			var paginatedVacationDays = await PaginatedList<VacationDays>.CreateAsync(vacationDays.AsNoTracking(), numPage ?? 1, registerCount);
+			var registerCountVacationDays = 5;
+			if (_contextAccessor.HttpContext.Session.GetInt32("registerCountVacationDays") != null) registerCountVacationDays = (int)_contextAccessor.HttpContext.Session.GetInt32("registerCountVacationDays");
+			var paginatedVacationDays = await PaginatedList<VacationDays>.CreateAsync(vacationDays.AsNoTracking(), numPage ?? 1, registerCountVacationDays);
 			var viewModel = new MainViewModel
 			{
 				VacationDays = paginatedVacationDays,
 				TotalRequest = vacationDays.Count(),
-				PageSize = registerCount,
+				PageSize = registerCountVacationDays,
 			};
 
 			return View(viewModel);

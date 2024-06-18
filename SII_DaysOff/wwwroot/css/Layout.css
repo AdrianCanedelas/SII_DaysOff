@@ -14,20 +14,43 @@ img.navBar {
     padding-bottom: 8px;
 }
 
-    .custom-progressive-link::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 0;
-        height: 5px;
-        background-color: white;
-        transition: width 0.3s ease-in-out;
-    }
+.custom-progressive-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 5px;
+    background-color: white;
+    transition: width 0.3s ease-in-out;
+}
 
-    .custom-progressive-link:hover::after {
-        width: 100%;
-    }
+.custom-progressive-link:hover::after {
+    width: 100%;
+}
+
+.custom-progressive-link-calendar {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    color: black !important;
+    padding-bottom: 8px;
+}
+
+.custom-progressive-link-calendar::after {
+    content: '';
+    position: absolute;
+    left: 10px;
+    bottom: 0;
+    width: 0;
+    height: 5px;
+    background-color: black;
+    transition: width 0.3s ease-in-out;
+}
+
+.custom-progressive-link-calendar:hover::after {
+    width: 100%;
+}
 
 .custom-go-back-link {
     text-decoration: none;

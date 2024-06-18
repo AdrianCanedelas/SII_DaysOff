@@ -399,12 +399,12 @@ namespace SII_DaysOff.Migrations
                 unique: true,
                 filter: "[CreatedBy] IS NOT NULL");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_Manager",
-                table: "AspNetUsers",
-                column: "Manager",
-                unique: true,
-                filter: "[Manager] IS NOT NULL");
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_AspNetUsers_Manager",
+            //    table: "AspNetUsers",
+            //    column: "Manager",
+            //    unique: true,
+            //    filter: "[Manager] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_ModifiedBy",

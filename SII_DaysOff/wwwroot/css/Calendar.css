@@ -22,11 +22,11 @@
     text-align: center;
 }
 
-    .custom-button-excel:hover {
-        border: 1px solid #084403;
-        box-shadow: none;
-        color: #084403;
-    }
+.custom-button-excel:hover {
+    border: 1px solid #084403;
+    box-shadow: none;
+    color: #084403;
+}
 
 .custom-button-pdf {
     border: 1px solid lightgrey;
@@ -42,8 +42,27 @@
     text-align: center;
 }
 
-    .custom-button-pdf:hover {
-        border: 1px solid #70010f;
-        box-shadow: none;
-        color: #70010f;
-    }
+.custom-button-pdf:hover {
+    border: 1px solid #70010f;
+    box-shadow: none;
+    color: #70010f;
+}
+
+.custom-dropddown-item {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1rem;
+    clear: both;
+    font-weight: 400;
+    color: dimgrey;
+    text-align: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+    transition: 0.3s;
+}
+
+.custom-dropddown-item:hover {
+    color: #007eb5;
+}

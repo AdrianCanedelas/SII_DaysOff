@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Manage.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,17 +14,13 @@ using System.Diagnostics;
 
 namespace SII_DaysOff.Controllers
 {
+	[Authorize]
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
 		private readonly DbContextBD _context;
 		private UserManager<ApplicationUser> _userManager;
 		public readonly IHttpContextAccessor _contextAccessor;
-
-		/*public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }*/
 
 		public HomeController(DbContextBD context, UserManager<ApplicationUser> userManager, IHttpContextAccessor contextAccessor)
 		{
@@ -37,15 +35,25 @@ namespace SII_DaysOff.Controllers
 			return View();
 		}
 
-		public async Task<IActionResult> MainAsync(string sortOrder, string searchString, int? numPage, string currentFilter, string optionStatus, string year, int registerCount)
+		public async Task<IActionResult> MainAsync(string sortOrder, string searchString, int? numPage, string optionStatus, string year, int registerCount)
 		{
-			//if (year == null) year = DateTime.Now.Year.ToString();
-			if (optionStatus != null && optionStatus != "") ViewData["Status"] = optionStatus;
-			var currentOptionStatus = ViewData["status"];
+			if (_contextAccessor.HttpContext.Session.GetString("sessionYear") == null) _contextAccessor.HttpContext.Session.SetString("sessionYear", DateTime.Now.Year + "");
+			if (year != null) _contextAccessor.HttpContext.Session.SetString("sessionYear", year);
 
-			if(year != null) _contextAccessor.HttpContext.Session.SetString("sessionYear", year);
+			var logedUser = await _userManager.Users
+				.Include(u => u.UserVacationDays)
+				.Include(u => u.UserVacationDays.YearNavigation)
+				.Where(u => u.UserVacationDays.Year == _contextAccessor.HttpContext.Session.GetString("sessionYear"))
+				.FirstOrDefaultAsync(u => u.Id == Guid.Parse(_userManager.GetUserId(User)));
 
-			ViewData["YearSelected"] = year;
+			if (optionStatus != null && optionStatus != "" && optionStatus != "-1")
+			{
+				ViewData["Status"] = optionStatus;
+				_contextAccessor.HttpContext.Session.SetString("sessionOptionStatus", optionStatus);
+			}
+			var currentOptionStatus = _contextAccessor.HttpContext.Session.GetString("sessionOptionStatus");
+
+			ViewData["YearSelected"] = _contextAccessor.HttpContext.Session.GetString("sessionYear");
 			ViewData["ReasonOrder"] = String.IsNullOrEmpty(sortOrder) ? "Reason_desc" : "";
 			ViewData["StartDayOrder"] = sortOrder == "StartDay" ? "StartDay_desc" : "StartDay";
 			ViewData["HalfDayStartOrder"] = sortOrder == "HalfDayStart" ? "HalfDayStart_desc" : "HalfDayStart";
@@ -54,12 +62,6 @@ namespace SII_DaysOff.Controllers
 			ViewData["RequestDayOrder"] = sortOrder == "RequestDay" ? "RequestDay_desc" : "RequestDay";
 			ViewData["CommentsOrder"] = sortOrder == "Comments" ? "Comments_desc" : "Comments";
 			ViewData["StatusOrder"] = sortOrder == "Status" ? "Status_desc" : "Status";
-
-			var logedUser = await _userManager.Users
-				.Include(u => u.UserVacationDays)
-				.Include(u => u.UserVacationDays.YearNavigation)
-				.Where(u => u.UserVacationDays.Year == _contextAccessor.HttpContext.Session.GetString("sessionYear"))
-				.FirstOrDefaultAsync(u => u.Id == Guid.Parse(_userManager.GetUserId(User)));
 
 			var user = await _userManager.Users
 				.Include(u => u.UserVacationDays)
@@ -91,24 +93,32 @@ namespace SII_DaysOff.Controllers
 			ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Email");
 			ViewData["YearId"] = new SelectList(_context.VacationDays, "Year", "Year");
 
-			// Paginacion
-			if (searchString != null) numPage = 1;
-			else searchString = currentFilter;
-
-			if (!String.IsNullOrEmpty(searchString))
+			if (searchString != null && !searchString.Equals("-1"))
 			{
-				requests = requests.Where(r => r.Reason.Name.Contains(searchString)
-					|| r.StartDate.ToString().Contains(searchString)
-					|| r.EndDate.ToString().Contains(searchString)
-					|| r.RequestDate.ToString().Contains(searchString)
-					|| r.Comments.Contains(searchString)
-					|| r.Status.Name.Contains(searchString));
+				numPage = 1;
+				_contextAccessor.HttpContext.Session.SetString("searchStringMain", searchString);
+			} else if(searchString == null)
+			{
+				_contextAccessor.HttpContext.Session.SetString("searchStringMain", "");
+			}
+
+			if (!String.IsNullOrEmpty(_contextAccessor.HttpContext.Session.GetString("searchStringMain")))
+			{
+				requests = requests.Where(r => r.Reason.Name.Contains(_contextAccessor.HttpContext.Session.GetString("searchStringMain"))
+					|| r.StartDate.ToString().Contains(_contextAccessor.HttpContext.Session.GetString("searchStringMain"))
+					|| r.EndDate.ToString().Contains(_contextAccessor.HttpContext.Session.GetString("searchStringMain"))
+					|| r.RequestDate.ToString().Contains(_contextAccessor.HttpContext.Session.GetString("searchStringMain"))
+					|| r.Comments.Contains(_contextAccessor.HttpContext.Session.GetString("searchStringMain"))
+					|| r.Status.Name.Contains(_contextAccessor.HttpContext.Session.GetString("searchStringMain")));
 			}
 
 			ViewData["CurrentOrder"] = sortOrder;
-			ViewData["CurrentFilter"] = searchString;
-			if (registerCount == 0) registerCount = 5;
-			ViewData["RegisterCount"] = registerCount;
+			ViewData["CurrentFilter"] = _contextAccessor.HttpContext.Session.GetString("searchStringMain");
+			if (registerCount == 0) _contextAccessor.HttpContext.Session.SetInt32("registerCountMain", 5);
+			else if(registerCount == null) _contextAccessor.HttpContext.Session.SetInt32("registerCountMain", 5);
+			else if(registerCount != 11) _contextAccessor.HttpContext.Session.SetInt32("registerCountMain", registerCount);
+			ViewData["RegisterCount"] = _contextAccessor.HttpContext.Session.GetInt32("registerCountMain");
+			if (ViewData["RegisterCount"] == null) ViewData["RegisterCount"] = 5;
 
 			switch (sortOrder)
 			{
@@ -176,13 +186,15 @@ namespace SII_DaysOff.Controllers
 
 			ViewData["PendingRequests"] = pendingRequests;
 
-			var paginatedRequests = await PaginatedList<Requests>.CreateAsync(requests.AsNoTracking(), numPage ?? 1, registerCount);
+			var registerCountMain = 5;
+			if (_contextAccessor.HttpContext.Session.GetInt32("registerCountMain") != null) registerCountMain = (int)_contextAccessor.HttpContext.Session.GetInt32("registerCountMain");
+			var paginatedRequests = await PaginatedList<Requests>.CreateAsync(requests.AsNoTracking(), numPage ?? 1, registerCountMain);
 			var viewModel = new MainViewModel
 			{
 				User = logedUser,
 				Requests = paginatedRequests,
 				TotalRequest = requests.Count(),
-				PageSize = registerCount,
+				PageSize = registerCountMain,
 				Year = _contextAccessor.HttpContext.Session.GetString("sessionYear"),
 				AdminId = _context.Roles.Where(r => r.Name.Equals("Admin")).Select(r => r.Id).FirstOrDefault()
 			};

@@ -12,20 +12,20 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <div class="row p-3">
-                            <div class="col-3">
+                            <div class="col-4 col-md-3">
                                 <label asp-for="ReasonId" class="control-label fw-bold"></label>
                             </div>
-                            <div class="col-9">
+                            <div class="col-8 col-md-9">
                                 <select asp-for="ReasonId" class="form-control" asp-items="ViewBag.ReasonId"></select>
                             </div>
 						</div>
 					</div>
                     <div class="form-group">
                         <div class="row p-3">
-                            <div class=" col-3">
+                            <div class=" col-4 col-md-3">
                                 <label asp-for="StartDate" class="control-label fw-bold"></label>
                             </div>
-                            <div class="col-9">
+                            <div class="col-8 col-md-9">
                                 <input asp-for="StartDate" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" min="1900" max="2100"/>
                                 <span asp-validation-for="StartDate" class="text-danger"></span>
                             </div>
@@ -33,10 +33,10 @@
                     </div>
                     <div class="form-group">
                         <div class="row p-3">
-                            <div class=" col-3">
+                            <div class="col-4 col-md-3">
                                 <label asp-for="EndDate" class="control-label fw-bold"></label>
                             </div>
-                            <div class="col-9">
+                            <div class="col-8 col-md-9">
                                 <input asp-for="EndDate" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" min="1900" max="2100"/>
                                 <span asp-validation-for="EndDate" class="text-danger"></span>
                             </div>
@@ -44,11 +44,11 @@
                     </div>
                     <div class="form-group">
                         <div class="row p-3">
-                            <div class=" col-3">
+                            <div class=" col-4 col-md-3">
                                 <label asp-for="Comments" class="control-label fw-bold"></label>
                             </div>
-                            <div class="col-9">
-                                <input asp-for="Comments" class="form-control" />
+                            <div class="col-8 col-md-9">
+                                <input asp-for="Comments" class="form-control" value="-"/>
                                 <span asp-validation-for="Comments" class="text-danger"></span>
                             </div>
                         </div>

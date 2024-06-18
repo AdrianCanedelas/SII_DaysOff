@@ -12,30 +12,30 @@
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 					<div class="form-group">
 						<div class="row p-3">
-							<div class="col-4 fw-bold">
+							<div class="col-5 col-md-4 fw-bold">
 								<label asp-for="UserId" class="control-label"></label>
 							</div>
-							<div class="col-8">
+							<div class="col-7 col-md-8">
 								<select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId" id="selectUser"></select>
 							</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="row p-3">
-							<div class="col-4 fw-bold">
+							<div class="col-5 col-md-4 fw-bold">
 								<label asp-for="Year" class="control-label"></label>
 							</div>
-							<div class="col-8">
-								<select asp-for="Year" class="form-control" asp-items="ViewBag.YearId" id="Year"></select>
+							<div class="col-7 col-md-8">
+								<select asp-for="Year" class="form-control" asp-items="ViewBag.YearId" id="selectYears"></select>
 							</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="row p-3">
-							<div class="col-4 fw-bold">
+							<div class="col-5 col-md-4 fw-bold">
 								<label asp-for="AcquiredDays" class="control-label"></label>
 							</div>
-							<div class="col-8">
+							<div class="col-7 col-md-8">
 								<input asp-for="AcquiredDays" class="form-control" min="0" />
 								<span asp-validation-for="AcquiredDays" class="text-danger"></span>
 							</div>
@@ -43,10 +43,10 @@
 					</div>
 					<div class="form-group">
 						<div class="row p-3">
-							<div class="col-4 fw-bold">
+							<div class="col-5 col-md-4 fw-bold">
 								<label asp-for="AdditionalDays" class="control-label"></label>
 							</div>
-							<div class="col-8">
+							<div class="col-7 col-md-8">
 								<input asp-for="AdditionalDays" class="form-control" min="0" />
 								<span asp-validation-for="AdditionalDays" class="text-danger"></span>
 							</div>

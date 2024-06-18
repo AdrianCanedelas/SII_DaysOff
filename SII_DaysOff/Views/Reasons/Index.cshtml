@@ -15,6 +15,7 @@
 		<form asp-controller="Reasons" asp-action="Index" class="mx-2 mt-3">
 			<div class="form-actions no-color">
 				<p>
+					<i class="bi bi-search"></i>
 					<input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="custom-button" />
 					<input type="submit" value="Search" class="custom-button" /> |
 					<a asp-controller="Reasons" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]" class="mx-2 custom-link">Back to Full List</a>
@@ -62,7 +63,7 @@
 
 						@foreach (var item in Model.Reasons)
 						{
-							<li class="list-group-item">
+							<li class="list-group-item custom-list-group-item">
 								<div class="row text-center d-flex justify-content-center align-items-center">
 									<div class="col">@Html.DisplayFor(model => item.Name)</div>
 									<div class="col">@Html.DisplayFor(model => item.Description)</div>
