@@ -29,113 +29,109 @@
 <body>
 	@if (!ViewData["notShow"].Equals(true) || ViewData["notShow"] == null)
 	{
-		<header>
-			<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow navbar-custom">
-				<div class="row container-fluid">
-					<div class="col-3">
-						<div class="row">
-							<div class="col-3 ms-3">
-								<img src="~/img/siigroup-spain-whiteline.png" class="navBar" />
-							</div>
-							<div class="col-7">
-								<a id="manage" class="nav-link text-light title fw-bold" asp-controller="Home" asp-action="Main" asp-route-registerCount="11" asp-route-searchString="-1">SII DaysOff</a>
-							</div>
-						</div>
+		//
+		<header class="row box-shadow navbar-custom">
+			<div class="col-12 col-md-11 col-xxl-2 my-2 ms-3 ms-xxl-4">
+				<div class="row">
+					<div class="col-3 col-md-1 col-xxl-3">
+						<img src="~/img/siigroup-spain-whiteline.png" class="navBar" />
 					</div>
-					@{
-						var user = await UserManager.GetUserAsync(User);
-						if(user != null)
-						{
-							var role = _context.Roles.Where(r => r.Name.Equals("Admin")).Select(r => r.Id).FirstOrDefault();
-							if (user.RoleId.Equals(role))
-							{
-								<div class="col-6">
-									<div class="row">
-										<div class="dropdown col-3">
-											<a type="button" class="custom-progressive-link fw-bold" data-bs-toggle="dropdown">
-												Reasons
-											</a>
-											<ul class="dropdown-menu">
-												<li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#reasonModal">New reason</a></li>
-												<li><a class="btn dropdown-item" asp-controller="Reasons" asp-action="Index" asp-route-registerCount="11" asp-route-searchString="-1">Manage reasons</a></li>
-											</ul>
-										</div>
-										<div class="dropdown col-3">
-											<a type="button" class="custom-progressive-link fw-bold" data-bs-toggle="dropdown">
-												Statuses
-											</a>
-											<ul class="dropdown-menu">
-												<li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#statusModal">New status</a></li>
-												<a class="btn dropdown-item" asp-controller="Statuses" asp-action="Index" asp-route-registerCount="11" asp-route-searchString="-1">Manage statuses</a>
-											</ul>
-										</div>
-										<div class="dropdown col-3">
-											<a type="button" class="custom-progressive-link fw-bold" data-bs-toggle="dropdown">
-												Vacation days
-											</a>
-											<ul class="dropdown-menu">
-												<li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#VacationDaysModal">New vacation days</a></li>
-												<a class="btn" asp-controller="VacationDays" asp-action="Index" asp-route-registerCount="11" asp-route-searchString="-1">Manage vacation days</a>
-											</ul>
-										</div>
-										<div class="dropdown col-3">
-											<a type="button" class="custom-progressive-link fw-bold" data-bs-toggle="dropdown">
-												User vacation days
-											</a>
-											<ul class="dropdown-menu">
-												<li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#UserVacationDaysModal">New vacation days</a></li>
-												<a class="btn" asp-controller="UserVacationDays" asp-action="Index" asp-route-registerCount="11" asp-route-searchString="-1">Manage vacation days</a>
-											</ul>
-										</div>
-									</div>
-								</div>
-							}
-						}
-					}
-					@*<div class="col-12 col-md-3 d-flex justify-content-start fw-bold mt-2 ms-4 ms-md-0 justify-content-md-end">*@
-					<div class="col-2 d-flex justify-content-center justify-content-lg-end">
-						<partial name="_LoginPartial" />
+					<div class="col-7 col-md-11 col-xxl-9">
+						<a id="manage" class="nav-link text-light title fw-bold" asp-controller="Home" asp-action="Main" asp-route-registerCount="11" asp-route-searchString="-1">SII DaysOff</a>
 					</div>
 				</div>
-			</nav>
-			@if (!ViewData["title"].Equals("Main"))
-			{
-				<nav class="navbar navbar-expand-sm navbar-toggleable-sm mb-3">
-					@if (!ViewData["Navigation"].Equals("Main"))
+			</div>
+			<div class="col-12 col-md-11 col-xxl-7 text-left align-content-center ms-3 mt-3 ms-md-2 ms-lg-4 ms-xxl-0 mt-xxl-0">
+				@{
+					var user = await UserManager.GetUserAsync(User);
+					if (user != null)
 					{
-						switch (ViewData["Navigation"])
+						var role = _context.Roles.Where(r => r.Name.Equals("Admin")).Select(r => r.Id).FirstOrDefault();
+						if (user.RoleId.Equals(role))
 						{
-							case "Reasons":
-								<a id="manage" asp-controller="Reasons" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="11" asp-route-searchString="-1" class="custom-go-back-link mt-2">
-									<span class="custom-go-back"><i class="bi bi-arrow-left"></i>  Go back</span>
-								</a>
-								break;
-							case "Statuses":
-								<a id="manage" asp-controller="Statuses" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="11" asp-route-searchString="-1" class="custom-go-back-link mt-2">
-									<span class="custom-go-back"><i class="bi bi-arrow-left"></i>  Go back</span>
-								</a>
-								break;
-							case "VacationDays":
-								<a id="manage" asp-controller="VacationDays" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="11" asp-route-searchString="-1" class="custom-go-back-link mt-2">
-									<span class="custom-go-back"><i class="bi bi-arrow-left"></i>  Go back</span>
-								</a>
-								break;
-							case "UserVacationDays":
-								<a id="manage" asp-controller="UserVacationDays" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="11" asp-route-searchString="-1" class="custom-go-back-link mt-2">
-									<span class="custom-go-back"><i class="bi bi-arrow-left"></i>  Go back</span>
-								</a>
-								break;
+							<div class="row">
+								<div class="dropdown col-12 col-md-3">
+									<a type="button" class="custom-progressive-link fw-bold" data-bs-toggle="dropdown">
+										Reasons
+									</a>
+									<ul class="dropdown-menu">
+										<li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#reasonModal">New reason</a></li>
+										<li><a class="btn dropdown-item" asp-controller="Reasons" asp-action="Index" asp-route-registerCount="11" asp-route-searchString="-1">Manage reasons</a></li>
+									</ul>
+								</div>
+								<div class="dropdown col-12 col-md-3">
+									<a type="button" class="custom-progressive-link fw-bold" data-bs-toggle="dropdown">
+										Statuses
+									</a>
+									<ul class="dropdown-menu">
+										<li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#statusModal">New status</a></li>
+										<a class="btn dropdown-item" asp-controller="Statuses" asp-action="Index" asp-route-registerCount="11" asp-route-searchString="-1">Manage statuses</a>
+									</ul>
+								</div>
+								<div class="dropdown col-12 col-md-3">
+									<a type="button" class="custom-progressive-link fw-bold" data-bs-toggle="dropdown">
+										Vacation days
+									</a>
+									<ul class="dropdown-menu">
+										<li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#VacationDaysModal">New vacation days</a></li>
+										<a class="btn" asp-controller="VacationDays" asp-action="Index" asp-route-registerCount="11" asp-route-searchString="-1">Manage vacation days</a>
+									</ul>
+								</div>
+								<div class="dropdown col-12 col-md-3">
+									<a type="button" class="custom-progressive-link fw-bold" data-bs-toggle="dropdown">
+										User vacation days
+									</a>
+									<ul class="dropdown-menu">
+										<li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#UserVacationDaysModal">New user vacation days</a></li>
+										<a class="btn" asp-controller="UserVacationDays" asp-action="Index" asp-route-registerCount="11" asp-route-searchString="-1">Manage user vacation days</a>
+									</ul>
+								</div>
+							</div>
 						}
 					}
-					else
-					{
-						<a id="manage" asp-controller="Home" asp-action="Main" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="11" asp-route-searchString="-1" class="custom-go-back-link mt-2">
-							<span class="custom-go-back"><i class="bi bi-arrow-left"></i>  Go back</span>
-						</a>
-					}
-				</nav>
-			}
+				}
+			</div>
+			<div class="col-12 col-xxl-2 d-flex justify-content-end pe-4 pe-lg-5 pe-xxl-0 mt-xxl-2 ms-xxl-1">
+				<partial name="_LoginPartial" />
+			</div>
 		</header>
+		@if (!ViewData["title"].Equals("Main"))
+		{
+			<nav class="navbar navbar-expand-sm navbar-toggleable-sm mb-3">
+				@if (!ViewData["Navigation"].Equals("Main"))
+				{
+					switch (ViewData["Navigation"])
+					{
+						case "Reasons":
+							<a id="manage" asp-controller="Reasons" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="11" asp-route-searchString="-1" class="custom-go-back-link mt-2">
+								<span class="custom-go-back"><i class="bi bi-arrow-left"></i>  Go back</span>
+							</a>
+							break;
+						case "Statuses":
+							<a id="manage" asp-controller="Statuses" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="11" asp-route-searchString="-1" class="custom-go-back-link mt-2">
+								<span class="custom-go-back"><i class="bi bi-arrow-left"></i>  Go back</span>
+							</a>
+							break;
+						case "VacationDays":
+							<a id="manage" asp-controller="VacationDays" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="11" asp-route-searchString="-1" class="custom-go-back-link mt-2">
+								<span class="custom-go-back"><i class="bi bi-arrow-left"></i>  Go back</span>
+							</a>
+							break;
+						case "UserVacationDays":
+							<a id="manage" asp-controller="UserVacationDays" asp-action="Index" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="11" asp-route-searchString="-1" class="custom-go-back-link mt-2">
+								<span class="custom-go-back"><i class="bi bi-arrow-left"></i>  Go back</span>
+							</a>
+							break;
+					}
+				}
+				else
+				{
+					<a id="manage" asp-controller="Home" asp-action="Main" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="11" asp-route-searchString="-1" class="custom-go-back-link mt-2">
+						<span class="custom-go-back"><i class="bi bi-arrow-left"></i>  Go back</span>
+					</a>
+				}
+			</nav>
+		}
 	}
 
 	<div class="container-fluid">

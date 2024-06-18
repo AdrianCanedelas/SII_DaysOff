@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Manage.Internal;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ using System.Diagnostics;
 
 namespace SII_DaysOff.Controllers
 {
+	[Authorize]
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
@@ -40,11 +42,19 @@ namespace SII_DaysOff.Controllers
 
 		public async Task<IActionResult> MainAsync(string sortOrder, string searchString, int? numPage, string optionStatus, string year, int registerCount)
 		{
+			if (_contextAccessor.HttpContext.Session.GetString("sessionYear") == null) _contextAccessor.HttpContext.Session.SetString("sessionYear", DateTime.Now.Year + "");
+			if (year != null) _contextAccessor.HttpContext.Session.SetString("sessionYear", year);
+
+			var logedUser = await _userManager.Users
+				.Include(u => u.UserVacationDays)
+				.Include(u => u.UserVacationDays.YearNavigation)
+				.Where(u => u.UserVacationDays.Year == _contextAccessor.HttpContext.Session.GetString("sessionYear"))
+				.FirstOrDefaultAsync(u => u.Id == Guid.Parse(_userManager.GetUserId(User)));
+
+			if (logedUser == null) return RedirectToPage("Login");
+
 			if (optionStatus != null && optionStatus != "") ViewData["Status"] = optionStatus;
 			var currentOptionStatus = ViewData["status"];
-
-			if (_contextAccessor.HttpContext.Session.GetString("sessionYear") == null) _contextAccessor.HttpContext.Session.SetString("sessionYear", DateTime.Now.Year+"");
-			if (year != null) _contextAccessor.HttpContext.Session.SetString("sessionYear", year);
 
 			ViewData["YearSelected"] = _contextAccessor.HttpContext.Session.GetString("sessionYear");
 			ViewData["ReasonOrder"] = String.IsNullOrEmpty(sortOrder) ? "Reason_desc" : "";
@@ -55,12 +65,6 @@ namespace SII_DaysOff.Controllers
 			ViewData["RequestDayOrder"] = sortOrder == "RequestDay" ? "RequestDay_desc" : "RequestDay";
 			ViewData["CommentsOrder"] = sortOrder == "Comments" ? "Comments_desc" : "Comments";
 			ViewData["StatusOrder"] = sortOrder == "Status" ? "Status_desc" : "Status";
-
-			var logedUser = await _userManager.Users
-				.Include(u => u.UserVacationDays)
-				.Include(u => u.UserVacationDays.YearNavigation)
-				.Where(u => u.UserVacationDays.Year == _contextAccessor.HttpContext.Session.GetString("sessionYear"))
-				.FirstOrDefaultAsync(u => u.Id == Guid.Parse(_userManager.GetUserId(User)));
 
 			var user = await _userManager.Users
 				.Include(u => u.UserVacationDays)
