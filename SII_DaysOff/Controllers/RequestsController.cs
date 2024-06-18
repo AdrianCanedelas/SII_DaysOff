@@ -274,7 +274,7 @@ namespace SII_DaysOff.Controllers
 
 				TempData["toastMessage"] = "Your request has been created";
 
-				return LocalRedirect("~/Home/Main");
+				return LocalRedirect("~/Home/Main?optionStatus=Pending");
 			}
 			ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.CreatedBy);
 			ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", requests.ModifiedBy);

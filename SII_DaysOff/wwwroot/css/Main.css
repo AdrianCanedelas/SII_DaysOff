@@ -159,3 +159,11 @@
     margin-bottom: 10px;
     color: darkgrey;
 }
+
+.custom-list-group-item {
+    transition: 0.2s;
+}
+
+.custom-list-group-item:hover {
+    background-color: #b8d1ec;
+}
