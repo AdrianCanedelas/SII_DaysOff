@@ -515,24 +515,26 @@ namespace SII_DaysOff.Controllers
                 {
                     numberCellStyles(worksheet, column, row, day);
 
-					if (requests.Any(r => r.StartDate <= new DateTime(year, month, day) && r.EndDate >= new DateTime(year, month, day)))
+					Console.WriteLine("\n\n\n\n entra0000 -> " + new DateTime(year, month, day));
+					if (requests.Any(r => r.StartDate.Date <= new DateTime(year, month, day).Date && r.EndDate.Date >= new DateTime(year, month, day).Date))
                     {
-                        Console.WriteLine("\n\n\n\n entra -> " + new DateTime(year, month, day));
+                        Console.WriteLine("\n\n\n\n entra1111 -> " + new DateTime(year, month, day));
                         //row = bottomCells(worksheet, row, column, XLColor.FromHtml("#f2f2f2"));
 
                         int pastRow = row;
 						foreach (Requests r in requests)
                         {
-                            if(r.StartDate <= new DateTime(year, month, day) && r.EndDate >= new DateTime(year, month, day))
+                            if(r.StartDate.Date <= new DateTime(year, month, day).Date && r.EndDate.Date >= new DateTime(year, month, day).Date)
 							{
+								Console.WriteLine("\n\n\n\n entra2222 -> " + r.StartDate);
 								//if (new DateTime(year, month, day) != r.EndDate || r.EndDate == r.StartDate)
-                                //{
-                                    cont++;
+								//{
+								cont++;
 									row++;
 									if (!users.Contains(r.UserId) || checkPreviousCell(worksheet, row, column, jumpsDown, cont))
 									{
 										if (row > pastRow) worksheet.Cell(row, column).Value += ("     ");
-										worksheet.Cell(row, column).Value += ("             |" + r.User.Name + " " + r.User.Surname + "   |" + r.Reason.Name);
+										worksheet.Cell(row, column).Value += ("             " + r.User.Name + " " + r.User.Surname + "   /" + r.Reason.Name);
 									}
 									worksheet.Cell(row, column).Style.Fill.SetBackgroundColor(cont %2 == 0 ? XLColor.FromHtml("#b8d1ec") : XLColor.FromHtml("#004278")).Font.SetFontColor(XLColor.FromHtml("#f2f2f2"))
 										.Border.SetBottomBorder(XLBorderStyleValues.Thin).Border.SetBottomBorderColor(XLColor.CoolGrey)

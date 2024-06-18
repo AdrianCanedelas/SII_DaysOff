@@ -51,7 +51,7 @@ namespace SII_DaysOff.Controllers
 				.Where(u => u.UserVacationDays.Year == _contextAccessor.HttpContext.Session.GetString("sessionYear"))
 				.FirstOrDefaultAsync(u => u.Id == Guid.Parse(_userManager.GetUserId(User)));
 
-			if (logedUser == null) return RedirectToPage("Login");
+			//if (logedUser == null) return RedirectToPage("Login");
 
 			if (optionStatus != null && optionStatus != "") ViewData["Status"] = optionStatus;
 			var currentOptionStatus = ViewData["status"];

@@ -29,27 +29,27 @@
 <body>
 	@if (!ViewData["notShow"].Equals(true) || ViewData["notShow"] == null)
 	{
-		//
-		<header class="row box-shadow navbar-custom">
-			<div class="col-12 col-md-11 col-xxl-2 my-2 ms-3 ms-xxl-4">
+
+		<header class="row box-shadow navbar-custom text-center-xl d-flex align-items-center py-2 ps-2">
+			<div class="col-12 col-xl-2 ms-3 mt-2 ms-xl-0 mt-xl-0">
 				<div class="row">
-					<div class="col-3 col-md-1 col-xxl-3">
+					<div class="col-3 col-md-1 col-xl-3">
 						<img src="~/img/siigroup-spain-whiteline.png" class="navBar" />
 					</div>
-					<div class="col-7 col-md-11 col-xxl-9">
+					<div class="col-9 col-md-11 col-xl-9">
 						<a id="manage" class="nav-link text-light title fw-bold" asp-controller="Home" asp-action="Main" asp-route-registerCount="11" asp-route-searchString="-1">SII DaysOff</a>
 					</div>
 				</div>
 			</div>
-			<div class="col-12 col-md-11 col-xxl-7 text-left align-content-center ms-3 mt-3 ms-md-2 ms-lg-4 ms-xxl-0 mt-xxl-0">
-				@{
-					var user = await UserManager.GetUserAsync(User);
-					if (user != null)
-					{
-						var role = _context.Roles.Where(r => r.Name.Equals("Admin")).Select(r => r.Id).FirstOrDefault();
-						if (user.RoleId.Equals(role))
+			<div class="col-12 col-xl-8 mt-3 ms-3 ms-md-2 ms-lg-4 ms-xl-0 mt-xl-0">
+				<div class="row">
+					@{
+						var user = await UserManager.GetUserAsync(User);
+						if (user != null)
 						{
-							<div class="row">
+							var role = _context.Roles.Where(r => r.Name.Equals("Admin")).Select(r => r.Id).FirstOrDefault();
+							if (user.RoleId.Equals(role))
+							{
 								<div class="dropdown col-12 col-md-3">
 									<a type="button" class="custom-progressive-link fw-bold" data-bs-toggle="dropdown">
 										Reasons
@@ -86,12 +86,12 @@
 										<a class="btn" asp-controller="UserVacationDays" asp-action="Index" asp-route-registerCount="11" asp-route-searchString="-1">Manage user vacation days</a>
 									</ul>
 								</div>
-							</div>
+							}
 						}
 					}
-				}
+				</div>
 			</div>
-			<div class="col-12 col-xxl-2 d-flex justify-content-end pe-4 pe-lg-5 pe-xxl-0 mt-xxl-2 ms-xxl-1">
+			<div class="col-12 col-xl-2 text-end pe-5 pe-md-4 pe-lg-5">
 				<partial name="_LoginPartial" />
 			</div>
 		</header>
