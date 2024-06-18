@@ -37,7 +37,7 @@
 						<img src="~/img/siigroup-spain-whiteline.png" class="navBar" />
 					</div>
 					<div class="col-9 col-md-11 col-xl-9">
-						<a id="manage" class="nav-link text-light title fw-bold" asp-controller="Home" asp-action="Main" asp-route-registerCount="11" asp-route-searchString="-1">SII DaysOff</a>
+						<a id="manage" class="nav-link text-light title fw-bold" asp-controller="Home" asp-action="Main" asp-route-registerCount="11" asp-route-searchString="-1" asp-route-optionStatus="-1">SII DaysOff</a>
 					</div>
 				</div>
 			</div>
@@ -126,7 +126,7 @@
 				}
 				else
 				{
-					<a id="manage" asp-controller="Home" asp-action="Main" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="11" asp-route-searchString="-1" class="custom-go-back-link mt-2">
+					<a id="manage" asp-controller="Home" asp-action="Main" asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="11" asp-route-searchString="-1" asp-route-optionStatus="-1" class="custom-go-back-link mt-2">
 						<span class="custom-go-back"><i class="bi bi-arrow-left"></i>  Go back</span>
 					</a>
 				}

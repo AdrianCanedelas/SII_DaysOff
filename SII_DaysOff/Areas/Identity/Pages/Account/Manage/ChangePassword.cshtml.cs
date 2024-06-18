@@ -80,7 +80,6 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Console.WriteLine("1111111111111111111111");
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -98,7 +97,6 @@ namespace SII_DaysOff.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Console.WriteLine("22222222222222222222222222");
             if (!ModelState.IsValid)
             {
                 return Page();

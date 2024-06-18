@@ -28,8 +28,6 @@ namespace SII_DaysOff.Controllers
         // GET: UserVacationDays
         public async Task<IActionResult> Index(string sortOrder, string searchString, int? numPage, string currentFilter, int registerCount)
         {
-            Console.WriteLine("\n\n\n\n filtro -> " + searchString + "\n\n\n\n");
-
 			ViewData["UserOrder"] = String.IsNullOrEmpty(sortOrder) ? "User_desc" : "";
 			ViewData["YearOrder"] = sortOrder == "Year" ? "Year_desc" : "Year";
 			ViewData["AcquiredDaysOrder"] = sortOrder == "AcquiredDays" ? "AcquiredDays_desc" : "AcquiredDays";
@@ -38,9 +36,6 @@ namespace SII_DaysOff.Controllers
 			ViewData["CurrentFilter"] = searchString;
 
 			var userVacationDays = _context.UserVacationDays.Include(r => r.CreatedByNavigation).Include(r => r.ModifiedByNavigation).Include(r => r.User).AsQueryable();
-
-			/*if (searchString != null) numPage = 1;
-			else searchString = currentFilter;*/
 
 			if (searchString != null && !searchString.Equals("-1"))
 			{
@@ -51,8 +46,6 @@ namespace SII_DaysOff.Controllers
 			{
 				_contextAccessor.HttpContext.Session.SetString("searchStringUserVacationDays", "");
 			}
-
-            Console.WriteLine("\n\n\n\n filtro -> " + searchString + "\n\n\n\n");
 
             if (!String.IsNullOrEmpty(_contextAccessor.HttpContext.Session.GetString("searchStringUserVacationDays")))
 			{

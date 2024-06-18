@@ -131,7 +131,8 @@
 				</li>
 				<form asp-controller="Home" asp-action="Main">
 					<div class="form-actions no-color">
-						<p>
+						<p class="ms-xxl-3">
+							<i class="bi bi-search"></i>
 							<input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="custom-button">
 							<input type="hidden" name="optionStatus" value="@ViewData["status"]" />
 							<input type="hidden" name="year" value="@ViewData["YearSelected"]" />
@@ -274,7 +275,6 @@
 	@{
 		var previousDisabled = !Model.Requests.HasPreviousPage ? "disabled" : "";
 		var nextDisabled = !Model.Requests.HasNextPage ? "disabled" : "";
-		//var registerCount = (int)ViewData["RegisterCount"];
 	}
 
 	<div class="card-footer py-3">
@@ -342,7 +342,34 @@
 </div>
 
 @section Scripts {
-	@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded', function () {
+			var yearPicker = document.getElementById('yearPicker');
+			var yearPickerVacationDays = document.getElementById('yearPickerVacationDays');
+			var currentYear = new Date().getFullYear();
+
+			$(yearPicker).datepicker({
+				format: "yyyy",
+				viewMode: "years",
+				minViewMode: "years",
+				startDate: "2000",
+				endDate: "2030",
+				defaultViewDate: { year: currentYear },
+				autoclose: true
+			});
+
+			$(yearPickerVacationDays).datepicker({
+				format: "yyyy",
+				viewMode: "years",
+				minViewMode: "years",
+				startDate: "2000",
+				endDate: "2030",
+				defaultViewDate: { year: currentYear },
+				autoclose: true
+			});
+		});
+	</script>
+
 	<script type="text/javascript">
 		$(document).ready(function () {
 			$('#selectUser').change(function () {
@@ -365,7 +392,8 @@
 				}
 			});
 		});
-	</script>*@
+	</script>
+
 	@if (TempData["toastMessage"] != null)
 	{
 		<script type="text/javascript">

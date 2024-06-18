@@ -22,11 +22,6 @@ namespace SII_DaysOff.Controllers
 		private UserManager<ApplicationUser> _userManager;
 		public readonly IHttpContextAccessor _contextAccessor;
 
-		/*public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }*/
-
 		public HomeController(DbContextBD context, UserManager<ApplicationUser> userManager, IHttpContextAccessor contextAccessor)
 		{
 			_context = context;
@@ -51,10 +46,12 @@ namespace SII_DaysOff.Controllers
 				.Where(u => u.UserVacationDays.Year == _contextAccessor.HttpContext.Session.GetString("sessionYear"))
 				.FirstOrDefaultAsync(u => u.Id == Guid.Parse(_userManager.GetUserId(User)));
 
-			//if (logedUser == null) return RedirectToPage("Login");
-
-			if (optionStatus != null && optionStatus != "") ViewData["Status"] = optionStatus;
-			var currentOptionStatus = ViewData["status"];
+			if (optionStatus != null && optionStatus != "" && optionStatus != "-1")
+			{
+				ViewData["Status"] = optionStatus;
+				_contextAccessor.HttpContext.Session.SetString("sessionOptionStatus", optionStatus);
+			}
+			var currentOptionStatus = _contextAccessor.HttpContext.Session.GetString("sessionOptionStatus");
 
 			ViewData["YearSelected"] = _contextAccessor.HttpContext.Session.GetString("sessionYear");
 			ViewData["ReasonOrder"] = String.IsNullOrEmpty(sortOrder) ? "Reason_desc" : "";
@@ -96,7 +93,6 @@ namespace SII_DaysOff.Controllers
 			ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Email");
 			ViewData["YearId"] = new SelectList(_context.VacationDays, "Year", "Year");
 
-			// Paginacion
 			if (searchString != null && !searchString.Equals("-1"))
 			{
 				numPage = 1;

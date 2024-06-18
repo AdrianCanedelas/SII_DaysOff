@@ -103,7 +103,6 @@ namespace SII_DaysOff.Models
             {
                 var index = entity.HasIndex(u => new { u.NormalizedUserName }).Metadata;
                 entity.Metadata.RemoveIndex(index.Properties);
-                //entity.HasIndex(a => new { a.NormalizedUserName, a.TenantId }).HasName("UserNameIndex").IsUnique();
 
                 entity.HasIndex(e => e.NormalizedEmail, "EmailIndex");
 
@@ -121,8 +120,6 @@ namespace SII_DaysOff.Models
 
                 entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
 
-                //entity.Property(e => e.RoleId).HasColumnName("RoleID");
-
                 entity.Property(e => e.Surname).HasMaxLength(100);
 
                 entity.Property(e => e.UserName).HasMaxLength(256);
@@ -133,7 +130,7 @@ namespace SII_DaysOff.Models
                     .OnDelete(DeleteBehavior.NoAction);
                 
                 entity.HasOne(u => u.ManagerUser)
-                    .WithOne()
+                    .WithOne() //Index eliminado, 1 Manager puede estar en muchos usuarios
                     .HasForeignKey<ApplicationUser>(u => u.Manager)
                     .OnDelete(DeleteBehavior.NoAction);
                 

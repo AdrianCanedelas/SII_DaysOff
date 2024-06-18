@@ -38,22 +38,37 @@ $("#printPDF").click(function () {
 });
 document.styleSheets[0].insertRule("td { page-break-inside: avoid; }");
 
+//document.addEventListener('DOMContentLoaded', function () {
+//    var yearPicker = document.getElementById('yearPicker');
+//    var yearPickerVacationDays = document.getElementById('yearPickerVacationDays');
+//    var currentYear = new Date().getFullYear();
+
+//    $(yearPicker).datepicker({
+//        format: "yyyy",
+//        viewMode: "years",
+//        minViewMode: "years",
+//        startDate: "2000",
+//        endDate: "2030",
+//        defaultViewDate: { year: currentYear },
+//        autoclose: true
+//    });
+
+//    $(yearPickerVacationDays).datepicker({
+//        format: "yyyy",
+//        viewMode: "years",
+//        minViewMode: "years",
+//        startDate: "2000",
+//        endDate: "2030",
+//        defaultViewDate: { year: currentYear },
+//        autoclose: true
+//    });
+//});
+
 document.addEventListener('DOMContentLoaded', function () {
     var yearPicker = document.getElementById('yearPicker');
-    var yearPickerVacationDays = document.getElementById('yearPickerVacationDays');
     var currentYear = new Date().getFullYear();
 
     $(yearPicker).datepicker({
-        format: "yyyy",
-        viewMode: "years",
-        minViewMode: "years",
-        startDate: "2000",
-        endDate: "2030",
-        defaultViewDate: { year: currentYear },
-        autoclose: true
-    });
-
-    $(yearPickerVacationDays).datepicker({
         format: "yyyy",
         viewMode: "years",
         minViewMode: "years",
@@ -119,5 +134,3 @@ document.getElementById("toastbtn").onclick = function () {
     })
     toastList.forEach(toast => toast.show())
 }
-
-//

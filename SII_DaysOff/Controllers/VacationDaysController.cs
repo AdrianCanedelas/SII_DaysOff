@@ -35,9 +35,6 @@ namespace SII_DaysOff.Controllers
 
 			var vacationDays = _context.VacationDays.Include(r => r.CreatedByNavigation).Include(r => r.ModifiedByNavigation).AsQueryable();
 
-			/*if (searchString != null) numPage = 1;
-			else searchString = currentFilter;*/
-
 			if (searchString != null && !searchString.Equals("-1"))
 			{
 				numPage = 1;
