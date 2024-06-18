@@ -517,6 +517,7 @@ namespace SII_DaysOff.Controllers
 
 					if (requests.Any(r => r.StartDate <= new DateTime(year, month, day) && r.EndDate >= new DateTime(year, month, day)))
                     {
+                        Console.WriteLine("\n\n\n\n entra -> " + new DateTime(year, month, day));
                         //row = bottomCells(worksheet, row, column, XLColor.FromHtml("#f2f2f2"));
 
                         int pastRow = row;
@@ -524,8 +525,8 @@ namespace SII_DaysOff.Controllers
                         {
                             if(r.StartDate <= new DateTime(year, month, day) && r.EndDate >= new DateTime(year, month, day))
 							{
-								if (new DateTime(year, month, day) != r.EndDate || r.EndDate == r.StartDate)
-                                {
+								//if (new DateTime(year, month, day) != r.EndDate || r.EndDate == r.StartDate)
+                                //{
                                     cont++;
 									row++;
 									if (!users.Contains(r.UserId) || checkPreviousCell(worksheet, row, column, jumpsDown, cont))
@@ -537,7 +538,7 @@ namespace SII_DaysOff.Controllers
 										.Border.SetBottomBorder(XLBorderStyleValues.Thin).Border.SetBottomBorderColor(XLColor.CoolGrey)
 										.Border.SetTopBorder(XLBorderStyleValues.Thin).Border.SetTopBorderColor(XLColor.CoolGrey);
 									users.Add(r.UserId);
-								}
+								//}
 							}
                             if (row > (pastRow + 4)) jumpsDown += 1;
                         }

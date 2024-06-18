@@ -28,6 +28,8 @@ namespace SII_DaysOff.Controllers
         // GET: UserVacationDays
         public async Task<IActionResult> Index(string sortOrder, string searchString, int? numPage, string currentFilter, int registerCount)
         {
+            Console.WriteLine("\n\n\n\n filtro -> " + searchString + "\n\n\n\n");
+
 			ViewData["UserOrder"] = String.IsNullOrEmpty(sortOrder) ? "User_desc" : "";
 			ViewData["YearOrder"] = sortOrder == "Year" ? "Year_desc" : "Year";
 			ViewData["AcquiredDaysOrder"] = sortOrder == "AcquiredDays" ? "AcquiredDays_desc" : "AcquiredDays";
@@ -50,12 +52,14 @@ namespace SII_DaysOff.Controllers
 				_contextAccessor.HttpContext.Session.SetString("searchStringUserVacationDays", "");
 			}
 
-			if (!String.IsNullOrEmpty(searchString))
+            Console.WriteLine("\n\n\n\n filtro -> " + searchString + "\n\n\n\n");
+
+            if (!String.IsNullOrEmpty(_contextAccessor.HttpContext.Session.GetString("searchStringUserVacationDays")))
 			{
-				userVacationDays = userVacationDays.Where(r => r.User.Name.Contains(searchString)
-				|| r.Year.Contains(searchString)
-				|| r.AcquiredDays.ToString().Contains(searchString)
-				|| r.AdditionalDays.ToString().Contains(searchString));
+				userVacationDays = userVacationDays.Where(r => r.User.Name.Contains(_contextAccessor.HttpContext.Session.GetString("searchStringUserVacationDays"))
+				|| r.Year.Contains(_contextAccessor.HttpContext.Session.GetString("searchStringUserVacationDays"))
+				|| r.AcquiredDays.ToString().Contains(_contextAccessor.HttpContext.Session.GetString("searchStringUserVacationDays"))
+				|| r.AdditionalDays.ToString().Contains(_contextAccessor.HttpContext.Session.GetString("searchStringUserVacationDays")));
 			}
 
 			ViewData["CurrentOrder"] = sortOrder;

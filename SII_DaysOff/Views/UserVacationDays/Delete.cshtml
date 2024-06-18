@@ -9,42 +9,42 @@
 
 <h1 class="ms-3">Delete user vacation days</h1>
 <hr />
-<div class="row d-flex justify-content-center bg-white py-2">
-    <div class="col-4 p-5">
+<div class="row d-flex justify-content-center bg-white py-2 container-fluid mx-auto py-5">
+    <div class="col-12 col-md-10 col-lg-8 col-xl-6 col-xxl-4 p-0 p-md-5">
         <div class="row">
             <div class="col-12 mb-3">
                 <h3 style="color: #d30012;">Are you sure you want to delete this?</h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-6 fw-bold">
+            <div class="col-7 col-md-6 fw-bold">
                 @Html.DisplayNameFor(model => model.User.Name)
             </div>
-            <div class="col-6 custom-form-delete">
+            <div class="col-5 col-md-6 custom-form-delete">
                 <span>@Html.DisplayNameFor(model => model.User.Name)</span>
             </div>
         </div>
         <div class="row">
-            <div class="col-6 fw-bold">
+            <div class="col-7 col-md-6 fw-bold">
                 @Html.DisplayNameFor(model => model.Year)
             </div>
-            <div class="col-6 custom-form-delete">
+            <div class="col-5 col-md-6 custom-form-delete">
                 @Html.DisplayFor(model => model.Year)
             </div>
         </div>
         <div class="row">
-            <div class="col-6 fw-bold">
+            <div class="col-7 col-md-6 fw-bold">
                 @Html.DisplayNameFor(model => model.AcquiredDays)
             </div>
-            <div class="col-6 custom-form-delete">
+            <div class="col-5 col-md-6 custom-form-delete">
                 @Html.DisplayFor(model => model.AcquiredDays)
             </div>
         </div>
         <div class="row">
-            <div class="col-6 fw-bold">
+            <div class="col-7 col-md-6 fw-bold">
                 @Html.DisplayNameFor(model => model.AdditionalDays)
             </div>
-            <div class="col-6 custom-form-delete">
+            <div class="col-5 col-md-6 custom-form-delete">
                 @Html.DisplayFor(model => model.AdditionalDays)
             </div>
         </div>

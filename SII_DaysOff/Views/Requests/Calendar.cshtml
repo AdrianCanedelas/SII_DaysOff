@@ -8,9 +8,9 @@
 @Html.Partial("../Components/ModalSelectYear")
 @Html.Partial("../Components/ModalSelectStatusExport")
 
-<h1>@ViewData["Title"]</h1>
+<h1 class="ms-3">@ViewData["Title"]</h1>
 
-<div class="my-4">
+<div class="my-4 ms-3">
 	<button type="submit" data-bs-toggle="modal" data-bs-target="#statusExportModal" class="custom-button-excel">Export requests</button>
 	<button type="submit" data-bs-toggle="modal" data-bs-target="#calendarModal" class="custom-button-excel">Export Excel Calendar</button>
 	<button id="printPDF" class="custom-button-pdf">Export PDF calendar</button>

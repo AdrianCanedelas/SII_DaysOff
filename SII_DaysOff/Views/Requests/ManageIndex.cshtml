@@ -133,7 +133,7 @@
 	<div class="card-footer py-3">
 		<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["currentOrder"]"
 		   asp-route-numPage="@(Model.Requests.PageIndex -1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
-		   class="custom-button btn @previousDisabled" asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]"
+		   class="custom-button btn @previousDisabled mb-3 mb-md-0" asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]"
 		   asp-route-registerCount="@ViewData["RegisterCount"]">Previous</a>
 
 		@{
@@ -146,7 +146,7 @@
 			if (startPage > 1)
 			{
 				<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["currentOrder"]"
-				   asp-route-numPage="1" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-button btn"
+				   asp-route-numPage="1" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-button btn mb-3 mb-md-0"
 				   asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]"
 				   asp-route-registerCount="@ViewData["RegisterCount"]">1</a>
 				if (startPage > 2)
@@ -159,7 +159,7 @@
 			{
 				var activePage = (i == currentPage) ? "custom-button-active" : "";
 				<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["currentOrder"]" asp-route-numPage="@i"
-				   asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-button btn @activePage" asp-route-optionStatus="@ViewData["Status"]"
+				   asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-button btn @activePage mb-3 mb-md-0" asp-route-optionStatus="@ViewData["Status"]"
 				   asp-route-year="@ViewData["YearSelected"]" asp-route-registerCount="@ViewData["RegisterCount"]">@i</a>
 			}
 
@@ -170,14 +170,14 @@
 					<span class="custom-button btn">...</span>
 				}
 				<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["currentOrder"]"
-				   asp-route-numPage="@totalPages" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-button btn"
+				   asp-route-numPage="@totalPages" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="custom-button btn mb-3 mb-md-0"
 				   asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]"
 				   asp-route-registerCount="@ViewData["RegisterCount"]">@totalPages</a>
 			}
 		}
 		<a asp-controller="Requests" asp-action="ManageIndex" asp-route-sortOrder="@ViewData["CurrentOrder"]"
 		   asp-route-numPage="@(Model.Requests.PageIndex + 1)" asp-route-currentFilter="@ViewData["CurrentFilter"]"
-		   class="custom-button btn @nextDisabled" asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]"
+		   class="custom-button btn @nextDisabled mb-3 mb-md-0" asp-route-optionStatus="@ViewData["Status"]" asp-route-year="@ViewData["YearSelected"]"
 		   asp-route-registerCount="@ViewData["RegisterCount"]">Next</a>
 		@{
 			int start = (Model.Requests.PageIndex - 1) * Model.PageSize + 1;
